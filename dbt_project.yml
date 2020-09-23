@@ -1,0 +1,10 @@
+name: 'fivetran_utils'
+version: '1.0.0'
+config-version: 2
+
+source-paths: ["models"]
+analysis-paths: ["analysis"]
+test-paths: ["tests"]
+data-paths: ["data"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
