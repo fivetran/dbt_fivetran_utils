@@ -31,6 +31,8 @@ select
 from source
 ```
 
+----
+
 #### generate_columns_macro ([source](macros/generate_columns_macro.sql))
 
 This macro is used to generate the macros used in `fill_staging_columns` to list all the expected columns. It takes a `table_name`, `schema_name` and `database_name`. `database_name` is optional. If missing, the macro will assume the source data is in the `target.database`.
