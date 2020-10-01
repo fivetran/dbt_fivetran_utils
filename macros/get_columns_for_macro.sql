@@ -13,6 +13,7 @@ select
         when lower(data_type) = 'boolean' then '"boolean"'
         when lower(data_type) = 'number' then 'dbt_utils.type_numeric()' 
         when lower(data_type) = 'float' then 'dbt_utils.type_float()' 
+        when lower(data_type) = 'date' then '"date"'
       end,
       '}')
 from {{ database_name }}.information_schema.columns
@@ -68,5 +69,5 @@ order by 1
 
 
 {% macro get_columns_for_macro(table_name, schema_name, database_name) -%}
-  {{ adapter.dispatch('get_columns_for_macro')(table_name, schema_name, database_name) }}
+  {{ return(adapter.dispatch('get_columns_for_macro')(table_name, schema_name, database_name)) }}
 {%- endmacro %}
