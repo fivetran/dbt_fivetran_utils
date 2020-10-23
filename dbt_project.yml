@@ -8,3 +8,8 @@ test-paths: ["tests"]
 data-paths: ["data"]
 macro-paths: ["macros"]
 snapshot-paths: ["snapshots"]
+
+vars:
+    dbt_utils_dispatch_list:
+        - fivetran_utils
+        - dbt_utils
