@@ -1,4 +1,4 @@
-{% macro remove_prefix_from_columns(columns, prefix='property_', exclude=[]) %}
+{% macro remove_prefix_from_columns(columns, prefix='', exclude=[]) %}
 
         {%- for col in columns if col.name not in exclude -%}
         {%- if col.name[:prefix|length]|lower == prefix -%}
