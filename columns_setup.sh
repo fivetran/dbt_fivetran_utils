@@ -6,7 +6,7 @@ echo "select *\nfrom {{ var('$5') }}" > $1/models/tmp/$2__$5_tmp.sql
 echo "\n\n" >> $1/models/$2__$5.sql
 echo "        {{
             fivetran_utils.fill_staging_columns(
-                source_columns=adapter.get_columns_in_relation(ref('$2_$5_tmp')),
+                source_columns=adapter.get_columns_in_relation(ref('$2__$5_tmp')),
                 staging_columns=get_$5_columns()
             )
         }}" >> $1/models/$2__$5.sql
