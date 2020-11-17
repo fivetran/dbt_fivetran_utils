@@ -1,20 +1,28 @@
-{% macro get_email_event_sent_columns() %}
+{% macro fill_staging_columns(source_columns, staging_columns) -%}
 
-{% set columns = [
-    {"name": "_fivetran_synced", "datatype": dbt_utils.type_timestamp()},
-    {"name": "bcc", "datatype": dbt_utils.type_string()},
-    {"name": "cc", "datatype": dbt_utils.type_string()},
-    {"name": "id", "datatype": dbt_utils.type_string()},
-    {"name": "reply_to", "datatype": dbt_utils.type_string()},
-    {"name": "subject", "datatype": dbt_utils.type_string()}
-] %}
+{%- set source_column_names = source_columns|map(attribute='name')|map('lower')|list -%}
 
-{% if target.type == 'snowflake' %}
- {{ columns.append({"name": "FROM", "datatype": dbt_utils.type_string(), "quote": True, "alias": "from_email"}) }}
-{% else %}
- {{ columns.append({"name": "from", "datatype": dbt_utils.type_string(), "quote": True, "alias": "from_email"}) }}
-{% endif %}
+{%- for column in staging_columns %}
+    {% if column.name|lower in source_column_names -%}
+        {{ fivetran_utils.quote_column(column) }}
+        {%- if 'alias' in column %} as {{ column.alias }} {%- endif -%}
+    {%- else -%}
+        cast(null as {{ column.datatype }})
+        {%- if 'alias' in column %} as {{ column.alias }} {% else %} as {{ column.name }} {% endif -%}
+    {%- endif -%}
+    {%- if not loop.last -%} , {% endif -%}
+{% endfor %}
 
-{{ return(columns) }}
+{% endmacro %}
 
+{% macro quote_column(column) %}
+    {% if 'quote' in column %}
+        {% if column.quote %}
+        "{{ column.name }}"
+        {% else %}
+        {{ column.name }}
+        {% endif %}
+    {% else %}
+    {{ column.name }}
+    {% endif %}
 {% endmacro %}
