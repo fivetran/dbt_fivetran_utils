@@ -4,7 +4,7 @@
 
 {%- for column in staging_columns %}
     {% if column.name|lower in source_column_names -%}
-        {{ column.name }}
+        {{ fivetran_utils.quote_column(column) }}
         {%- if 'alias' in column %} as {{ column.alias }} {%- endif -%}
     {%- else -%}
         cast(null as {{ column.datatype }})
@@ -13,4 +13,16 @@
     {%- if not loop.last -%} , {% endif -%}
 {% endfor %}
 
+{% endmacro %}
+
+{% macro quote_column(column) %}
+    {% if 'quote' in column %}
+        {% if column.quote %}
+        "{{ column.name }}"
+        {% else %}
+        {{ column.name }}
+        {% endif %}
+    {% else %}
+    {{ column.name }}
+    {% endif %}
 {% endmacro %}
