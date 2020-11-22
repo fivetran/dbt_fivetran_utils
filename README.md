@@ -43,3 +43,27 @@ Usage:
 ```
 dbt run-operation fivetran_utils.generate_columns_macro --args '{"table_name": "promoted_tweet_report", "schema_name": "twitter_ads", "database_name": "dbt-package-testing"}'
 ```
+----
+
+#### columns_setup.sh ([source](columns_setup.sh))
+
+This bash file can be used to setup or update packages to use the `fill_staging_columns` macro above. The bash script does the following three things:
+
+* Creates a `.sql` file in the `macros` directory for a source table and fills it with all the columns from the table.
+* Creates a `..._tmp.sql` file in the `models/tmp` directory and fills it with a `select * from {{ var('table_name') }}` where `table_name` is the name of the source table.
+* Creates or updates a `.sql` file in the `models` directory and fills it with the filled out version of the `fill_staging_columns` macro as shown above. You can then write whatever SQL you want around the macro to finishing off the staging file.
+
+The usage is as follows, assuming you are in a dbt project directory that has already imported this repo as a dependency:
+```bash
+source dbt_modules/fivetran_utils/columns_setup.sh "path/to/directory" file_prefix database_name schema_name table_name
+```
+
+As an example, assuming we are in a dbt project in an adjacent folder to `dbt_marketo_source`:
+```bash
+source dbt_modules/fivetran_utils/columns_setup.sh "../dbt_marketo_source" stg_marketo "digital-arbor-400" marketo_v3 deleted_program_membership
+```
+
+In that example, it will:
+* Create a `get_deleted_program_membership_columns.sql` file in the `macros` directory, with the necessary macro within it.
+* Create a `stg_marketo__deleted_program_membership_tmp.sql` file in the `models/tmp` directory, with `select * from {{ var('deleted_program_membership') }}` in it.
+* Create or update a `stg_marketo__deleted_program_membership.sql` file in the `models` directory with the pre-filled out `fill_staging_columns` macro.
