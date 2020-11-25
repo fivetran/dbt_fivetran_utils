@@ -50,10 +50,11 @@ dbt run-operation fivetran_utils.generate_columns_macro --args '{"table_name": "
 This bash file can be used to setup or update packages to use the `fill_staging_columns` macro above. The bash script does the following three things:
 
 * Creates a `.sql` file in the `macros` directory for a source table and fills it with all the columns from the table.
+    * Be sure your `dbt_project.yml` file does not contain any **Warnings** or **Errors**. If warnings or errors are present, the messages from the terminal will be printed above the macro within the `.sql` file in the `macros` directory.
 * Creates a `..._tmp.sql` file in the `models/tmp` directory and fills it with a `select * from {{ var('table_name') }}` where `table_name` is the name of the source table.
 * Creates or updates a `.sql` file in the `models` directory and fills it with the filled out version of the `fill_staging_columns` macro as shown above. You can then write whatever SQL you want around the macro to finishing off the staging file.
 
-The usage is as follows, assuming you are in a dbt project directory that has already imported this repo as a dependency:
+The usage is as follows, assuming you are executing via a `zsh` terminal and in a dbt project directory that has already imported this repo as a dependency:
 ```bash
 source dbt_modules/fivetran_utils/columns_setup.sh "path/to/directory" file_prefix database_name schema_name table_name
 ```
