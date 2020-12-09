@@ -3,7 +3,6 @@
 This package includes macros that are used in Fivetran's dbt packages.
 
 ## Macros
-
 #### fill_staging_columns ([source](macros/fill_staging_columns.sql))
 
 This macro is used to generate the correct SQL for package staging models. It takes a list of columns that are expected/needed (`staging_columns`) and compares it with columns in the source (`source_columns`). `source_columns` should come from the `get_columns_in_relation` method, as used below.
@@ -32,6 +31,18 @@ from source
 ```
 
 ----
+#### first_value ([source](macros/first_value.sql))
+This macro returns the the value_expression for the first row in the current window frame with cross db functionality. The default root first_value calulcation within the macro is the `first_value` function. The Redshift root first_value calculate is the `first_value` function, with the inclusion of a frame_clause `{{ partition_field }} rows unbounded preceding`.
+
+**Usage:**
+```sql
+{{ fivetran_utils.first_value(first_value_field="created_at", partition_field="conversation_id", order_by_field="created_at", order="asc") }}
+```
+**Args:**
+* `first_value_field` (required): The value expression which you want to determine the first value for.
+* `partition_field` (required): Name of the field you want to partition by to determine the first_value.
+* `order_by_field` (required): Name of the field you wish to sort on in to determine the first_value.
+* `order` (optional): The order of which you want to partition the window frame. The order argument by default is `asc`. If you wish to get the last_value, you may change the argument to `desc`.
 
 #### generate_columns_macro ([source](macros/generate_columns_macro.sql))
 
@@ -44,6 +55,17 @@ Usage:
 dbt run-operation fivetran_utils.generate_columns_macro --args '{"table_name": "promoted_tweet_report", "schema_name": "twitter_ads", "database_name": "dbt-package-testing"}'
 ```
 ----
+#### median ([source](macros/median.sql))
+This macro is used to return the median set of values of a field with cross db functionality. The default root median calulcation within the macro is the `median` function. The BigQuery root median calculation is `percentile_cont`.
+
+**Usage:**
+```sql
+{{ fivetran_utils.median(median_field='time_to_close', partition_field='partition_by_field', percent=0.5) }}
+```
+**Args:**
+* `median_field` (required): Name of the field you are looking to determine the median value of.
+* `partition_field` (required): Name of the field you want to partition by to determine the median value.
+* `percent` (default = optional, bigquery = required): The percent necessary for `percentile_cont` to determine the median value. By defualt this value is 0.5 for the middle value. 
 
 #### columns_setup.sh ([source](columns_setup.sh))
 
