@@ -5,31 +5,21 @@
 {%- endmacro %}
 
 --Default median calculation
-{% macro default__median(median_field, partition_field, percent=0.5)  %}
+{% macro default__median(median_field, partition_field) %}
+
+    median( 
+        {{ median_field }})
+        over (partition by {{ partition_field }}    
+        )
+
+{% endmacro %}
+
+--Median calculation specific to BigQuery
+{% macro bigquery__median(median_field, partition_field, percent=0.5)  %}
 
     percentile_cont( 
         {{ median_field }}, 
         {{ percent }}) 
-        over (partition by {{ partition_field }}    
-        )
-
-{% endmacro %}
-
---Median calculation specific to Snowflake
-{% macro snowflake__median(median_field, partition_field) %}
-
-    median( 
-        {{ median_field }})
-        over (partition by {{ partition_field }}    
-        )
-
-{% endmacro %}
-
---Median calculation specific to Redshift
-{% macro redshift__median(median_field, partition_field) %}
-
-    median( 
-        {{ median_field }})
         over (partition by {{ partition_field }}    
         )
 
