@@ -5,7 +5,7 @@
 {%- endmacro %}
 
 --Default median calculation
-{% macro default__median(median_field, partition_field) %}
+{% macro default__median(median_field, partition_field, percent=0.5) %}
 
     median( 
         {{ median_field }})
