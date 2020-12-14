@@ -55,17 +55,17 @@ Usage:
 dbt run-operation fivetran_utils.generate_columns_macro --args '{"table_name": "promoted_tweet_report", "schema_name": "twitter_ads", "database_name": "dbt-package-testing"}'
 ```
 ----
-#### median ([source](macros/median.sql))
-This macro is used to return the median value of a field with cross db functionality. The default median calulcation within the macro is the `median` function. The BigQuery median calculation within the macro is the `percentile_cont` function.
+#### percentile ([source](macros/percentile.sql))
+This macro is used to return the designated percentile of a field with cross db functionality. The percentile function stems from percentile_cont across db's. For Snowflake and Redshift this macro uses the window function opposed to the aggregate for percentile.
 
 **Usage:**
 ```sql
-{{ fivetran_utils.median(median_field='time_to_close', partition_field='id', percent=0.5) }}
+{{ fivetran_utils.percentile(percentile_field='time_to_close', partition_field='id', percent='0.5') }}
 ```
 **Args:**
-* `median_field` (required): Name of the field of which you are determining the median value.
-* `partition_field` (required): Name of the field you want to partition by to determine the median value.
-* `percent` (default = optional, bigquery = required): The percent necessary for `percentile_cont` to determine the median value. By defualt the value is `0.5`. 
+* `percentile_field` (required): Name of the field of which you are determining the desired percentile.
+* `partition_field` (required): Name of the field you want to partition by to determine the designated percentile.
+* `percent` (required): The percent necessary for `percentile_cont` to determine the percentile. If you want to find the median, you will input `0.5` for the percent. 
 
 #### columns_setup.sh ([source](columns_setup.sh))
 
