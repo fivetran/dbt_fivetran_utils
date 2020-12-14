@@ -32,7 +32,7 @@ from source
 
 ----
 #### first_value ([source](macros/first_value.sql))
-This macro returns the value_expression for the first row in the current window frame with cross db functionality. The default first_value calulcation within the macro is the `first_value` function. The Redshift first_value calculate is the `first_value` function, with the inclusion of a frame_clause `{{ partition_field }} rows unbounded preceding`.
+This macro returns the value_expression for the first row in the current window frame with cross db functionality. This macro ignores null values. The default first_value calulcation within the macro is the `first_value` function. The Redshift first_value calculate is the `first_value` function, with the inclusion of a frame_clause `{{ partition_field }} rows unbounded preceding`.
 
 **Usage:**
 ```sql
