@@ -20,7 +20,9 @@
     {% if 'quote' in column %}
         {% if column.quote %}
             {% if target.type == 'bigquery' %}
-            `{{ column.name}}`
+            `{{ column.name }}`
+            {% elif target.type == 'snowflake' %}
+            "{{ column.name | upper }}"
             {% else %}
             "{{ column.name }}"
             {% endif %}
