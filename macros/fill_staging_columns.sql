@@ -15,10 +15,17 @@
 
 {% endmacro %}
 
+
 {% macro quote_column(column) %}
     {% if 'quote' in column %}
         {% if column.quote %}
-        "{{ column.name }}"
+            {% if target.type == 'bigquery' %}
+            `{{ column.name }}`
+            {% elif target.type == 'snowflake' %}
+            "{{ column.name | upper }}"
+            {% else %}
+            "{{ column.name }}"
+            {% endif %}
         {% else %}
         {{ column.name }}
         {% endif %}
