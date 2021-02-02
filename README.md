@@ -38,12 +38,11 @@ This macro creates a dummy coalesce value based on the data type of the field. S
 
 ----
 ### enabled_vars ([source](macros/enabled_vars.sql))
-This macro references a specified boolean variable and returns the declared value. Typically this macro is used to enable or disable models if a user sets 
-the variable to either `True` or `False` respectively. 
+This macro references a set of specified boolean variable and returns `false` if any variable value is equal to false.
 
 **Usage:**
 ```sql
-{{ fivetran_utils.enabled_vars(vars="using_department_table") }}
+{{ fivetran_utils.enabled_vars(vars=["using_department_table", "using_customer_table"]) }}
 ```
 **Args:**
 * `vars` (required): Variable you are referencing to return the declared variable value.
