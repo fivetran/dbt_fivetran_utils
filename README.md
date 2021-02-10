@@ -203,6 +203,16 @@ relations will be filled with `null` where not present. An new column
 * `source_column_name` (optional): The name of the column that records the source of this row. By default this argument is set to `none`.
 
 ---
+### snowflake_seed_data ([source](macros/snowflake_seed_data.sql))
+This macro is intended to be used when a source table column is a reserved keyword in Snowflake, and Circle CI is throwing a fit.
+It simply chooses which version of the data to seed (the Snowflake copy should capitalize and put three pairs of quotes around the problematic column).
+
+***Usage:**
+```yml
+    # in integration_tests/dbt_project.yml
+    vars:
+        table_name: "{{ snowflake_seed_data('table_name') }}"
+```
 
 ## Bash Scripts
 ### columns_setup.sh ([source](columns_setup.sh))
