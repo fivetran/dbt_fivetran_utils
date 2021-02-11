@@ -4,11 +4,11 @@
 
 {%- for column in staging_columns %}
     {% if column.name|lower in source_column_names -%}
-        {{ fivetran_utils.quote_column(column) }}
-        {%- if 'alias' in column %} as {{ column.alias }} {%- endif -%}
+        {{ fivetran_utils.quote_column(column) }} as 
+        {%- if 'alias' in column %} {{ column.alias }} {% else %} {{ fivetran_utils.quote_column(column) }} {%- endif -%}
     {%- else -%}
         cast(null as {{ column.datatype }})
-        {%- if 'alias' in column %} as {{ column.alias }} {% else %} as {{ column.name }} {% endif -%}
+        {%- if 'alias' in column %} as {{ column.alias }} {% else %} as {{ fivetran_utils.quote_column(column) }} {% endif -%}
     {%- endif -%}
     {%- if not loop.last -%} , {% endif -%}
 {% endfor %}
