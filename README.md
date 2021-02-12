@@ -37,6 +37,18 @@ This macro creates a dummy coalesce value based on the data type of the field. S
 * `column` (required): Field you are applying the dummy coalesce.
 
 ----
+### enabled_vars_one_true ([source](macros/enabled_vars_one_true.sql))
+This macro references a set of specified boolean variable and returns `true` if any variable value is equal to true.
+
+**Usage:**
+```sql
+{{ fivetran_utils.enabled_vars_one_true(vars=["using_department_table", "using_customer_table"]) }}
+```
+**Args:**
+* `vars` (required): Variable(s) you are referencing to return the declared variable value.
+
+----
+
 ### enabled_vars ([source](macros/enabled_vars.sql))
 This macro references a set of specified boolean variable and returns `false` if any variable value is equal to false.
 
