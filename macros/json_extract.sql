@@ -15,3 +15,9 @@
   json_extract({{string}}, {{ "'$." ~ string_path ~ "'" }} )
 
 {% endmacro %}
+
+{% macro postgres__json_extract(string, string_path) %}
+
+  {{string}}::json->{{"'" ~ string_path ~ "'" }}
+
+{% endmacro %}
