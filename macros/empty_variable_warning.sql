@@ -1,4 +1,4 @@
-{% macro ticket_field_history_columns_warning(variable, downstream_model) %}
+{% macro empty_variable_warning(variable, downstream_model) %}
 
 {% if not var(first_value_field) %}
 {{ log(
