@@ -50,11 +50,11 @@ This macro creates a dummy coalesce value based on the data type of the field. S
 
 ----
 ### empty_variable_warning ([source](macros/empty_variable_warning.sql))
-This macro checks a declared variable and returns an error message if the variable is empty.
+This macro checks a declared variable and returns an error message if the variable is empty before running the models within the `dbt_project.yml` file.
 
 **Usage:**
-```sql
-{{ fivetran_utils.empty_variable_warning(variable="ticket_field_history_columns", downstream_model="zendesk_ticket_field_history") }}
+```yml
+on-run-start: '{{ fivetran_utils.empty_variable_warning(variable="ticket_field_history_columns", downstream_model="zendesk_ticket_field_history") }}'
 ```
 **Args:**
 * `variable`            (required): The variable you want to check if it is empty.
