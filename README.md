@@ -21,6 +21,18 @@ BigQuery, Snowflake, Redshift, and Postgres. By default a comma `,` is used as a
 * `field_to_agg` (required): Field within the table you are wishing to aggregate.
 
 ----
+### ceiling ([source](macros/ceiling.sql))
+This macro allows for cross database use of the ceiling function. The ceiling function returns the smallest integer greater 
+than, or equal to, the specified numeric expression. The ceiling macro is compatible with BigQuery, Redshift, Postgres, and Snowflake.
+
+**Usage:**
+```sql
+{{ fivetran_utils.ceiling(num="target/total_days") }}
+```
+**Args:**
+* `num` (required): The integer field you wish to apply the ceiling function.
+
+----
 ### dummy_coalesce_value ([source](macros/dummy_coalesce_value.sql))
 This macro creates a dummy coalesce value based on the data type of the field. See below for the respective data type and dummy values:
 - String    = 'DUMMY_STRING'
@@ -35,6 +47,18 @@ This macro creates a dummy coalesce value based on the data type of the field. S
 ```
 **Args:**
 * `column` (required): Field you are applying the dummy coalesce.
+
+----
+### empty_variable_warning ([source](macros/empty_variable_warning.sql))
+This macro checks a declared variable and returns an error message if the variable is empty.
+
+**Usage:**
+```sql
+{{ fivetran_utils.empty_variable_warning(variable="ticket_field_history_columns", downstream_model="zendesk_ticket_field_history") }}
+```
+**Args:**
+* `variable`            (required): The variable you want to check if it is empty.
+* `downstream_model`    (required): The downstream model that is affected if the variable is empty.
 
 ----
 ### enabled_vars_one_true ([source](macros/enabled_vars_one_true.sql))
@@ -83,7 +107,7 @@ from source
 
 ----
 ### first_value ([source](macros/first_value.sql))
-This macro returns the value_expression for the first row in the current window frame with cross db functionality. This macro ignores null values. The default first_value calulcation within the macro is the `first_value` function. The Redshift first_value calculate is the `first_value` function, with the inclusion of a frame_clause `{{ partition_field }} rows unbounded preceding`.
+This macro returns the value_expression for the first row in the current window frame with cross db functionality. This macro ignores null values. The default first_value calculation within the macro is the `first_value` function. The Redshift first_value calculation is the `first_value` function, with the inclusion of a frame_clause `{{ partition_field }} rows unbounded preceding`.
 
 **Usage:**
 ```sql
@@ -141,6 +165,19 @@ This macro returns all column names and datatypes for a specified table within a
 * `database_name` (optional): Name of the database where the above mentioned schema and table reside. By default this will be your target.database.
 
 ----
+### json_extract ([source](macros/json_extract.sql))
+This macro allows for cross database use of the json extract function. The json extract allows the return of data from a json object.
+The data is returned by the path you provide as the argument. The json_extract macro is compatible with BigQuery, Redshift, Postgres, and Snowflake.
+
+**Usage:**
+```sql
+{{ fivetran_utils.json_extract(string="value", string_path="in_business_hours") }}
+```
+**Args:**
+* `string` (required): Name of the field which contains the json object.
+* `string_path`  (required): Name of the path in the json object which you want to extract the data from.
+
+----
 ### percentile ([source](macros/percentile.sql))
 This macro is used to return the designated percentile of a field with cross db functionality. The percentile function stems from percentile_cont across db's. For Snowflake and Redshift this macro uses the window function opposed to the aggregate for percentile.
 
@@ -167,6 +204,20 @@ This macro removes desired prefixes from specified columns. Additionally, a for 
 * `exclude` (optional): The columns you wish to exclude from this macro. By default no columns are excluded.
 
 ----
+### snowflake_seed_data ([source](macros/snowflake_seed_data.sql))
+This macro is intended to be used when a source table column is a reserved keyword in Snowflake, and Circle CI is throwing a fit.
+It simply chooses which version of the data to seed (the Snowflake copy should capitalize and put three pairs of quotes around the problematic column).
+
+***Usage:**
+```yml
+    # in integration_tests/dbt_project.yml
+    vars:
+        table_name: "{{ fivetran_utils.snowflake_seed_data(seed_name='user_data') }}"
+```
+**Args:**
+* `seed_name` (required): Name of the seed that has separate snowflake seed data.
+
+----
 ### string_agg ([source](macros/string_agg.sql))
 This macro allows for cross database field aggregation and delimiter customization. Supported database specific field aggregation functions include 
 BigQuery, Snowflake, Redshift.
@@ -180,7 +231,7 @@ BigQuery, Snowflake, Redshift.
 * `delimiter`    (required): Character you want to be used as the delimiter between aggregates.
 ----
 ### timestamp_add ([source](macros/timestamp_add.sql))
-This macro allows for cross database addition of a timestamp field and a specified datepart and interval for BigQuery, Redshift, and Snowflake.
+This macro allows for cross database addition of a timestamp field and a specified datepart and interval for BigQuery, Redshift, Postgres, and Snowflake.
 
 **Usage:**
 ```sql
@@ -190,6 +241,19 @@ This macro allows for cross database addition of a timestamp field and a specifi
 * `datepart`       (required): The datepart you are adding to the timestamp field.
 * `interval`       (required): The interval in relation to the datepart you are adding to the timestamp field.
 * `from_timestamp` (required): The timestamp field you are adding the datepart and interval.
+
+----
+### timestamp_diff ([source](macros/timestamp_diff.sql))
+This macro allows for cross database timestamp difference calculation for BigQuery, Redshift, Postgres, and Snowflake.
+
+**Usage:**
+```sql
+{{ fivetran_utils.timestamp_diff(first_date="first_ticket_timestamp", second_date="last_ticket_timestamp", datepart="day") }}
+```
+**Args:**
+* `first_date`       (required): The first timestamp field for the difference calculation.
+* `second_date`      (required): The second timestamp field for the difference calculation.
+* `datepart`         (required): The date part applied to the timestamp difference calculation.
 
 ----
 ### union_relations ([source](macros/union_relations.sql))
@@ -213,18 +277,6 @@ relations will be filled with `null` where not present. An new column
 * `include`            (optional): A list of column names that should be included in the final query. Note the `include` and `exclude` parameters are mutually exclusive.
 * `column_override`    (optional): A dictionary of explicit column type overrides, e.g. `{"some_field": "varchar(100)"}`.``
 * `source_column_name` (optional): The name of the column that records the source of this row. By default this argument is set to `none`.
-
----
-### snowflake_seed_data ([source](macros/snowflake_seed_data.sql))
-This macro is intended to be used when a source table column is a reserved keyword in Snowflake, and Circle CI is throwing a fit.
-It simply chooses which version of the data to seed (the Snowflake copy should capitalize and put three pairs of quotes around the problematic column).
-
-***Usage:**
-```yml
-    # in integration_tests/dbt_project.yml
-    vars:
-        table_name: "{{ snowflake_seed_data('table_name') }}"
-```
 
 ## Bash Scripts
 ### columns_setup.sh ([source](columns_setup.sh))
