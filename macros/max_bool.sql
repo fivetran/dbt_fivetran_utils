@@ -5,21 +5,21 @@
 {%- endmacro %}
 
 --Default max_bool calculation
-{% macro default__first_value(boolean_field)  %}
+{% macro default__max_bool(boolean_field)  %}
 
     bool_or( {{ boolean_field }} )
 
 {% endmacro %}
 
 --max_bool calculation specific to Snowflake
-{% macro snowflake__first_value(boolean_field)  %}
+{% macro snowflake__max_bool(boolean_field)  %}
 
     max( {{ boolean_field }} )
 
 {% endmacro %}
 
 --max_bool calculation specific to BigQuery
-{% macro bigquery__first_value(boolean_field)  %}
+{% macro bigquery__max_bool(boolean_field)  %}
 
     max( {{ boolean_field }} )
 
