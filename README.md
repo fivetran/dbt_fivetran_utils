@@ -178,6 +178,17 @@ The data is returned by the path you provide as the argument. The json_extract m
 * `string_path`  (required): Name of the path in the json object which you want to extract the data from.
 
 ----
+### max_bool ([source](macros/max_bool.sql))
+This macro allows for cross database use of obtaining the max boolean value of a field. This macro recognizes true = 1 and false = 0. The macro will aggregate the boolean_field and return the max boolean value. The max_bool macro is compatible with BigQuery, Redshift, Postgres, and Snowflake.
+
+**Usage:**
+```sql
+{{ fivetran_utils.max_bool(boolean_field="is_breach") }}
+```
+**Args:**
+* `boolean_field` (required): Name of the field you are obtaining the max boolean record from.
+
+----
 ### percentile ([source](macros/percentile.sql))
 This macro is used to return the designated percentile of a field with cross db functionality. The percentile function stems from percentile_cont across db's. For Snowflake and Redshift this macro uses the window function opposed to the aggregate for percentile.
 
