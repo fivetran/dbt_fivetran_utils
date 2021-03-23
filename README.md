@@ -84,7 +84,7 @@ This macro references a set of specified boolean variable and returns `false` if
 * `vars` (required): Variable you are referencing to return the declared variable value.
 
 ----
-### fill_staging_columns ([source](macros/.sql))
+### fill_staging_columns ([source](macros/fill_staging_columns.sql))
 This macro is used to generate the correct SQL for package staging models. It takes a list of columns that are expected/needed (`staging_columns`) 
 and compares it with columns in the source (`source_columns`). 
 
