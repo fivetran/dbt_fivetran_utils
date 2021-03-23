@@ -234,7 +234,7 @@ This macro is intended to be used as a `run-operation` when generating Fivetran 
 
 **Usage:**
 ```bash
-dbt run-operation staging_models_automation --args '{package: asana, target_schema: asana_target, target_database: database-target-name, tables: ["user","tag"]}'
+dbt run-operation staging_models_automation --args '{package: asana, source_schema: asana_source, source_database: database-source-name, tables: ["user","tag"]}'
 ```
 
 **CLI Output:**
@@ -245,8 +245,8 @@ source dbt_modules/fivetran_utils/columns_setup.sh '../dbt_asana_source' stg_asa
 
 **Args:**
 * `package`         (required): Name of the package for which you are creating staging models/macros.
-* `target_schema`   (required): Name of the target_schema from which the bash command will query.
-* `target_database` (required): Name of the target_database from which the bash command will query.
+* `source_schema`   (required): Name of the source_schema from which the bash command will query.
+* `source_database` (required): Name of the source_database from which the bash command will query.
 * `tables`          (required): List of the tables for which you want to create staging models/macros.
 
 ----
