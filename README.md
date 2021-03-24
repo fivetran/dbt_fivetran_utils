@@ -229,6 +229,21 @@ It simply chooses which version of the data to seed (the Snowflake copy should c
 * `seed_name` (required): Name of the seed that has separate snowflake seed data.
 
 ----
+### seed_data_helper ([source](macros/seed_data_helper.sql))
+This macro is intended to be used when a source table column is a reserved keyword in a warehouse, and Circle CI is throwing a fit.
+It simply chooses which version of the data to seed.
+
+***Usage:**
+```yml
+    # in integration_tests/dbt_project.yml
+    vars:
+        table_name: "{{ fivetran_utils.seed_data_helper(seed_name='user_data', warehouse='postgres') }}"
+```
+**Args:**
+* `seed_name` (required): Name of the seed that has separate postgres seed data.
+* `warehouse_name` (required): Name of the warehouse for which you want CircleCi to use the helper seed data.
+
+----
 ### staging_models_automation ([source](macros/staging_models_automation.sql))
 This macro is intended to be used as a `run-operation` when generating Fivetran dbt source package staging models/macros. This macro will receive user input to create all necessary ([bash commands](columns_setup.sh)) appended with `&&` so they may all be ran at once. The output of this macro within the CLI will then be copied and pasted as a command to generate the staging models/macros.
 
