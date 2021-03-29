@@ -231,17 +231,18 @@ It simply chooses which version of the data to seed (the Snowflake copy should c
 ----
 ### seed_data_helper ([source](macros/seed_data_helper.sql))
 This macro is intended to be used when a source table column is a reserved keyword in a warehouse, and Circle CI is throwing a fit.
-It simply chooses which version of the data to seed.
+It simply chooses which version of the data to seed. Also note the `warehouses` argument is a list and multiple warehouses may be added based on the number of warehouse
+specific seed data files you need for integration testing.
 
 ***Usage:**
 ```yml
     # in integration_tests/dbt_project.yml
     vars:
-        table_name: "{{ fivetran_utils.seed_data_helper(seed_name='user_data', warehouse='postgres') }}"
+        table_name: "{{ fivetran_utils.seed_data_helper(seed_name='user_data', warehouses=['snowflake', 'postgres']) }}"
 ```
 **Args:**
 * `seed_name` (required): Name of the seed that has separate postgres seed data.
-* `warehouse_name` (required): Name of the warehouse for which you want CircleCi to use the helper seed data.
+* `warehouses` (required): List of the warehouses for which you want CircleCi to use the helper seed data.
 
 ----
 ### string_agg ([source](macros/string_agg.sql))
