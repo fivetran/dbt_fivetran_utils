@@ -9,6 +9,20 @@ This macro allows for namespacing macros throughout a dbt project. The macro cur
 - `fivetran_utils`
 
 ----
+### add_pass_through_columns ([source](macros/add_pass_through_columns.sql))
+This macro creates the proper name, datatype, and aliasing for user defined pass through column variable. This
+macro allows for pass through variables to be more dynamic and allow users to alias custom fields they are 
+bringing in.
+
+**Usage:**
+```sql
+{{ fivetran_utils.add_pass_through_columns(base_columns=columns, pass_through_var=var('hubspot__deal_pass_through_columns')) }}
+```
+**Args:**
+* `base_columns` (required): The name of the variable where the base columns are contained. This is typically `columns`.
+* `pass_through_var` (required): The variable which contains the user defined pass through fields.
+
+----
 ### array_agg ([source](macros/array_agg.sql))
 This macro allows for cross database field aggregation. The macro contains the database specific field aggregation function for 
 BigQuery, Snowflake, Redshift, and Postgres. By default a comma `,` is used as a delimiter in the aggregation.
