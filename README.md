@@ -98,6 +98,18 @@ This macro references a set of specified boolean variable and returns `false` if
 * `vars` (required): Variable you are referencing to return the declared variable value.
 
 ----
+
+### fill_pass_through_columns ([source](macros/fill_pass_through_columns.sql))
+This macro is used to generate the correct sql for package staging models for user defined pass through columns.
+
+**Usage:**
+```sql
+{{ fivetran_utils.fill_pass_through_columns(pass_through_variable='hubspot__contact_pass_through_columns') }}
+```
+**Args:**
+* `pass_through_variable` (required): Name of the variable which contains the respective pass through fields for the staging model.
+
+----
 ### fill_staging_columns ([source](macros/fill_staging_columns.sql))
 This macro is used to generate the correct SQL for package staging models. It takes a list of columns that are expected/needed (`staging_columns`) 
 and compares it with columns in the source (`source_columns`). 
