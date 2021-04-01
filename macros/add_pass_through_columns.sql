@@ -4,7 +4,7 @@
 
     {% for column in pass_through_var %}
 
-      {% do base_columns.append({ "name": column.name, "datatype": column.datatype, "alias": column.alias }) if column.alias else base_columns.append({ "name": column.name, "datatype": column.datatype}) %}
+      {% do base_columns.append({ "name": column.name, "alias": column.alias }) if column.alias else base_columns.append({ "name": column.name }) %}
 
     {% endfor %}
 
