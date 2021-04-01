@@ -18,6 +18,6 @@
 
 {% macro postgres__json_extract(string, string_path) %}
 
-  {{string}}::json->{{"'" ~ string_path ~ "'" }}
+  {{string}}::json->>{{"'" ~ string_path ~ "'" }}
 
 {% endmacro %}

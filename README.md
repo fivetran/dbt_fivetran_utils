@@ -256,25 +256,20 @@ It simply chooses which version of the data to seed (the Snowflake copy should c
 * `seed_name` (required): Name of the seed that has separate snowflake seed data.
 
 ----
-### staging_models_automation ([source](macros/staging_models_automation.sql))
-This macro is intended to be used as a `run-operation` when generating Fivetran dbt source package staging models/macros. This macro will receive user input to create all necessary ([bash commands](columns_setup.sh)) appended with `&&` so they may all be ran at once. The output of this macro within the CLI will then be copied and pasted as a command to generate the staging models/macros.
+### seed_data_helper ([source](macros/seed_data_helper.sql))
+This macro is intended to be used when a source table column is a reserved keyword in a warehouse, and Circle CI is throwing a fit.
+It simply chooses which version of the data to seed. Also note the `warehouses` argument is a list and multiple warehouses may be added based on the number of warehouse
+specific seed data files you need for integration testing.
 
-**Usage:**
-```bash
-dbt run-operation staging_models_automation --args '{package: asana, source_schema: asana_source, source_database: database-source-name, tables: ["user","tag"]}'
+***Usage:**
+```yml
+    # in integration_tests/dbt_project.yml
+    vars:
+        table_name: "{{ fivetran_utils.seed_data_helper(seed_name='user_data', warehouses=['snowflake', 'postgres']) }}"
 ```
-
-**CLI Output:**
-```bash
-source dbt_modules/fivetran_utils/columns_setup.sh '../dbt_asana_source' stg_asana dbt-package-testing asana_2 user && 
-source dbt_modules/fivetran_utils/columns_setup.sh '../dbt_asana_source' stg_asana dbt-package-testing asana_2 tag
-```
-
 **Args:**
-* `package`         (required): Name of the package for which you are creating staging models/macros.
-* `source_schema`   (required): Name of the source_schema from which the bash command will query.
-* `source_database` (required): Name of the source_database from which the bash command will query.
-* `tables`          (required): List of the tables for which you want to create staging models/macros.
+* `seed_name` (required): Name of the seed that has separate postgres seed data.
+* `warehouses` (required): List of the warehouses for which you want CircleCi to use the helper seed data.
 
 ----
 ### string_agg ([source](macros/string_agg.sql))
