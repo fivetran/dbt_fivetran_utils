@@ -9,6 +9,21 @@ This macro allows for namespacing macros throughout a dbt project. The macro cur
 - `fivetran_utils`
 
 ----
+### add_pass_through_columns ([source](macros/add_pass_through_columns.sql))
+This macro creates the proper name, datatype, and aliasing for user defined pass through column variable. This
+macro allows for pass through variables to be more dynamic and allow users to alias custom fields they are 
+bringing in. This macro is typically used within staging models of a fivetran dbt source package to pass through
+user defined custom fields.
+
+**Usage:**
+```sql
+{{ fivetran_utils.add_pass_through_columns(base_columns=columns, pass_through_var=var('hubspot__deal_pass_through_columns')) }}
+```
+**Args:**
+* `base_columns` (required): The name of the variable where the base columns are contained. This is typically `columns`.
+* `pass_through_var` (required): The variable which contains the user defined pass through fields.
+
+----
 ### array_agg ([source](macros/array_agg.sql))
 This macro allows for cross database field aggregation. The macro contains the database specific field aggregation function for 
 BigQuery, Snowflake, Redshift, and Postgres. By default a comma `,` is used as a delimiter in the aggregation.
@@ -82,6 +97,18 @@ This macro references a set of specified boolean variable and returns `false` if
 ```
 **Args:**
 * `vars` (required): Variable you are referencing to return the declared variable value.
+
+----
+
+### fill_pass_through_columns ([source](macros/fill_pass_through_columns.sql))
+This macro is used to generate the correct sql for package staging models for user defined pass through columns.
+
+**Usage:**
+```sql
+{{ fivetran_utils.fill_pass_through_columns(pass_through_variable='hubspot__contact_pass_through_columns') }}
+```
+**Args:**
+* `pass_through_variable` (required): Name of the variable which contains the respective pass through fields for the staging model.
 
 ----
 ### fill_staging_columns ([source](macros/fill_staging_columns.sql))
