@@ -12,7 +12,8 @@ This macro allows for namespacing macros throughout a dbt project. The macro cur
 ### add_pass_through_columns ([source](macros/add_pass_through_columns.sql))
 This macro creates the proper name, datatype, and aliasing for user defined pass through column variable. This
 macro allows for pass through variables to be more dynamic and allow users to alias custom fields they are 
-bringing in.
+bringing in. This macro is typically used within staging models of a fivetran dbt source package to pass through
+user defined custom fields.
 
 **Usage:**
 ```sql
