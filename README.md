@@ -9,6 +9,21 @@ This macro allows for namespacing macros throughout a dbt project. The macro cur
 - `fivetran_utils`
 
 ----
+### add_pass_through_columns ([source](macros/add_pass_through_columns.sql))
+This macro creates the proper name, datatype, and aliasing for user defined pass through column variable. This
+macro allows for pass through variables to be more dynamic and allow users to alias custom fields they are 
+bringing in. This macro is typically used within staging models of a fivetran dbt source package to pass through
+user defined custom fields.
+
+**Usage:**
+```sql
+{{ fivetran_utils.add_pass_through_columns(base_columns=columns, pass_through_var=var('hubspot__deal_pass_through_columns')) }}
+```
+**Args:**
+* `base_columns` (required): The name of the variable where the base columns are contained. This is typically `columns`.
+* `pass_through_var` (required): The variable which contains the user defined pass through fields.
+
+----
 ### array_agg ([source](macros/array_agg.sql))
 This macro allows for cross database field aggregation. The macro contains the database specific field aggregation function for 
 BigQuery, Snowflake, Redshift, and Postgres. By default a comma `,` is used as a delimiter in the aggregation.
@@ -84,7 +99,19 @@ This macro references a set of specified boolean variable and returns `false` if
 * `vars` (required): Variable you are referencing to return the declared variable value.
 
 ----
-### fill_staging_columns ([source](macros/.sql))
+
+### fill_pass_through_columns ([source](macros/fill_pass_through_columns.sql))
+This macro is used to generate the correct sql for package staging models for user defined pass through columns.
+
+**Usage:**
+```sql
+{{ fivetran_utils.fill_pass_through_columns(pass_through_variable='hubspot__contact_pass_through_columns') }}
+```
+**Args:**
+* `pass_through_variable` (required): Name of the variable which contains the respective pass through fields for the staging model.
+
+----
+### fill_staging_columns ([source](macros/fill_staging_columns.sql))
 This macro is used to generate the correct SQL for package staging models. It takes a list of columns that are expected/needed (`staging_columns`) 
 and compares it with columns in the source (`source_columns`). 
 
@@ -229,24 +256,37 @@ It simply chooses which version of the data to seed (the Snowflake copy should c
 * `seed_name` (required): Name of the seed that has separate snowflake seed data.
 
 ----
+### seed_data_helper ([source](macros/seed_data_helper.sql))
+This macro is intended to be used when a source table column is a reserved keyword in a warehouse, and Circle CI is throwing a fit.
+It simply chooses which version of the data to seed. Also note the `warehouses` argument is a list and multiple warehouses may be added based on the number of warehouse
+specific seed data files you need for integration testing.
+
+***Usage:**
+```yml
+    # in integration_tests/dbt_project.yml
+    vars:
+        table_name: "{{ fivetran_utils.seed_data_helper(seed_name='user_data', warehouses=['snowflake', 'postgres']) }}"
+```
+**Args:**
+* `seed_name` (required): Name of the seed that has separate postgres seed data.
+* `warehouses` (required): List of the warehouses for which you want CircleCi to use the helper seed data.
+
+----
 ### staging_models_automation ([source](macros/staging_models_automation.sql))
 This macro is intended to be used as a `run-operation` when generating Fivetran dbt source package staging models/macros. This macro will receive user input to create all necessary ([bash commands](columns_setup.sh)) appended with `&&` so they may all be ran at once. The output of this macro within the CLI will then be copied and pasted as a command to generate the staging models/macros.
-
 **Usage:**
 ```bash
-dbt run-operation staging_models_automation --args '{package: asana, target_schema: asana_target, target_database: database-target-name, tables: ["user","tag"]}'
+dbt run-operation staging_models_automation --args '{package: asana, source_schema: asana_source, source_database: database-source-name, tables: ["user","tag"]}'
 ```
-
 **CLI Output:**
 ```bash
 source dbt_modules/fivetran_utils/columns_setup.sh '../dbt_asana_source' stg_asana dbt-package-testing asana_2 user && 
 source dbt_modules/fivetran_utils/columns_setup.sh '../dbt_asana_source' stg_asana dbt-package-testing asana_2 tag
 ```
-
 **Args:**
 * `package`         (required): Name of the package for which you are creating staging models/macros.
-* `target_schema`   (required): Name of the target_schema from which the bash command will query.
-* `target_database` (required): Name of the target_database from which the bash command will query.
+* `source_schema`   (required): Name of the source_schema from which the bash command will query.
+* `source_database` (required): Name of the source_database from which the bash command will query.
 * `tables`          (required): List of the tables for which you want to create staging models/macros.
 
 ----
