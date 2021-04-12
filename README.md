@@ -205,6 +205,18 @@ The data is returned by the path you provide as the argument. The json_extract m
 * `string_path`  (required): Name of the path in the json object which you want to extract the data from.
 
 ----
+### pivot_json_extract ([source](macros/pivot_json_extract.sql))
+This macro builds off of the `json_extract` macro in order to extract a list of fields from a json object and pivot the fields out into columns. The `pivot_json_extract` macro is compatible with BigQuery, Redshift, Postgres, and Snowflake.
+
+**Usage:**
+```sql
+{{ fivetran_utils.pivot_json_extract(string="json_value", list_of_properties=["field 1", "field 2"]) }}
+```
+**Args:**
+* `string` (required): Name of the field which contains the json object.
+* `list_of_properties`  (required): List of the fields that you want to extract from the json object and pivot out into columns. Any spaces will be replaced by underscores in column names.
+
+----
 ### max_bool ([source](macros/max_bool.sql))
 This macro allows for cross database use of obtaining the max boolean value of a field. This macro recognizes true = 1 and false = 0. The macro will aggregate the boolean_field and return the max boolean value. The max_bool macro is compatible with BigQuery, Redshift, Postgres, and Snowflake.
 
