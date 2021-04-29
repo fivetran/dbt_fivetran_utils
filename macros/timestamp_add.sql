@@ -37,3 +37,9 @@
     {{ from_timestamp }} + ((interval '1 {{ datepart }}') * ({{ interval }}))
 
 {% endmacro %}
+
+{% macro spark__timestamp_add(datepart, interval, from_timestamp) %}
+
+    {{ dbt_utils.dateadd(datepart, interval, from_timestamp) }}
+        
+{% endmacro %}
