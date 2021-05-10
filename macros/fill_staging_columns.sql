@@ -19,7 +19,7 @@
 {% macro quote_column(column) %}
     {% if 'quote' in column %}
         {% if column.quote %}
-            {% if target.type == 'bigquery' %}
+            {% if target.type in ('bigquery', 'spark') %}
             `{{ column.name }}`
             {% elif target.type == 'snowflake' %}
             "{{ column.name | upper }}"
