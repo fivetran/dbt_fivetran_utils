@@ -205,6 +205,19 @@ The data is returned by the path you provide as the argument. The json_extract m
 * `string_path`  (required): Name of the path in the json object which you want to extract the data from.
 
 ----
+### json_parse ([source](macros/json_parse.sql))
+This macro allows for cross database use of the json extract function, specifically used to parse and extract a nested value from a json object.
+The data is returned by the path you provide as the list within the `string_path` argument. The json_parse macro is compatible with BigQuery, Redshift, Postgres, Snowflake and Databricks.
+
+**Usage:**
+```sql
+{{ fivetran_utils.json_parse(string="receipt", string_path=["charges","data",0,"balance_transaction","exchange_rate"]) }}
+```
+**Args:**
+* `string` (required): Name of the field which contains the json object.
+* `string_path`  (required): List of item(s) that derive the path in the json object which you want to extract the data from.
+
+----
 ### pivot_json_extract ([source](macros/pivot_json_extract.sql))
 This macro builds off of the `json_extract` macro in order to extract a list of fields from a json object and pivot the fields out into columns. The `pivot_json_extract` macro is compatible with BigQuery, Redshift, Postgres, and Snowflake.
 
