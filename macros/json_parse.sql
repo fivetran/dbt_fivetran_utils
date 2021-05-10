@@ -31,6 +31,6 @@
 
 {% macro spark__json_parse(string, string_path) %}
 
-  explode(from_json( {{string}} , '{%- for s in string_path -%}{{ s }}{%- if not loop.last -%},{%- endif -%}{%- endfor -%} '))
+  {{string}} : {%- for s in string_path -%}{% if s is number %}[{{ s }}]{% else %}['{{ s }}']{% endif %}{%- endfor -%}
 
 {% endmacro %}
