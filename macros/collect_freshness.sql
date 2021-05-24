@@ -15,7 +15,6 @@
     {% endif %}
   {% endfor %}
   {% set is_enabled = (enabled_array != []) %}
-  {{ log(is_enabled, info=true) }}
 
     select
       {% if is_enabled %}
