@@ -49,7 +49,7 @@ than, or equal to, the specified numeric expression. The ceiling macro is compat
 
 ----
 ### collect_freshness ([source](macros/collect_freshness.sql))
-This macro overrides dbt's default [`collect_freshness` macro]((https://github.com/fishtown-analytics/dbt/blob/0.19.latest/core/dbt/include/global_project/macros/adapters/common.sql#L257-L273)) that is called when running `dbt source snapshot-freshness`. It allows you to incorporate model enabling/disabling variables into freshness tests, so that, if a source table does not exist, dbt will not run (and error on) a freshness test on the table. **Any package that has a dependency on fivetran_utils will use this version of the macro. If no `meta.is_enabled` field is provided, the `collect_freshness` should run exactly like dbt's default version.**
+This macro overrides dbt's default [`collect_freshness` macro](https://github.com/fishtown-analytics/dbt/blob/0.19.latest/core/dbt/include/global_project/macros/adapters/common.sql#L257-L273) that is called when running `dbt source snapshot-freshness`. It allows you to incorporate model enabling/disabling variables into freshness tests, so that, if a source table does not exist, dbt will not run (and error on) a freshness test on the table. **Any package that has a dependency on fivetran_utils will use this version of the macro. If no `meta.is_enabled` field is provided, the `collect_freshness` should run exactly like dbt's default version.**
 
 **Usage:**
 ```yml
