@@ -9,7 +9,7 @@
   {%- set enabled_array = [] -%}
   {% for node in graph.sources.values() %}
     {% if node.name == source.name %}
-      {% if node.meta['is_enabled'] == true or node.meta['is_enabled'] == none %}
+      {% if (node.meta['is_enabled'] | default(true)) %}
         {%- do enabled_array.append(1) -%}
       {% endif %}
     {% endif %}
