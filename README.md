@@ -426,6 +426,15 @@ When using this functionality, every `_tmp` table should use this macro as descr
 * `default_schema`: The default schema where source data should be found. This is used when unioning databases.
 * `default_variable`: The name of the variable that users should populate when they want to pass one specific relation to this model (mostly used for CI)
 
+----
+### source_relation ([source](macros/source_relation.sql))
+This macro creates a new column that signifies with database/schema a record came from when using the `union_data` macro above. 
+It should be added to all non-tmp staging models when using the `union_data` macro. 
+
+**Usage:**
+```sql
+{{ fivetran_utils.source_relation() }}
+```
 
 ## Bash Scripts
 ### columns_setup.sh ([source](columns_setup.sh))
