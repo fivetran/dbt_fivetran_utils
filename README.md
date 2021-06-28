@@ -395,6 +395,47 @@ relations will be filled with `null` where not present. An new column
 * `column_override`    (optional): A dictionary of explicit column type overrides, e.g. `{"some_field": "varchar(100)"}`.``
 * `source_column_name` (optional): The name of the column that records the source of this row. By default this argument is set to `none`.
 
+----
+### union_data ([source](macros/union_data.sql))
+This macro unions together tables of the same structure so that users can treat data from multiple connectors as the 'source' to a package.
+Depending on which macros are set, it will either look for schemas of the same name across multiple databases, or schemas with different names in the same database.
+
+If the `var` with the name of the `schema_variable` argument is set, the macro will union the `table_identifier` tables from each respective schema within the target database (or source database if set by a variable).
+If the `var` with the name of the `database_variable` argument is set, the macro will union the `table_identifier` tables from the source schema in each respective database.
+
+When using this functionality, every `_tmp` table should use this macro as described below.
+
+**Usage:**
+```sql
+{{
+    fivetran_utils.union_data(
+        table_identifier='customer', 
+        database_variable='shopify_database', 
+        schema_variable='shopify_schema', 
+        default_database=target.database,
+        default_schema='shopify',
+        default_variable='customer_source'
+    )
+}}
+```
+**Args:**
+* `table_identifier`: The name of the table that will be unioned.
+* `database_variable`: The name of the variable that users can populate to union data from multiple databases.
+* `schema_variable`: The name of the variable that users can populate to union data from multiple schemas.
+* `default_database`: The default database where source data should be found. This is used when unioning schemas.
+* `default_schema`: The default schema where source data should be found. This is used when unioning databases.
+* `default_variable`: The name of the variable that users should populate when they want to pass one specific relation to this model (mostly used for CI)
+
+----
+### source_relation ([source](macros/source_relation.sql))
+This macro creates a new column that signifies with database/schema a record came from when using the `union_data` macro above. 
+It should be added to all non-tmp staging models when using the `union_data` macro. 
+
+**Usage:**
+```sql
+{{ fivetran_utils.source_relation() }}
+```
+
 ## Bash Scripts
 ### columns_setup.sh ([source](columns_setup.sh))
 
