@@ -17,8 +17,14 @@
         schema=schema,
         identifier=table_identifier
     ) -%}
+    
+    {% set relation_exists=relation is not none %}
+
+    {% if relation_exists %}
 
     {% do relations.append(relation) %}
+    
+    {% endif %}
 
     {% endfor %}
 
