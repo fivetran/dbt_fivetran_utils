@@ -18,7 +18,7 @@
         identifier=table_identifier
     ) -%}
     
-    {% set relation_exists=relation is not none  %}
+    {% set relation_exists=relation is not none %}
 
     {% if relation_exists %}
 
