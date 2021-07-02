@@ -1,4 +1,4 @@
-{% macro snowflake__get_columns_for_macro(table_name, schema_name, database_name=target.database) %}
+{% macro default__get_columns_for_macro(table_name, schema_name, database_name=target.database) %}
 
 {% set query %}
 
