@@ -24,3 +24,12 @@
         )
 
 {% endmacro %}
+
+{% macro postgres__percentile(percentile_field, partition_field, percent)  %}
+
+    percentile_cont( 
+        {{ percent }} )
+        within group ( order by {{ percentile_field }} )
+    /* have to group by partition field */
+
+{% endmacro %}
