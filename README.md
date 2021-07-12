@@ -262,15 +262,18 @@ This macro allows for cross database use of obtaining the max boolean value of a
 
 ----
 ### percentile ([source](macros/percentile.sql))
-This macro is used to return the designated percentile of a field with cross db functionality. The percentile function stems from percentile_cont across db's. For Snowflake and Redshift this macro uses the window function opposed to the aggregate for percentile.
+This macro is used to return the designated percentile of a field with cross db functionality. The percentile function stems from percentile_cont across db's. For Snowflake and Redshift this macro uses the window function opposed to the aggregate for percentile. For Postgres, this macro uses the aggregate, as it does not support a percentile window function. Thus, you will need to add a target-dependent `group by` in the query you are calling this macro in.
 
 **Usage:**
 ```sql
+select id,
 {{ fivetran_utils.percentile(percentile_field='time_to_close', partition_field='id', percent='0.5') }}
+from your_cte
+{% if target.type == 'postgres' %} group by id {% endif %}
 ```
 **Args:**
 * `percentile_field` (required): Name of the field of which you are determining the desired percentile.
-* `partition_field`  (required): Name of the field you want to partition by to determine the designated percentile.
+* `partition_field`  (required): Name of the field you want to partition by to determine the designated percentile. You will need to group by this for Postgres.
 * `percent`          (required): The percent necessary for `percentile_cont` to determine the percentile. If you want to find the median, you will input `0.5` for the percent. 
 
 ----
@@ -337,7 +340,7 @@ source dbt_modules/fivetran_utils/columns_setup.sh '../dbt_asana_source' stg_asa
 ----
 ### string_agg ([source](macros/string_agg.sql))
 This macro allows for cross database field aggregation and delimiter customization. Supported database specific field aggregation functions include 
-BigQuery, Snowflake, Redshift.
+BigQuery, Snowflake, Redshift, Postgres, and Spark.
 
 **Usage:**
 ```sql
