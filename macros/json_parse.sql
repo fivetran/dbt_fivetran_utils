@@ -1,6 +1,6 @@
 {% macro json_parse(string, string_path) -%}
 
-{{ adapter.dispatch('json_parse', packages = fivetran_utils._get_utils_namespaces()) (string, string_path) }}
+{{ adapter.dispatch('json_parse', 'fivetran_utils') (string, string_path) }}
 
 {%- endmacro %}
 

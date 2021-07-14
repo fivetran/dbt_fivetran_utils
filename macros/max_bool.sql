@@ -1,6 +1,6 @@
 {% macro max_bool(boolean_field) -%}
 
-{{ adapter.dispatch('max_bool', packages = fivetran_utils._get_utils_namespaces()) (boolean_field) }}
+{{ adapter.dispatch('max_bool', 'fivetran_utils') (boolean_field) }}
 
 {%- endmacro %}
 

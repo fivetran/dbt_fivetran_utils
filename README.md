@@ -2,11 +2,16 @@
 
 This package includes macros that are used in Fivetran's dbt packages.
 
+In order to use macros from this package with other databases, you can set a [`dispatch` config](https://docs.getdbt.com/reference/project-configs/dispatch-config) in your root `dbt_project.yml`. For example:
+
+```yml
+dispatch:
+  - macro_namespace: fivetran_utils
+    search_order: ['spark_utils', 'fivetran_utils']
+  - macro_namespace: dbt_utils
+    search_order: ['spark_utils', 'fivetran_utils', 'dbt_utils']
+
 ## Macros
-### _get_utils_namespaces ([source](macros/_get_utils_namespaces.sql))
-This macro allows for namespacing macros throughout a dbt project. The macro currently consists of two namespaces:
-- `dbt_utils`
-- `fivetran_utils`
 
 ----
 ### add_pass_through_columns ([source](macros/add_pass_through_columns.sql))
