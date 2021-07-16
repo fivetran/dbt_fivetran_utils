@@ -14,6 +14,16 @@
 
 {% endmacro %}
 
+--percentile calculation specific to Redshift
+{% macro redshift__percentile(percentile_field, partition_field, percent)  %}
+
+    percentile_cont( 
+        {{ percent }} )
+        within group ( order by {{ percentile_field }} )
+        over ( partition by {{ partition_field }} )
+
+{% endmacro %}
+
 --percentile calculation specific to BigQuery
 {% macro bigquery__percentile(percentile_field, partition_field, percent)  %}
 
