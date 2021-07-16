@@ -10,6 +10,12 @@
  
 {% endmacro %}
 
+{% macro redshift__json_extract(string, string_path) %}
+
+  json_extract_path_text({{string}}, {{ "'" ~ string_path ~ "'" }} )
+ 
+{% endmacro %}
+
 {% macro bigquery__json_extract(string, string_path) %}
 
   json_extract_scalar({{string}}, {{ "'$." ~ string_path ~ "'" }} )
