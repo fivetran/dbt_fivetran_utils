@@ -11,7 +11,7 @@ dispatch:
     search_order: ['spark_utils', 'fivetran_utils']
   - macro_namespace: dbt_utils
     search_order: ['spark_utils', 'fivetran_utils', 'dbt_utils']
-
+```
 ## Macros
 
 ----
