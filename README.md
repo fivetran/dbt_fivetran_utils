@@ -42,6 +42,23 @@ BigQuery, Snowflake, Redshift, and Postgres. By default a comma `,` is used as a
 * `field_to_agg` (required): Field within the table you are wishing to aggregate.
 
 ----
+### calculated_fields ([source](macros/calculated_fields.sql))
+This macro allows for calculated fields within a variable to be passed through to a model. The format of the variable **must** be in the following format:
+```yml
+vars:
+  calculated_fields_variable:
+    - name:          "new_calculated_field_name"
+      transform_sql: "existing_field * other_field"
+```
+
+**Usage:**
+```sql
+{{ fivetran_utils.calculated_fields(variable="calculated_fields_variable") }}
+```
+**Args:**
+* `variable` (required): The variable containing the calculated field `name` and `transform_sql`.
+
+----
 ### ceiling ([source](macros/ceiling.sql))
 This macro allows for cross database use of the ceiling function. The ceiling function returns the smallest integer greater 
 than, or equal to, the specified numeric expression. The ceiling macro is compatible with BigQuery, Redshift, Postgres, and Snowflake.
