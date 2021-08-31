@@ -300,6 +300,17 @@ from your_cte
 * `percent`          (required): The percent necessary for `percentile_cont` to determine the percentile. If you want to find the median, you will input `0.5` for the percent. 
 
 ----
+### persist_pass_through_columns ([source](macros/persist_pass_through_columns.sql))
+This macro is used to persist pass through columns from the staging model to the transform package. This is particularly helpful when a `select *` is not feasible.
+
+**Usage:**
+```sql
+{{ fivetran_utils.fill_pass_through_columns(pass_through_variable='hubspot__contact_pass_through_columns') }}
+```
+**Args:**
+* `pass_through_variable` (required): Name of the variable which contains the respective pass through fields for the model.
+
+----
 ### remove_prefix_from_columns ([source](macros/remove_prefix_from_columns.sql))
 This macro removes desired prefixes from specified columns. Additionally, a for loop is utilized which allows for adding multiple columns to remove prefixes.
 
