@@ -4,7 +4,15 @@
 
     {% for column in pass_through_var %}
 
-      {% do base_columns.append({ "name": column.name, "alias": column.alias }) if column.alias else base_columns.append({ "name": column.name }) %}
+      {% if column.alias %}
+
+      {% do base_columns.append({ "name": column.name, "alias": column.alias, "datatype": column.datatype if column.datatype else dbt_utils.type_string()}) %}
+
+      {% else %}
+
+      {% do base_columns.append({ "name": column.name, "datatype": column.datatype if column.datatype else dbt_utils.type_string()}) %}
+        
+      {% endif %}
 
     {% endfor %}
 
