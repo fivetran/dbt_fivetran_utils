@@ -1,11 +1,21 @@
 {% macro timestamp_diff(first_date, second_date, datepart) %}
-  {{ adapter.dispatch('timestamp_diff', packages = fivetran_utils._get_utils_namespaces())(first_date, second_date, datepart) }}
+  {{ adapter.dispatch('timestamp_diff', 'fivetran_utils')(first_date, second_date, datepart) }}
 {% endmacro %}
 
 
 {% macro default__timestamp_diff(first_date, second_date, datepart) %}
 
-    timestamp_diff(
+    datediff(
+        {{ datepart }},
+        {{ first_date }},
+        {{ second_date }}
+        )
+
+{% endmacro %}
+
+{% macro redshift__timestamp_diff(first_date, second_date, datepart) %}
+
+    datediff(
         {{ datepart }},
         {{ first_date }},
         {{ second_date }}
@@ -52,7 +62,7 @@
     {% elif datepart == 'microsecond' %}
         ({{ dbt_utils.datediff(first_date, second_date, 'minute') }} * 60000000 + floor(date_part('microsecond', ({{second_date}})::timestamp)) - floor(date_part('microsecond', ({{first_date}})::timestamp)))
     {% else %}
-        {{ exceptions.raise_compiler_error("Unsupported datepart for macro timestamp_diff in postgres: {!r}".format(datepart)) }}
+        {{ exceptions.raise_compiler_error("Unsupported datepart for macro datediff in postgres: {!r}".format(datepart)) }}
     {% endif %}
 
 {% endmacro %}
