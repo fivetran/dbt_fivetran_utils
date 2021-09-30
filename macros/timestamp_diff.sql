@@ -1,9 +1,19 @@
 {% macro timestamp_diff(first_date, second_date, datepart) %}
-  {{ adapter.dispatch('datediff', packages = fivetran_utils._get_utils_namespaces())(first_date, second_date, datepart) }}
+    {{ adapter.dispatch('timestamp_diff', packages = fivetran_utils._get_utils_namespaces())(first_date, second_date, datepart) }}
 {% endmacro %}
 
 
 {% macro default__timestamp_diff(first_date, second_date, datepart) %}
+
+    datediff(
+        {{ datepart }},
+        {{ first_date }},
+        {{ second_date }}
+        )
+
+{% endmacro %}
+
+{% macro redshift__timestamp_diff(first_date, second_date, datepart) %}
 
     datediff(
         {{ datepart }},
@@ -24,7 +34,7 @@
 
 {% endmacro %}
 
-{% macro postgres__datediff(first_date, second_date, datepart) %}
+{% macro postgres__timestamp_diff(first_date, second_date, datepart) %}
 
     {% if datepart == 'year' %}
         (date_part('year', ({{second_date}})::date) - date_part('year', ({{first_date}})::date))
