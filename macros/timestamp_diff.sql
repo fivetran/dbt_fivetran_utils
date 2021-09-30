@@ -1,5 +1,5 @@
 {% macro timestamp_diff(first_date, second_date, datepart) %}
-  {{ adapter.dispatch('timestamp_diff', 'fivetran_utils')(first_date, second_date, datepart) }}
+    {{ adapter.dispatch('timestamp_diff', packages = fivetran_utils._get_utils_namespaces())(first_date, second_date, datepart) }}
 {% endmacro %}
 
 
