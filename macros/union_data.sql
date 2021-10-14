@@ -11,7 +11,7 @@
     {% set relations = [] %}
 
     {% if var('union_schemas') is string %}
-    {% set trimmed = var('union_schemas')|trim('[')|trim(']')|trim('('))|trim(')') %}
+    {% set trimmed = var('union_schemas')|trim('[')|trim(']')|trim('(')|trim(')') %}
     {% set schemas = trimmed.split(',')|map('trim'," ")|map('trim','"')|map('trim',"'") %}
     {% else %}
     {% set schemas = var('union_schemas') %}
