@@ -10,7 +10,14 @@
 
     {% set relations = [] %}
 
-    {% for schema in var('union_schemas') %}
+    {% if var('union_schemas') is string %}
+    {% set trimmed = var('union_schemas')|trim('[')|trim(']')|trim('(')|trim(')') %}
+    {% set schemas = trimmed.split(',')|map('trim'," ")|map('trim','"')|map('trim',"'") %}
+    {% else %}
+    {% set schemas = var('union_schemas') %}
+    {% endif %}
+
+    {% for schema in schemas %}
 
     {% set relation=adapter.get_relation(
         database=var(database_variable, default_database),
