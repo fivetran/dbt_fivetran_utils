@@ -436,6 +436,15 @@ It should be added to all non-tmp staging models when using the `union_data` mac
 {{ fivetran_utils.source_relation() }}
 ```
 
+### add_dbt_source_relation ([source](macros/add_dbt_source_relation.sql))
+This macro is intended to be used within the second CTE (typically named `fields`) of non-tmp staging models. 
+It simply passes through the `_dbt_source_relation` column produced by `union_data()` in the tmp staging model.
+
+**Usage:**
+```sql
+{{ fivetran_utils.add_dbt_source_relation() }}
+```
+
 ## Bash Scripts
 ### columns_setup.sh ([source](columns_setup.sh))
 
