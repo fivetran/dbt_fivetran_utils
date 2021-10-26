@@ -438,7 +438,7 @@ It should be added to all non-tmp staging models when using the `union_data` mac
 
 ### add_dbt_source_relation ([source](macros/add_dbt_source_relation.sql))
 This macro is intended to be used within the second CTE (typically named `fields`) of non-tmp staging models. 
-It simply passes through the `_dbt_source_relation` column produced by `union_data()` in the tmp staging model.
+It simply passes through the `_dbt_source_relation` column produced by `union_data()` in the tmp staging model, so that `source_relation()` can work in the final CTE of the staging model.
 
 **Usage:**
 ```sql
