@@ -4,7 +4,7 @@
 
 {%- endmacro %}
 
-{% macro default__source_relation() %}
+{% macro default__source_relation(union_schema_variable='union_schemas', union_database_variable='union_databases') %}
 
 {% if var(union_schema_variable, none)  %}
 , case
