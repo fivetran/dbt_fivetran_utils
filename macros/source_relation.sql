@@ -1,6 +1,6 @@
 {% macro source_relation() -%}
 
-{{ adapter.dispatch('source_relation', packages = fivetran_utils._get_utils_namespaces()) (union_schema_variable='union_schemas', union_database_variable='union_databases') }}
+{{ adapter.dispatch('source_relation', 'fivetran_utils') (union_schema_variable='union_schemas', union_database_variable='union_databases') }}
 
 {%- endmacro %}
 
