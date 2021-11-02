@@ -1,6 +1,6 @@
 {% macro union_data(table_identifier, database_variable, schema_variable, default_database, default_schema, default_variable) -%}
 
-{{ adapter.dispatch('union_data', packages = fivetran_utils._get_utils_namespaces()) (
+{{ adapter.dispatch('union_data', 'fivetran_utils') (
     table_identifier, 
     database_variable, 
     schema_variable, 
