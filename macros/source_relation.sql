@@ -1,10 +1,10 @@
-{% macro source_relation() -%}
+{% macro source_relation(union_schema_variable='union_schemas', union_database_variable='union_databases') -%}
 
-{{ adapter.dispatch('source_relation', 'fivetran_utils') (union_schema_variable='union_schemas', union_database_variable='union_databases') }}
+{{ adapter.dispatch('source_relation', 'fivetran_utils') (union_schema_variable, union_database_variable) }}
 
 {%- endmacro %}
 
-{% macro default__source_relation(union_schema_variable='union_schemas', union_database_variable='union_databases') %}
+{% macro default__source_relation(union_schema_variable, union_database_variable) %}
 
 {% if var(union_schema_variable, none)  %}
 , case
