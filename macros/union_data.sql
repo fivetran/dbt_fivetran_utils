@@ -1,4 +1,4 @@
-{% macro union_data(table_identifier, database_variable, schema_variable, default_database, default_schema, default_variable, union_schema_variable, union_database_variable) -%}
+{% macro union_data(table_identifier, database_variable, schema_variable, default_database, default_schema, default_variable, union_schema_variable='union_schemas', union_database_variable='union_databases') -%}
 
 {{ adapter.dispatch('union_data', 'fivetran_utils') (
     table_identifier, 
