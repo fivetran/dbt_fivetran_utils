@@ -1,4 +1,4 @@
-{% macro union_data(table_identifier, database_variable, schema_variable, default_database, default_schema, default_variable) -%}
+{% macro union_data(table_identifier, database_variable, schema_variable, default_database, default_schema, default_variable, union_schema_variable, union_database_variable) -%}
 
 {{ adapter.dispatch('union_data', 'fivetran_utils') (
     table_identifier, 
@@ -7,8 +7,8 @@
     default_database, 
     default_schema, 
     default_variable,
-    union_schema_variable='union_schemas',
-    union_database_variable='union_databases'
+    union_schema_variable,
+    union_database_variable
     ) }}
 
 {%- endmacro %}
@@ -20,8 +20,8 @@
     default_database, 
     default_schema, 
     default_variable,
-    union_schema_variable='union_schemas',
-    union_database_variable='union_databases'
+    union_schema_variable,
+    union_database_variable
     ) %}
 
 {% if var(union_schema_variable, none) %}
