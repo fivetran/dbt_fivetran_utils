@@ -18,7 +18,7 @@
 
 {% macro redshift__json_extract(string, string_path) %}
 
-  json_extract_path_text({{string}}, {{ "'" ~ string_path ~ "'" }} )
+  case when is_valid_json( {{string}} ) then json_extract_path_text({{string}}, {{ "'" ~ string_path ~ "'" }} ) else null end
  
 {% endmacro %}
 
