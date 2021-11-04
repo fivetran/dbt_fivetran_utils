@@ -1,3 +1,8 @@
+# dbt_fivetran_utils v0.2.9
+
+## Under the Hood
+- Added a specific Snowflake macro designation for the `json_extract_path` macro. This Snowflake version of the macro is similar to the default; however, this designation of the macro includes a `try_parse_json` within the json extract function. This allows for the macro to succeed if not all fields are a json object that are being passed through. If a field is not a json object, then a `null` record is generated.
+
 # dbt_fivetran_utils v0.2.8
 
 ## 🚨 Breaking Changes
