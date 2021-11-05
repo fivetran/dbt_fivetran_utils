@@ -1,4 +1,4 @@
-# dbt_fivetran_utils v0.2.8
+# dbt_fivetran_utils v0.2.9
 
 ## 🚨 Breaking Changes
 - n/a
