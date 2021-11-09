@@ -462,6 +462,8 @@ When using this functionality, every `_tmp` table should use this macro as descr
 * `default_database`: The default database where source data should be found. This is used when unioning schemas.
 * `default_schema`: The default schema where source data should be found. This is used when unioning databases.
 * `default_variable`: The name of the variable that users should populate when they want to pass one specific relation to this model (mostly used for CI)
+* `union_schema_variable` (optional): The name of the union schema variable. By default the macro will look for `union_schemas`.
+* `union_database_variable` (optional): The name of the union database variable. By default the macro will look for `union_databases`.
 
 ----
 ### source_relation ([source](macros/source_relation.sql))
@@ -472,6 +474,10 @@ It should be added to all non-tmp staging models when using the `union_data` mac
 ```sql
 {{ fivetran_utils.source_relation() }}
 ```
+
+**Args:**
+* `union_schema_variable` (optional): The name of the union schema variable. By default the macro will look for `union_schemas`.
+* `union_database_variable` (optional): The name of the union database variable. By default the macro will look for `union_databases`.
 
 ### add_dbt_source_relation ([source](macros/add_dbt_source_relation.sql))
 This macro is intended to be used within the second CTE (typically named `fields`) of non-tmp staging models. 
