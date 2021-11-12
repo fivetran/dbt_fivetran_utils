@@ -19,7 +19,7 @@
     {% endfor %}
   end as source_relation
 {% else %}
-, '' as source_relation
+, cast('' as {{ dbt_utils.type_string() }}) as source_relation
 {% endif %}
 
 {% endmacro %}
