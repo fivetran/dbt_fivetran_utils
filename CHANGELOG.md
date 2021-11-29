@@ -1,6 +1,6 @@
 # dbt_fivetran_utils v0.2.10
 ## Bug Fixes
-- Added a `dbt_utils.type_string()` cast to the `source_relation` macro. There were accounts of failures occurring within Redshift where the casting was failing in downstream models. This will remedy those issues by casting on field creation if multiple schemas/databases are not provided. ()
+- Added a `dbt_utils.type_string()` cast to the `source_relation` macro. There were accounts of failures occurring within Redshift where the casting was failing in downstream models. This will remedy those issues by casting on field creation if multiple schemas/databases are not provided. ([#53](https://github.com/fivetran/dbt_fivetran_utils/pull/53))
 
 # dbt_fivetran_utils v0.2.9
 
