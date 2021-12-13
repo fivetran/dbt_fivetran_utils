@@ -1,3 +1,14 @@
+# dbt_fivetran_utils v0.3.0
+## 🎉 Features 🎉
+- dbt v1.0.0 compatibility release! All future release of fivetran/fivetran_utils compatible with dbt v1.0.0 will be based on the `releases/v0.3.latest`. ([#54](https://github.com/fivetran/dbt_fivetran_utils/pull/54))
+
+## 🚨 Breaking Changes 🚨
+- This release updates the dbt-utils `packages.yml` dependency to be within the `">=0.8.0", "<0.9.0"` range. If you have a dbt-utils version outside of this range then you will experience a package dependency error. ([#54](https://github.com/fivetran/dbt_fivetran_utils/pull/54))
+
+# dbt_fivetran_utils v0.2.10
+## Bug Fixes
+- Added a `dbt_utils.type_string()` cast to the `source_relation` macro. There were accounts of failures occurring within Redshift where the casting was failing in downstream models. This will remedy those issues by casting on field creation if multiple schemas/databases are not provided. ([#53](https://github.com/fivetran/dbt_fivetran_utils/pull/53))
+
 # dbt_fivetran_utils v0.2.9
 
 ## Bug Fixes
