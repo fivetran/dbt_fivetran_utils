@@ -45,7 +45,7 @@ select
         when lower(data_type) like '%timestamp%' then 'dbt_utils.type_timestamp()' 
         when lower(data_type) = 'string' then 'dbt_utils.type_string()' 
         when lower(data_type) = 'bool' then '"boolean"'
-        when lower(data_type) = 'numeric' then 'dbt_utils.type_numeric()' 
+        when lower(data_type) like '%num%' then 'dbt_utils.type_numeric()' 
         when lower(data_type) = 'float64' then 'dbt_utils.type_float()' 
         when lower(data_type) = 'int64' then 'dbt_utils.type_int()' 
         when lower(data_type) = 'date' then '"date"' 
