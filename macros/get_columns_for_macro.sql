@@ -11,7 +11,7 @@ select
         when lower(data_type) like '%timestamp%' then 'dbt_utils.type_timestamp()' 
         when lower(data_type) = 'text' then 'dbt_utils.type_string()' 
         when lower(data_type) = 'boolean' then '"boolean"'
-        when lower(data_type) = 'number' then 'dbt_utils.type_numeric()' 
+        when lower(data_type) like '%num%' then 'dbt_utils.type_numeric()' 
         when lower(data_type) = 'float' then 'dbt_utils.type_float()' 
         when lower(data_type) = 'date' then '"date"'
       end,
