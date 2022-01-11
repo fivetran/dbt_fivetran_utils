@@ -461,7 +461,7 @@ In that example, it will:
 
 ### generate_models.sh ([source](generate_models.sh))
 
-This bash file can be used to setup or update packages to use the `generate_models` macro above. The bash script assumes that there already exists a macro directory. The bash script does the following:
+This bash file can be used to setup or update packages to use the `generate_models` macro above. The bash script assumes that there already exists a macro directory with all relevant `get_<table_name>_columns.sql` files created. The bash script does the following:
 
 * Creates a `..._tmp.sql` file in the `models/tmp` directory and fills it with a `select * from {{ var('table_name') }}` where `table_name` is the name of the source table.
 * Creates or updates a `.sql` file in the `models` directory and fills it with the filled out version of the `fill_staging_columns` macro as shown above. You can then write whatever SQL you want around the macro to finishing off the staging file.
