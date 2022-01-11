@@ -1,12 +1,18 @@
+[![Apache License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) 
 # Fivetran Utilities for dbt
 
 This package includes macros that are used in Fivetran's dbt packages.
 
+In order to use macros from this package with other databases, you can set a [`dispatch` config](https://docs.getdbt.com/reference/project-configs/dispatch-config) in your root `dbt_project.yml`. For example:
+
+```yml
+dispatch:
+  - macro_namespace: fivetran_utils
+    search_order: ['spark_utils', 'fivetran_utils']
+  - macro_namespace: dbt_utils
+    search_order: ['spark_utils', 'fivetran_utils', 'dbt_utils']
+```
 ## Macros
-### _get_utils_namespaces ([source](macros/_get_utils_namespaces.sql))
-This macro allows for namespacing macros throughout a dbt project. The macro currently consists of two namespaces:
-- `dbt_utils`
-- `fivetran_utils`
 
 ----
 ### add_pass_through_columns ([source](macros/add_pass_through_columns.sql))
@@ -34,6 +40,23 @@ BigQuery, Snowflake, Redshift, and Postgres. By default a comma `,` is used as a
 ```
 **Args:**
 * `field_to_agg` (required): Field within the table you are wishing to aggregate.
+
+----
+### calculated_fields ([source](macros/calculated_fields.sql))
+This macro allows for calculated fields within a variable to be passed through to a model. The format of the variable **must** be in the following format:
+```yml
+vars:
+  calculated_fields_variable:
+    - name:          "new_calculated_field_name"
+      transform_sql: "existing_field * other_field"
+```
+
+**Usage:**
+```sql
+{{ fivetran_utils.calculated_fields(variable="calculated_fields_variable") }}
+```
+**Args:**
+* `variable` (required): The variable containing the calculated field `name` and `transform_sql`.
 
 ----
 ### ceiling ([source](macros/ceiling.sql))
@@ -262,16 +285,30 @@ This macro allows for cross database use of obtaining the max boolean value of a
 
 ----
 ### percentile ([source](macros/percentile.sql))
-This macro is used to return the designated percentile of a field with cross db functionality. The percentile function stems from percentile_cont across db's. For Snowflake and Redshift this macro uses the window function opposed to the aggregate for percentile.
+This macro is used to return the designated percentile of a field with cross db functionality. The percentile function stems from percentile_cont across db's. For Snowflake and Redshift this macro uses the window function opposed to the aggregate for percentile. For Postgres, this macro uses the aggregate, as it does not support a percentile window function. Thus, you will need to add a target-dependent `group by` in the query you are calling this macro in.
 
 **Usage:**
 ```sql
+select id,
 {{ fivetran_utils.percentile(percentile_field='time_to_close', partition_field='id', percent='0.5') }}
+from your_cte
+{% if target.type == 'postgres' %} group by id {% endif %}
 ```
 **Args:**
 * `percentile_field` (required): Name of the field of which you are determining the desired percentile.
-* `partition_field`  (required): Name of the field you want to partition by to determine the designated percentile.
+* `partition_field`  (required): Name of the field you want to partition by to determine the designated percentile. You will need to group by this for Postgres.
 * `percent`          (required): The percent necessary for `percentile_cont` to determine the percentile. If you want to find the median, you will input `0.5` for the percent. 
+
+----
+### persist_pass_through_columns ([source](macros/persist_pass_through_columns.sql))
+This macro is used to persist pass through columns from the staging model to the transform package. This is particularly helpful when a `select *` is not feasible.
+
+**Usage:**
+```sql
+{{ fivetran_utils.fill_pass_through_columns(pass_through_variable='hubspot__contact_pass_through_columns') }}
+```
+**Args:**
+* `pass_through_variable` (required): Name of the variable which contains the respective pass through fields for the model.
 
 ----
 ### remove_prefix_from_columns ([source](macros/remove_prefix_from_columns.sql))
@@ -321,14 +358,12 @@ specific seed data files you need for integration testing.
 This macro is intended to be used as a `run-operation` when generating Fivetran dbt source package staging models/macros. This macro will receive user input to create all necessary ([bash commands](columns_setup.sh)) appended with `&&` so they may all be ran at once. The output of this macro within the CLI will then be copied and pasted as a command to generate the staging models/macros.
 **Usage:**
 ```bash
-dbt run-operation staging_models_automation --args '{package: apple_search_ads, source_schema: apple_search_ads, source_database: dbt-package-testing, tables: ["campaign_history","campaign_report"]}'
+dbt run-operation staging_models_automation --args '{package: asana, source_schema: asana_source, source_database: database-source-name, tables: ["user","tag"]}'
 ```
 **CLI Output:**
 ```bash
-source dbt_packages/fivetran_utils/generate_columns.sh '../dbt_apple_search_ads_source' stg_apple_search_ads dbt-package-testing apple_search_ads campaign_history && 
-source dbt_packages/fivetran_utils/generate_columns.sh '../dbt_apple_search_ads_source' stg_apple_search_ads dbt-package-testing apple_search_ads campaign_report && 
-source dbt_packages/fivetran_utils/generate_models.sh '../dbt_apple_search_ads_source' stg_apple_search_ads dbt-package-testing apple_search_ads campaign_history && 
-source dbt_packages/fivetran_utils/generate_models.sh '../dbt_apple_search_ads_source' stg_apple_search_ads dbt-package-testing apple_search_ads campaign_report
+source dbt_modules/fivetran_utils/columns_setup.sh '../dbt_asana_source' stg_asana dbt-package-testing asana_2 user && 
+source dbt_modules/fivetran_utils/columns_setup.sh '../dbt_asana_source' stg_asana dbt-package-testing asana_2 tag
 ```
 **Args:**
 * `package`         (required): Name of the package for which you are creating staging models/macros.
@@ -339,7 +374,7 @@ source dbt_packages/fivetran_utils/generate_models.sh '../dbt_apple_search_ads_s
 ----
 ### string_agg ([source](macros/string_agg.sql))
 This macro allows for cross database field aggregation and delimiter customization. Supported database specific field aggregation functions include 
-BigQuery, Snowflake, Redshift.
+BigQuery, Snowflake, Redshift, Postgres, and Spark.
 
 **Usage:**
 ```sql
@@ -427,6 +462,8 @@ When using this functionality, every `_tmp` table should use this macro as descr
 * `default_database`: The default database where source data should be found. This is used when unioning schemas.
 * `default_schema`: The default schema where source data should be found. This is used when unioning databases.
 * `default_variable`: The name of the variable that users should populate when they want to pass one specific relation to this model (mostly used for CI)
+* `union_schema_variable` (optional): The name of the union schema variable. By default the macro will look for `union_schemas`.
+* `union_database_variable` (optional): The name of the union database variable. By default the macro will look for `union_databases`.
 
 ----
 ### source_relation ([source](macros/source_relation.sql))
@@ -436,6 +473,19 @@ It should be added to all non-tmp staging models when using the `union_data` mac
 **Usage:**
 ```sql
 {{ fivetran_utils.source_relation() }}
+```
+
+**Args:**
+* `union_schema_variable` (optional): The name of the union schema variable. By default the macro will look for `union_schemas`.
+* `union_database_variable` (optional): The name of the union database variable. By default the macro will look for `union_databases`.
+
+### add_dbt_source_relation ([source](macros/add_dbt_source_relation.sql))
+This macro is intended to be used within the second CTE (typically named `fields`) of non-tmp staging models. 
+It simply passes through the `_dbt_source_relation` column produced by `union_data()` in the tmp staging model, so that `source_relation()` can work in the final CTE of the staging model.
+
+**Usage:**
+```sql
+{{ fivetran_utils.add_dbt_source_relation() }}
 ```
 
 ## Bash Scripts
