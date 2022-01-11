@@ -1,16 +1,4 @@
 name: 'fivetran_utils'
-version: '0.1.0'
+version: '0.3.1'
 config-version: 2
-
-source-paths: ["models"]
-analysis-paths: ["analysis"]
-test-paths: ["tests"]
-data-paths: ["data"]
-macro-paths: ["macros"]
-snapshot-paths: ["snapshots"]
-
-
-vars:
-  fivetran_utils:
-    dbt_utils_dispatch_list:
-      - fivetran_utils 
+require-dbt-version: [">=1.0.0", "<2.0.0"]
