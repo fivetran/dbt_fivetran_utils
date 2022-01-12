@@ -1,3 +1,10 @@
+# dbt_fivetran_utils v0.3.1
+## Bug Fixes
+- Updates `staging_models_automation` macro to refer to dbt_packages instead of dbt_modules re: dbt v1.0.0 updates
+- Updates `staging_models_automation` macro to first create `macros/get_<table name>_columns`.sql files before creating `models/tmp` and `models/stg*`
+- Incorporates fix for bignumeric data type in `get_columns_for_macro`
+- Updates `README` to reflect new `.sh` files added for updated `staging_models_automation` macro
+
 # dbt_fivetran_utils v0.3.0
 ## 🎉 Features 🎉
 - dbt v1.0.0 compatibility release! All future release of fivetran/fivetran_utils compatible with dbt v1.0.0 will be based on the `releases/v0.3.latest`. ([#54](https://github.com/fivetran/dbt_fivetran_utils/pull/54))
