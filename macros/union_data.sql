@@ -1,16 +1,41 @@
-{% macro union_data(table_identifier, database_variable, schema_variable, default_database, default_schema, default_variable) -%}
+{% macro union_data(table_identifier, database_variable, schema_variable, default_database, default_schema, default_variable, union_schema_variable='union_schemas', union_database_variable='union_databases') -%}
 
-{{ adapter.dispatch('union_data', packages = fivetran_utils._get_utils_namespaces()) (table_identifier, database_variable, schema_variable, default_database, default_schema, default_variable) }}
+{{ adapter.dispatch('union_data', 'fivetran_utils') (
+    table_identifier, 
+    database_variable, 
+    schema_variable, 
+    default_database, 
+    default_schema, 
+    default_variable,
+    union_schema_variable,
+    union_database_variable
+    ) }}
 
 {%- endmacro %}
 
-{% macro default__union_data(table_identifier, database_variable, schema_variable, default_database, default_schema, default_variable) %}
+{% macro default__union_data(
+    table_identifier, 
+    database_variable, 
+    schema_variable, 
+    default_database, 
+    default_schema, 
+    default_variable,
+    union_schema_variable,
+    union_database_variable
+    ) %}
 
-{% if var('union_schemas', none) %}
+{% if var(union_schema_variable, none) %}
 
     {% set relations = [] %}
+    
+    {% if var(union_schema_variable) is string %}
+    {% set trimmed = var(union_schema_variable)|trim('[')|trim(']') %}
+    {% set schemas = trimmed.split(',')|map('trim'," ")|map('trim','"')|map('trim',"'") %}
+    {% else %}
+    {% set schemas = var(union_schema_variable) %}
+    {% endif %}
 
-    {% for schema in var('union_schemas') %}
+    {% for schema in var(union_schema_variable) %}
 
     {% set relation=adapter.get_relation(
         database=var(database_variable, default_database),
@@ -30,11 +55,11 @@
 
     {{ dbt_utils.union_relations(relations) }}
 
-{% elif var('union_databases', none) %}
+{% elif var(union_database_variable, none) %}
 
     {% set relations = [] %}
 
-    {% for database in var('union_databases') %}
+    {% for database in var(union_database_variable) %}
 
     {% set relation=adapter.get_relation(
         database=database,
