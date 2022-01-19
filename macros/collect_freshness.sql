@@ -8,7 +8,7 @@
 
   {%- set enabled_array = [] -%}
   {% for node in graph.sources.values() %}
-    {% if node.name == source.name %}
+    {% if node.identifier == source.identifier %}
       {% if (node.meta['is_enabled'] | default(true)) %}
         {%- do enabled_array.append(1) -%}
       {% endif %}
@@ -17,10 +17,10 @@
   {% set is_enabled = (enabled_array != []) %}
 
     select
-      {% if is_enabled %}
-      max({{ loaded_at_field }})
+      {% if is_enabled == false %}
+      {{ current_timestamp() }}
       {% else %} 
-      {{ current_timestamp() }} {% endif %} as max_loaded_at,
+      max({{ loaded_at_field }}) {% endif %} as max_loaded_at,
       {{ current_timestamp() }} as snapshotted_at
 
     {% if is_enabled %}
