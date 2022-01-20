@@ -19,9 +19,8 @@
     select
       {% if is_enabled %}
       max({{ loaded_at_field }})
-      {{ current_timestamp() }}
       {% else %} 
-      max({{ loaded_at_field }}) {% endif %} as max_loaded_at,
+      {{ current_timestamp() }} {% endif %} as max_loaded_at,
       {{ current_timestamp() }} as snapshotted_at
 
     {% if is_enabled %}
