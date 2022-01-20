@@ -17,7 +17,8 @@
   {% set is_enabled = (enabled_array != []) %}
 
     select
-      {% if is_enabled == false %}
+      {% if is_enabled %}
+      max({{ loaded_at_field }})
       {{ current_timestamp() }}
       {% else %} 
       max({{ loaded_at_field }}) {% endif %} as max_loaded_at,
