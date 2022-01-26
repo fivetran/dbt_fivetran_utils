@@ -1,3 +1,6 @@
+# dbt_fivetran_utils v0.3.2
+## Fixes
+- The `collect_freshness` macro was inadvertently causing non-package source freshness tests that were aliased with the `identifier` config to use the current date opposed to the loaded date. Therefore, the macro was adjusted to leverage the table identifier opposed to the name. As the identifier is the name of the table by default, this should resolve the error. ([#56](https://github.com/fivetran/dbt_fivetran_utils/pull/56))
 # dbt_fivetran_utils v0.3.1
 ## Bug Fixes
 - Updates `staging_models_automation` macro to refer to dbt_packages instead of dbt_modules re: dbt v1.0.0 updates
