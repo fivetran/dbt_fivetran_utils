@@ -1,6 +1,6 @@
 {% macro trim(field, characters) -%}
 
-    {{ adapter.dispatch('trim', packages = fivetran_utils._get_utils_namespaces()) (field, characters) }}
+    {{ adapter.dispatch('trim', 'fivetran_utils') (field, characters) }}
 
 {% endmacro %}
 
@@ -10,7 +10,7 @@
 
 {% endmacro %}
 
-{% macro postgres__json_parse(string, string_path) %}
+{% macro postgres__trim(field, characters) %}
 
     trim({{ characters }} from {{ field }})
 
