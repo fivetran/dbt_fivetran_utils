@@ -6,12 +6,12 @@
 
 {% macro default__trim(field, characters) %}
 
-    trim({{ field }},{{ characters }})
+    trim({{ field }},'{{ characters }})')
 
 {% endmacro %}
 
 {% macro postgres__trim(field, characters) %}
 
-    trim({{ characters }} from {{ field }})
+    trim('{{ characters }}' from {{ field }})
 
 {% endmacro %}
