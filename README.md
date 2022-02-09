@@ -17,12 +17,12 @@ dispatch:
 ----
 ### Contents
 
-- [Tests and helpers](#tests-and-helpers)**
+- [Tests and helpers](#tests-and-helpers)
   - [collect_freshness](#collect_freshness-source)
   - [snowflake_seed_data](#snowflake_seed_data-source)
   - [seed_data_helper](#seed_data_helper-source)
 
-- [Cross-database compatibility](#cross-database-compatibility)**
+- [Cross-database compatibility](#cross-database-compatibility)
   - [array_agg](#array_agg-source)
   - [ceiling](#ceiling-source)
   - [first_value](#first_value-source)
@@ -35,7 +35,7 @@ dispatch:
   - [timestamp_add](#timestamp_add-source)
   - [timestamp_diff](#timestamp_diff-source)
 
-- [SQL and field generators](#sql-and-field-generators)**
+- [SQL and field generators](#sql-and-field-generators)
   - [add_pass_through_columns](#add_pass_through_columns-source)
   - [calculated_fields](#calculated_fields-source)
   - [dummy_coalesce_value](#dummy_coalesce_value-source)
@@ -47,12 +47,12 @@ dispatch:
   - [union_data](#union_data-source)
   - [source_relation](#source_relation-source)
 
-- [Automations](#automations)**
+- [Automations](#automations)
   - [generate_columns_macro](#generate_columns_macro-source)
   - [get_columns_for_macro](#get_columns_for_macro-source)
   - [staging_models_automation](#staging_models_automation-source)
 
-- [Booleans](#booleans)**
+- [Booleans](#booleans)
   - [empty_variable_warning](#empty_variable_warning-source)
   - [enabled_vars_one_true](#enabled_vars_onetrue-source)
   - [enabled_vars](#enabled-vars-source)
