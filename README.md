@@ -18,9 +18,9 @@ dispatch:
 ### Contents
 
 - [Tests and helpers](#tests-and-helpers)**
-  - [collect_freshness](#collect_freshness)
-  - [snowflake_seed_data](#snowflake_seed_data)
-  - [seed_data_helper](#seed_data_helper)
+  - [collect_freshness](#collect-freshness)
+  - [snowflake_seed_data](#snowflake-seed-data)
+  - [seed_data_helper](#seed-data-helper)
 
 - [Cross-database compatibility](#cross-database-compatibility)**
   - [array_agg](#array_agg)
@@ -60,7 +60,7 @@ dispatch:
 ----
 
 ## Tests and helpers
-These macros
+These macros help run or assist integration tests.
 ### collect_freshness ([source](macros/collect_freshness.sql))
 This macro overrides dbt's default [`collect_freshness` macro](https://github.com/fishtown-analytics/dbt/blob/0.19.latest/core/dbt/include/global_project/macros/adapters/common.sql#L257-L273) that is called when running `dbt source snapshot-freshness`. It allows you to incorporate model enabling/disabling variables into freshness tests, so that, if a source table does not exist, dbt will not run (and error on) a freshness test on the table. **Any package that has a dependency on fivetran_utils will use this version of the macro. If no `meta.is_enabled` field is provided, the `collect_freshness` should run exactly like dbt's default version.**
 
@@ -112,6 +112,7 @@ specific seed data files you need for integration testing.
 
 ----
 ## Cross-database compatibility
+These macros allows functions to prevail across the different databases. 
 ### array_agg ([source](macros/array_agg.sql))
 This macro allows for cross database field aggregation. The macro contains the database specific field aggregation function for 
 BigQuery, Snowflake, Redshift, and Postgres. By default a comma `,` is used as a delimiter in the aggregation.
@@ -256,6 +257,7 @@ This macro allows for cross database timestamp difference calculation for BigQue
 ----
 
 ## SQL and field generators
+These macros create SQL or fields to be included when running the package.
 ### add_pass_through_columns ([source](macros/add_pass_through_columns.sql))
 This macro creates the proper name, datatype, and aliasing for user defined pass through column variable. This
 macro allows for pass through variables to be more dynamic and allow users to alias custom fields they are 
@@ -442,6 +444,7 @@ It simply passes through the `_dbt_source_relation` column produced by `union_da
 ----
 
 ## Automations
+These macros provide the scripts to automate parts of the model creation.
 ### generate_columns_macro ([source](macros/generate_columns_macro.sql))
 This macro is used to generate the macro used as an argument within the [fill_staging_columns](https://github.com/fivetran/dbt_fivetran_utils#fill_staging_columns-source) macro which will list all the expected columns within a respective table. The macro output will contain `name` and `datatype`; however, you may add an optional argument for `alias` if you wish to rename the column within the macro. 
 
@@ -507,6 +510,7 @@ source dbt_modules/fivetran_utils/columns_setup.sh '../dbt_asana_source' stg_asa
 ----
 
 ## Booleans
+These macros tests for true or false under the given conditions.
 ### empty_variable_warning ([source](macros/empty_variable_warning.sql))
 This macro checks a declared variable and returns an error message if the variable is empty before running the models within the `dbt_project.yml` file.
 
