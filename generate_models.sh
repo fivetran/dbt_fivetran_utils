@@ -1,7 +1,7 @@
 #!/bin/bash
 mkdir -p $1/models/tmp
 echo "select * from {{ var('$5') }}" > $1/models/tmp/$2__$5_tmp.sql
-echo "" > $1/models/$2__$5.sql
+echo "" >> $1/models/$2__$5.sql
 echo "with base as (
 
     select * 
@@ -29,4 +29,4 @@ final as (
     from fields
 )
 
-select * from final" > $1/models/$2__$5.sql
+select * from final" >> $1/models/$2__$5.sql
