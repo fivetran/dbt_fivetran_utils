@@ -29,4 +29,4 @@ final as (
     from fields
 )
 
-select * from final" > $1/models/$2__$5.sql
+select * from final" >> $1/models/$2__$5.sql
