@@ -19,8 +19,8 @@ dispatch:
 
 - [Tests and helpers](#tests-and-helpers)
   - [collect_freshness](#collect_freshness-source)
-  - [snowflake_seed_data](#snowflake_seed_data-source)
   - [seed_data_helper](#seed_data_helper-source)
+  - [snowflake_seed_data](#snowflake_seed_data-source)
 
 - [Cross-database compatibility](#cross-database-compatibility)
   - [array_agg](#array_agg-source)
@@ -28,14 +28,15 @@ dispatch:
   - [first_value](#first_value-source)
   - [json_extract](#json_extract-source)
   - [json_parse](#json_parse-source)
-  - [pivot_json_extract](#pivot_json_extract-source)
   - [max_bool](#max_bool-source)
   - [percentile](#percentile-source)
+  - [pivot_json_extract](#pivot_json_extract-source)
   - [string_agg](#string_agg-source)
   - [timestamp_add](#timestamp_add-source)
   - [timestamp_diff](#timestamp_diff-source)
 
 - [SQL and field generators](#sql-and-field-generators)
+  - [add_dbt_source_relation](#add_dbt_source_relation-source)
   - [add_pass_through_columns](#add_pass_through_columns-source)
   - [calculated_fields](#calculated_fields-source)
   - [dummy_coalesce_value](#dummy_coalesce_value-source)
@@ -43,19 +44,19 @@ dispatch:
   - [fill_staging_columns](#fill_staging_columns-source)
   - [persist_pass_through_columns](#persist_pass_through_columns-source)
   - [remove_prefix_from_columns](#remove_prefix_from_columns-source)
-  - [union_relations](#union_relations-source)
-  - [union_data](#union_data-source)
   - [source_relation](#source_relation-source)
+  - [union_data](#union_data-source)
+  - [union_relations](#union_relations-source)
 
 - [Automations](#automations)
   - [generate_columns_macro](#generate_columns_macro-source)
   - [get_columns_for_macro](#get_columns_for_macro-source)
   - [staging_models_automation](#staging_models_automation-source)
 
-- [Booleans](#booleans)
+- [Variable Checks](#variable_checks)
   - [empty_variable_warning](#empty_variable_warning-source)
-  - [enabled_vars_one_true](#enabled_vars_onetrue-source)
   - [enabled_vars](#enabled-vars-source)
+  - [enabled_vars_one_true](#enabled_vars_onetrue-source)
 
 ----
 
@@ -81,20 +82,6 @@ sources:
 * `meta.is_enabled` (optional): The variable(s) you would like to reference to determine if dbt should include this table in freshness tests.
 
 ----
-### snowflake_seed_data ([source](macros/snowflake_seed_data.sql))
-This macro is intended to be used when a source table column is a reserved keyword in Snowflake, and Circle CI is throwing a fit.
-It simply chooses which version of the data to seed (the Snowflake copy should capitalize and put three pairs of quotes around the problematic column).
-
-***Usage:**
-```yml
-    # in integration_tests/dbt_project.yml
-    vars:
-        table_name: "{{ fivetran_utils.snowflake_seed_data(seed_name='user_data') }}"
-```
-**Args:**
-* `seed_name` (required): Name of the seed that has separate snowflake seed data.
-
-----
 ### seed_data_helper ([source](macros/seed_data_helper.sql))
 This macro is intended to be used when a source table column is a reserved keyword in a warehouse, and Circle CI is throwing a fit.
 It simply chooses which version of the data to seed. Also note the `warehouses` argument is a list and multiple warehouses may be added based on the number of warehouse
@@ -109,6 +96,20 @@ specific seed data files you need for integration testing.
 **Args:**
 * `seed_name` (required): Name of the seed that has separate postgres seed data.
 * `warehouses` (required): List of the warehouses for which you want CircleCi to use the helper seed data.
+
+----
+### snowflake_seed_data ([source](macros/snowflake_seed_data.sql))
+This macro is intended to be used when a source table column is a reserved keyword in Snowflake, and Circle CI is throwing a fit.
+It simply chooses which version of the data to seed (the Snowflake copy should capitalize and put three pairs of quotes around the problematic column).
+
+***Usage:**
+```yml
+    # in integration_tests/dbt_project.yml
+    vars:
+        table_name: "{{ fivetran_utils.snowflake_seed_data(seed_name='user_data') }}"
+```
+**Args:**
+* `seed_name` (required): Name of the seed that has separate snowflake seed data.
 
 ----
 ## Cross-database compatibility
@@ -178,18 +179,6 @@ The data is returned by the path you provide as the list within the `string_path
 * `string_path`  (required): List of item(s) that derive the path in the json object which you want to extract the data from.
 
 ----
-### pivot_json_extract ([source](macros/pivot_json_extract.sql))
-This macro builds off of the `json_extract` macro in order to extract a list of fields from a json object and pivot the fields out into columns. The `pivot_json_extract` macro is compatible with BigQuery, Redshift, Postgres, and Snowflake.
-
-**Usage:**
-```sql
-{{ fivetran_utils.pivot_json_extract(string="json_value", list_of_properties=["field 1", "field 2"]) }}
-```
-**Args:**
-* `string` (required): Name of the field which contains the json object.
-* `list_of_properties`  (required): List of the fields that you want to extract from the json object and pivot out into columns. Any spaces will be replaced by underscores in column names.
-
-----
 ### max_bool ([source](macros/max_bool.sql))
 This macro allows for cross database use of obtaining the max boolean value of a field. This macro recognizes true = 1 and false = 0. The macro will aggregate the boolean_field and return the max boolean value. The max_bool macro is compatible with BigQuery, Redshift, Postgres, and Snowflake.
 
@@ -215,6 +204,18 @@ from your_cte
 * `percentile_field` (required): Name of the field of which you are determining the desired percentile.
 * `partition_field`  (required): Name of the field you want to partition by to determine the designated percentile. You will need to group by this for Postgres.
 * `percent`          (required): The percent necessary for `percentile_cont` to determine the percentile. If you want to find the median, you will input `0.5` for the percent. 
+
+----
+### pivot_json_extract ([source](macros/pivot_json_extract.sql))
+This macro builds off of the `json_extract` macro in order to extract a list of fields from a json object and pivot the fields out into columns. The `pivot_json_extract` macro is compatible with BigQuery, Redshift, Postgres, and Snowflake.
+
+**Usage:**
+```sql
+{{ fivetran_utils.pivot_json_extract(string="json_value", list_of_properties=["field 1", "field 2"]) }}
+```
+**Args:**
+* `string` (required): Name of the field which contains the json object.
+* `list_of_properties`  (required): List of the fields that you want to extract from the json object and pivot out into columns. Any spaces will be replaced by underscores in column names.
 
 ----
 ### string_agg ([source](macros/string_agg.sql))
@@ -258,6 +259,15 @@ This macro allows for cross database timestamp difference calculation for BigQue
 
 ## SQL and field generators
 These macros create SQL or fields to be included when running the package.
+### add_dbt_source_relation ([source](macros/add_dbt_source_relation.sql))
+This macro is intended to be used within the second CTE (typically named `fields`) of non-tmp staging models. 
+It simply passes through the `_dbt_source_relation` column produced by `union_data()` in the tmp staging model, so that `source_relation()` can work in the final CTE of the staging model.
+
+**Usage:**
+```sql
+{{ fivetran_utils.add_dbt_source_relation() }}
+```
+----
 ### add_pass_through_columns ([source](macros/add_pass_through_columns.sql))
 This macro creates the proper name, datatype, and aliasing for user defined pass through column variable. This
 macro allows for pass through variables to be more dynamic and allow users to alias custom fields they are 
@@ -363,27 +373,18 @@ This macro removes desired prefixes from specified columns. Additionally, a for 
 * `exclude` (optional): The columns you wish to exclude from this macro. By default no columns are excluded.
 
 ----
-### union_relations ([source](macros/union_relations.sql))
-This macro unions together an array of [Relations](https://docs.getdbt.com/docs/writing-code-in-dbt/class-reference/#relation),
-even when columns have differing orders in each Relation, and/or some columns are
-missing from some relations. Any columns exclusive to a subset of these
-relations will be filled with `null` where not present. An new column
-(`_dbt_source_relation`) is also added to indicate the source for each record.
+### source_relation ([source](macros/source_relation.sql))
+This macro creates a new column that signifies with database/schema a record came from when using the `union_data` macro above. 
+It should be added to all non-tmp staging models when using the `union_data` macro. 
 
 **Usage:**
 ```sql
-{{ dbt_utils.union_relations(
-    relations=[ref('my_model'), source('my_source', 'my_table')],
-    exclude=["_loaded_at"]
-) }}
+{{ fivetran_utils.source_relation() }}
 ```
+
 **Args:**
-* `relations`          (required): An array of [Relations](https://docs.getdbt.com/docs/writing-code-in-dbt/class-reference/#relation).
-* `aliases`            (optional): An override of the relation identifier. This argument should be populated with the overwritten alias for the relation. If not populated `relations` will be the default.
-* `exclude`            (optional): A list of column names that should be excluded from the final query.
-* `include`            (optional): A list of column names that should be included in the final query. Note the `include` and `exclude` parameters are mutually exclusive.
-* `column_override`    (optional): A dictionary of explicit column type overrides, e.g. `{"some_field": "varchar(100)"}`.``
-* `source_column_name` (optional): The name of the column that records the source of this row. By default this argument is set to `none`.
+* `union_schema_variable` (optional): The name of the union schema variable. By default the macro will look for `union_schemas`.
+* `union_database_variable` (optional): The name of the union database variable. By default the macro will look for `union_databases`.
 
 ----
 ### union_data ([source](macros/union_data.sql))
@@ -419,30 +420,29 @@ When using this functionality, every `_tmp` table should use this macro as descr
 * `union_database_variable` (optional): The name of the union database variable. By default the macro will look for `union_databases`.
 
 ----
-### source_relation ([source](macros/source_relation.sql))
-This macro creates a new column that signifies with database/schema a record came from when using the `union_data` macro above. 
-It should be added to all non-tmp staging models when using the `union_data` macro. 
+### union_relations ([source](macros/union_relations.sql))
+This macro unions together an array of [Relations](https://docs.getdbt.com/docs/writing-code-in-dbt/class-reference/#relation),
+even when columns have differing orders in each Relation, and/or some columns are
+missing from some relations. Any columns exclusive to a subset of these
+relations will be filled with `null` where not present. An new column
+(`_dbt_source_relation`) is also added to indicate the source for each record.
 
 **Usage:**
 ```sql
-{{ fivetran_utils.source_relation() }}
+{{ dbt_utils.union_relations(
+    relations=[ref('my_model'), source('my_source', 'my_table')],
+    exclude=["_loaded_at"]
+) }}
 ```
-
 **Args:**
-* `union_schema_variable` (optional): The name of the union schema variable. By default the macro will look for `union_schemas`.
-* `union_database_variable` (optional): The name of the union database variable. By default the macro will look for `union_databases`.
-
-### add_dbt_source_relation ([source](macros/add_dbt_source_relation.sql))
-This macro is intended to be used within the second CTE (typically named `fields`) of non-tmp staging models. 
-It simply passes through the `_dbt_source_relation` column produced by `union_data()` in the tmp staging model, so that `source_relation()` can work in the final CTE of the staging model.
-
-**Usage:**
-```sql
-{{ fivetran_utils.add_dbt_source_relation() }}
-```
+* `relations`          (required): An array of [Relations](https://docs.getdbt.com/docs/writing-code-in-dbt/class-reference/#relation).
+* `aliases`            (optional): An override of the relation identifier. This argument should be populated with the overwritten alias for the relation. If not populated `relations` will be the default.
+* `exclude`            (optional): A list of column names that should be excluded from the final query.
+* `include`            (optional): A list of column names that should be included in the final query. Note the `include` and `exclude` parameters are mutually exclusive.
+* `column_override`    (optional): A dictionary of explicit column type overrides, e.g. `{"some_field": "varchar(100)"}`.``
+* `source_column_name` (optional): The name of the column that records the source of this row. By default this argument is set to `none`.
 
 ----
-
 ## Automations
 These macros provide the scripts to automate parts of the model creation.
 ### generate_columns_macro ([source](macros/generate_columns_macro.sql))
@@ -492,14 +492,18 @@ This macro returns all column names and datatypes for a specified table within a
 ----
 ### staging_models_automation ([source](macros/staging_models_automation.sql))
 This macro is intended to be used as a `run-operation` when generating Fivetran dbt source package staging models/macros. This macro will receive user input to create the necessary bash commands using ([generate_columns](generate_columns.sh)) and ([generate_models](generate_models.sh)) appended with `&&` so they may all be ran at once. The output of this macro within the CLI will then be copied and pasted as a command to generate the staging models/macros.
+
 **Usage:**
 ```bash
 dbt run-operation staging_models_automation --args '{package: asana, source_schema: asana_source, source_database: database-source-name, tables: ["user","tag"]}'
 ```
 **CLI Output:**
+Additionally these commands will replace existing content in those relevant models/macro files if there are any.
 ```bash
-source dbt_modules/fivetran_utils/columns_setup.sh '../dbt_asana_source' stg_asana dbt-package-testing asana_2 user && 
-source dbt_modules/fivetran_utils/columns_setup.sh '../dbt_asana_source' stg_asana dbt-package-testing asana_2 tag
+source dbt_packages/fivetran_utils/generate_columns.sh '../dbt_asana_source' stg_asana dbt-package-testing asana_2 user && 
+source dbt_packages/fivetran_utils/generate_columns.sh '../dbt_asana_source' stg_asana dbt-package-testing asana_2 tag &&
+source dbt_packages/fivetran_utils/generate_models.sh '../dbt_asana_source' stg_asana dbt-package-testing asana_2 user && 
+source dbt_packages/fivetran_utils/generate_models.sh '../dbt_asana_source' stg_asana dbt-package-testing asana_2 tag &&
 ```
 **Args:**
 * `package`         (required): Name of the package for which you are creating staging models/macros.
@@ -509,8 +513,8 @@ source dbt_modules/fivetran_utils/columns_setup.sh '../dbt_asana_source' stg_asa
 
 ----
 
-## Booleans
-These macros tests for true or false under the given conditions.
+## Variable Checks
+These macros tests if a variable meets given conditions.
 ### empty_variable_warning ([source](macros/empty_variable_warning.sql))
 This macro checks a declared variable and returns an error message if the variable is empty before running the models within the `dbt_project.yml` file.
 
@@ -523,17 +527,6 @@ on-run-start: '{{ fivetran_utils.empty_variable_warning(variable="ticket_field_h
 * `downstream_model`    (required): The downstream model that is affected if the variable is empty.
 
 ----
-### enabled_vars_one_true ([source](macros/enabled_vars_one_true.sql))
-This macro references a set of specified boolean variable and returns `true` if any variable value is equal to true.
-
-**Usage:**
-```sql
-{{ fivetran_utils.enabled_vars_one_true(vars=["using_department_table", "using_customer_table"]) }}
-```
-**Args:**
-* `vars` (required): Variable(s) you are referencing to return the declared variable value.
-
-----
 ### enabled_vars ([source](macros/enabled_vars.sql))
 This macro references a set of specified boolean variable and returns `false` if any variable value is equal to false.
 
@@ -543,6 +536,17 @@ This macro references a set of specified boolean variable and returns `false` if
 ```
 **Args:**
 * `vars` (required): Variable you are referencing to return the declared variable value.
+
+----
+### enabled_vars_one_true ([source](macros/enabled_vars_one_true.sql))
+This macro references a set of specified boolean variable and returns `true` if any variable value is equal to true.
+
+**Usage:**
+```sql
+{{ fivetran_utils.enabled_vars_one_true(vars=["using_department_table", "using_customer_table"]) }}
+```
+**Args:**
+* `vars` (required): Variable(s) you are referencing to return the declared variable value.
 
 ----
 
