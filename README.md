@@ -493,12 +493,18 @@ This macro returns all column names and datatypes for a specified table within a
 ### staging_models_automation ([source](macros/staging_models_automation.sql))
 This macro is intended to be used as a `run-operation` when generating Fivetran dbt source package staging models/macros. This macro will receive user input to create the necessary bash commands using ([generate_columns](generate_columns.sh)) and ([generate_models](generate_models.sh)) appended with `&&` so they may all be ran at once. The output of this macro within the CLI will then be copied and pasted as a command to generate the staging models/macros.
 
+Additionally, you can rerun this macro as it will create or replace what currently exists in the macro & model folders.
+
+Things to note:
+
+- This macro will only work if you have already included your src.yml file.
+- Please double check your outputs as there may be timestamps & notes that are not relevant to the file.
+
 **Usage:**
 ```bash
 dbt run-operation staging_models_automation --args '{package: asana, source_schema: asana_source, source_database: database-source-name, tables: ["user","tag"]}'
 ```
 **CLI Output:**
-Additionally these commands will replace existing content in those relevant models/macro files if there are any.
 ```bash
 source dbt_packages/fivetran_utils/generate_columns.sh '../dbt_asana_source' stg_asana dbt-package-testing asana_2 user && 
 source dbt_packages/fivetran_utils/generate_columns.sh '../dbt_asana_source' stg_asana dbt-package-testing asana_2 tag &&
