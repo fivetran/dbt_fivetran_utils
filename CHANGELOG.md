@@ -1,6 +1,6 @@
 # dbt_fivetran_utils v0.3.4
 ## 🎉 Features 🎉 
-Added a new macro, `generate_docs` that will generate a `source` string that does the following:
+Added a new macro called `generate_docs` which returns a `source` command leveraging `generate_docs.sh` to do the following:
 - seeds, runs and creates documentation for integration tests models
 - moves `catalog.json`, `index.html`, `manifest.json` and `run_results.json` into a `<project_name>/docs` folder
 

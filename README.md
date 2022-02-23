@@ -479,11 +479,11 @@ dbt run-operation fivetran_utils.generate_columns_macro --args '{"table_name": "
 ----
 
 ### generate_docs ([source](macros/generate_docs.sql))
-This macro will generate a `source` string that leverages `generate_docs.sh` to do the following:
+This macro will generate a `source` command that leverages `generate_docs.sh` to do the following:
 - seeds, runs and creates documentation for integration tests models
 - moves `catalog.json`, `index.html`, `manifest.json` and `run_results.json` into a `<project_name>/docs` folder. 
 
-When ran, this feature will remove existing files in the `<project_name>/docs` if any exists. 
+When the source script is ran, this feature will remove existing files in the `<project_name>/docs` if any exists. 
 
 **Usage:**
 ```bash
@@ -494,6 +494,9 @@ dbt run-operation generate_docs --args '{package: apple_search_ads_source}'
 ```bash
 source dbt_packages/fivetran_utils/generate_docs.sh '../dbt_apple_search_ads_source'
 ```
+
+**Args:**
+* `package` (required): Name of the package; include whether package is source or not
 
 ----
 ### get_columns_for_macro ([source](macros/get_columns_for_macro.sql))
