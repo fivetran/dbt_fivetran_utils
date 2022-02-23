@@ -50,6 +50,7 @@ dispatch:
 
 - [Automations](#automations)
   - [generate_columns_macro](#generate_columns_macro-source)
+  - [generate_docs](#generate_docs-source)
   - [get_columns_for_macro](#get_columns_for_macro-source)
   - [staging_models_automation](#staging_models_automation-source)
 
@@ -475,6 +476,24 @@ dbt run-operation fivetran_utils.generate_columns_macro --args '{"table_name": "
 * `table_name`    (required): Name of the schema which the table you are running the macro for resides in.
 * `schema_name`   (required): Name of the schema which the table you are running the macro for resides in.
 * `database_name` (optional): Name of the database which the table you are running the macro for resides in. If empty, the macro will default this value to `target.database`.
+----
+
+### generate_docs ([source](macros/generate_docs.sql))
+This macro will generate a `source` string that leverages `generate_docs.sh` to do the following:
+- seeds, runs and creates documentation for integration tests models
+- moves `catalog.json`, `index.html`, `manifest.json` and `run_results.json` into a `<project_name>/docs` folder. 
+
+When ran, this feature will remove existing files in the `<project_name>/docs` if any exists. 
+
+**Usage:**
+```bash
+dbt run-operation generate_docs --args '{package: apple_search_ads_source}'
+```
+
+**CLI Output:**
+```bash
+source dbt_packages/fivetran_utils/generate_docs.sh '../dbt_apple_search_ads_source'
+```
 
 ----
 ### get_columns_for_macro ([source](macros/get_columns_for_macro.sql))
@@ -578,6 +597,21 @@ source dbt_packages/fivetran_utils/generate_columns.sh '../dbt_apple_search_ads_
 In that example, it will:
 * Create a `get_campaign_history_columns.sql` file in the `macros` directory, with the necessary macro within it.
 
+----
+
+### generate_docs.sh([source](generate_docs.sh))
+
+This bash file can be used to create or replace package documentation (`<project_name>/docs`). 
+
+As an example, assuming we are in a dbt project in an adjacent directory to `dbt_apple_search_ads_source`. 
+
+```bash
+source dbt_packages/fivetran_utils/generate_docs.sh '../dbt_apple_search_ads_source'
+```
+The bash script does the following:
+- seeds, runs and creates documentation for integration tests models
+- moves `catalog.json`, `index.html`, `manifest.json` and `run_results.json` into a `<project_name>/docs` folder. 
+----
 ### generate_models.sh ([source](generate_models.sh))
 
 This bash file can be used to setup or update packages to use the `generate_models` macro above. The bash script assumes that there already exists a macro directory with all relevant `get_<table_name>_columns.sql` files created. The bash script does the following:
