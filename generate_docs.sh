@@ -2,7 +2,7 @@
 ORIG_DIR=$(echo $PWD)
 PKG=$(echo $1)
 cd ${PKG}/integration_tests
-dbt clean && dbt deps && dbt seed && dbt run
+dbt clean && dbt deps && dbt seed
 dbt docs generate
 FILES=('catalog.json' 'index.html' 'manifest.json' 'run_results.json')
 
