@@ -485,6 +485,16 @@ This macro will generate a `source` command that leverages `generate_docs.sh` to
 
 When the source script is ran, this feature will remove existing files in the `<project_name>/docs` if any exists. 
 
+This script assumes that you are running in a directory that is adjacent to your project. For example, say you are working on dbt_apple_search_ads. You may run the macro & the source command from the CLI Output within your dev directory below. 
+```bash
+├── apple_search_ads
+│   ├── dbt_apple_search_ads
+│   ├── dbt_apple_search_ads_source
+│   ├── dev
+│   ├── logs
+│   └── testuu 
+```
+
 **Usage:**
 ```bash
 dbt run-operation generate_docs --args '{package: apple_search_ads_source}'
@@ -606,7 +616,15 @@ In that example, it will:
 
 This bash file can be used to create or replace package documentation (`<project_name>/docs`). 
 
-As an example, assuming we are in a dbt project in an adjacent directory to `dbt_apple_search_ads_source`. 
+As an example, assuming we are in a dbt project in an adjacent directory to `dbt_apple_search_ads_source`. For example, say you are working on dbt_apple_search_ads. You may run the source command within your dev directory below. 
+```bash
+├── apple_search_ads
+│   ├── dbt_apple_search_ads
+│   ├── dbt_apple_search_ads_source
+│   ├── dev
+│   ├── logs
+│   └── testuu 
+```
 
 ```bash
 source dbt_packages/fivetran_utils/generate_docs.sh '../dbt_apple_search_ads_source'
