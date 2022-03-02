@@ -1,20 +1,3 @@
-# dbt_fivetran_utils v0.3.4
-## 🎉 Features 🎉 
-Added a new macro called `generate_docs` which returns a `source` command leveraging `generate_docs.sh` to do the following:
-- seeds, runs and creates documentation for integration tests models
-- moves `catalog.json`, `index.html`, `manifest.json` and `run_results.json` into a `<project_name>/docs` folder
-
-When ran, this feature will remove existing files in the `<project_name>/docs` if any exists.
-
-# dbt_fivetran_utils v0.3.3
-
-## Updates
-([#63](https://github.com/fivetran/dbt_fivetran_utils/pull/63/files)) This release of the `dbt_fivetran_utils` package includes the following updates to the README:
-- Add a Table of Contents to allow for quicker searches.
-- Leverage new Categories to better organize macros.
-- Update the `staging_models_automation` macro to reflect usage of the new `generate_columns.sh` and `generate_models.sh` scripts. 
-- Update the `generate_models.sh` script to create the models/macros folders if empty or replace any existing content in the models/macros folders.
-
 # dbt_fivetran_utils v0.3.2
 ## Fixes
 - The `collect_freshness` macro was inadvertently causing non-package source freshness tests that were aliased with the `identifier` config to use the current date opposed to the loaded date. Therefore, the macro was adjusted to leverage the table identifier opposed to the name. As the identifier is the name of the table by default, this should resolve the error. ([#56](https://github.com/fivetran/dbt_fivetran_utils/pull/56))
