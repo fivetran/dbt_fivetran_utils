@@ -491,9 +491,7 @@ When the source script is ran, this feature will remove existing files in the `<
 ├── apple_search_ads
 │   ├── dbt_apple_search_ads
 │   ├── dbt_apple_search_ads_source
-│   ├── dev
-│   ├── logs
-│   └── test1
+│   └── dev
 ```
 - Make sure your integration_test profiles in `~/.dbt/profiles.yml` is set for the appropriate project name.
 
@@ -624,9 +622,7 @@ This bash file can be used to create or replace package documentation (`<project
 ├── apple_search_ads
 │   ├── dbt_apple_search_ads
 │   ├── dbt_apple_search_ads_source
-│   ├── dev
-│   ├── logs
-│   └── test1 
+│   └── dev 
 ```
 - Make sure your integration_test profiles in `~/.dbt/profiles.yml` is set for the appropriate project name.
 
