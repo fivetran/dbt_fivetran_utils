@@ -31,6 +31,40 @@ order by 1
 {% endmacro %}
 
 
+{% macro redshift__get_columns_for_macro(table_name, schema_name, database_name=target.database) %}
+
+{% set query %}
+
+select
+    concat(
+      '{"name": "',
+      concat(lower(column_name), 
+      concat('", "datatype": ',
+      concat( case
+        when lower(data_type) like '%timestamp%' then 'dbt_utils.type_timestamp()' 
+        when lower(data_type) = 'character varying' then 'dbt_utils.type_string()' 
+        when lower(data_type) = 'text' then 'dbt_utils.type_string()' 
+        when lower(data_type) = 'boolean' then '"boolean"'
+        when lower(data_type) like '%num%' then 'dbt_utils.type_numeric()' 
+        when lower(data_type) like '%int%' then 'dbt_utils.type_int()' 
+        when lower(data_type) = 'float' then 'dbt_utils.type_float()' 
+        when lower(data_type) = 'date' then '"date"'
+      end,
+      '}'))))
+from {{ database_name }}.information_schema.columns
+where lower(table_name) = '{{ table_name }}'
+and lower(table_schema) = '{{ schema_name }}'
+order by 1
+
+{% endset %}
+
+{% set results = run_query(query) %}
+{% set results_list = results.columns[0].values() %}}
+
+{{ return(results_list) }}
+
+{% endmacro %}
+
 
 {% macro bigquery__get_columns_for_macro(table_name, schema_name, database_name=target.database) %}
 
