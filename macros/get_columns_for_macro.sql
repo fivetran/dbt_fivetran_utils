@@ -47,7 +47,7 @@ select
         when lower(data_type) = 'boolean' then '"boolean"'
         when lower(data_type) like '%num%' then 'dbt_utils.type_numeric()' 
         when lower(data_type) like '%int%' then 'dbt_utils.type_int()' 
-        when lower(data_type) = 'float' then 'dbt_utils.type_float()' 
+        when lower(data_type) = 'double precision' then 'dbt_utils.type_float()' 
         when lower(data_type) = 'date' then '"date"'
       end,
       '}'))))
