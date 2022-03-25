@@ -1,3 +1,6 @@
+# dbt_fivetran_utils v0.3.5
+## 🎉 Features 🎉 
+- The `try_cast` macro has been added. This macro will try to cast the field to the specified datatype. If it cannot be cast, then a `null` value is provided. Please note, Postgres and Redshift destinations are only compatible with try_cast and the numeric datatype.
 # dbt_fivetran_utils v0.3.4
 ## 🎉 Features 🎉 
 Added a new macro called `generate_docs` which returns a `source` command leveraging `generate_docs.sh` to do the following:
