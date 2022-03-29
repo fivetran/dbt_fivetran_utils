@@ -34,6 +34,7 @@ dispatch:
   - [string_agg](#string_agg-source)
   - [timestamp_add](#timestamp_add-source)
   - [timestamp_diff](#timestamp_diff-source)
+  - [try_cast](#try_cast-source)
 
 - [SQL and field generators](#sql-and-field-generators)
   - [add_dbt_source_relation](#add_dbt_source_relation-source)
@@ -255,6 +256,18 @@ This macro allows for cross database timestamp difference calculation for BigQue
 * `first_date`       (required): The first timestamp field for the difference calculation.
 * `second_date`      (required): The second timestamp field for the difference calculation.
 * `datepart`         (required): The date part applied to the timestamp difference calculation.
+
+----
+### try_cast ([source](macros/try_cast.sql))
+This macro allows a field to be cast to a specified datatype. If the datatype is incompatible then a `null` value is provided. This macro is compatible with BigQuery, Redshift, Postgres, Snowflake, and Databricks.
+> Please note: For Postgres and Redshift destinations the `numeric` datatype is only supported to try_cast.
+**Usage:**
+```sql
+{{ fivetran_utils.try_cast(field="amount", type="numeric") }}
+```
+**Args:**
+* `field`       (required): The base field you are trying to cast.
+* `type`        (required): The datatype you want to try and cast the base field.
 
 ----
 
