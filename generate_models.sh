@@ -24,7 +24,7 @@ final as (
     select 
     " >> $1/models/$2__$5.sql
     
-sed "1p;d" $1/models/tmp/$2__$5_columns.sql >> $1/models/$2__$5.sql
+$1/models/tmp/$2__$5_columns.sql >> $1/models/$2__$5.sql
     
 echo "from fields
 )
