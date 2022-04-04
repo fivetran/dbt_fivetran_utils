@@ -51,6 +51,7 @@ dispatch:
 
 - [Automations](#automations)
   - [generate_columns_macro](#generate_columns_macro-source)
+  - [get_column_names_only](#get_column_names_only-source)
   - [get_columns_for_macro](#get_columns_for_macro-source)
   - [generate_docs](#generate_docs-source)
   - [staging_models_automation](#staging_models_automation-source)
