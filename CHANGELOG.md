@@ -1,3 +1,7 @@
+# dbt_fivetran_utils v0.3.6
+## 🎉 Features 🎉 
+- New macro `get_column_names_only` that further automates the staging model creation to prefill column fields in the final select statement. 
+- Updated bash script `generate_models` to incorporate this new macro.
 # dbt_fivetran_utils v0.3.5
 ## 🎉 Features 🎉 
 - The `try_cast` macro has been added. This macro will try to cast the field to the specified datatype. If it cannot be cast, then a `null` value is provided. Please note, Postgres and Redshift destinations are only compatible with try_cast and the numeric datatype.
