@@ -14,7 +14,7 @@ order by 1
 {% set results = run_query(query) %}
 {% set results_list = results.columns[0].values() %}}
 {% for col in results_list %}
-{% do jinja_macro.append('    ' ~ col ~ (',' if not loop.last)) %}
+{% do jinja_macro.append('        ' ~ col ~ (',' if not loop.last)) %}
 {% endfor %}
 
 {% if execute %}
@@ -46,7 +46,7 @@ order by 1
 {% set results = run_query(query) %}
 {% set results_list = results.columns[0].values() %}}
 {% for col in results_list %}
-{% do jinja_macro.append('    ' ~ col ~ (',' if not loop.last)) %}
+{% do jinja_macro.append('        ' ~ col ~ (',' if not loop.last)) %}
 {% endfor %}
 
 {% if execute %}
@@ -65,13 +65,3 @@ order by 1
 {% macro get_column_names_only(table_name, schema_name, database_name) -%}
 {{ return(adapter.dispatch('get_column_names_only')(table_name, schema_name, database_name)) }}
 {%- endmacro %}
-
-
--- % macro get_column_names_only_format(table_name, schema_name, database_name=target.database) -%}
--- {% set columns = get_column_names_only(table_name, schema_name, database_name) %}
-
--- {% for col in columns %}
--- {% do jinja_macro.append('    ' ~ col ~ (',' if not loop.last)) %}
--- {% endfor %}
-
--- {% endmacro %}
