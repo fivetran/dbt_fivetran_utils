@@ -527,7 +527,7 @@ Note this will retain the timestamp from the built-in formatting update from dbt
 
 **Usage:**
 ```bash
-dbt run-operation get_column_names_only --args '{table_name: [table_name], schema_name: [schema_name], database_name: [database_name]}' | tail -n +2 
+dbt run-operation get_column_names_only --args '{table_name: log, schema_name: fivetran_log, database_name: database-name' 
 
 ```
 **CLI Output:**
