@@ -51,6 +51,7 @@ dispatch:
 
 - [Automations](#automations)
   - [generate_columns_macro](#generate_columns_macro-source)
+  - [get_column_names_only](#get_column_names_only-source)
   - [get_columns_for_macro](#get_columns_for_macro-source)
   - [generate_docs](#generate_docs-source)
   - [staging_models_automation](#staging_models_automation-source)
@@ -519,6 +520,37 @@ source dbt_packages/fivetran_utils/generate_docs.sh '../dbt_apple_search_ads_sou
 * `package` (required): Name of the package; include whether package is source or not
 
 ----
+### get_column_names_only ([source](macros/get_column_names_only.sql))
+This macro is used in the `generate_models.sh` script to further the `staging_models_automation` macro. This macro outputs all columns from the specified table, allowing `generate_models.sh` to prefill column fields in the final select statement.
+
+Note this will retain the timestamp from the built-in formatting update from dbt 1.0.0. Therefore in the staging model resulting from `generate_models.sh`, you will need to manually delete the timestamp.
+
+**Usage:**
+```bash
+dbt run-operation get_column_names_only --args '{table_name: log, schema_name: fivetran_log, database_name: database-name' 
+
+```
+**CLI Output:**
+```bash
+14:41:40      _fivetran_synced,
+    connector_id,
+    event,
+    id,
+    message_data,
+    message_event,
+    process_id,
+    sequence_number,
+    sync_id,
+    time_stamp,
+    transformation_id
+
+```
+**Args:**
+* `table_name`    (required): Name of the table you are wanting to return column names and datatypes.
+* `schema_name`   (required): Name of the schema where the above mentioned table resides.
+* `database_name` (optional): Name of the database where the above mentioned schema and table reside. By default this will be your target.database.
+
+----
 ### get_columns_for_macro ([source](macros/get_columns_for_macro.sql))
 This macro returns all column names and datatypes for a specified table within a database and is used as part of the [generate_columns_macro](macros/generate_columns_macro.sql).
 
@@ -648,7 +680,7 @@ The bash script does the following:
 This bash file can be used to setup or update packages to use the `generate_models` macro above. The bash script assumes that there already exists a macro directory with all relevant `get_<table_name>_columns.sql` files created. The bash script does the following:
 
 * Creates a `..._tmp.sql` file in the `models/tmp` directory and fills it with a `select * from {{ var('table_name') }}` where `table_name` is the name of the source table.
-* Creates or updates a `.sql` file in the `models` directory and fills it with the filled out version of the `fill_staging_columns` macro as shown above. You can then write whatever SQL you want around the macro to finishing off the staging file.
+* Creates or updates a `.sql` file in the `models` directory and fills it with the filled out version of the `fill_staging_columns` macro. The final select statement then grabs the output of the `get_column_names_only` macro.
 
 ```bash
 source dbt_packages/fivetran_utils/generate_models.sh "path/to/directory" file_prefix database_name schema_name table_name
@@ -661,4 +693,4 @@ source dbt_packages/fivetran_utils/generate_models.sh '../dbt_apple_search_ads_s
 
 With the above example, the script will:
 * Create a `stg_apple_search_ads__campaign_history_tmp.sql` file in the `models/tmp` directory, with `select * from {{ var('campaign_history') }}` in it.
-* Create or update a `stg_apple_search_ads__campaign_history.sql` file in the `models` directory with the pre-filled out `fill_staging_columns` macro.
+* Create or update a `stg_apple_search_ads__campaign_history.sql` file in the `models` directory with the pre-filled out `fill_staging_columns` macro, and fields in the final select statement resulting from the `get_column_names_only` macro.

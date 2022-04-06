@@ -1,12 +1,12 @@
 #!/bin/bash
-mkdir -p $1/models/tmp
-echo "select * from {{ var('$5') }}" > $1/models/tmp/$2__$5_tmp.sql
+mkdir -p $1/models/tmp 
+echo "select * from {{ var('$5') }}" > $1/models/tmp/$2__$5_tmp.sql 
 echo "" > $1/models/$2__$5.sql
+
 echo "with base as (
 
     select * 
     from {{ ref('$2__$5_tmp') }}
-
 ),
 
 fields as (
@@ -18,15 +18,20 @@ fields as (
                 staging_columns=get_$5_columns()
             )
         }}
-        
     from base
 ),
 
 final as (
     
-    select 
-    -- rename here
-    from fields
+    select " >> $1/models/$2__$5.sql
+    
+
+dbt run-operation fivetran_utils.get_column_names_only --args '{"table_name": "'$5'", "schema_name": "'$4'", "database_name":"'$3'"}' | tail -n +2 >> $1/models/$2__$5.sql
+    
+    
+echo "    from fields
 )
 
-select * from final" >> $1/models/$2__$5.sql
+select *
+from final" >> $1/models/$2__$5.sql
+
