@@ -3,13 +3,13 @@
 This package includes macros that are used in Fivetran's dbt packages.
 
 ## Macros
-### _get_utils_namespaces ([source](macros/_get_utils_namespaces.sql))
+### _get_utils_namespaces ([source](https://github.com/fivetran/dbt_fivetran_utils/blob/master/macros/_get_utils_namespaces.sql))
 This macro allows for namespacing macros throughout a dbt project. The macro currently consists of two namespaces:
 - `dbt_utils`
 - `fivetran_utils`
 
 ----
-### add_pass_through_columns ([source](macros/add_pass_through_columns.sql))
+### add_pass_through_columns ([source](https://github.com/fivetran/dbt_fivetran_utils/blob/master/macros/add_pass_through_columns.sql))
 This macro creates the proper name, datatype, and aliasing for user defined pass through column variable. This
 macro allows for pass through variables to be more dynamic and allow users to alias custom fields they are 
 bringing in. This macro is typically used within staging models of a fivetran dbt source package to pass through
@@ -24,7 +24,7 @@ user defined custom fields.
 * `pass_through_var` (required): The variable which contains the user defined pass through fields.
 
 ----
-### array_agg ([source](macros/array_agg.sql))
+### array_agg ([source](https://github.com/fivetran/dbt_fivetran_utils/blob/master/macros/array_agg.sql))
 This macro allows for cross database field aggregation. The macro contains the database specific field aggregation function for 
 BigQuery, Snowflake, Redshift, and Postgres. By default a comma `,` is used as a delimiter in the aggregation.
 
@@ -36,7 +36,7 @@ BigQuery, Snowflake, Redshift, and Postgres. By default a comma `,` is used as a
 * `field_to_agg` (required): Field within the table you are wishing to aggregate.
 
 ----
-### ceiling ([source](macros/ceiling.sql))
+### ceiling ([source](https://github.com/fivetran/dbt_fivetran_utils/blob/master/macros/ceiling.sql))
 This macro allows for cross database use of the ceiling function. The ceiling function returns the smallest integer greater 
 than, or equal to, the specified numeric expression. The ceiling macro is compatible with BigQuery, Redshift, Postgres, and Snowflake.
 
@@ -48,7 +48,7 @@ than, or equal to, the specified numeric expression. The ceiling macro is compat
 * `num` (required): The integer field you wish to apply the ceiling function.
 
 ----
-### collect_freshness ([source](macros/collect_freshness.sql))
+### collect_freshness ([source](https://github.com/fivetran/dbt_fivetran_utils/blob/master/macros/collect_freshness.sql))
 This macro overrides dbt's default [`collect_freshness` macro](https://github.com/fishtown-analytics/dbt/blob/0.19.latest/core/dbt/include/global_project/macros/adapters/common.sql#L257-L273) that is called when running `dbt source snapshot-freshness`. It allows you to incorporate model enabling/disabling variables into freshness tests, so that, if a source table does not exist, dbt will not run (and error on) a freshness test on the table. **Any package that has a dependency on fivetran_utils will use this version of the macro. If no `meta.is_enabled` field is provided, the `collect_freshness` should run exactly like dbt's default version.**
 
 **Usage:**
@@ -68,7 +68,7 @@ sources:
 * `meta.is_enabled` (optional): The variable(s) you would like to reference to determine if dbt should include this table in freshness tests.
 
 ----
-### dummy_coalesce_value ([source](macros/dummy_coalesce_value.sql))
+### dummy_coalesce_value ([source](https://github.com/fivetran/dbt_fivetran_utils/blob/master/macros/dummy_coalesce_value.sql))
 This macro creates a dummy coalesce value based on the data type of the field. See below for the respective data type and dummy values:
 - String    = 'DUMMY_STRING'
 - Boolean   = null
@@ -84,7 +84,7 @@ This macro creates a dummy coalesce value based on the data type of the field. S
 * `column` (required): Field you are applying the dummy coalesce.
 
 ----
-### empty_variable_warning ([source](macros/empty_variable_warning.sql))
+### empty_variable_warning ([source](https://github.com/fivetran/dbt_fivetran_utils/blob/master/macros/empty_variable_warning.sql))
 This macro checks a declared variable and returns an error message if the variable is empty before running the models within the `dbt_project.yml` file.
 
 **Usage:**
@@ -96,7 +96,7 @@ on-run-start: '{{ fivetran_utils.empty_variable_warning(variable="ticket_field_h
 * `downstream_model`    (required): The downstream model that is affected if the variable is empty.
 
 ----
-### enabled_vars_one_true ([source](macros/enabled_vars_one_true.sql))
+### enabled_vars_one_true ([source](https://github.com/fivetran/dbt_fivetran_utils/blob/master/macros/enabled_vars_one_true.sql))
 This macro references a set of specified boolean variable and returns `true` if any variable value is equal to true.
 
 **Usage:**
@@ -108,7 +108,7 @@ This macro references a set of specified boolean variable and returns `true` if 
 
 ----
 
-### enabled_vars ([source](macros/enabled_vars.sql))
+### enabled_vars ([source](https://github.com/fivetran/dbt_fivetran_utils/edit/master/macros/enabled_vars.sql))
 This macro references a set of specified boolean variable and returns `false` if any variable value is equal to false.
 
 **Usage:**
@@ -120,7 +120,7 @@ This macro references a set of specified boolean variable and returns `false` if
 
 ----
 
-### fill_pass_through_columns ([source](macros/fill_pass_through_columns.sql))
+### fill_pass_through_columns ([source](https://github.com/fivetran/dbt_fivetran_utils/blob/master/macros/fill_pass_through_columns.sql))
 This macro is used to generate the correct sql for package staging models for user defined pass through columns.
 
 **Usage:**
@@ -131,7 +131,7 @@ This macro is used to generate the correct sql for package staging models for us
 * `pass_through_variable` (required): Name of the variable which contains the respective pass through fields for the staging model.
 
 ----
-### fill_staging_columns ([source](macros/fill_staging_columns.sql))
+### fill_staging_columns ([source](https://github.com/fivetran/dbt_fivetran_utils/blob/master/macros/fill_staging_columns.sql))
 This macro is used to generate the correct SQL for package staging models. It takes a list of columns that are expected/needed (`staging_columns`) 
 and compares it with columns in the source (`source_columns`). 
 
@@ -153,7 +153,7 @@ from source
 * `staging_columns` (required): Created as a result of running the [generate_columns_macro](https://github.com/fivetran/dbt_fivetran_utils#generate_columns_macro-source) for the respective table.
 
 ----
-### first_value ([source](macros/first_value.sql))
+### first_value ([source](https://github.com/fivetran/dbt_fivetran_utils/blob/master/macros/first_value.sql))
 This macro returns the value_expression for the first row in the current window frame with cross db functionality. This macro ignores null values. The default first_value calculation within the macro is the `first_value` function. The Redshift first_value calculation is the `first_value` function, with the inclusion of a frame_clause `{{ partition_field }} rows unbounded preceding`.
 
 **Usage:**
@@ -167,7 +167,7 @@ This macro returns the value_expression for the first row in the current window 
 * `order`             (optional): The order of which you want to partition the window frame. The order argument by default is `asc`. If you wish to get the last_value, you may change the argument to `desc`.
 
 ----
-### generate_columns_macro ([source](macros/generate_columns_macro.sql))
+### generate_columns_macro ([source](https://github.com/fivetran/dbt_fivetran_utils/blob/master/macros/generate_columns_macro.sql))
 This macro is used to generate the macro used as an argument within the [fill_staging_columns](https://github.com/fivetran/dbt_fivetran_utils#fill_staging_columns-source) macro which will list all the expected columns within a respective table. The macro output will contain `name` and `datatype`; however, you may add an optional argument for `alias` if you wish to rename the column within the macro. 
 
 The macro should be run using dbt's `run-operation` functionality, as used below. It will print out the macro text, which can be copied and pasted into the relevant `macro` directory file within the package.
@@ -199,7 +199,7 @@ dbt run-operation fivetran_utils.generate_columns_macro --args '{"table_name": "
 * `database_name` (optional): Name of the database which the table you are running the macro for resides in. If empty, the macro will default this value to `target.database`.
 
 ----
-### get_columns_for_macro ([source](macros/get_columns_for_macro.sql))
+### get_columns_for_macro ([source](https://github.com/fivetran/dbt_fivetran_utils/blob/master/macros/get_columns_for_macro.sql))
 This macro returns all column names and datatypes for a specified table within a database and is used as part of the [generate_columns_macro](macros/generate_columns_macro.sql).
 
 **Usage:**
@@ -212,7 +212,7 @@ This macro returns all column names and datatypes for a specified table within a
 * `database_name` (optional): Name of the database where the above mentioned schema and table reside. By default this will be your target.database.
 
 ----
-### json_extract ([source](macros/json_extract.sql))
+### json_extract ([source](https://github.com/fivetran/dbt_fivetran_utils/blob/master/macros/json_extract.sql))
 This macro allows for cross database use of the json extract function. The json extract allows the return of data from a json object.
 The data is returned by the path you provide as the argument. The json_extract macro is compatible with BigQuery, Redshift, Postgres, and Snowflake.
 
@@ -225,7 +225,7 @@ The data is returned by the path you provide as the argument. The json_extract m
 * `string_path`  (required): Name of the path in the json object which you want to extract the data from.
 
 ----
-### json_parse ([source](macros/json_parse.sql))
+### json_parse ([source](https://github.com/fivetran/dbt_fivetran_utils/blob/master/macros/json_parse.sql))
 This macro allows for cross database use of the json extract function, specifically used to parse and extract a nested value from a json object.
 The data is returned by the path you provide as the list within the `string_path` argument. The json_parse macro is compatible with BigQuery, Redshift, Postgres, Snowflake and Databricks.
 
@@ -238,7 +238,7 @@ The data is returned by the path you provide as the list within the `string_path
 * `string_path`  (required): List of item(s) that derive the path in the json object which you want to extract the data from.
 
 ----
-### pivot_json_extract ([source](macros/pivot_json_extract.sql))
+### pivot_json_extract ([source](https://github.com/fivetran/dbt_fivetran_utils/blob/master/macros/pivot_json_extract.sql))
 This macro builds off of the `json_extract` macro in order to extract a list of fields from a json object and pivot the fields out into columns. The `pivot_json_extract` macro is compatible with BigQuery, Redshift, Postgres, and Snowflake.
 
 **Usage:**
@@ -250,7 +250,7 @@ This macro builds off of the `json_extract` macro in order to extract a list of 
 * `list_of_properties`  (required): List of the fields that you want to extract from the json object and pivot out into columns. Any spaces will be replaced by underscores in column names.
 
 ----
-### max_bool ([source](macros/max_bool.sql))
+### max_bool ([source](https://github.com/fivetran/dbt_fivetran_utils/blob/master/macros/max_bool.sql))
 This macro allows for cross database use of obtaining the max boolean value of a field. This macro recognizes true = 1 and false = 0. The macro will aggregate the boolean_field and return the max boolean value. The max_bool macro is compatible with BigQuery, Redshift, Postgres, and Snowflake.
 
 **Usage:**
@@ -261,7 +261,7 @@ This macro allows for cross database use of obtaining the max boolean value of a
 * `boolean_field` (required): Name of the field you are obtaining the max boolean record from.
 
 ----
-### percentile ([source](macros/percentile.sql))
+### percentile ([source](https://github.com/fivetran/dbt_fivetran_utils/blob/master/macros/percentile.sql))
 This macro is used to return the designated percentile of a field with cross db functionality. The percentile function stems from percentile_cont across db's. For Snowflake and Redshift this macro uses the window function opposed to the aggregate for percentile.
 
 **Usage:**
@@ -274,7 +274,7 @@ This macro is used to return the designated percentile of a field with cross db 
 * `percent`          (required): The percent necessary for `percentile_cont` to determine the percentile. If you want to find the median, you will input `0.5` for the percent. 
 
 ----
-### remove_prefix_from_columns ([source](macros/remove_prefix_from_columns.sql))
+### remove_prefix_from_columns ([source](https://github.com/fivetran/dbt_fivetran_utils/blob/master/macros/remove_prefix_from_columns.sql))
 This macro removes desired prefixes from specified columns. Additionally, a for loop is utilized which allows for adding multiple columns to remove prefixes.
 
 **Usage:**
@@ -287,7 +287,7 @@ This macro removes desired prefixes from specified columns. Additionally, a for 
 * `exclude` (optional): The columns you wish to exclude from this macro. By default no columns are excluded.
 
 ----
-### snowflake_seed_data ([source](macros/snowflake_seed_data.sql))
+### snowflake_seed_data ([source](https://github.com/fivetran/dbt_fivetran_utils/blob/master/macros/snowflake_seed_data.sql))
 This macro is intended to be used when a source table column is a reserved keyword in Snowflake, and Circle CI is throwing a fit.
 It simply chooses which version of the data to seed (the Snowflake copy should capitalize and put three pairs of quotes around the problematic column).
 
@@ -301,7 +301,7 @@ It simply chooses which version of the data to seed (the Snowflake copy should c
 * `seed_name` (required): Name of the seed that has separate snowflake seed data.
 
 ----
-### seed_data_helper ([source](macros/seed_data_helper.sql))
+### seed_data_helper ([source](https://github.com/fivetran/dbt_fivetran_utils/blob/master/macros/seed_data_helper.sql))
 This macro is intended to be used when a source table column is a reserved keyword in a warehouse, and Circle CI is throwing a fit.
 It simply chooses which version of the data to seed. Also note the `warehouses` argument is a list and multiple warehouses may be added based on the number of warehouse
 specific seed data files you need for integration testing.
@@ -317,7 +317,7 @@ specific seed data files you need for integration testing.
 * `warehouses` (required): List of the warehouses for which you want CircleCi to use the helper seed data.
 
 ----
-### staging_models_automation ([source](macros/staging_models_automation.sql))
+### staging_models_automation ([source](https://github.com/fivetran/dbt_fivetran_utils/blob/master/macros/staging_models_automation.sql))
 This macro is intended to be used as a `run-operation` when generating Fivetran dbt source package staging models/macros. This macro will receive user input to create all necessary ([bash commands](columns_setup.sh)) appended with `&&` so they may all be ran at once. The output of this macro within the CLI will then be copied and pasted as a command to generate the staging models/macros.
 **Usage:**
 ```bash
@@ -335,7 +335,7 @@ source dbt_modules/fivetran_utils/columns_setup.sh '../dbt_asana_source' stg_asa
 * `tables`          (required): List of the tables for which you want to create staging models/macros.
 
 ----
-### string_agg ([source](macros/string_agg.sql))
+### string_agg ([source](https://github.com/fivetran/dbt_fivetran_utils/blob/master/macros/string_agg.sql))
 This macro allows for cross database field aggregation and delimiter customization. Supported database specific field aggregation functions include 
 BigQuery, Snowflake, Redshift.
 
@@ -347,7 +347,7 @@ BigQuery, Snowflake, Redshift.
 * `field_to_agg` (required): Field within the table you are wishing to aggregate.
 * `delimiter`    (required): Character you want to be used as the delimiter between aggregates.
 ----
-### timestamp_add ([source](macros/timestamp_add.sql))
+### timestamp_add ([source](https://github.com/fivetran/dbt_fivetran_utils/blob/master/macros/timestamp_add.sql))
 This macro allows for cross database addition of a timestamp field and a specified datepart and interval for BigQuery, Redshift, Postgres, and Snowflake.
 
 **Usage:**
@@ -360,7 +360,7 @@ This macro allows for cross database addition of a timestamp field and a specifi
 * `from_timestamp` (required): The timestamp field you are adding the datepart and interval.
 
 ----
-### timestamp_diff ([source](macros/timestamp_diff.sql))
+### timestamp_diff ([source](https://github.com/fivetran/dbt_fivetran_utils/blob/master/macros/timestamp_diff.sql))
 This macro allows for cross database timestamp difference calculation for BigQuery, Redshift, Postgres, and Snowflake.
 
 **Usage:**
@@ -373,7 +373,7 @@ This macro allows for cross database timestamp difference calculation for BigQue
 * `datepart`         (required): The date part applied to the timestamp difference calculation.
 
 ----
-### union_relations ([source](macros/union_relations.sql))
+### union_relations ([source](https://github.com/fivetran/dbt_fivetran_utils/blob/master/macros/union_relations.sql))
 This macro unions together an array of [Relations](https://docs.getdbt.com/docs/writing-code-in-dbt/class-reference/#relation),
 even when columns have differing orders in each Relation, and/or some columns are
 missing from some relations. Any columns exclusive to a subset of these
@@ -396,7 +396,7 @@ relations will be filled with `null` where not present. An new column
 * `source_column_name` (optional): The name of the column that records the source of this row. By default this argument is set to `none`.
 
 ----
-### union_data ([source](macros/union_data.sql))
+### union_data ([source](https://github.com/fivetran/dbt_fivetran_utils/blob/master/macros/union_data.sql))
 This macro unions together tables of the same structure so that users can treat data from multiple connectors as the 'source' to a package.
 Depending on which macros are set, it will either look for schemas of the same name across multiple databases, or schemas with different names in the same database.
 
@@ -427,7 +427,7 @@ When using this functionality, every `_tmp` table should use this macro as descr
 * `default_variable`: The name of the variable that users should populate when they want to pass one specific relation to this model (mostly used for CI)
 
 ----
-### source_relation ([source](macros/source_relation.sql))
+### source_relation ([source](https://github.com/fivetran/dbt_fivetran_utils/blob/master/macros/source_relation.sql))
 This macro creates a new column that signifies with database/schema a record came from when using the `union_data` macro above. 
 It should be added to all non-tmp staging models when using the `union_data` macro. 
 
@@ -437,7 +437,7 @@ It should be added to all non-tmp staging models when using the `union_data` mac
 ```
 
 ## Bash Scripts
-### columns_setup.sh ([source](columns_setup.sh))
+### columns_setup.sh ([source](https://github.com/fivetran/dbt_fivetran_utils/blob/master/columns_setup.sh))
 
 This bash file can be used to setup or update packages to use the `fill_staging_columns` macro above. The bash script does the following three things:
 
