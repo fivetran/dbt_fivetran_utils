@@ -69,5 +69,5 @@ order by 1
 
 
 {% macro get_columns_for_macro(table_name, schema_name, database_name) -%}
-  {{ return(adapter.dispatch('get_columns_for_macro')(table_name, schema_name, database_name)) }}
+  {{ return(adapter.dispatch('get_columns_for_macro', 'fivetran_utils')(table_name, schema_name, database_name)) }}
 {%- endmacro %}

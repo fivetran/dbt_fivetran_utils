@@ -63,5 +63,5 @@ order by 1
 
 
 {% macro get_column_names_only(table_name, schema_name, database_name) -%}
-{{ return(adapter.dispatch('get_column_names_only')(table_name, schema_name, database_name)) }}
+{{ return(adapter.dispatch('get_column_names_only', 'fivetran_utils')(table_name, schema_name, database_name)) }}
 {%- endmacro %}
