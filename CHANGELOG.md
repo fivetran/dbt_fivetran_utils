@@ -1,3 +1,6 @@
+# dbt_fivetran_utils v0.3.7
+## 🎉 Features 🎉 
+- Expands `try_cast()` capabilities for Snowflake. The native function can only convert fields that are originally strings. The macro now proactively casts the field as a string prior to casting it to the target datatype.
 # dbt_fivetran_utils v0.3.6
 ## 🎉 Features 🎉 
 - New macro `get_column_names_only` that further automates the staging model creation to prefill column fields in the final select statement. 
