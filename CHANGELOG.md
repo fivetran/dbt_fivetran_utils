@@ -1,22 +1,12 @@
 # dbt_fivetran_utils v0.3.8
-## Clean Up :broom: 
 - Removes automation macros used only by the Fivetran dbt package team when developing new dbt packages. These macros are not needed within the utility package for access by all Fivetran dbt packages. 
     - As a result of the above, these automations were removed and re-located to our Fivetran team's automations repo.
 # dbt_fivetran_utils v0.3.7
-## Bug Fixes
-- Rollback of the v0.3.6 release which introduced a bug for Snowflake users.
+- Rollback of the v0.3.6 release that introduced a bug for Snowflake users.
 # dbt_fivetran_utils v0.3.6
 ## 🎉 Features 🎉 
 - New macro `get_column_names_only` that further automates the staging model creation to prefill column fields in the final select statement. 
 - Updated bash script `generate_models` to incorporate this new macro.
-# dbt_fivetran_utils v0.3.5
-## 🎉 Features 🎉 
-- The `try_cast` macro has been added. This macro will try to cast the field to the specified datatype. If it cannot be cast, then a `null` value is provided. Please note, Postgres and Redshift destinations are only compatible with try_cast and the numeric datatype.
-# dbt_fivetran_utils v0.3.4
-## 🎉 Features 🎉 
-Added a new macro called `generate_docs` which returns a `source` command leveraging `generate_docs.sh` to do the following:
-- seeds, runs and creates documentation for integration tests models
-- moves `catalog.json`, `index.html`, `manifest.json` and `run_results.json` into a `<project_name>/docs` folder
 # dbt_fivetran_utils v0.3.5
 ## 🎉 Features 🎉 
 - The `try_cast` macro has been added. This macro will try to cast the field to the specified datatype. If it cannot be cast, then a `null` value is provided. Please note, Postgres and Redshift destinations are only compatible with try_cast and the numeric datatype.
