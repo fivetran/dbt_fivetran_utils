@@ -14,10 +14,27 @@
 </p>
 
 # Fivetran Utilities for dbt
+# 📣 What does this dbt package do?
+This package includes macros that are used across Fivetran's dbt packages. See the **Contents** below for the macros available within this package.
 
-This package includes macros that are used in Fivetran's dbt packages.
+# 🤔 Who is the target user of this dbt package?
+- You use dbt
+- You are a member of the Fivetran dbt package team, or would like to leverage any of the included macros
+- Cross database compatibility of your sql functions is important to you
 
-In order to use macros from this package with other databases, you can set a [`dispatch` config](https://docs.getdbt.com/reference/project-configs/dispatch-config) in your root `dbt_project.yml`. For example:
+# 🎯 How do I use the dbt package?
+## Step 1: Installing the Package
+Include the following fivetran_utils package version in your `packages.yml`
+> Check [dbt Hub](https://hub.getdbt.com/) for the latest installation instructions, or [read the dbt docs](https://docs.getdbt.com/docs/package-management) for more information on installing packages.
+```yaml
+packages:
+  - package: fivetran/fivetran_utils
+    version: [">=0.3.0", "<0.4.0"]
+```
+## Step 2: Using the Macros
+Call any of the below listed macros in your models. See the specific details for each macros within the contents below.
+
+Additionally, in order to use macros from this package with other utility packages, you can set a [`dispatch` config](https://docs.getdbt.com/reference/project-configs/dispatch-config) in your root `dbt_project.yml`. For example:
 
 ```yml
 dispatch:
@@ -26,10 +43,9 @@ dispatch:
   - macro_namespace: dbt_utils
     search_order: ['spark_utils', 'fivetran_utils', 'dbt_utils']
 ```
-## Macros
 
 ----
-### Contents
+# 📋 Contents
 
 - [Tests and helpers](#tests-and-helpers)
   - [collect_freshness](#collect_freshness-source)
@@ -500,3 +516,17 @@ This macro references a set of specified boolean variable and returns `true` if 
 ```
 **Args:**
 * `vars` (required): Variable(s) you are referencing to return the declared variable value.
+
+# 🙌 How is this package maintained and can I contribute?
+## Package Maintenance
+The Fivetran team maintaining this package **only** maintains the latest version of the package. We highly recommend you stay consistent with the [latest version](https://hub.getdbt.com/fivetran/jira/latest/) of the package and refer to the [CHANGELOG](https://github.com/fivetran/dbt_jira/blob/main/CHANGELOG.md) and release notes for more information on changes across versions.
+
+## Contributions
+These dbt packages are developed by a small team of analytics engineers at Fivetran. However, the packages are made better by community contributions! 
+
+We highly encourage and welcome contributions to this package. Check out [this post](https://discourse.getdbt.com/t/contributing-to-a-dbt-package/657) on the best workflow for contributing to a package!
+
+# 🏪 Are there any resources available?
+- If you encounter any questions or want to reach out for help, please refer to the [GitHub Issue](https://github.com/fivetran/dbt_fivetran_utils/issues/new/choose) section to find the right avenue of support for you.
+- If you would like to provide feedback to the dbt package team at Fivetran, or would like to request a future dbt package to be developed, then feel free to fill out our [Feedback Form](https://www.surveymonkey.com/r/DQ7K7WW).
+- Have questions or want to just say hi? Book a time during our office hours [here](https://calendly.com/fivetran-solutions-team/fivetran-solutions-team-office-hours) or send us an email at solutions@fivetran.com.
