@@ -12,6 +12,7 @@
     <a alt="PRs">
         <img src="https://img.shields.io/badge/Contributions-welcome-blueviolet" /></a>
 </p>
+
 # Fivetran Utilities for dbt
 
 This package includes macros that are used in Fivetran's dbt packages.
