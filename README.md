@@ -6,25 +6,20 @@
         href="https://fivetran.com/docs/getting-started/core-concepts#releasephases">
         <img src="https://img.shields.io/badge/Fivetran Release Phase-_Beta-orange.svg" /></a>
     <a alt="dbt-core">
-        <img src="https://img.shields.io/badge/dbt_core-version_>=1.0.0_<2.0.0-orange.svg" /></a>
+        <img src="https://img.shields.io/badge/dbt_Core™_version->=1.0.0_<2.0.0-orange.svg" /></a>
     <a alt="Maintained?">
         <img src="https://img.shields.io/badge/Maintained%3F-yes-green.svg" /></a>
     <a alt="PRs">
         <img src="https://img.shields.io/badge/Contributions-welcome-blueviolet" /></a>
 </p>
 
-# Fivetran Utilities for dbt
+# Fivetran Utilities Macros for dbt
 # 📣 What does this dbt package do?
-This package includes macros that are used across Fivetran's dbt packages. See the **Contents** below for the macros available within this package.
-
-# 🤔 Who is the target user of this dbt package?
-- You use dbt
-- You are a member of the Fivetran dbt package team, or would like to leverage any of the included macros
-- Cross database compatibility of your sql functions is important to you
+This package includes macros that are used across Fivetran's dbt packages. This package is comprised primarily of cross database compatible macros and macros specific for dbt package maintenance. See the **Contents** below for the macros available within this package.
 
 # 🎯 How do I use the dbt package?
 ## Step 1: Installing the Package
-Include the following fivetran_utils package version in your `packages.yml`
+Include the following fivetran_utils package version in your `packages.yml`. Please note that this package is installed by default within **all** Fivetran dbt packages.
 > Check [dbt Hub](https://hub.getdbt.com/) for the latest installation instructions, or [read the dbt docs](https://docs.getdbt.com/docs/package-management) for more information on installing packages.
 ```yaml
 packages:
@@ -32,7 +27,7 @@ packages:
     version: [">=0.3.0", "<0.4.0"]
 ```
 ## Step 2: Using the Macros
-Call any of the below listed macros in your models. See the specific details for each macros within the contents below.
+Call any of the below listed macros within the **Contents** section in your models. See the specific details for each macro below.
 
 Additionally, in order to use macros from this package with other utility packages, you can set a [`dispatch` config](https://docs.getdbt.com/reference/project-configs/dispatch-config) in your root `dbt_project.yml`. For example:
 
