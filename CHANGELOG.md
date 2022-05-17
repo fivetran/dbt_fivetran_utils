@@ -1,6 +1,11 @@
 # dbt_fivetran_utils v0.3.8
-- Removes automation macros used only by the Fivetran dbt package team when developing new dbt packages. These macros are not needed within the utility package for access by all Fivetran dbt packages. 
+## Bug Fixes
+- Adjustment within the `try_cast` macro to fix an error witch ocurred within Snowflake warehouses. ([#79](https://github.com/fivetran/dbt_fivetran_utils/pull/79))
+
+## Under the Hood
+- Removes automation macros used only by the Fivetran dbt package team when developing new dbt packages. These macros are not needed within the utility package for access by all Fivetran dbt packages. ([#79](https://github.com/fivetran/dbt_fivetran_utils/pull/79))
     - As a result of the above, these automations were removed and re-located to our Fivetran team's automations repo.
+
 # dbt_fivetran_utils v0.3.7
 - Rollback of the v0.3.6 release that introduced a bug for Snowflake users.
 # dbt_fivetran_utils v0.3.6
