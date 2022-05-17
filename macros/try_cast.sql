@@ -40,7 +40,7 @@
 {% endmacro %}
 
 {% macro snowflake__try_cast(field, type) %}
-    try_cast({{field}} as {{type}})
+    try_cast(cast({{field}} as varchar) as {{type}})
 {% endmacro %}
 
 {% macro bigquery__try_cast(field, type) %}
