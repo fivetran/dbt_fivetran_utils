@@ -2,7 +2,7 @@
 
 {% if var(pass_through_variable, none) %}
     {% for field in var(pass_through_variable) %}
-        , {{ transform ~ '(' ~ (field.alias if field.alias else field.name) ~ ')' }}
+        , {{ transform ~ '(' ~ (field.alias if field.alias else field.name) ~ ')' }} as {{ field.alias if field.alias else field.name }}
     {% endfor %}
 {% endif %}
 
