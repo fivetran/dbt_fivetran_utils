@@ -1,4 +1,4 @@
-{% macro persist_pass_through_columns(pass_through_variable, identifier, transform='') %}
+{% macro persist_pass_through_columns(pass_through_variable, identifier=none, transform='') %}
 
 {% if var(pass_through_variable, none) %}
     {% for field in var(pass_through_variable) %}
