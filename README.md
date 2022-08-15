@@ -383,14 +383,16 @@ from source
 
 ----
 ### persist_pass_through_columns ([source](macros/persist_pass_through_columns.sql))
-This macro is used to persist pass through columns from the staging model to the transform package. This is particularly helpful when a `select *` is not feasible.
+This macro is used to persist pass through columns from the staging model to the **transform** package. This is particularly helpful when a `select *` is not feasible.
 
 **Usage:**
 ```sql
-{{ fivetran_utils.fill_pass_through_columns(pass_through_variable='hubspot__contact_pass_through_columns') }}
+{{ fivetran_utils.persist_pass_through_columns(pass_through_variable='hubspot__contact_pass_through_columns', identifier='cte_name', transform='') }}
 ```
 **Args:**
 * `pass_through_variable` (required): Name of the variable which contains the respective pass through fields for the model.
+* `identifier` (optional): Relation-identifier to prefix (followed by `'.'`) each column with (ie in case of ambiguous column join errors).
+* `transform` (optional): SQL function you would like to apply to the passed through columns.
 
 ----
 ### remove_prefix_from_columns ([source](macros/remove_prefix_from_columns.sql))
