@@ -1,3 +1,7 @@
+# dbt_fivetran_utils v0.3.9
+## 🎉 Features 🎉 
+- Addition of the `transform` argument to the `persist_pass_through_columns` macro. This argument is optional and will take in a SQL function (most likely an aggregate such as `sum`) you would like to apply to the passthrough columns ([81](https://github.com/fivetran/dbt_fivetran_utils/pull/81)).
+
 # dbt_fivetran_utils v0.3.8
 ## Bug Fixes
 - Adjustment within the `try_cast` macro to fix an error witch ocurred within Snowflake warehouses. ([#79](https://github.com/fivetran/dbt_fivetran_utils/pull/79))

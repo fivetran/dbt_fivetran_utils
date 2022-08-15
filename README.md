@@ -387,7 +387,7 @@ This macro is used to persist pass through columns from the staging model to the
 
 **Usage:**
 ```sql
-{{ fivetran_utils.fill_pass_through_columns(pass_through_variable='hubspot__contact_pass_through_columns', identifier='cte_name', transform='') }}
+{{ fivetran_utils.persist_pass_through_columns(pass_through_variable='hubspot__contact_pass_through_columns', identifier='cte_name', transform='') }}
 ```
 **Args:**
 * `pass_through_variable` (required): Name of the variable which contains the respective pass through fields for the model.
