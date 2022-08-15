@@ -1,4 +1,4 @@
 name: 'fivetran_utils'
-version: '0.3.8'
+version: '0.3.9'
 config-version: 2
 require-dbt-version: [">=1.0.0", "<2.0.0"]
