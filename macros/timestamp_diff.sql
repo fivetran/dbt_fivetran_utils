@@ -69,6 +69,6 @@
 
 {% macro spark__timestamp_diff(first_date, second_date, datepart) %}
 
-{{ spark_utils.datediff(first_date, second_date, datepart )}}
+{{ dbt_utils.datediff(first_date, second_date, datepart )}}
 
 {% endmacro %}
