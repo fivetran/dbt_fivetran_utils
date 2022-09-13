@@ -1,7 +1,7 @@
 # dbt_fivetran_utils v0.4.0
 ## Updates
-The below updates are now incorporated into this package as a result of the cross-db macro migration from `dbt-utils` to `dbt-core` ([dbt-core v1.2.0](https://github.com/dbt-labs/dbt-core/releases/tag/v1.2.0)):
-- Macro updates dispatch from `{{ dbt_utils.<macro> }}` to `{{ dbt.<macro> }}`
+[PR #85](https://github.com/fivetran/dbt_fivetran_utils/pull/85) updates are now incorporated into this package as a result of the cross-db macro migration from `dbt-utils` to `dbt-core` ([dbt-core v1.2.0](https://github.com/dbt-labs/dbt-core/releases/tag/v1.2.0)):
+- Macro updates dispatch from `{{ dbt_utils.<macro> }}` to `{{ dbt.<macro> }}` for respective [cross-db macros](https://docs.google.com/spreadsheets/d/1xF_YwJ4adsnjFkUbUm8-EnEL1r_C-9_OI_pP4m4FlJU/edit#gid=1062533692):
     - `add_pass_through_columns.sql`
     - `source_relation.sql`
     - `timestamp_add.sql`
