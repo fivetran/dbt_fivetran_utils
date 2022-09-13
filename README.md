@@ -21,7 +21,7 @@ Include the following fivetran_utils package version in your `packages.yml`. Ple
 ```yaml
 packages:
   - package: fivetran/fivetran_utils
-    version: [">=0.3.0", "<0.4.0"]
+    version: [">=0.4.0", "<0.5.0"]
 ```
 ## Step 2: Using the Macros
 Call any of the below listed macros within the **Contents** section in your models. See the specific details for each macro below.

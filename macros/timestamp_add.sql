@@ -40,6 +40,6 @@
 
 {% macro spark__timestamp_add(datepart, interval, from_timestamp) %}
 
-    {{ dbt_utils.dateadd(datepart, interval, from_timestamp) }}
+    {{ dbt.dateadd(datepart, interval, from_timestamp) }}
         
 {% endmacro %}
