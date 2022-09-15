@@ -1,5 +1,11 @@
 # Fivetran Utilities for dbt
 
+> ## ⚠️ Warning! ⚠️
+>
+> You are viewing a deprecated branch, which is no longer maintained and not recommended for use. This branch remains public to prevent breaking changes to any existing dbt projects that use this package. 
+>
+> To view the current release branch, please refer to the [release list](https://github.com/fivetran/dbt_fivetran_utils/releases).
+
 This package includes macros that are used in Fivetran's dbt packages.
 
 ## Macros
