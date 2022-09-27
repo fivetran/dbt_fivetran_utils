@@ -13,6 +13,8 @@
         - macro_namespace: fivetran_utils
             search_order: ['fivetran_utils_union','fivetran_utils']
     ```
+
+    -- todo: update changelog after getting goahead on variable
 # dbt_fivetran_utils v0.3.9
 ## 🎉 Features 🎉 
 - Addition of the `transform` argument to the `persist_pass_through_columns` macro. This argument is optional and will take in a SQL function (most likely an aggregate such as `sum`) you would like to apply to the passthrough columns ([81](https://github.com/fivetran/dbt_fivetran_utils/pull/81)).

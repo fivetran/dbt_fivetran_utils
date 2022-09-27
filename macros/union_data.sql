@@ -1,6 +1,6 @@
 {% macro union_data(table_identifier, database_variable, schema_variable, default_database, default_schema, default_variable, union_schema_variable='union_schemas', union_database_variable='union_databases') -%}
 
-{{ adapter.dispatch('union_data', 'fivetran_utils_union') (
+{{ adapter.dispatch('union_data', 'fivetran_utils') (
     table_identifier, 
     database_variable, 
     schema_variable, 
@@ -36,11 +36,10 @@
     {% endif %}
 
     {% for schema in var(union_schema_variable) %}
-
     {% set relation=adapter.get_relation(
-        database=source(schema, table_identifier).database,
-        schema=source(schema, table_identifier).schema,
-        identifier=source(schema, table_identifier).identifier
+        database=source(schema, table_identifier).database if var('has_defined_sources', false) else var(database_variable, default_database),
+        schema=source(schema, table_identifier).schema if var('has_defined_sources', false) else schema,
+        identifier=source(schema, table_identifier).identifier if var('has_defined_sources', false) else table_identifier
     ) -%}
     
     {% set relation_exists=relation is not none %}
@@ -62,9 +61,9 @@
     {% for database in var(union_database_variable) %}
 
     {% set relation=adapter.get_relation(
-        database=source(schema, table_identifier).database,
-        schema=source(schema, table_identifier).schema,
-        identifier=source(schema, table_identifier).identifier
+        database=source(schema, table_identifier).database if var('has_defined_sources', false) else database,
+        schema=source(schema, table_identifier).schema if var('has_defined_sources', false) else var(schema_variable, default_schema),
+        identifier=source(schema, table_identifier).identifier if var('has_defined_sources', false) else table_identifier
     ) -%}
 
     {% set relation_exists=relation is not none %}

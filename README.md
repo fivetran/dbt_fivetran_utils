@@ -428,6 +428,8 @@ If the `var` with the name of the `database_variable` argument is set, the macro
 
 When using this functionality, every `_tmp` table should use this macro as described below.
 
+To create dependencies between the unioned model and its **sources**, you must define the source tables in a `.yml` file in your project and set the `has_defined_sources` variable (scoped to the source package) to `True` in your `dbt_project.yml` file.
+
 **Usage:**
 ```sql
 {{
