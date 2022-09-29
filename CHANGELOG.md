@@ -1,20 +1,10 @@
-# dbt_fivetran_utils v0.4.0-b1
-## Bug Fixes
-- The `union_data` macro has been adjusted to establish a source relation instead of a floating relation. 
-    - To leverage this macro in an environment where `dbt_fivetran_utils` is already installed, you can add the following to your `packages.yml` to install this version of the package:
-    ```yml
-    - git: https://github.com/fivetran/dbt_fivetran_utils.git
-        revision: bugfix/union-data
-        warn-unpinned: false
-    ```
-    - You can then add the following to your `dbt_project.yml` to dispatch this package version (`fivetran_utils_union`) in place of the original package (`dbt_fivetran_utils`).
-    ```yml
-    dispatch:
-        - macro_namespace: fivetran_utils
-            search_order: ['fivetran_utils_union','fivetran_utils']
-    ```
+# dbt_fivetran_utils v0.3.10
 
-    -- todo: update changelog after getting goahead on variable
+## Bug Fixes
+- The `union_data` macro has been adjusted to establish a source relation instead of a floating relation, though the default behavior still uses a floating relation. To establish relationships between sources and the models that union them:
+  - Define the sources in `.yml` files in your project. Only the names of tables are required.
+  - In your `dbt_project.yml` file, set the `has_defined_sources` variable to `true`. This variable has a generic name, so you must scope it to the package/project in which the `union_data` macro is called.
+
 # dbt_fivetran_utils v0.3.9
 ## 🎉 Features 🎉 
 - Addition of the `transform` argument to the `persist_pass_through_columns` macro. This argument is optional and will take in a SQL function (most likely an aggregate such as `sum`) you would like to apply to the passthrough columns ([81](https://github.com/fivetran/dbt_fivetran_utils/pull/81)).
