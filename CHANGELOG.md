@@ -1,6 +1,7 @@
-# dbt_fivetran_utils v0.3.10
+# dbt_fivetran_utils v0.4.0
 
 ## Bug Fixes
+[PR #89](https://github.com/fivetran/dbt_fivetran_utils/pull/89) introduces the following change:
 - The `union_data` macro has been adjusted to establish a source relation instead of a floating relation, though the default behavior still uses a floating relation. To establish relationships between sources and the models that union them:
   - Define the sources in `.yml` files in your project. Only the names of tables are required.
   - In your `dbt_project.yml` file, set the `has_defined_sources` variable to `true`. This variable has a generic name, so you must scope it to the package/project in which the `union_data` macro is called.

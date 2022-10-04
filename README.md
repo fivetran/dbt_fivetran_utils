@@ -428,10 +428,11 @@ If the `var` with the name of the `database_variable` argument is set, the macro
 
 When using this functionality, every `_tmp` table should use this macro as described below.
 
-To create dependencies between the unioned model and its **sources**, you must define the source tables in a `.yml` file in your project and set the `has_defined_sources` variable (scoped to the source package in which the macro is being called) to `True` in your `dbt_project.yml` file.
+To create dependencies between the unioned model and its *sources*, you **must define** the source tables in a `.yml` file in your project and set the `has_defined_sources` variable (scoped to the source package in which the macro is being called) to `True` in your `dbt_project.yml` file. If you set `has_defined_sources` to true and do not define sources (at least adding the `name` of each table in the source), dbt will throw an error.
 
 **Usage:**
 ```sql
+-- in model.sql file
 {{
     fivetran_utils.union_data(
         table_identifier='customer', 
@@ -453,6 +454,38 @@ To create dependencies between the unioned model and its **sources**, you must d
 * `union_schema_variable` (optional): The name of the union schema variable. By default the macro will look for `union_schemas`.
 * `union_database_variable` (optional): The name of the union database variable. By default the macro will look for `union_databases`.
 
+```yml
+# in root dbt_project.yml file
+vars:
+  shopify_source:
+    has_defined_sources: true
+```
+
+```yml
+# in a root-project schema.yml file 
+version: 2
+
+sources:
+  - name: shopify_us
+    schema: shopify_us
+    database: "{{ var('shopify_database', target.database) }}"
+    loader: Fivetran
+    loaded_at_field: _fivetran_synced
+    tables:
+      - name: account
+      - name: customer 
+      ...
+  
+  - name: shopify_mx
+    schema: shopify_mx
+    database: "{{ var('shopify_database', target.database) }}"
+    loader: Fivetran
+    loaded_at_field: _fivetran_synced
+    tables:
+      - name: account
+      - name: customer 
+      ...
+```
 ----
 ### union_relations ([source](macros/union_relations.sql))
 This macro unions together an array of [Relations](https://docs.getdbt.com/docs/writing-code-in-dbt/class-reference/#relation),
