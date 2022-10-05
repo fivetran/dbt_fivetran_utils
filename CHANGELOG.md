@@ -13,7 +13,7 @@
     - `source_relation.sql`
     - `timestamp_add.sql`
     - `timestamp_diff.sql`
-- `packages.yml` update for `dbt_utils` from `[">=0.8.0", "<0.9.0"]` to `[">=1.2.0", "<2.0.0"]`
+- `packages.yml` update for `dbt_utils` from `[">=0.8.0", "<0.9.0"]` to `[">=0.9.0", "<2.0.0"]`
 
 # dbt_fivetran_utils v0.3.9
 ## 🎉 Features 🎉 
