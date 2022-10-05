@@ -6,11 +6,11 @@
 
       {% if column.alias %}
 
-      {% do base_columns.append({ "name": column.name, "alias": column.alias, "datatype": column.datatype if column.datatype else dbt_utils.type_string()}) %}
+      {% do base_columns.append({ "name": column.name, "alias": column.alias, "datatype": column.datatype if column.datatype else dbt.type_string()}) %}
 
       {% else %}
 
-      {% do base_columns.append({ "name": column.name, "datatype": column.datatype if column.datatype else dbt_utils.type_string()}) %}
+      {% do base_columns.append({ "name": column.name, "datatype": column.datatype if column.datatype else dbt.type_string()}) %}
         
       {% endif %}
 

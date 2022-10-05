@@ -6,6 +6,15 @@
   - Define the sources in `.yml` files in your project. Only the names of tables are required.
   - In your `dbt_project.yml` file, set the `has_defined_sources` variable to `true`. This variable has a generic name, so you must scope it to the package/project in which the `union_data` macro is called.
 
+## Updates
+[PR #85](https://github.com/fivetran/dbt_fivetran_utils/pull/85) updates are now incorporated into this package as a result of the cross-db macro migration from `dbt-utils` to `dbt-core` ([dbt-core v1.2.0](https://github.com/dbt-labs/dbt-core/releases/tag/v1.2.0)):
+- Macro updates dispatch from `{{ dbt_utils.<macro> }}` to `{{ dbt.<macro> }}` for respective [cross-db macros](https://docs.google.com/spreadsheets/d/1xF_YwJ4adsnjFkUbUm8-EnEL1r_C-9_OI_pP4m4FlJU/edit#gid=1062533692):
+    - `add_pass_through_columns.sql`
+    - `source_relation.sql`
+    - `timestamp_add.sql`
+    - `timestamp_diff.sql`
+- `packages.yml` update for `dbt_utils` from `[">=0.8.0", "<0.9.0"]` to `[">=1.2.0", "<2.0.0"]`
+
 # dbt_fivetran_utils v0.3.9
 ## 🎉 Features 🎉 
 - Addition of the `transform` argument to the `persist_pass_through_columns` macro. This argument is optional and will take in a SQL function (most likely an aggregate such as `sum`) you would like to apply to the passthrough columns ([81](https://github.com/fivetran/dbt_fivetran_utils/pull/81)).
