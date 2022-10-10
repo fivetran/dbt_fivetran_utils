@@ -11,6 +11,11 @@
 </p>
 
 # Fivetran Utilities Macros for dbt
+
+# 🤔 Who are the intended users of this package?
+- The Fivetran team to leverage across Fivetran dbt packages
+- It is not recommend to use this package outside of the Fivetran dbt packages
+
 # 📣 What does this dbt package do?
 This package includes macros that are used across Fivetran's dbt packages. This package is comprised primarily of cross database compatible macros and macros specific for dbt package maintenance. See the **Contents** below for the macros available within this package.
 
