@@ -2,7 +2,7 @@
 
 {%- for property in list_of_properties -%}
 
-replace( {{ fivetran_utils.json_extract(string, property) }}, '"', '') as {{ property | replace(' ', '_') | lower }}
+replace( {{ fivetran_utils.json_extract(string, property) }}, '"', '') as {{ property | replace(' ', '_') | replace('.', '_') | lower }}
 
 {%- if not loop.last -%},{%- endif %}
 {% endfor -%}
