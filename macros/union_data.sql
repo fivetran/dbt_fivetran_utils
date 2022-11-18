@@ -52,7 +52,7 @@
 
     {% endfor %}
 
-    {{ dbt_utils.union_relations(relations) }}
+    {{ fivetran_utils.fivetran_union_relations(relations) }}
 
 {% elif var(union_database_variable, none) %}
 
@@ -76,7 +76,7 @@
 
     {% endfor %}
 
-    {{ dbt_utils.union_relations(relations) }}
+    {{ fivetran_utils.fivetran_union_relations(relations) }}
 
 {% else %}
 
