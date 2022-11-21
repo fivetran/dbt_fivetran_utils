@@ -238,7 +238,7 @@ This macro builds off of the `json_extract` macro in order to extract a list of 
 ```
 **Args:**
 * `string` (required): Name of the field which contains the json object.
-* `list_of_properties`  (required): List of the fields that you want to extract from the json object and pivot out into columns. Any spaces will be replaced by underscores in column names.
+* `list_of_properties`  (required): List of the fields that you want to extract from the json object and pivot out into columns.
 
 ----
 ### string_agg ([source](macros/string_agg.sql))
