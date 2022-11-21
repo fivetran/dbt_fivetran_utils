@@ -1,3 +1,8 @@
+# dbt_fivetran_utils v0.4.2
+
+## Updates
+[PR #92](https://github.com/fivetran/dbt_fivetran_utils/pull/92) updates the `pivot_json_extract` macro to include additional formats of fields to be pivoted out into columns. Specifically, allowing for fields with `.` to be replaced with `_`, for metadata variables to accept dictionaries in addition to strings, and for aliasing of fields.
+
 # dbt_fivetran_utils v0.4.1
 
 ## Bug Fixes
