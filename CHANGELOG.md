@@ -1,7 +1,10 @@
 # dbt_fivetran_utils v0.4.1
 
 ## Bug Fixes
-[PR #91](https://github.com/fivetran/dbt_fivetran_utils/pull/91) updates dispatch from `{{ dbt_utils.<macro> }}` to `{{ dbt.<macro> }}` for additional [cross-db macros](https://docs.google.com/spreadsheets/d/1xF_YwJ4adsnjFkUbUm8-EnEL1r_C-9_OI_pP4m4FlJU/edit#gid=1062533692) missed in the `fivetran_utils.union_relations()` macro.
+- Updates dispatch from `{{ dbt_utils.<macro> }}` to `{{ dbt.<macro> }}` for additional [cross-db macros](https://docs.google.com/spreadsheets/d/1xF_YwJ4adsnjFkUbUm8-EnEL1r_C-9_OI_pP4m4FlJU/edit#gid=1062533692) missed in the `fivetran_utils.union_relations()` macro. ([PR #91](https://github.com/fivetran/dbt_fivetran_utils/pull/91))
+
+## Updates
+- Updates the `pivot_json_extract` macro to include additional formats of fields using a new `name` and `alias` argument to be pivoted out into columns. Specifically, allowing for fields with `.` to be replaced with `_`, for metadata variables to accept dictionaries in addition to strings, and for aliasing of fields. ([PR #92](https://github.com/fivetran/dbt_fivetran_utils/pull/92))
 
 # dbt_fivetran_utils v0.4.0
 
