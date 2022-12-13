@@ -307,7 +307,7 @@ It simply passes through the `_dbt_source_relation` column produced by `union_da
 This macro creates the proper name, datatype, and aliasing for user defined pass through column variable. This
 macro allows for pass through variables to be more dynamic and allow users to alias custom fields they are 
 bringing in. This macro is typically used within staging models of a fivetran dbt source package to pass through
-user defined custom fields.
+user defined custom fields. Works for older and newer versions of passthrough columns.
 
 **Usage:**
 ```sql
@@ -352,7 +352,7 @@ This macro creates a dummy coalesce value based on the data type of the field. S
 
 ----
 ### fill_pass_through_columns ([source](macros/fill_pass_through_columns.sql))
-This macro is used to generate the correct sql for package staging models for user defined pass through columns.
+This macro is used to generate the correct sql for package staging models for user defined pass through columns. Works for older and newer versions of passthrough columns.
 
 **Usage:**
 ```sql
