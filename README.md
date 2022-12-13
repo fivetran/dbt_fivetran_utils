@@ -307,7 +307,7 @@ It simply passes through the `_dbt_source_relation` column produced by `union_da
 This macro creates the proper name, datatype, and aliasing for user defined pass through column variable. This
 macro allows for pass through variables to be more dynamic and allow users to alias custom fields they are 
 bringing in. This macro is typically used within staging models of a fivetran dbt source package to pass through
-user defined custom fields.
+user defined custom fields. Works for older and newer versions of passthrough columns.
 
 **Usage:**
 ```sql
@@ -352,7 +352,7 @@ This macro creates a dummy coalesce value based on the data type of the field. S
 
 ----
 ### fill_pass_through_columns ([source](macros/fill_pass_through_columns.sql))
-This macro is used to generate the correct sql for package staging models for user defined pass through columns.
+This macro is used to generate the correct sql for package staging models for user defined pass through columns. Works for older and newer versions of passthrough columns.
 
 **Usage:**
 ```sql
@@ -450,7 +450,7 @@ To create dependencies between the unioned model and its *sources*, you **must d
 }}
 ```
 **Args:**
-* `table_identifier`: The name of the table that will be unioned.
+* `table_identifier`: The name of the table that will be unioned. This maps onto the table's `name` as it is defined in the `src.yml` file, _not_ the `identifier`.
 * `database_variable`: The name of the variable that users can populate to union data from multiple databases.
 * `schema_variable`: The name of the variable that users can populate to union data from multiple schemas.
 * `default_database`: The default database where source data should be found. This is used when unioning schemas.

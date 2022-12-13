@@ -5,6 +5,7 @@
 
 ## Updates
 - Updates the `pivot_json_extract` macro to include additional formats of fields using a new `name` and `alias` argument to be pivoted out into columns. Specifically, allowing for fields with `.` to be replaced with `_`, for metadata variables to accept dictionaries in addition to strings, and for aliasing of fields. ([PR #92](https://github.com/fivetran/dbt_fivetran_utils/pull/92))
+- Updates the `add_pass_through_columns` and `fill_pass_through_columms` macros to be backwards compatible for _lists_ of pass through columns (ie those that do not have attributes like `name`, `alias`, or `transform_sql`) [(PR #93)](https://github.com/fivetran/dbt_fivetran_utils/pull/93).
 
 # dbt_fivetran_utils v0.4.0
 
