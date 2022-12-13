@@ -450,7 +450,7 @@ To create dependencies between the unioned model and its *sources*, you **must d
 }}
 ```
 **Args:**
-* `table_identifier`: The name of the table that will be unioned.
+* `table_identifier`: The name of the table that will be unioned. This maps onto the table's `name` as it is defined in the `src.yml` file, _not_ the `identifier`.
 * `database_variable`: The name of the variable that users can populate to union data from multiple databases.
 * `schema_variable`: The name of the variable that users can populate to union data from multiple schemas.
 * `default_database`: The default database where source data should be found. This is used when unioning schemas.
