@@ -10,7 +10,7 @@
         <img src="https://img.shields.io/badge/Contributions-welcome-blueviolet" /></a>
 </p>
 
-# Fivetran Utilities Macros for dbt
+# Fivetran Utility Macros for dbt
 
 # 🤔 Who are the intended users of this package?
 - The Fivetran team to leverage across Fivetran dbt packages
