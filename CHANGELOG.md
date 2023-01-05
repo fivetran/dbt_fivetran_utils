@@ -59,7 +59,7 @@ When ran, this feature will remove existing files in the `<project_name>/docs` i
 
 ## Updates
 ([#63](https://github.com/fivetran/dbt_fivetran_utils/pull/63/files)) This release of the `dbt_fivetran_utils` package includes the following updates to the README:
-- Add a Table of Contents to allow for quicker searches._
+- Add a Table of Contents to allow for quicker searches.
 - Leverage new Categories to better organize macros.
 - Update the `staging_models_automation` macro to reflect usage of the new `generate_columns.sh` and `generate_models.sh` scripts. 
 - Update the `generate_models.sh` script to create the models/macros folders if empty or replace any existing content in the models/macros folders.
