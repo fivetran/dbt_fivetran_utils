@@ -2,6 +2,7 @@
 
 ## Bug Fixes
 - Updates dispatch from `{{ dbt_utils.<macro> }}` to `{{ dbt.<macro> }}` for additional [cross-db macros](https://docs.google.com/spreadsheets/d/1xF_YwJ4adsnjFkUbUm8-EnEL1r_C-9_OI_pP4m4FlJU/edit#gid=1062533692) missed in the `fivetran_utils.union_relations()` macro. ([PR #91](https://github.com/fivetran/dbt_fivetran_utils/pull/91))
+- Fix broken anchor tags in README. ([PR #96](https://github.com/fivetran/dbt_fivetran_utils/pull/96))
 
 ## Updates
 - Updates the `pivot_json_extract` macro to include additional formats of fields using a new `name` and `alias` argument to be pivoted out into columns. Specifically, allowing for fields with `.` to be replaced with `_`, for metadata variables to accept dictionaries in addition to strings, and for aliasing of fields. ([PR #92](https://github.com/fivetran/dbt_fivetran_utils/pull/92))
@@ -58,7 +59,7 @@ When ran, this feature will remove existing files in the `<project_name>/docs` i
 
 ## Updates
 ([#63](https://github.com/fivetran/dbt_fivetran_utils/pull/63/files)) This release of the `dbt_fivetran_utils` package includes the following updates to the README:
-- Add a Table of Contents to allow for quicker searches.
+- Add a Table of Contents to allow for quicker searches._
 - Leverage new Categories to better organize macros.
 - Update the `staging_models_automation` macro to reflect usage of the new `generate_columns.sh` and `generate_models.sh` scripts. 
 - Update the `generate_models.sh` script to create the models/macros folders if empty or replace any existing content in the models/macros folders.
