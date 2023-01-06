@@ -78,8 +78,8 @@ dispatch:
 
 - [Variable Checks](#variable_checks)
   - [empty_variable_warning](#empty_variable_warning-source)
-  - [enabled_vars](#enabled-vars-source)
-  - [enabled_vars_one_true](#enabled_vars_onetrue-source)
+  - [enabled_vars](#enabled_vars-source)
+  - [enabled_vars_one_true](#enabled_vars_one_true-source)
 
 ----
 
