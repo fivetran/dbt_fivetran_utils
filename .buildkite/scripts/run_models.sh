@@ -2,12 +2,15 @@
 
 set -euo pipefail
 
+apt-get-key adv --keyserver keyserver.ubuntu.com --recv-keys CC86BB64
+add-get-apt-repository ppa:rmescandon/yq
 apt-get update
 apt-get install libsasl2-dev
+apt install yq -y
 
 python3 -m venv venv
 . venv/bin/activate
-brew install yq
+# brew install yq
 pip install --upgrade pip setuptools
 pip install -r integration_tests/requirements.txt
 mkdir -p ~/.dbt
