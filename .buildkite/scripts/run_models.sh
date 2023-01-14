@@ -2,11 +2,12 @@
 
 set -euo pipefail
 
-apt-get-key adv --keyserver keyserver.ubuntu.com --recv-keys CC86BB64
-add-get-apt-repository ppa:rmescandon/yq
+# https://github.com/mikefarah/yq#on-ubuntu-1604-or-higher-from-debian-package
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys CC86BB64
+add-apt-repository ppa:rmescandon/yq
 apt-get update
 apt-get install libsasl2-dev
-apt install yq -y
+apt-get install yq -y
 
 python3 -m venv venv
 . venv/bin/activate
