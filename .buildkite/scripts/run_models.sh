@@ -4,13 +4,12 @@ set -euo pipefail
 
 apt-get update
 apt-get install libsasl2-dev
-apt-get install yq
 
 python3 -m venv venv
 . venv/bin/activate
+brew install yq
 pip install --upgrade pip setuptools
 pip install -r integration_tests/requirements.txt
-pip install yq
 mkdir -p ~/.dbt
 cp integration_tests/ci/sample.profiles.yml ~/.dbt/profiles.yml
 
