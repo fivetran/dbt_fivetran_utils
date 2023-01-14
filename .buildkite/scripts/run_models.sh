@@ -2,9 +2,6 @@
 
 set -euo pipefail
 
-# https://github.com/mikefarah/yq#on-ubuntu-1604-or-higher-from-debian-package
-apt-key adv --keyserver keyserver.ubuntu.com --recv-keys CC86BB64
-add-apt-repository ppa:rmescandon/yq
 apt-get update
 apt-get install libsasl2-dev
 apt-get install yq -y
