@@ -4,16 +4,34 @@ config-version: 2
 profile: 'integration_tests'
 
 models:
-  ad_reporting:
-    +tags: ad_reporting
-  zendesk:
-    +tags: zendesk
-  hubspot:
-    +tags: hubspot
+  fivetran_utils_schema: 'fivetran_utils_integration_tests'
+  # ad_reporting:
+  #   +schema: ad_reporting
+  #   +tags: ad_reporting
+  # zendesk:
+  #   +schema: zendesk
+  #   +tags: zendesk
+  # hubspot:
+  #   +schema: hubspot
+  #   +tags: hubspot
   netsuite:
     +tags: netsuite
   jira: 
     +tags: jira
+
+vars:
+  netsuite_schema: "{{ env_var('NETSUITE_SCHEMA') }}"
+  jira_schema: "{{ env_var('JIRA_SCHEMA') }}"
+  ## Ad Reporting
+  # ad_reporting__apple_search_ads_enabled: False # by default this is assumed to be True
+  # ad_reporting__pinterest_ads_enabled: False # by default this is assumed to be True
+  # ad_reporting__microsoft_ads_enabled: True # by default this is assumed to be True
+  # ad_reporting__linkedin_ads_enabled: False # by default this is assumed to be True
+  # ad_reporting__google_ads_enabled: True # by default this is assumed to be True
+  # ad_reporting__twitter_ads_enabled: False # by default this is assumed to be True
+  # ad_reporting__facebook_ads_enabled: True # by default this is assumed to be True
+  # ad_reporting__snapchat_ads_enabled: False # by default this is assumed to be True
+  # ad_reporting__tiktok_ads_enabled: False # by default this is assumed to be True
 
 clean-targets:         # directories to be removed by `dbt clean`
   - "target"
