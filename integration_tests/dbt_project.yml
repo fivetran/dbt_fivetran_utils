@@ -20,8 +20,12 @@ models:
     +tags: jira
 
 vars:
+  netsuite_database: "{{ env_var('BIGQUERY_DATABASE') }}"
   netsuite_schema: "{{ env_var('NETSUITE_SCHEMA') }}"
+
+  jira_database: "{{ env_var('BIGQUERY_DATABASE') }}"
   jira_schema: "{{ env_var('JIRA_SCHEMA') }}"
+  
   ## Ad Reporting
   # ad_reporting__apple_search_ads_enabled: False # by default this is assumed to be True
   # ad_reporting__pinterest_ads_enabled: False # by default this is assumed to be True

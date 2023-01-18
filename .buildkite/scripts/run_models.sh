@@ -20,10 +20,20 @@ mv packages.yml packages_ft_pkgs.yml
 mv packages_ft_utils_override.yml packages.yml
 ## for local testing
 ## mv packages.yml packages_ft_utils_override.yml && mv packages_ft_pkgs.yml packages.yml 
+
 dbt deps
-dbt compile --target "$db" --select tag:ad_reporting
-dbt compile --target "$db" --select tag:zendesk
-dbt compile --target "$db" --select tag:hubspot
+# echo 'Compiling Ad Reporting...'
+# dbt compile --target "$db" --select tag:ad_reporting
+
+# echo 'Compiling Zendesk'
+# dbt compile --target "$db" --select tag:zendesk
+
+# echo 'Compiling Hubspot'
+# dbt compile --target "$db" --select tag:hubspot
+
+echo 'Compiling Netsuite'
 dbt compile --target "$db" --select tag:netsuite
+
+echo 'Compiling Jira'
 dbt compile --target "$db" --select tag:jira
 
