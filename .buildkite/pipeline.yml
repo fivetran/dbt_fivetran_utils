@@ -40,6 +40,7 @@ steps:
           environment:
             - "BASH_ENV=/tmp/.bashrc"
             - "GCLOUD_SERVICE_KEY"
+            - "BIGQUERY_DATABASE"
             - "NETSUITE_SCHEMA"
             - "JIRA_SCHEMA"
     commands: |
