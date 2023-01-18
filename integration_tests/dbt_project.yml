@@ -5,37 +5,38 @@ profile: 'integration_tests'
 
 models:
   fivetran_utils_schema: 'fivetran_utils_integration_tests'
-  # ad_reporting:
-  #   +schema: ad_reporting
-  #   +tags: ad_reporting
-  # zendesk:
-  #   +schema: zendesk
-  #   +tags: zendesk
-  # hubspot:
-  #   +schema: hubspot
-  #   +tags: hubspot
+  ad_reporting:
+    +tags: ad_reporting
+  zendesk:
+    +tags: zendesk
+  hubspot:
+    +tags: hubspot
   netsuite:
     +tags: netsuite
   jira: 
     +tags: jira
 
 vars:
-  netsuite_database: "{{ env_var('BIGQUERY_DATABASE') }}"
-  netsuite_schema: "{{ env_var('NETSUITE_SCHEMA') }}"
-
-  jira_database: "{{ env_var('BIGQUERY_DATABASE') }}"
-  jira_schema: "{{ env_var('JIRA_SCHEMA') }}"
-  
   ## Ad Reporting
-  # ad_reporting__apple_search_ads_enabled: False # by default this is assumed to be True
-  # ad_reporting__pinterest_ads_enabled: False # by default this is assumed to be True
-  # ad_reporting__microsoft_ads_enabled: True # by default this is assumed to be True
-  # ad_reporting__linkedin_ads_enabled: False # by default this is assumed to be True
-  # ad_reporting__google_ads_enabled: True # by default this is assumed to be True
-  # ad_reporting__twitter_ads_enabled: False # by default this is assumed to be True
-  # ad_reporting__facebook_ads_enabled: True # by default this is assumed to be True
-  # ad_reporting__snapchat_ads_enabled: False # by default this is assumed to be True
-  # ad_reporting__tiktok_ads_enabled: False # by default this is assumed to be True
+  ad_reporting__apple_search_ads_enabled: False
+  ad_reporting__pinterest_ads_enabled: False
+  ad_reporting__microsoft_ads_enabled: True
+  ad_reporting__linkedin_ads_enabled: False
+  ad_reporting__google_ads_enabled: True
+  ad_reporting__twitter_ads_enabled: False
+  ad_reporting__facebook_ads_enabled: True
+  ad_reporting__snapchat_ads_enabled: False
+  ad_reporting__tiktok_ads_enabled: False
+  microsoft_ads_schema: "{{ env_var('MICROSOFT_ADS_SCHEMA') }}"
+  facebook_ads_schema: "{{ env_var('FACEBOOK_ADS_SCHEMA') }}"
+  google_ads_schema:  "{{ env_var('GOOGLE_ADS_SCHEMA') }}"
+
+  netsuite_schema: "{{ env_var('NETSUITE_SCHEMA') }}"
+  
+  jira_schema: "{{ env_var('JIRA_SCHEMA') }}"
+
+  zendesk_database: "{{ env_var('BIGQUERY_DATABASE') }}"
+  zendesk_schema: "{{ env_var('ZENDESK_SCHEMA') }}"
 
 clean-targets:         # directories to be removed by `dbt clean`
   - "target"

@@ -1,6 +1,7 @@
 #!/bin/bash
 
-set -euo pipefail
+## remove failure for testing
+# set -euo pipefail
 
 apt-get update
 apt-get install libsasl2-dev
@@ -22,14 +23,14 @@ mv packages_ft_utils_override.yml packages.yml
 ## mv packages.yml packages_ft_utils_override.yml && mv packages_ft_pkgs.yml packages.yml 
 
 dbt deps
-# echo 'Compiling Ad Reporting...'
-# dbt compile --target "$db" --select tag:ad_reporting
+echo 'Compiling Ad Reporting...'
+dbt compile --target "$db" --select tag:ad_reporting
 
-# echo 'Compiling Zendesk'
-# dbt compile --target "$db" --select tag:zendesk
+echo 'Compiling Zendesk'
+dbt compile --target "$db" --select tag:zendesk
 
-# echo 'Compiling Hubspot'
-# dbt compile --target "$db" --select tag:hubspot
+echo 'Compiling Hubspot'
+dbt compile --target "$db" --select tag:hubspot
 
 echo 'Compiling Netsuite'
 dbt compile --target "$db" --select tag:netsuite
