@@ -1,5 +1,5 @@
 name: 'fivetran_utils_integration_tests'
-version: '0.4.1'
+version: '0.4.2'
 config-version: 2
 profile: 'integration_tests'
 
@@ -15,7 +15,6 @@ models:
   jira: 
     +tags: jira
 
-
-dispatch:
-  - macro_namespace: fivetran_utils
-    search_order: ['fivetran_utils_test','fivetran_utils']
+clean-targets:         # directories to be removed by `dbt clean`
+  - "target"
+  - "dbt_packages"
