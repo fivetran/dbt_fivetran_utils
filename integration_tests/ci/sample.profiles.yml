@@ -24,6 +24,13 @@ integration_tests:
       schema: fivetran_utils_integration_tests
       threads: 8
       keyfile_json: "{{ env_var('GCLOUD_SERVICE_KEY') | as_native }}"
+    bigquery_alt:
+      type: bigquery
+      method: service-account-json
+      project: "{{ env_var('BIGQUERY_DATABASE') }}"
+      schema: fivetran_utils_integration_tests
+      threads: 8
+      keyfile_json: "{{ env_var('GCLOUD_SERVICE_KEY') | as_native }}"
     snowflake:
       type: snowflake
       account: "{{ env_var('CI_SNOWFLAKE_DBT_ACCOUNT') }}"

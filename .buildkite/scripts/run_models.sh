@@ -27,7 +27,7 @@ echo 'Compiling Ad Reporting...'
 dbt compile --target "$db" --select tag:ad_reporting
 
 # echo 'Compiling Zendesk'
-# dbt compile --target "$db" --select tag:zendesk
+dbt compile --target bigquery_alt --select tag:zendesk
 
 echo 'Compiling Hubspot'
 dbt compile --target "$db" --select tag:hubspot
