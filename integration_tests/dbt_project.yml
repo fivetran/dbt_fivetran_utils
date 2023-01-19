@@ -14,22 +14,22 @@ models:
   netsuite:
     +tags: netsuite
   jira: 
-    intermediate:
-      int_jira__project_metrics:
-        +enabled: False 
-      int_jira__user_metrics:
-        +enabled: False
-      field_history:
-        int_jira__issue_calendar_spine:
-          +enabled: False
-    jira__daily_issue_field_history:
-      +enabled: False
-    jira__issue_enhanced:
-      +enabled: False
-    jira__user_enhanced:
-      +enabled: False
-    jira__project_enhanced:
-      +enabled: False
+    # intermediate:
+    #   int_jira__project_metrics:
+    #     +enabled: False 
+    #   int_jira__user_metrics:
+    #     +enabled: False
+    #   field_history:
+    #     int_jira__issue_calendar_spine:
+    #       +enabled: False
+    # jira__daily_issue_field_history:
+    #   +enabled: False
+    # jira__issue_enhanced:
+    #   +enabled: False
+    # jira__user_enhanced:
+    #   +enabled: False
+    # jira__project_enhanced:
+    #   +enabled: False
     +tags: jira
 
 vars:
