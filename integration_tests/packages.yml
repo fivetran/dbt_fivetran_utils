@@ -1,11 +1,12 @@
 packages:
-  - package: fivetran/ad_reporting
-    version: [">=1.1.0", "<1.2.0"]
-  - package: fivetran/zendesk
-    version: [">=0.10.0", "<0.11.0"]
+  - package: fivetran/twitter_ads
+    version: [">=0.6.0", "<0.7.0"]
+  ## Waiting on connector to be set up and filled with data
+  # - package: fivetran/zendesk
+  #   version: [">=0.10.0", "<0.11.0"]
   - package: fivetran/hubspot
     version: [">=0.8.0", "<0.9.0"]
-  - package: fivetran/netsuite
-    version: [">=0.7.0", "<0.8.0"]
   - package: fivetran/jira
     version: [">=0.11.0", "<0.12.0"]
+  - package: fivetran/klaviyo
+    version: [">=0.5.0", "<0.6.0"]

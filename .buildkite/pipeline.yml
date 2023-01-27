@@ -14,41 +14,34 @@ steps:
   #   commands: |
   #     bash .buildkite/scripts/run_models.sh postgres 
 
-  # - label: ":snowflake-db: Run Tests - Snowflake"
-  #   key: "run_dbt_snowflake"
-  #   plugins:
-  #     - docker#v3.13.0:
-  #         image: "python:3.8"
-  #         shell: [ "/bin/bash", "-e", "-c" ]
-  #         environment:
-  #           - "BASH_ENV=/tmp/.bashrc"
-  #           - "CI_SNOWFLAKE_DBT_ACCOUNT"
-  #           - "CI_SNOWFLAKE_DBT_DATABASE"
-  #           - "CI_SNOWFLAKE_DBT_PASS"
-  #           - "CI_SNOWFLAKE_DBT_ROLE"
-  #           - "CI_SNOWFLAKE_DBT_USER"
-  #           - "CI_SNOWFLAKE_DBT_WAREHOUSE"
-  #   commands: |
-  #     bash .buildkite/scripts/run_models.sh snowflake
-
-  - label: ":gcloud: Run Tests - BigQuery"
-    key: "run_dbt_bigquery"
+  - label: ":snowflake-db: Run Tests - Snowflake"
+    key: "run_dbt_snowflake"
     plugins:
       - docker#v3.13.0:
           image: "python:3.8"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
-            - "GCLOUD_SERVICE_KEY"
-            - "BIGQUERY_DATABASE"
-            - "GOOGLE_ADS_SCHEMA"
-            - "FACEBOOK_ADS_SCHEMA"
-            - "MICROSOFT_ADS_SCHEMA"
-            # - "ZENDESK_SCHEMA"
-            - "NETSUITE_SCHEMA"
-            - "JIRA_SCHEMA"
+            - "CI_SNOWFLAKE_DBT_ACCOUNT"
+            - "CI_SNOWFLAKE_DATABASE_FT_UTILS"
+            - "CI_SNOWFLAKE_DBT_PASS"
+            - "CI_SNOWFLAKE_DBT_ROLE"
+            - "CI_SNOWFLAKE_DBT_USER"
+            - "CI_SNOWFLAKE_DBT_WAREHOUSE"
     commands: |
-      bash .buildkite/scripts/run_models.sh bigquery
+      bash .buildkite/scripts/run_models.sh snowflake
+
+  # - label: ":gcloud: Run Tests - BigQuery"
+  #   key: "run_dbt_bigquery"
+  #   plugins:
+  #     - docker#v3.13.0:
+  #         image: "python:3.8"
+  #         shell: [ "/bin/bash", "-e", "-c" ]
+  #         environment:
+  #           - "BASH_ENV=/tmp/.bashrc"
+  #           - "GCLOUD_SERVICE_KEY"
+  #   commands: |
+  #     bash .buildkite/scripts/run_models.sh bigquery
 
   # - label: ":amazon-redshift: Run Tests - Redshift"
   #   key: "run_dbt_redshift"

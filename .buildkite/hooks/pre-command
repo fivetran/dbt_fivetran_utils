@@ -23,11 +23,12 @@ export CI_DATABRICKS_DBT_HOST=$(gcloud secrets versions access latest --secret="
 export CI_DATABRICKS_DBT_HTTP_PATH=$(gcloud secrets versions access latest --secret="CI_DATABRICKS_DBT_HTTP_PATH" --project="dbt-package-testing-363917")
 export CI_DATABRICKS_DBT_TOKEN=$(gcloud secrets versions access latest --secret="CI_DATABRICKS_DBT_TOKEN" --project="dbt-package-testing-363917")
 
-export BIGQUERY_DATABASE=$(gcloud secrets versions access latest --secret="BIGQUERY_DATABASE" --project="dbt-package-testing-363917")
-export GOOGLE_ADS_SCHEMA=$(gcloud secrets versions access latest --secret="GOOGLE_ADS_SCHEMA" --project="dbt-package-testing-363917")
-export FACEBOOK_ADS_SCHEMA=$(gcloud secrets versions access latest --secret="FACEBOOK_ADS_SCHEMA" --project="dbt-package-testing-363917")
-export MICROSOFT_ADS_SCHEMA=$(gcloud secrets versions access latest --secret="MICROSOFT_ADS_SCHEMA" --project="dbt-package-testing-363917")
-export ZENDESK_SCHEMA=$(gcloud secrets versions access latest --secret="ZENDESK_SCHEMA" --project="dbt-package-testing-363917")
-export NETSUITE_SCHEMA=$(gcloud secrets versions access latest --secret="NETSUITE_SCHEMA" --project="dbt-package-testing-363917")
-export JIRA_SCHEMA=$(gcloud secrets versions access latest --secret="JIRA_SCHEMA" --project="dbt-package-testing-363917")
+export CI_SNOWFLAKE_DATABASE_FT_UTILS=$(gcloud secrets versions access latest --secret="CI_SNOWFLAKE_DATABASE_FT_UTILS" --project="dbt-package-testing-363917")
 
+## shouldn't need schema variables if we have expected names
+# export FACEBOOK_ADS_SCHEMA=$(gcloud secrets versions access latest --secret="FACEBOOK_ADS_SCHEMA" --project="dbt-package-testing-363917")
+# export ZENDESK_SCHEMA=$(gcloud secrets versions access latest --secret="ZENDESK_SCHEMA" --project="dbt-package-testing-363917")
+# export JIRA_SCHEMA=$(gcloud secrets versions access latest --secret="JIRA_SCHEMA" --project="dbt-package-testing-363917")
+## Klaviyo
+## Twitter
+## Hubspot

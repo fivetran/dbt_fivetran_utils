@@ -5,14 +5,16 @@ profile: 'integration_tests'
 
 models:
   fivetran_utils_schema: 'fivetran_utils_integration_tests'
-  ad_reporting:
-    +tags: ad_reporting
+  # ad_reporting:
+  #   +tags: ad_reporting
+  twitter_ads:
+    +tags: twitter_ads
   zendesk:
     +tags: zendesk
   hubspot:
     +tags: hubspot
-  netsuite:
-    +tags: netsuite
+  klaviyo:
+    +tags: klaviyo
   jira: 
     intermediate:
       field_history:
@@ -20,26 +22,26 @@ models:
           +enabled: False
     +tags: jira
 
-vars:
+# vars:
   ## Ad Reporting
-  ad_reporting__apple_search_ads_enabled: False
-  ad_reporting__pinterest_ads_enabled: False
-  ad_reporting__microsoft_ads_enabled: True
-  ad_reporting__linkedin_ads_enabled: False
-  ad_reporting__google_ads_enabled: True
-  ad_reporting__twitter_ads_enabled: False
-  ad_reporting__facebook_ads_enabled: True
-  ad_reporting__snapchat_ads_enabled: False
-  ad_reporting__tiktok_ads_enabled: False
-  microsoft_ads_schema: "{{ env_var('MICROSOFT_ADS_SCHEMA') }}"
-  facebook_ads_schema: "{{ env_var('FACEBOOK_ADS_SCHEMA') }}"
-  google_ads_schema:  "{{ env_var('GOOGLE_ADS_SCHEMA') }}"
+  # ad_reporting__apple_search_ads_enabled: False
+  # ad_reporting__pinterest_ads_enabled: False
+  # ad_reporting__microsoft_ads_enabled: True
+  # ad_reporting__linkedin_ads_enabled: False
+  # ad_reporting__google_ads_enabled: False
+  # ad_reporting__twitter_ads_enabled: True
+  # ad_reporting__facebook_ads_enabled: False
+  # ad_reporting__snapchat_ads_enabled: False
+  # ad_reporting__tiktok_ads_enabled: False
 
-  netsuite_schema: "{{ env_var('NETSUITE_SCHEMA') }}"
+  # microsoft_ads_schema: "{{ env_var('MICROSOFT_ADS_SCHEMA') }}"
+  # facebook_ads_schema: "{{ env_var('FACEBOOK_ADS_SCHEMA') }}"
+  # google_ads_schema:  "{{ env_var('GOOGLE_ADS_SCHEMA') }}"
 
-  jira_schema: "{{ env_var('JIRA_SCHEMA') }}"
 
-  zendesk_schema: "{{ env_var('ZENDESK_SCHEMA') }}"
+  # jira_schema: "{{ env_var('JIRA_SCHEMA') }}"
+  # hubspot_schema: "{{ env_var('HUBSPOT_SCHEMA') }}" ## it's currently hubspot so 
+  # zendesk_schema: "{{ env_var('ZENDESK_SCHEMA') }}"
 
 clean-targets:         # directories to be removed by `dbt clean`
   - "target"

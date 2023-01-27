@@ -23,18 +23,19 @@ mv packages_ft_utils_override.yml packages.yml
 ## mv packages.yml packages_ft_utils_override.yml && mv packages_ft_pkgs.yml packages.yml 
 
 dbt deps
-echo 'Compiling Ad Reporting...'
-dbt compile --target "$db" --select tag:ad_reporting
-
-# echo 'Compiling Zendesk'
-dbt compile --target bigquery_alt --select tag:zendesk
+echo 'Compiling Twitter Ads...'
+dbt compile --target "$db" --select tag:twitter_ads
 
 echo 'Compiling Hubspot'
 dbt compile --target "$db" --select tag:hubspot
 
-echo 'Compiling Netsuite'
-dbt compile --target "$db" --select tag:netsuite
+echo 'Compiling Klaviyo'
+dbt compile --target "$db" --select tag:klaviyo
 
 echo 'Compiling Jira'
 dbt compile --target "$db" --select tag:jira
+
+## Waiting for Zendesk Connector
+# echo 'Compiling Zendesk'
+# dbt compile --target "$db" --select tag:zendesk
 
