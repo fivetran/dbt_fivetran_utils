@@ -35,7 +35,5 @@ dbt compile --target "$db" --select tag:klaviyo
 echo 'Compiling Jira'
 dbt compile --target "$db" --select tag:jira
 
-## Waiting for Zendesk Connector
-# echo 'Compiling Zendesk'
-# dbt compile --target "$db" --select tag:zendesk
-
+echo 'Compiling Zendesk'
+dbt compile --target "$db" --select tag:zendesk
