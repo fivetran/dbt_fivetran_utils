@@ -1,4 +1,4 @@
-# dbt_fivetran_utils v0.4.2 (not yet released)
+# dbt_fivetran_utils v0.4.2
 ## Bug Fixes
 - Fix broken anchor tags in README. ([PR #96](https://github.com/fivetran/dbt_fivetran_utils/pull/96))
 - Expand `spark` adapter logic in the `fill_staging_columns` macro to `databricks` adapters. ([PR #98](https://github.com/fivetran/dbt_fivetran_utils/pull/98))
