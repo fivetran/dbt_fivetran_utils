@@ -9,6 +9,10 @@ models:
     +tags: twitter_ads
   zendesk:
     +tags: zendesk
+    intermediate:
+      int_zendesk__ticket_schedules:
+        +enabled: False
+
   hubspot:
     +tags: hubspot
   klaviyo:
