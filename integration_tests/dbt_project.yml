@@ -12,6 +12,9 @@ models:
     intermediate:
       int_zendesk__ticket_schedules:
         +enabled: False
+    utils:
+      int_zendesk__calendar_spine:
+        +enabled: False
 
   hubspot:
     +tags: hubspot
@@ -26,6 +29,7 @@ models:
 
 vars:
   schedule: "{{ source('zendesk', 'schedule') }}"
+  ticket: "{{ source('zendesk', 'ticket') }}"
 
 clean-targets:         # directories to be removed by `dbt clean`
   - "target"
