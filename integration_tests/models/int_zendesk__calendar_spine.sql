@@ -4,7 +4,7 @@ with spine as (
 
     {% if execute %}
     {% set first_date_query %}
-        select  min( created_at ) as min_date from {{ var('ticket') }}
+        select  min( created_at ) as min_date from {{ var('zendesk_ticket') }}
         -- by default take all the data 
         where cast(created_at as date) >= {{ dbt.dateadd('year', - var('ticket_field_history_timeframe_years', 50), dbt.current_timestamp_backcompat() ) }}
     {% endset %}

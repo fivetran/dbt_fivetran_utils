@@ -15,6 +15,9 @@ models:
     utils:
       int_zendesk__calendar_spine:
         +enabled: False
+    ticket_history:
+      int_zendesk__field_history_pivot:
+        +enabled: False
 
   hubspot:
     +tags: hubspot
@@ -28,8 +31,9 @@ models:
     +tags: jira
 
 vars:
-  schedule: "{{ source('zendesk', 'schedule') }}"
-  ticket: "{{ source('zendesk', 'ticket') }}"
+  zendesk_schedule: "{{ source('zendesk', 'schedule') }}"
+  zendesk_ticket: "{{ source('zendesk', 'ticket') }}"
+  zendesk_ticket_field_history: "{{ source('zendesk', 'ticket_field_history') }}"
 
 clean-targets:         # directories to be removed by `dbt clean`
   - "target"
