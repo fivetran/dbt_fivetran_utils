@@ -30,7 +30,7 @@ with ticket as (
           select 
             row_number() over (order by created_at) = 1 as is_default_schedule,
             schedule_id
-          from {{ source('zendesk', 'schedule')}}
+          from {{ var('schedule') }}
         )
         select 
           schedule_id

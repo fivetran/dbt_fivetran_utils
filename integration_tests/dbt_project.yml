@@ -24,6 +24,9 @@ models:
           +enabled: False
     +tags: jira
 
+vars:
+  schedule: "{{ source('zendesk', 'schedule') }}"
+
 clean-targets:         # directories to be removed by `dbt clean`
   - "target"
   - "dbt_packages"
