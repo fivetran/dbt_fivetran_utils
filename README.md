@@ -44,42 +44,51 @@ dispatch:
 ----
 # 📋 Contents
 
-- [Tests and helpers](#tests-and-helpers)
-  - [collect_freshness](#collect_freshness-source)
-  - [seed_data_helper](#seed_data_helper-source)
-  - [snowflake_seed_data](#snowflake_seed_data-source)
-
-- [Cross-database compatibility](#cross-database-compatibility)
-  - [array_agg](#array_agg-source)
-  - [ceiling](#ceiling-source)
-  - [first_value](#first_value-source)
-  - [json_extract](#json_extract-source)
-  - [json_parse](#json_parse-source)
-  - [max_bool](#max_bool-source)
-  - [percentile](#percentile-source)
-  - [pivot_json_extract](#pivot_json_extract-source)
-  - [string_agg](#string_agg-source)
-  - [timestamp_add](#timestamp_add-source)
-  - [timestamp_diff](#timestamp_diff-source)
-  - [try_cast](#try_cast-source)
-
-- [SQL and field generators](#sql-and-field-generators)
-  - [add_dbt_source_relation](#add_dbt_source_relation-source)
-  - [add_pass_through_columns](#add_pass_through_columns-source)
-  - [calculated_fields](#calculated_fields-source)
-  - [dummy_coalesce_value](#dummy_coalesce_value-source)
-  - [fill_pass_through_columns](#fill_pass_through_columns-source)
-  - [fill_staging_columns](#fill_staging_columns-source)
-  - [persist_pass_through_columns](#persist_pass_through_columns-source)
-  - [remove_prefix_from_columns](#remove_prefix_from_columns-source)
-  - [source_relation](#source_relation-source)
-  - [union_data](#union_data-source)
-  - [union_relations](#union_relations-source)
-
-- [Variable Checks](#variable_checks)
-  - [empty_variable_warning](#empty_variable_warning-source)
-  - [enabled_vars](#enabled_vars-source)
-  - [enabled_vars_one_true](#enabled_vars_one_true-source)
+- [Fivetran Utility Macros for dbt](#fivetran-utility-macros-for-dbt)
+- [🤔 Who are the intended users of this package?](#-who-are-the-intended-users-of-this-package)
+- [📣 What does this dbt package do?](#-what-does-this-dbt-package-do)
+- [🎯 How do I use the dbt package?](#-how-do-i-use-the-dbt-package)
+  - [Step 1: Installing the Package](#step-1-installing-the-package)
+  - [Step 2: Using the Macros](#step-2-using-the-macros)
+- [📋 Contents](#-contents)
+  - [Tests and helpers](#tests-and-helpers)
+    - [collect\_freshness (source)](#collect_freshness-source)
+    - [seed\_data\_helper (source)](#seed_data_helper-source)
+    - [snowflake\_seed\_data (source)](#snowflake_seed_data-source)
+  - [Cross-database compatibility](#cross-database-compatibility)
+    - [array\_agg (source)](#array_agg-source)
+    - [ceiling (source)](#ceiling-source)
+    - [first\_value (source)](#first_value-source)
+    - [json\_extract (source)](#json_extract-source)
+    - [json\_parse (source)](#json_parse-source)
+    - [max\_bool (source)](#max_bool-source)
+    - [percentile (source)](#percentile-source)
+    - [pivot\_json\_extract (source)](#pivot_json_extract-source)
+    - [string\_agg (source)](#string_agg-source)
+    - [timestamp\_add (source)](#timestamp_add-source)
+    - [timestamp\_diff (source)](#timestamp_diff-source)
+    - [try\_cast (source)](#try_cast-source)
+  - [SQL and field generators](#sql-and-field-generators)
+    - [add\_dbt\_source\_relation (source)](#add_dbt_source_relation-source)
+    - [add\_pass\_through\_columns (source)](#add_pass_through_columns-source)
+    - [calculated\_fields (source)](#calculated_fields-source)
+    - [dummy\_coalesce\_value (source)](#dummy_coalesce_value-source)
+    - [fill\_pass\_through\_columns (source)](#fill_pass_through_columns-source)
+    - [fill\_staging\_columns (source)](#fill_staging_columns-source)
+    - [persist\_pass\_through\_columns (source)](#persist_pass_through_columns-source)
+    - [remove\_prefix\_from\_columns (source)](#remove_prefix_from_columns-source)
+    - [source\_relation (source)](#source_relation-source)
+    - [union\_data (source)](#union_data-source)
+    - [union\_relations (source)](#union_relations-source)
+  - [Variable Checks](#variable-checks)
+    - [empty\_variable\_warning (source)](#empty_variable_warning-source)
+    - [enabled\_vars (source)](#enabled_vars-source)
+    - [enabled\_vars\_one\_true (source)](#enabled_vars_one_true-source)
+- [🔍 Does this package have dependencies?](#-does-this-package-have-dependencies)
+- [🙌 How is this package maintained and can I contribute?](#-how-is-this-package-maintained-and-can-i-contribute)
+  - [Package Maintenance](#package-maintenance)
+  - [Contributions](#contributions)
+- [🏪 Are there any resources available?](#-are-there-any-resources-available)
 
 ----
 
@@ -445,6 +454,7 @@ To create dependencies between the unioned model and its *sources*, you **must d
         schema_variable='shopify_schema', 
         default_database=target.database,
         default_schema='shopify',
+        column_macro=get_customer_columns(),
         default_variable='customer_source'
     )
 }}
@@ -456,6 +466,7 @@ To create dependencies between the unioned model and its *sources*, you **must d
 * `default_database`: The default database where source data should be found. This is used when unioning schemas.
 * `default_schema`: The default schema where source data should be found. This is used when unioning databases.
 * `default_variable`: The name of the variable that users should populate when they want to pass one specific relation to this model (mostly used for CI)
+* `column_macro` (optional but recommended): The name of the macro leveraged by `fill_staging_columns()` which contains expected columns and their data types. Default value is `[{}]`.
 * `union_schema_variable` (optional): The name of the union schema variable. By default the macro will look for `union_schemas`.
 * `union_database_variable` (optional): The name of the union database variable. By default the macro will look for `union_databases`.
 
