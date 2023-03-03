@@ -56,8 +56,8 @@
         {{ dbt_utils.union_relations(relations) }}
     {%- else -%}
     select 
-        {{ fivetran_utils.fill_staging_columns(source_columns=[], staging_columns=column_macro) }}
-        {%- if column_macro is not none%},{%- endif -%} null as _dbt_source_relation
+        {% if column_macro != [{}] %}{{ fivetran_utils.fill_staging_columns(source_columns=[], staging_columns=column_macro) }},{% endif -%} 
+        cast(null as {{ dbt.type_string() }}) as _dbt_source_relation
     {%- endif -%}
 
 {%- elif var(union_database_variable, none) -%}
@@ -83,8 +83,8 @@
         {{ dbt_utils.union_relations(relations) }}
     {%- else -%}
     select 
-        {{ fivetran_utils.fill_staging_columns(source_columns=[], staging_columns=column_macro) }}
-        {%- if column_macro != [{}] %},{%- endif -%} null as _dbt_source_relation
+        {% if column_macro != [{}] %}{{ fivetran_utils.fill_staging_columns(source_columns=[], staging_columns=column_macro) }},{% endif -%}
+        cast(null as {{ dbt.type_string() }}) as _dbt_source_relation
     {%- endif -%}
 
 {%- else -%}
@@ -100,8 +100,8 @@
     from {{ var(default_variable) }}
 {%- else -%}
     select 
-        {{ fivetran_utils.fill_staging_columns(source_columns=[], staging_columns=column_macro) }}
-        {%- if column_macro != [{}] %},{%- endif -%} null as _dbt_source_relation
+        {% if column_macro != [{}] %}{{ fivetran_utils.fill_staging_columns(source_columns=[], staging_columns=column_macro) }},{% endif -%}
+        cast(null as {{ dbt.type_string() }}) as _dbt_source_relation
 {%- endif -%}
 {%- endif -%}
 

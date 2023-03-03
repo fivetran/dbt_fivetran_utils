@@ -1,7 +1,10 @@
 # dbt_fivetran_utils v0.4.3
 
 ## Feature Updates
-- Expanded the `union_data` macro to create an empty table if none of the provided schemas or databases contain a source table. If the `get_<table name>_columns()` macro is provided as the `column_macro` argument and the source table does not exist, `union_data` will create each of the missing table's fields and properly cast them as `null`. If the macro is not provided and the source table still does not exist, `union_data` will create a table with just one `null` field (`_dbt_source_relation`).
+- ([PR #100](https://github.com/fivetran/dbt_fivetran_utils/pull/100)) Expanded the `union_data` macro to create an empty table if none of the provided schemas or databases contain a source table. This is achieved by:
+  - A new (optional, but recommended) `columm_macro` argument. This should be the `get_<table name>_columns()` macro stored in the `macros` folder of the source package, which returns all expected columns and their datatypes for source tables. 
+  - New output: If the `column_macro` argument is provided and the source table does not exist, `union_data` will create each of the missing table's fields as `null` and properly cast them. 
+  - New output: If the `column_macro` argument is not provided and the source table does not exist, `union_data` will create a table with just one `null` field (`_dbt_source_relation`).
 
 # dbt_fivetran_utils v0.4.2
 ## Bug Fixes
