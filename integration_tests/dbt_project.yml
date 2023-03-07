@@ -30,20 +30,11 @@ models:
         +enabled: False
 
 vars:
-  "{% if target.type == 'snowflake' %}
-  hubspot_database: DBT_PACKAGE_TESTING_STAGE
-  jira_database: DBT_PACKAGE_TESTING_STAGE
-  klaviyo_database: DBT_PACKAGE_TESTING_STAGE
-  twitter_ads: DBT_PACKAGE_TESTING_STAGE
-  zendesk: DBT_PACKAGE_TESTING_STAGE
-  
-  {%- else %}
-  hubspot_schema: snowflake_stage_hubspot
-  jira_schema: snowflake_stage_jira
-  klaviyo_schema: snowflake_stage_klaviyo
-  twitter_schema: snowflake_stage_twitter
-  zendesk_schema: snowflake_stage_zendesk
-  {% endif %}"
+  hubspot_schema: "{% if target.type != 'snowflake' %} snowflake_stage_hubspot {% endif %}"
+  jira_schema: "{% if target.type != 'snowflake' %} snowflake_stage_jira {% endif %}"
+  klaviyo_schema: "{% if target.type != 'snowflake' %} snowflake_stage_klaviyo {% endif %}"
+  twitter_schema: "{% if target.type != 'snowflake' %} snowflake_stage_twitter {% endif %}"
+  zendesk_schema: "{% if target.type != 'snowflake' %} snowflake_stage_zendesk {% endif %}"
 
   zendesk_schedule: "{{ source('zendesk', 'schedule') }}"
   zendesk_ticket: "{{ source('zendesk', 'ticket') }}"
