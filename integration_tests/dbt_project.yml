@@ -1,10 +1,20 @@
 name: 'fivetran_utils_integration_tests'
-version: '0.4.2'
+version: '0.4.3'
 config-version: 2
 profile: 'integration_tests'
 
 models:
   fivetran_utils_schema: 'fivetran_utils_integration_tests'
+  hubspot:
+    +tags: hubspot
+  jira: 
+    intermediate:
+      field_history:
+        int_jira__issue_calendar_spine:
+          +enabled: False
+    +tags: jira
+  klaviyo:
+    +tags: klaviyo
   twitter_ads:
     +tags: twitter_ads
   zendesk:
@@ -19,22 +29,26 @@ models:
       int_zendesk__field_history_pivot:
         +enabled: False
 
-  hubspot:
-    +tags: hubspot
-  klaviyo:
-    +tags: klaviyo
-  jira: 
-    intermediate:
-      field_history:
-        int_jira__issue_calendar_spine:
-          +enabled: False
-    +tags: jira
-
 vars:
+  "{% if target.type == 'snowflake' %}
+  hubspot_database: DBT_PACKAGE_TESTING_STAGE
+  jira_database: DBT_PACKAGE_TESTING_STAGE
+  klaviyo_database: DBT_PACKAGE_TESTING_STAGE
+  twitter_ads: DBT_PACKAGE_TESTING_STAGE
+  zendesk: DBT_PACKAGE_TESTING_STAGE
+  
+  {%- else %}
+  hubspot_schema: snowflake_stage_hubspot
+  jira_schema: snowflake_stage_jira
+  klaviyo_schema: snowflake_stage_klaviyo
+  twitter_schema: snowflake_stage_twitter
+  zendesk_schema: snowflake_stage_zendesk
+  {% endif %}"
+
   zendesk_schedule: "{{ source('zendesk', 'schedule') }}"
   zendesk_ticket: "{{ source('zendesk', 'ticket') }}"
   zendesk_ticket_field_history: "{{ source('zendesk', 'ticket_field_history') }}"
 
-clean-targets:         # directories to be removed by `dbt clean`
+clean-targets:        
   - "target"
   - "dbt_packages"

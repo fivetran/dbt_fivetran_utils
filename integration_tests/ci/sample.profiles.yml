@@ -44,7 +44,7 @@ integration_tests:
       schema: fivetran_utils_integration_tests
       threads: 8
     databricks:
-      catalog: null
+      catalog: hive_metastore
       host: "{{ env_var('CI_DATABRICKS_DBT_HOST') }}"
       http_path: "{{ env_var('CI_DATABRICKS_DBT_HTTP_PATH') }}"
       schema: fivetran_utils_integration_tests

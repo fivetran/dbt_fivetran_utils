@@ -23,7 +23,7 @@ mv packages.yml packages_ft_pkgs.yml && mv packages_ft_utils_override.yml packag
 ## mv packages.yml packages_ft_utils_override.yml && mv packages_ft_pkgs.yml packages.yml 
 
 dbt deps ## To override initial fivetran_utils package
-echo 'Compiling Twitter Ads...'
+echo 'Compiling Twitter Ads'
 dbt compile --target "$db" --select tag:twitter_ads
 
 echo 'Compiling Hubspot'
