@@ -454,7 +454,6 @@ To create dependencies between the unioned model and its *sources*, you **must d
         schema_variable='shopify_schema', 
         default_database=target.database,
         default_schema='shopify',
-        column_macro=get_customer_columns(),
         default_variable='customer_source'
     )
 }}
@@ -466,7 +465,6 @@ To create dependencies between the unioned model and its *sources*, you **must d
 * `default_database`: The default database where source data should be found. This is used when unioning schemas.
 * `default_schema`: The default schema where source data should be found. This is used when unioning databases.
 * `default_variable`: The name of the variable that users should populate when they want to pass one specific relation to this model (mostly used for CI)
-* `column_macro` (optional but recommended): The name of the macro leveraged by `fill_staging_columns()` which contains expected columns and their data types. Default value is `[{}]`.
 * `union_schema_variable` (optional): The name of the union schema variable. By default the macro will look for `union_schemas`.
 * `union_database_variable` (optional): The name of the union database variable. By default the macro will look for `union_databases`.
 

@@ -1,4 +1,4 @@
-{%- macro union_data(table_identifier, database_variable, schema_variable, default_database, default_schema, default_variable, column_macro=[{}], union_schema_variable='union_schemas', union_database_variable='union_databases') -%}
+{%- macro union_data(table_identifier, database_variable, schema_variable, default_database, default_schema, default_variable, union_schema_variable='union_schemas', union_database_variable='union_databases') -%}
 
 {{ adapter.dispatch('union_data', 'fivetran_utils') (
     table_identifier, 
@@ -7,7 +7,6 @@
     default_database, 
     default_schema, 
     default_variable,
-    column_macro,
     union_schema_variable,
     union_database_variable
     ) }}
@@ -21,7 +20,6 @@
     default_database, 
     default_schema, 
     default_variable,
-    column_macro,
     union_schema_variable,
     union_database_variable
     ) -%}
@@ -56,7 +54,6 @@
         {{ dbt_utils.union_relations(relations) }}
     {%- else -%}
     select 
-        {% if column_macro != [{}] %}{{ fivetran_utils.fill_staging_columns(source_columns=[], staging_columns=column_macro) }},{% endif -%} 
         cast(null as {{ dbt.type_string() }}) as _dbt_source_relation
     {%- endif -%}
 
@@ -83,7 +80,6 @@
         {{ dbt_utils.union_relations(relations) }}
     {%- else -%}
     select 
-        {% if column_macro != [{}] %}{{ fivetran_utils.fill_staging_columns(source_columns=[], staging_columns=column_macro) }},{% endif -%}
         cast(null as {{ dbt.type_string() }}) as _dbt_source_relation
     {%- endif -%}
 
@@ -100,7 +96,6 @@
     from {{ var(default_variable) }}
 {%- else -%}
     select 
-        {% if column_macro != [{}] %}{{ fivetran_utils.fill_staging_columns(source_columns=[], staging_columns=column_macro) }},{% endif -%}
         cast(null as {{ dbt.type_string() }}) as _dbt_source_relation
 {%- endif -%}
 {%- endif -%}
