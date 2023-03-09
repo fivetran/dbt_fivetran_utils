@@ -55,6 +55,7 @@
     {%- else -%}
     select 
         cast(null as {{ dbt.type_string() }}) as _dbt_source_relation
+    limit 0
     {%- endif -%}
 
 {%- elif var(union_database_variable, none) -%}
@@ -81,6 +82,7 @@
     {%- else -%}
     select 
         cast(null as {{ dbt.type_string() }}) as _dbt_source_relation
+    limit 0
     {%- endif -%}
 
 {%- else -%}
@@ -97,6 +99,7 @@
 {%- else -%}
     select 
         cast(null as {{ dbt.type_string() }}) as _dbt_source_relation
+    limit 0
 {%- endif -%}
 {%- endif -%}
 
