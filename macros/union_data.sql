@@ -53,7 +53,9 @@
     {%- if relations != [] -%}
         {{ dbt_utils.union_relations(relations) }}
     {%- else -%}
-    {% if execute and not var('remove_empty_table_warnings', false) -%}{{ exceptions.warn("\n\nWarning: The " ~ table_identifier ~ " table was not found in your destination. The package will create a completely empty staging model as to not break downstream transformations.\n") }}{% endif -%}
+    {% if execute and not var('remove_empty_table_warnings', false) -%}
+    {{ exceptions.warn("\n\nPlease be aware: The " ~ table_identifier ~ " table was not found in your destination. The package will create a completely empty staging model as to not break downstream transformations. To turn off these warnings, set the `remove_empty_table_warnings` variable to False.\n") }}
+    {% endif -%}
     select 
         cast(null as {{ dbt.type_string() }}) as _dbt_source_relation
     limit 0
@@ -81,7 +83,9 @@
     {%- if relations != [] -%}
         {{ dbt_utils.union_relations(relations) }}
     {%- else -%}
-    {% if execute and not var('remove_empty_table_warnings', false) -%}{{ exceptions.warn("\n\nWarning: The " ~ table_identifier ~ " table was not found in your destination. The package will create a completely empty staging model as to not break downstream transformations.\n") }}{% endif -%}
+    {% if execute and not var('remove_empty_table_warnings', false) -%}
+    {{ exceptions.warn("\n\nPlease be aware: The " ~ table_identifier ~ " table was not found in your destination. The package will create a completely empty staging model as to not break downstream transformations. To turn off these warnings, set the `remove_empty_table_warnings` variable to False.\n") }}
+    {% endif -%}
     select 
         cast(null as {{ dbt.type_string() }}) as _dbt_source_relation
     limit 0
@@ -99,7 +103,9 @@
     select * 
     from {{ var(default_variable) }}
 {%- else -%}
-    {% if execute and not var('remove_empty_table_warnings', false) -%}{{ exceptions.warn("\n\nWarning: The " ~ table_identifier ~ " table was not found in your destination. The package will create a completely empty staging model as to not break downstream transformations.\n") }}{% endif -%}
+    {% if execute and not var('remove_empty_table_warnings', false) -%}
+    {{ exceptions.warn("\n\nPlease be aware: The " ~ table_identifier ~ " table was not found in your destination. The package will create a completely empty staging model as to not break downstream transformations. To turn off these warnings, set the `remove_empty_table_warnings` variable to False.\n") }}
+    {% endif -%}
     select 
         cast(null as {{ dbt.type_string() }}) as _dbt_source_relation
     limit 0
