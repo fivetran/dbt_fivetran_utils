@@ -444,7 +444,7 @@ When using this functionality, every `_tmp` table should use this macro as descr
 
 To create dependencies between the unioned model and its *sources*, you **must define** the source tables in a `.yml` file in your project and set the `has_defined_sources` variable (scoped to the source package in which the macro is being called) to `True` in your `dbt_project.yml` file. If you set `has_defined_sources` to true and do not define sources (at least adding the `name` of each table in the source), dbt will throw an error.
 
-If the source table is not found in any of the provided schemas/databases, `union_data` will return a **completely** empty table (ie `limit 0`) with just one string column (`_dbt_source_relation`). A compiler warning will be raised, highlighting that the expected source table was not found and its respective staging model is empty. The compiler warning can be turned off by the end user by setting the global `remove_empty_table_warnings` variable to `True`.
+If the source table is not found in any of the provided schemas/databases, `union_data` will return a **completely** empty table (ie `limit 0`) with just one string column (`_dbt_source_relation`). A compiler warning message will be output, highlighting that the expected source table was not found and its respective staging model is empty. The compiler warning can be turned off by the end user by setting the global `remove_empty_table_warnings` variable to `True`.
 
 **Usage:**
 ```sql
