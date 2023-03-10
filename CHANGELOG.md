@@ -1,7 +1,7 @@
 # dbt_fivetran_utils v0.4.3
 
 ## Feature Updates
-- ([PR #100](https://github.com/fivetran/dbt_fivetran_utils/pull/100)) Expanded the `union_data` macro to create an empty table if none of the provided schemas or databases contain a source table. If the source table does not exist anywhere, `union_data` will return a **completely** empty (ie `limit 0`) with just one string column (`_dbt_source_relation`).
+- ([PR #100](https://github.com/fivetran/dbt_fivetran_utils/pull/100)) Expanded the `union_data` macro to create an empty table if none of the provided schemas or databases contain a source table. If the source table does not exist anywhere, `union_data` will return a **completely** empty table (ie `limit 0`) with just one string column (`_dbt_source_relation`).
 
 # dbt_fivetran_utils v0.4.2
 ## Bug Fixes
