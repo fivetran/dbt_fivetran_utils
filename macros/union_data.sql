@@ -54,7 +54,7 @@
         {{ dbt_utils.union_relations(relations) }}
     {%- else -%}
     {% if execute and not var('fivetran__remove_empty_table_warnings', false) -%}
-    {{ exceptions.warn("\n\nPlease be aware: The " ~ table_identifier ~ " table was not found in your " ~ default_schema ~ " schema(s). The package will create a completely empty " ~ table_identifier ~ " staging model as to not break downstream transformations. To turn off these warnings, set the `fivetran__remove_empty_table_warnings` variable to False.\n") }}
+    {{ exceptions.warn("\n\nPlease be aware: The " ~ table_identifier ~ " table was not found in your " ~ default_schema ~ " schema(s). The package will create a completely empty " ~ table_identifier ~ " staging model as to not break downstream transformations. To turn off these warnings, set the `fivetran__remove_empty_table_warnings` variable to True.\n") }}
     {% endif -%}
     select 
         cast(null as {{ dbt.type_string() }}) as _dbt_source_relation
@@ -84,7 +84,7 @@
         {{ dbt_utils.union_relations(relations) }}
     {%- else -%}
     {% if execute and not var('fivetran__remove_empty_table_warnings', false) -%}
-    {{ exceptions.warn("\n\nPlease be aware: The " ~ table_identifier ~ " table was not found in your " ~ default_schema ~ " schema(s). The package will create a completely empty " ~ table_identifier ~ " staging model as to not break downstream transformations. To turn off these warnings, set the `fivetran__remove_empty_table_warnings` variable to False.\n") }}
+    {{ exceptions.warn("\n\nPlease be aware: The " ~ table_identifier ~ " table was not found in your " ~ default_schema ~ " schema(s). The package will create a completely empty " ~ table_identifier ~ " staging model as to not break downstream transformations. To turn off these warnings, set the `fivetran__remove_empty_table_warnings` variable to True.\n") }}
     {% endif -%}
     select 
         cast(null as {{ dbt.type_string() }}) as _dbt_source_relation
@@ -104,7 +104,7 @@
     from {{ var(default_variable) }}
 {%- else -%}
     {% if execute and not var('fivetran__remove_empty_table_warnings', false) -%}
-    {{ exceptions.warn("\n\nPlease be aware: The " ~ table_identifier ~ " table was not found in your " ~ default_schema ~ " schema(s). The package will create a completely empty " ~ table_identifier ~ " staging model as to not break downstream transformations. To turn off these warnings, set the `fivetran__remove_empty_table_warnings` variable to False.\n") }}
+    {{ exceptions.warn("\n\nPlease be aware: The " ~ table_identifier ~ " table was not found in your " ~ default_schema ~ " schema(s). The package will create a completely empty " ~ table_identifier ~ " staging model as to not break downstream transformations. To turn off these warnings, set the `fivetran__remove_empty_table_warnings` variable to True.\n") }}
     {% endif -%}
     select 
         cast(null as {{ dbt.type_string() }}) as _dbt_source_relation
