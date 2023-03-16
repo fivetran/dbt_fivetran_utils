@@ -1,3 +1,8 @@
+# dbt_fivetran_utils v0.4.3
+
+## Under the Hood
+- Added `dbt compile` tests for popular Fivetran packages in integration testing. ([PR #101](https://github.com/fivetran/dbt_fivetran_utils/pull/101))
+
 # dbt_fivetran_utils v0.4.2
 ## Bug Fixes
 - Fix broken anchor tags in README. ([PR #96](https://github.com/fivetran/dbt_fivetran_utils/pull/96))
