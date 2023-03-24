@@ -8,7 +8,7 @@
 
 {% for s in schemas_to_drop %}
 
-{{ run_query("drop schema if exists `" ~ target.database ~ "`.`" ~ s ~ "` cascade;") }}
+{{ run_query("drop schema if exists " ~ quote(target.database) ~ "." ~ quote(s) ~ " cascade;") }}
 
 {# {{ print('drop schema if exists `' ~ target.database ~ '`.`' ~ s ~ '` cascade;') }} #}
 {% endfor %}
