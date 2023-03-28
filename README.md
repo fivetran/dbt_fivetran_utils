@@ -78,6 +78,7 @@ dispatch:
     - [persist\_pass\_through\_columns (source)](#persist_pass_through_columns-source)
     - [remove\_prefix\_from\_columns (source)](#remove_prefix_from_columns-source)
     - [source\_relation (source)](#source_relation-source)
+    - [slugify\_sql (source)](#slugify_sql-source)
     - [union\_data (source)](#union_data-source)
     - [union\_relations (source)](#union_relations-source)
   - [Variable Checks](#variable-checks)
@@ -431,6 +432,18 @@ It should be added to all non-tmp staging models when using the `union_data` mac
 **Args:**
 * `union_schema_variable` (optional): The name of the union schema variable. By default the macro will look for `union_schemas`.
 * `union_database_variable` (optional): The name of the union database variable. By default the macro will look for `union_databases`.
+
+----
+### slugify_sql ([source](macros/slugify_sql.sql))
+SQL-version of [dbt-utils.slugify()](https://github.com/dbt-labs/dbt-utils#slugify-source), which turns **Jinja strings** into "slugs" (lowercase; replace spaces and dashes with underscores; only numbers, letters, and underscores; prepended with an underscore if it begins with a number). `slugify_sql()` will turn **SQL strings** into slugs. 
+
+**Usage:**
+```sql
+{{ fivetran_utils.slugify_sql(string='string_field_to_slugify') }}
+```
+
+**Args:**
+* `string`: The SQL string you want to slugify.
 
 ----
 ### union_data ([source](macros/union_data.sql))
