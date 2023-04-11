@@ -1,14 +1,23 @@
-{% macro drop_schemas(schema_suffixes=[], drop_target_schema=true) %}
+{% macro drop_schemas(drop_target_schema=true) %}
 
-{% set schemas_to_drop = [target.schema] if drop_target_schema else [] %}
+{% set fetch_list_sql %}
+select schema_name
+from {{ target.database }}.INFORMATION_SCHEMA.SCHEMATA
+where lower(schema_name) like '{{ target.schema | lower }}{%- if not drop_target_schema -%}_{%- endif -%}%'
+{% endset %}
 
-{% for suffix in schema_suffixes %}
-{% do schemas_to_drop.append(target.schema ~ suffix) %}
-{% endfor %}
+{% set results = run_query(fetch_list_sql) %}
 
-{% for s in schemas_to_drop %}
+{% if execute %}
+{% set results_list = results.columns[0].values() %}
+{% else %}
+{% set results_list = [] %}
+{% endif %}
 
-{{ run_query("drop schema if exists " ~ s ~ " cascade;") }}
+
+{% for schema_to_drop in results_list %}
+
+{{ run_query("drop schema if exists " ~ schema_to_drop ~ " cascade;") }}
 
 {% endfor %}
 
