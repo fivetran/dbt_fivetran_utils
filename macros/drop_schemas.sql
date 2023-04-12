@@ -1,13 +1,11 @@
 {% macro drop_schemas(drop_target_schema=true) %}
 
-{% set wh_quote = '`' if target.type in ('bigquery') else '"' %}
-
 {% set fetch_list_sql %}
 
 {% if target.type not in ('databricks', 'spark') %}
 select schema_name
 from 
-{{ wh_quote ~ (target.database|upper if target.type == 'snowflake' else target.database) ~ wh_quote }}.INFORMATION_SCHEMA.SCHEMATA
+{{ quote(target.database) }}.INFORMATION_SCHEMA.SCHEMATA
 where lower(schema_name) like '{{ target.schema | lower }}{%- if not drop_target_schema -%}_{%- endif -%}%'
 
 {% else %}
