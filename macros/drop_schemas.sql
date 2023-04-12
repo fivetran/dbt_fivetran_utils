@@ -1,11 +1,19 @@
 {% macro drop_schemas(drop_target_schema=true) %}
 
-{% set wh_quote = '`' if target.type in ('bigquery', 'databricks', 'spark') else '"' %}
+{% set wh_quote = '`' if target.type in ('bigquery') else '"' %}
 
 {% set fetch_list_sql %}
+
+{% if target.type not in ('databricks', 'spark') %}
 select schema_name
-from {{ wh_quote ~ (target.database|upper if target.type == 'snowflake' else target.database) ~ wh_quote }}.INFORMATION_SCHEMA.SCHEMATA
+from 
+{{ wh_quote ~ (target.database|upper if target.type == 'snowflake' else target.database) ~ wh_quote }}.INFORMATION_SCHEMA.SCHEMATA
 where lower(schema_name) like '{{ target.schema | lower }}{%- if not drop_target_schema -%}_{%- endif -%}%'
+
+{% else %}
+SHOW SCHEMAS LIKE '{{ target.schema }}{%- if not drop_target_schema -%}_{%- endif -%}*'
+
+{% endif %}
 {% endset %}
 
 {% set results = run_query(fetch_list_sql) %}
@@ -15,7 +23,6 @@ where lower(schema_name) like '{{ target.schema | lower }}{%- if not drop_target
 {% else %}
 {% set results_list = [] %}
 {% endif %}
-
 
 {% for schema_to_drop in results_list %}
 
