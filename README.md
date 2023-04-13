@@ -64,6 +64,7 @@ dispatch:
     - [max\_bool (source)](#max_bool-source)
     - [percentile (source)](#percentile-source)
     - [pivot\_json\_extract (source)](#pivot_json_extract-source)
+    - [quote (source)](#quote-source)
     - [string\_agg (source)](#string_agg-source)
     - [timestamp\_add (source)](#timestamp_add-source)
     - [timestamp\_diff (source)](#timestamp_diff-source)
@@ -72,6 +73,7 @@ dispatch:
     - [add\_dbt\_source\_relation (source)](#add_dbt_source_relation-source)
     - [add\_pass\_through\_columns (source)](#add_pass_through_columns-source)
     - [calculated\_fields (source)](#calculated_fields-source)
+    - [drop\_schemas (source)](#drop_schemas-source)
     - [dummy\_coalesce\_value (source)](#dummy_coalesce_value-source)
     - [fill\_pass\_through\_columns (source)](#fill_pass_through_columns-source)
     - [fill\_staging\_columns (source)](#fill_staging_columns-source)
@@ -250,6 +252,16 @@ This macro builds off of the `json_extract` macro in order to extract a list of 
 * `list_of_properties`  (required): List of the fields that you want to extract from the json object and pivot out into columns.
 
 ----
+### quote ([source](macros/quote_something.sql))
+This macro takes an object returns it wrapped in database-appropriate quotes (and casing). 
+
+**Usage:**
+```sql
+{{ fivetran_utils.quote(thing="reserved_keyword_mayhaps") }}
+```
+**Args:**
+* `thing` (required): SQL object you want to quote.
+----
 ### string_agg ([source](macros/string_agg.sql))
 This macro allows for cross database field aggregation and delimiter customization. Supported database specific field aggregation functions include 
 BigQuery, Snowflake, Redshift, Postgres, and Spark.
@@ -344,6 +356,19 @@ vars:
 * `variable` (required): The variable containing the calculated field `name` and `transform_sql`.
 
 ----
+
+### drop_schemas ([source](macros/drop_schemas.sql))
+This macro was created to be clean up the schemas in our integration test environments. It drops schemas that are `like` the `target.schema`. By default it will drop the target schema as well but this can be configured.
+
+**Usage:**
+```zsh
+dbt run-operation fivetran_utils.drop_schemas
+```
+**Args:**
+* `drop_target_schema` (optional): Boolean that is `true` by default. If `false`, the target schema will not be dropped.
+
+----
+
 ### dummy_coalesce_value ([source](macros/dummy_coalesce_value.sql))
 This macro creates a dummy coalesce value based on the data type of the field. See below for the respective data type and dummy values:
 - String    = 'DUMMY_STRING'
