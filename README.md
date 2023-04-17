@@ -73,7 +73,7 @@ dispatch:
     - [add\_dbt\_source\_relation (source)](#add_dbt_source_relation-source)
     - [add\_pass\_through\_columns (source)](#add_pass_through_columns-source)
     - [calculated\_fields (source)](#calculated_fields-source)
-    - [drop\_schemas (source)](#drop_schemas-source)
+    - [drop\_schemas\_automation (source)](#drop_schemas_automation-source)
     - [dummy\_coalesce\_value (source)](#dummy_coalesce_value-source)
     - [fill\_pass\_through\_columns (source)](#fill_pass_through_columns-source)
     - [fill\_staging\_columns (source)](#fill_staging_columns-source)
@@ -357,7 +357,7 @@ vars:
 
 ----
 
-### drop_schemas ([source](macros/drop_schemas.sql))
+### drop_schemas_automation ([source](macros/drop_schemas_automation.sql))
 This macro was created to be clean up the schemas in our integration test environments. It drops schemas that are `like` the `target.schema`. By default it will drop the target schema as well but this can be configured.
 
 **Usage:**
@@ -374,9 +374,9 @@ jobs:
    schedule: '0 0 * * 0' # The example will run once a week at 00:00 on Sunday.
    steps:
     - name: drop schemas but leave target
-      command: dbt run-operation fivetran_utils.drop_schemas --target "$db" --vars '{"drop_target_schema": False}'
+      command: dbt run-operation fivetran_utils.drop_schemas --vars '{"drop_target_schema": False}'
     - name: drop schemas including target
-      command: dbt run-operation fivetran_utils.drop_schemas --target "$db"
+      command: dbt run-operation fivetran_utils.drop_schemas_automation
 ```
 **Args:**
 * `drop_target_schema` (optional): Boolean that is `true` by default. If `false`, the target schema will not be dropped.
