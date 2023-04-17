@@ -361,8 +361,22 @@ vars:
 This macro was created to be clean up the schemas in our integration test environments. It drops schemas that are `like` the `target.schema`. By default it will drop the target schema as well but this can be configured.
 
 **Usage:**
-```zsh
-dbt run-operation fivetran_utils.drop_schemas
+At the end of a Buildkite integration test job in `.buildkite/scripts/run_models.sh`:
+```sh
+# do all the setup, dbt seed, compile, run, test steps beforehand...
+dbt run-operation fivetran_utils.drop_schemas --target "$db"
+```
+
+As a Fivetran Transformation job step in a `deployment.yml`:
+```yml
+jobs:
+ - name: cleanup
+   schedule: '0 0 * * 0' # The example will run once a week at 00:00 on Sunday.
+   steps:
+    - name: drop schemas but leave target
+      command: dbt run-operation fivetran_utils.drop_schemas --target "$db" --vars '{"drop_target_schema": False}'
+    - name: drop schemas including target
+      command: dbt run-operation fivetran_utils.drop_schemas --target "$db"
 ```
 **Args:**
 * `drop_target_schema` (optional): Boolean that is `true` by default. If `false`, the target schema will not be dropped.

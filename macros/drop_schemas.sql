@@ -1,4 +1,4 @@
-{% macro drop_schemas(drop_target_schema=true) %}
+{% macro drop_schemas(drop_target_schema=true, schema_patterns=[target.schema]) %}
 
 {% set fetch_list_sql %}
 
@@ -24,7 +24,9 @@ SHOW SCHEMAS LIKE '{{ target.schema }}{%- if not drop_target_schema -%}_{%- endi
 
 {% for schema_to_drop in results_list %}
 
-{{ run_query("drop schema if exists " ~ schema_to_drop ~ " cascade;") }}
+{# {{ run_query("drop schema if exists " ~ schema_to_drop ~ " cascade;") }} #}
+
+{% do adapter.drop_schema(api.Relation.create(database=target.database, schema=schema_to_drop)) %}
 
 {% endfor %}
 
