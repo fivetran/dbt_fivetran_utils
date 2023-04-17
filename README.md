@@ -21,7 +21,7 @@ This package includes macros that are used across Fivetran's dbt packages. This 
 
 # 🎯 How do I use the dbt package?
 ## Step 1: Installing the Package
-Include the following fivetran_utils package version in your `packages.yml`. Please note that this package is installed by default within **all** Fivetran dbt packages.
+Include the following fivetran_utils package version in your `packages.yml` if you do not have any other Fivetran dbt packag dependencies. Please note that this package is installed by default within **all** Fivetran dbt packages.
 > Check [dbt Hub](https://hub.getdbt.com/) for the latest installation instructions, or [read the dbt docs](https://docs.getdbt.com/docs/package-management) for more information on installing packages.
 ```yaml
 packages:
@@ -364,7 +364,7 @@ This macro was created to be clean up the schemas in our integration test enviro
 At the end of a Buildkite integration test job in `.buildkite/scripts/run_models.sh`:
 ```sh
 # do all the setup, dbt seed, compile, run, test steps beforehand...
-dbt run-operation fivetran_utils.drop_schemas --target "$db"
+dbt run-operation fivetran_utils.drop_schemas_automation --target "$db"
 ```
 
 As a Fivetran Transformation job step in a `deployment.yml`:
@@ -374,7 +374,7 @@ jobs:
    schedule: '0 0 * * 0' # The example will run once a week at 00:00 on Sunday.
    steps:
     - name: drop schemas but leave target
-      command: dbt run-operation fivetran_utils.drop_schemas --vars '{"drop_target_schema": False}'
+      command: dbt run-operation fivetran_utils.drop_schemas_automation --vars '{"drop_target_schema": False}'
     - name: drop schemas including target
       command: dbt run-operation fivetran_utils.drop_schemas_automation
 ```
