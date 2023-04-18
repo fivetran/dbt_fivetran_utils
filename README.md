@@ -307,10 +307,10 @@ This macro takes a SQL object (ie database, schema, column) and returns it wrapp
 
 **Usage:**
 ```sql
-{{ fivetran_utils.wrap_in_quotes(thing="reserved_keyword_mayhaps") }}
+{{ fivetran_utils.wrap_in_quotes(object_to_quote="reserved_keyword_mayhaps") }}
 ```
 **Args:**
-* `thing` (required): SQL object you want to quote.
+* `object_to_quote` (required): SQL object you want to quote.
 ----
 ## SQL and field generators
 These macros create SQL or fields to be included when running the package.
