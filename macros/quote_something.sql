@@ -4,7 +4,7 @@
 
 {%- endmacro -%}
 
-{%- macro default__quote(thing)  -%}
+{%- macro bigquery__quote(thing)  -%}
 {# bigquery, spark, databricks #}
     `{{ thing }}`
 {%- endmacro -%}
