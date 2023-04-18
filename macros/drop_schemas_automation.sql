@@ -2,7 +2,7 @@
     {{ return(adapter.dispatch('drop_schemas_automation', 'fivetran_utils')(drop_target_schema)) }}
 {%- endmacro %}
 
-{% macro default__drop_schemas_automation(drop_target_schema=true) %}
+{% macro snowflake__drop_schemas_automation(drop_target_schema=true) %}
 
 {% set fetch_list_sql %}
     {% if target.type not in ('databricks', 'spark') %}
