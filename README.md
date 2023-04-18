@@ -358,7 +358,7 @@ vars:
 ----
 
 ### drop_schemas_automation ([source](macros/drop_schemas_automation.sql))
-This macro was created to be clean up the schemas in our integration test environments. It drops schemas that are `like` the `target.schema`. By default it will drop the target schema as well but this can be configured.
+This macro was created to help clean up the schemas in our integration test environments. It drops schemas that are `like` the `target.schema`. By default it will drop the target schema as well but this can be configured.
 
 **Usage:**
 At the end of a Buildkite integration test job in `.buildkite/scripts/run_models.sh`:
