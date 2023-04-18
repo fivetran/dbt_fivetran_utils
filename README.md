@@ -253,7 +253,7 @@ This macro builds off of the `json_extract` macro in order to extract a list of 
 
 ----
 ### quote ([source](macros/quote_something.sql))
-This macro takes an object returns it wrapped in database-appropriate quotes (and casing). 
+This macro takes a SQL object (ie database, schema, column) and returns it wrapped in database-appropriate quotes (and casing for Snowflake). 
 
 **Usage:**
 ```sql

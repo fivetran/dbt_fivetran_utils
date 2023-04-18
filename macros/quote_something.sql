@@ -1,6 +1,6 @@
 {%- macro quote(thing) -%}
 
-{{ adapter.dispatch('quote', 'fivetran_utils') (thing) }}
+{{ return(adapter.dispatch('quote', 'fivetran_utils')(thing)) }}
 
 {%- endmacro -%}
 
