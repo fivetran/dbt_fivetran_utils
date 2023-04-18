@@ -21,7 +21,7 @@ This package includes macros that are used across Fivetran's dbt packages. This 
 
 # 🎯 How do I use the dbt package?
 ## Step 1: Installing the Package
-Include the following fivetran_utils package version in your `packages.yml`. Please note that this package is installed by default within **all** Fivetran dbt packages.
+Include the following fivetran_utils package version in your `packages.yml` if you do not have any other Fivetran dbt packag dependencies. Please note that this package is installed by default within **all** Fivetran dbt packages.
 > Check [dbt Hub](https://hub.getdbt.com/) for the latest installation instructions, or [read the dbt docs](https://docs.getdbt.com/docs/package-management) for more information on installing packages.
 ```yaml
 packages:
@@ -68,10 +68,12 @@ dispatch:
     - [timestamp\_add (source)](#timestamp_add-source)
     - [timestamp\_diff (source)](#timestamp_diff-source)
     - [try\_cast (source)](#try_cast-source)
+    - [wrap\_in\_quotes (source)](#wrap_in_quotes-source)
   - [SQL and field generators](#sql-and-field-generators)
     - [add\_dbt\_source\_relation (source)](#add_dbt_source_relation-source)
     - [add\_pass\_through\_columns (source)](#add_pass_through_columns-source)
     - [calculated\_fields (source)](#calculated_fields-source)
+    - [drop\_schemas\_automation (source)](#drop_schemas_automation-source)
     - [dummy\_coalesce\_value (source)](#dummy_coalesce_value-source)
     - [fill\_pass\_through\_columns (source)](#fill_pass_through_columns-source)
     - [fill\_staging\_columns (source)](#fill_staging_columns-source)
@@ -300,7 +302,16 @@ This macro allows a field to be cast to a specified datatype. If the datatype is
 * `type`        (required): The datatype you want to try and cast the base field.
 
 ----
+### wrap_in_quotes ([source](macros/wrap_in_quotes.sql))
+This macro takes a SQL object (ie database, schema, column) and returns it wrapped in database-appropriate quotes (and casing for Snowflake). 
 
+**Usage:**
+```sql
+{{ fivetran_utils.wrap_in_quotes(object_to_quote="reserved_keyword_mayhaps") }}
+```
+**Args:**
+* `object_to_quote` (required): SQL object you want to quote.
+----
 ## SQL and field generators
 These macros create SQL or fields to be included when running the package.
 ### add_dbt_source_relation ([source](macros/add_dbt_source_relation.sql))
@@ -344,6 +355,33 @@ vars:
 * `variable` (required): The variable containing the calculated field `name` and `transform_sql`.
 
 ----
+
+### drop_schemas_automation ([source](macros/drop_schemas_automation.sql))
+This macro was created to help clean up the schemas in our integration test environments. It drops schemas that are `like` the `target.schema`. By default it will drop the target schema as well but this can be configured.
+
+**Usage:**
+At the end of a Buildkite integration test job in `.buildkite/scripts/run_models.sh`:
+```sh
+# do all the setup, dbt seed, compile, run, test steps beforehand...
+dbt run-operation fivetran_utils.drop_schemas_automation --target "$db"
+```
+
+As a Fivetran Transformation job step in a `deployment.yml`:
+```yml
+jobs:
+ - name: cleanup
+   schedule: '0 0 * * 0' # The example will run once a week at 00:00 on Sunday.
+   steps:
+    - name: drop schemas but leave target
+      command: dbt run-operation fivetran_utils.drop_schemas_automation --vars '{"drop_target_schema": False}'
+    - name: drop schemas including target
+      command: dbt run-operation fivetran_utils.drop_schemas_automation
+```
+**Args:**
+* `drop_target_schema` (optional): Boolean that is `true` by default. If `false`, the target schema will not be dropped.
+
+----
+
 ### dummy_coalesce_value ([source](macros/dummy_coalesce_value.sql))
 This macro creates a dummy coalesce value based on the data type of the field. See below for the respective data type and dummy values:
 - String    = 'DUMMY_STRING'
