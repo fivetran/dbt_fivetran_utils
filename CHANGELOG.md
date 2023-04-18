@@ -3,7 +3,7 @@
 ## Feature Updates
 [PR #106](https://github.com/fivetran/dbt_fivetran_utils/pull/106) introduces the following two new macros:
 - [drop_schemas_automation](https://github.com/fivetran/dbt_fivetran_utils/tree/explore/drop-integration-test-schemas#drop_schemas_automation-source)
-- [quote](https://github.com/fivetran/dbt_fivetran_utils/tree/explore/drop-integration-test-schemas#quote-source)
+- [wrap_in_quotes](https://github.com/fivetran/dbt_fivetran_utils/tree/explore/drop-integration-test-schemas#wrap_in_quotes-source)
 
 # dbt_fivetran_utils v0.4.3
 

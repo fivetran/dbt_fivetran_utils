@@ -64,11 +64,11 @@ dispatch:
     - [max\_bool (source)](#max_bool-source)
     - [percentile (source)](#percentile-source)
     - [pivot\_json\_extract (source)](#pivot_json_extract-source)
-    - [quote (source)](#quote-source)
     - [string\_agg (source)](#string_agg-source)
     - [timestamp\_add (source)](#timestamp_add-source)
     - [timestamp\_diff (source)](#timestamp_diff-source)
     - [try\_cast (source)](#try_cast-source)
+    - [wrap\_in\_quotes (source)](#wrap_in_quotes-source)
   - [SQL and field generators](#sql-and-field-generators)
     - [add\_dbt\_source\_relation (source)](#add_dbt_source_relation-source)
     - [add\_pass\_through\_columns (source)](#add_pass_through_columns-source)
@@ -252,16 +252,6 @@ This macro builds off of the `json_extract` macro in order to extract a list of 
 * `list_of_properties`  (required): List of the fields that you want to extract from the json object and pivot out into columns.
 
 ----
-### quote ([source](macros/quote_something.sql))
-This macro takes a SQL object (ie database, schema, column) and returns it wrapped in database-appropriate quotes (and casing for Snowflake). 
-
-**Usage:**
-```sql
-{{ fivetran_utils.quote(thing="reserved_keyword_mayhaps") }}
-```
-**Args:**
-* `thing` (required): SQL object you want to quote.
-----
 ### string_agg ([source](macros/string_agg.sql))
 This macro allows for cross database field aggregation and delimiter customization. Supported database specific field aggregation functions include 
 BigQuery, Snowflake, Redshift, Postgres, and Spark.
@@ -312,7 +302,16 @@ This macro allows a field to be cast to a specified datatype. If the datatype is
 * `type`        (required): The datatype you want to try and cast the base field.
 
 ----
+### wrap_in_quotes ([source](macros/wrap_in_quotes.sql))
+This macro takes a SQL object (ie database, schema, column) and returns it wrapped in database-appropriate quotes (and casing for Snowflake). 
 
+**Usage:**
+```sql
+{{ fivetran_utils.wrap_in_quotes(thing="reserved_keyword_mayhaps") }}
+```
+**Args:**
+* `thing` (required): SQL object you want to quote.
+----
 ## SQL and field generators
 These macros create SQL or fields to be included when running the package.
 ### add_dbt_source_relation ([source](macros/add_dbt_source_relation.sql))

@@ -8,7 +8,7 @@
     {% if target.type not in ('databricks', 'spark') %}
         select schema_name
         from 
-        {{ quote(target.database) }}.INFORMATION_SCHEMA.SCHEMATA
+        {{ wrap_in_quotes(target.database) }}.INFORMATION_SCHEMA.SCHEMATA
         where lower(schema_name) like '{{ target.schema | lower }}{%- if not drop_target_schema -%}_{%- endif -%}%'
     {% else %}
         SHOW SCHEMAS LIKE '{{ target.schema }}{%- if not drop_target_schema -%}_{%- endif -%}*'
