@@ -4,7 +4,7 @@
 
 {%- endmacro -%}
 
-{%- macro default__wrap_in_quotes(object_to_quote)  -%}
+{%- macro bigquery__wrap_in_quotes(object_to_quote)  -%}
 {# bigquery, spark, databricks #}
     `{{ object_to_quote }}`
 {%- endmacro -%}
