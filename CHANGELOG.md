@@ -1,3 +1,8 @@
+# dbt_fivetran_utils v0.4.5
+## Feature Updates
+[PR #110](https://github.com/fivetran/dbt_fivetran_utils/pull/110) includes the following feature updates:
+- Update to the `union_data` macro to ensure a source connection is established when just one schema is being used with the macro. 
+    - The previous build did allow the macro to read data from the correct location; however, it did not leverage the source. Therefore, the models using this macro would result in not having a source connection. This has since been updated in this release and all versions of this macro (whether unioning or not) will attempt to leverage the source function.
 # dbt_fivetran_utils v0.4.4
 
 ## Feature Updates
