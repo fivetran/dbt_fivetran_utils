@@ -93,10 +93,9 @@
 
 {%- else -%}
     {%- set relation=adapter.get_relation(
-        database=source(default_schema, table_identifier).database,
-        schema=source(default_schema, table_identifier).schema,
-        identifier=source(default_schema, table_identifier).identifier
-    ) -%}
+        database=var(database_variable, default_database),
+        schema=var(schema_variable, default_schema),
+        identifier=var(default_schema ~ '_' ~ table_identifier ~ '_' ~ 'identifier', table_identifier)) -%}
 
 {%- set table_exists=relation is not none -%}
 
