@@ -1,3 +1,7 @@
+# dbt_fivetran_utils v0.4.6
+## Bug Fixes
+- Rolling back an error within the v0.4.5 release that caused a breaking change for the LinkedIn Pages dbt Package
+
 # dbt_fivetran_utils v0.4.5
 ## Feature Updates
 [PR #110](https://github.com/fivetran/dbt_fivetran_utils/pull/110) includes the following feature updates:
