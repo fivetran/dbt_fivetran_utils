@@ -6,6 +6,9 @@ profile: 'integration_tests'
 models:
   fivetran_utils_schema: 'fivetran_utils_integration_tests'
   quickbooks:
+    intermediate:
+      int_quickbooks__general_ledger_date_spine:
+        +enabled: False
     +tags: quickbooks
   hubspot:
     +tags: hubspot
