@@ -1,4 +1,5 @@
 steps:
+  ## Finance Packages
   - label: ":snowflake: Run Tests - Snowflake: Finance Packages :money_with_wings:"
     key: "run_dbt_snowflake_finance"
     plugins:
@@ -16,6 +17,64 @@ steps:
     commands: |
       bash .buildkite/scripts/finance_tests/finance_run_models.sh snowflake
 
+
+  - label: ":postgres: Run Tests - Postgres: Finance Packages :money_with_wings:"
+    key: "run-dbt-postgres"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.8"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+            - "CI_POSTGRES_DBT_DBNAME"
+            - "CI_POSTGRES_DBT_HOST"
+            - "CI_POSTGRES_DBT_PASS"
+            - "CI_POSTGRES_DBT_USER"
+    commands: |
+      bash .buildkite/scripts/finance_tests/finance_run_models.sh postgres 
+
+  - label: ":gcloud: Run Tests - BigQuery: Finance Packages :money_with_wings:"
+    key: "run_dbt_bigquery"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.8"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+            - "GCLOUD_SERVICE_KEY"
+    commands: |
+      bash .buildkite/scripts/finance_tests/finance_run_models.sh bigquery
+
+  - label: ":amazon-redshift: Run Tests - Redshift: Finance Packages :money_with_wings:"
+    key: "run_dbt_redshift"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.8"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+            - "CI_REDSHIFT_DBT_DBNAME"
+            - "CI_REDSHIFT_DBT_HOST"
+            - "CI_REDSHIFT_DBT_PASS"
+            - "CI_REDSHIFT_DBT_USER"
+    commands: |
+      bash .buildkite/scripts/finance_tests/finance_run_models.sh redshift
+
+  - label: ":bricks: Run Tests - Databricks: Finance Packages :money_with_wings:"
+    key: "run_dbt_databricks"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.8"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+            - "CI_DATABRICKS_DBT_HOST"
+            - "CI_DATABRICKS_DBT_HTTP_PATH"
+            - "CI_DATABRICKS_DBT_TOKEN"
+    commands: |
+      bash .buildkite/scripts/finance_tests/finance_run_models.sh databricks
+
+## Normal runs
   - label: ":postgres: Run Tests - Postgres"
     key: "run-dbt-postgres"
     plugins:

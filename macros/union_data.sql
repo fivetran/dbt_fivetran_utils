@@ -92,29 +92,10 @@
     {%- endif -%}
 
 {%- else -%}
-    {% if default_schema == 'linkedin_company_pages' %}
-        {%- set relation=adapter.get_relation(
-            database=source('linkedin_pages', table_identifier).database,
-            schema=source('linkedin_pages', table_identifier).schema,
-            identifier=source('linkedin_pages', table_identifier).identifier
-        ) -%}
-
-    {% elif default_schema == 'instagram_business_pages' %}
-        {%- set relation=adapter.get_relation(
-            database=source('instagram_business', table_identifier).database,
-            schema=source('instagram_business', table_identifier).schema,
-            identifier=source('instagram_business', table_identifier).identifier
-        ) -%}
-
-    {% else %}
-
     {%- set relation=adapter.get_relation(
-        database=source(default_schema, table_identifier).database,
-        schema=source(default_schema, table_identifier).schema,
-        identifier=source(default_schema, table_identifier).identifier
-    ) -%}
-
-    {% endif %}
+        database=var(database_variable, default_database),
+        schema=var(schema_variable, default_schema),
+        identifier=var(default_schema ~ '_' ~ table_identifier ~ '_' ~ 'identifier', table_identifier)) -%}
 
 {%- set table_exists=relation is not none -%}
 
