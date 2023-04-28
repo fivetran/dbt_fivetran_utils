@@ -1,4 +1,21 @@
 steps:
+  - label: ":snowflake: Run Tests - Snowflake: Finance Packages :money_with_wings:"
+    key: "run_dbt_snowflake_finance"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.8"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+            - "CI_SNOWFLAKE_DBT_ACCOUNT"
+            - "CI_SNOWFLAKE_DATABASE_FT_UTILS"
+            - "CI_SNOWFLAKE_DBT_PASS"
+            - "CI_SNOWFLAKE_DBT_ROLE"
+            - "CI_SNOWFLAKE_DBT_USER"
+            - "CI_SNOWFLAKE_DBT_WAREHOUSE"
+    commands: |
+      bash .buildkite/scripts/finance_tests/finance_run_models.sh snowflake
+
   - label: ":postgres: Run Tests - Postgres"
     key: "run-dbt-postgres"
     plugins:
