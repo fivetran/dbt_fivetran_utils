@@ -29,7 +29,11 @@
       where {{ filter }}
       {% endif %}
     {% endif %}
-
   {% endcall %}
+  
+  {% if dbt_version|tojson >= "1.5.0"|tojson %}
+  {{ return(load_result('collect_freshness')) }}
+  {% else %}
   {{ return(load_result('collect_freshness').table) }}
+  {% endif %}
 {% endmacro %}
