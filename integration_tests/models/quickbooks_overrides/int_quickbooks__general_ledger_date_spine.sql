@@ -3,7 +3,7 @@ with spine as (
 
     {% if execute %}
     {% set first_date_query %}
-        select  min( transaction_date ) as min_date from {{ var ('bill') }}
+        select  min( transaction_date ) as min_date from {{ var ('quickbooks_bill') }}
     {% endset %}
     {% set first_date = run_query(first_date_query).columns[0][0]|string %}
     
@@ -20,7 +20,7 @@ with spine as (
 
     {% if execute %}
     {% set last_date_query %}
-        select  max( transaction_date ) as max_date from {{ var ('bill') }}
+        select  max( transaction_date ) as max_date from {{ var ('quickbooks_bill') }}
     {% endset %}
 
     {% set current_date_query %}

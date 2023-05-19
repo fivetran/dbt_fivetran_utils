@@ -45,6 +45,7 @@ vars:
   zendesk_schedule: "{{ source('zendesk', 'schedule') }}"
   zendesk_ticket: "{{ source('zendesk', 'ticket') }}"
   zendesk_ticket_field_history: "{{ source('zendesk', 'ticket_field_history') }}"
+  quickbooks_bill: "{{ source('quickbooks', 'bill') }}"
 
 clean-targets:        
   - "target"
