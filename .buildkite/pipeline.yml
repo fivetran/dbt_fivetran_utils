@@ -19,7 +19,7 @@ steps:
 
 
   - label: ":postgres: Run Tests - Postgres: Finance Packages :money_with_wings:"
-    key: "run-dbt-postgres"
+    key: "run-dbt-postgres-finance"
     plugins:
       - docker#v3.13.0:
           image: "python:3.8"
@@ -34,7 +34,7 @@ steps:
       bash .buildkite/scripts/finance_tests/finance_run_models.sh postgres 
 
   - label: ":gcloud: Run Tests - BigQuery: Finance Packages :money_with_wings:"
-    key: "run_dbt_bigquery"
+    key: "run_dbt_bigquery_finance"
     plugins:
       - docker#v3.13.0:
           image: "python:3.8"
@@ -46,7 +46,7 @@ steps:
       bash .buildkite/scripts/finance_tests/finance_run_models.sh bigquery
 
   - label: ":amazon-redshift: Run Tests - Redshift: Finance Packages :money_with_wings:"
-    key: "run_dbt_redshift"
+    key: "run_dbt_redshift_finance"
     plugins:
       - docker#v3.13.0:
           image: "python:3.8"
@@ -61,7 +61,7 @@ steps:
       bash .buildkite/scripts/finance_tests/finance_run_models.sh redshift
 
   - label: ":bricks: Run Tests - Databricks: Finance Packages :money_with_wings:"
-    key: "run_dbt_databricks"
+    key: "run_dbt_databricks_finance"
     plugins:
       - docker#v3.13.0:
           image: "python:3.8"
