@@ -17,11 +17,18 @@ db=$1
 echo `pwd`
 cd integration_tests
 dbt deps ## Install all packages needed
-mv packages.yml packages_ft_pkgs.yml && mv packages_ft_utils_override.yml packages.yml
+cd dbt_packages
 
-## To rename files back to original names for local testing
-## mv packages.yml packages_ft_utils_override.yml && mv packages_ft_pkgs.yml packages.yml 
+packages=('twitter_ads')
 
-dbt deps ## To override initial fivetran_utils package
-echo 'Compiling QuickBooks'
-dbt compile --target "$db" --select tag:quickbooks
+for model in "${packages[@]}"
+do
+    cd dbt_packages/$model/integration_tests
+    dbt deps
+    cp ../../../packages_ft_utils_override.yml packages.yml
+    echo "compiling "$model""
+    dbt seed --target "$db"
+    dbt compile --target "$db"
+    dbt run-operation fivetran_utils.drop_schemas_automation --target "$db"
+    cd ../../../
+done

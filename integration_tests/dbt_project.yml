@@ -4,11 +4,14 @@ config-version: 2
 profile: 'integration_tests'
 
 models:
+  +schema:
   fivetran_utils_schema: 'fivetran_utils_integration_tests'
   quickbooks:
     intermediate:
       int_quickbooks__general_ledger_date_spine:
         +enabled: False
+    +tags: quickbooks
+  quickbooks_source:
     +tags: quickbooks
   hubspot:
     +tags: hubspot
@@ -40,7 +43,7 @@ vars:
   klaviyo_schema: "{% if target.type != 'snowflake' %} snowflake_stage_klaviyo {% endif %}"
   twitter_schema: "{% if target.type != 'snowflake' %} snowflake_stage_twitter {% endif %}"
   zendesk_schema: "{% if target.type != 'snowflake' %} snowflake_stage_zendesk {% endif %}"
-  quickbooks_schema: "{% if target.type != 'snowflake' %} snowflake_stage_quickbooks {% endif %}"
+  quickbooks_schema: "{{ env_var('QUICKBOOKS_SCHEMA') }}"
 
   zendesk_schedule: "{{ source('zendesk', 'schedule') }}"
   zendesk_ticket: "{{ source('zendesk', 'ticket') }}"

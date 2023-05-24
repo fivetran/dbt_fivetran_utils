@@ -92,16 +92,35 @@
     {%- endif -%}
 
 {%- else -%}
-    {%- set relation=adapter.get_relation(
-        database=var(database_variable, default_database),
-        schema=var(schema_variable, default_schema),
-        identifier=var(default_schema ~ '_' ~ table_identifier ~ '_' ~ 'identifier', table_identifier)) -%}
+    {% set exception_schemas = {"linkedin_company_pages": "linkedin_pages", "instagram_business_pages": "instagram_business"} %}
 
+    {% if default_schema in exception_schemas.keys() %}
+        {% for corrected_schema_name in exception_schemas.items() %}   
+            {% if default_schema in corrected_schema_name %}
+                {%- set relation=adapter.get_relation(
+                    database=source(corrected_schema_name[1], table_identifier).database,
+                    schema=source(corrected_schema_name[1], table_identifier).schema,
+                    identifier=source(corrected_schema_name[1], table_identifier).identifier
+                ) -%}
+            {% endif %}
+        {% endfor %}
+    {% else %}
+
+        {%- set relation=adapter.get_relation(
+            database=source(default_schema, table_identifier).database,
+            schema=source(default_schema, table_identifier).schema,
+            identifier=source(default_schema, table_identifier).identifier
+        ) -%}
+    {% endif %}
+    {{ log(relation, info=true) }}
 {%- set table_exists=relation is not none -%}
 
+{# {{ log(var(default_variable), info=true) }} #}
+{{ log(relation, info=true) }}
 {%- if table_exists -%}
     select * 
-    from {{ var(default_variable) }}
+    from {{ relation }}
+    {# from {{ var(default_variable) }} #}
 {%- else -%}
     {% if execute and not var('fivetran__remove_empty_table_warnings', false) -%}
     {{ exceptions.warn("\n\nPlease be aware: The " ~ table_identifier|upper ~ " table was not found in your " ~ default_schema|upper ~ " schema(s). The Fivetran dbt package will create a completely empty " ~ table_identifier|upper ~ " staging model as to not break downstream transformations. To turn off these warnings, set the `fivetran__remove_empty_table_warnings` variable to TRUE (see https://github.com/fivetran/dbt_fivetran_utils/tree/releases/v0.4.latest#union_data-source for details).\n") }}
