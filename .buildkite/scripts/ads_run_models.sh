@@ -17,7 +17,6 @@ db=$1
 echo `pwd`
 cd integration_tests
 dbt deps ## Install all packages needed
-cd dbt_packages
 
 packages=('twitter_ads')
 
