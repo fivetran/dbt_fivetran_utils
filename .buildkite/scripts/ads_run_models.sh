@@ -22,10 +22,11 @@ packages=('twitter_ads')
 
 for model in "${packages[@]}"
 do
-    cd dbt_packages/$model/integration_tests
+    echo "compiling "$model""
+    cd dbt_packages/$model/integration_tests/
     dbt deps
     cp ../../../packages_ft_utils_override.yml packages.yml
-    echo "compiling "$model""
+    dbt deps
     dbt seed --target "$db"
     dbt compile --target "$db"
     dbt run-operation fivetran_utils.drop_schemas_automation --target "$db"
