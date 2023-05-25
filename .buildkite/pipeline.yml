@@ -1,6 +1,6 @@
 steps:
   ## Ads Packages
-  - label: "Run Tests - :one: Ads Packages :bookmark:"
+  - label: ":snowflake: Run Tests - :one: Ads Packages :bookmark:"
     key: "run_dbt_snowflake_ads"
     plugins:
       - docker#v3.13.0:
@@ -14,74 +14,61 @@ steps:
             - "CI_SNOWFLAKE_DBT_ROLE_FT_UTILS_TEST"
             - "CI_SNOWFLAKE_DBT_USER"
             - "CI_SNOWFLAKE_DBT_WAREHOUSE"
+    commands: |
+      bash .buildkite/scripts/ads_run_models.sh snowflake facebook_ads twitter_ads reddit_ads microsoft_ads
+
+  - label: ":postgres: Run Tests - :one: Ads Packages :bookmark:"
+    key: "run-dbt-postgres-ads"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.8"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
             - "CI_POSTGRES_DBT_DBNAME"
             - "CI_POSTGRES_DBT_HOST"
             - "CI_POSTGRES_DBT_PASS"
             - "CI_POSTGRES_DBT_USER"
+    commands: |
+      bash .buildkite/scripts/ads_run_models.sh postgres facebook_ads twitter_ads reddit_ads microsoft_ads
+
+  - label: ":gcloud: Run Tests - :one: Ads Packages :bookmark:"
+    key: "run_dbt_bigquery_ads"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.8"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
             - "GCLOUD_SERVICE_KEY"
+    commands: |
+      bash .buildkite/scripts/ads_run_models.sh bigquery facebook_ads twitter_ads reddit_ads microsoft_ads
+
+  - label: ":amazon-redshift: Run Tests - :one: Ads Packages :bookmark:"
+    key: "run_dbt_redshift_ads"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.8"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
             - "CI_REDSHIFT_DBT_DBNAME"
             - "CI_REDSHIFT_DBT_HOST"
             - "CI_REDSHIFT_DBT_PASS"
             - "CI_REDSHIFT_DBT_USER"
+    commands: |
+      bash .buildkite/scripts/ads_run_models.sh redshift facebook_ads twitter_ads reddit_ads microsoft_ads
+
+  - label: ":bricks: Run Tests - :one: Ads Packages :bookmark:"
+    key: "run_dbt_databricks_ads"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.8"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
             - "CI_DATABRICKS_DBT_HOST"
             - "CI_DATABRICKS_DBT_HTTP_PATH"
             - "CI_DATABRICKS_DBT_TOKEN"
     commands: |
-      bash .buildkite/scripts/ads_run_models.sh facebook_ads twitter_ads reddit_ads microsoft_ads
-
-
-  # - label: ":postgres: Run Tests - Postgres: Ads Packages :money_with_wings:"
-  #   key: "run-dbt-postgres-ads"
-  #   plugins:
-  #     - docker#v3.13.0:
-  #         image: "python:3.8"
-  #         shell: [ "/bin/bash", "-e", "-c" ]
-  #         environment:
-  #           - "BASH_ENV=/tmp/.bashrc"
-  #           - "CI_POSTGRES_DBT_DBNAME"
-  #           - "CI_POSTGRES_DBT_HOST"
-  #           - "CI_POSTGRES_DBT_PASS"
-  #           - "CI_POSTGRES_DBT_USER"
-  #   commands: |
-  #     bash .buildkite/scripts/ads_run_models.sh postgres 
-
-  # - label: ":gcloud: Run Tests - BigQuery: Ads Packages :money_with_wings:"
-  #   key: "run_dbt_bigquery_ads"
-  #   plugins:
-  #     - docker#v3.13.0:
-  #         image: "python:3.8"
-  #         shell: [ "/bin/bash", "-e", "-c" ]
-  #         environment:
-  #           - "BASH_ENV=/tmp/.bashrc"
-  #           - "GCLOUD_SERVICE_KEY"
-  #   commands: |
-  #     bash .buildkite/scripts/ads_run_models.sh bigquery
-
-  # - label: ":amazon-redshift: Run Tests - Redshift: Ads Packages :money_with_wings:"
-  #   key: "run_dbt_redshift_ads"
-  #   plugins:
-  #     - docker#v3.13.0:
-  #         image: "python:3.8"
-  #         shell: [ "/bin/bash", "-e", "-c" ]
-  #         environment:
-  #           - "BASH_ENV=/tmp/.bashrc"
-  #           - "CI_REDSHIFT_DBT_DBNAME"
-  #           - "CI_REDSHIFT_DBT_HOST"
-  #           - "CI_REDSHIFT_DBT_PASS"
-  #           - "CI_REDSHIFT_DBT_USER"
-  #   commands: |
-  #     bash .buildkite/scripts/ads_run_models.sh redshift
-
-  # - label: ":bricks: Run Tests - Databricks: Ads Packages :money_with_wings:"
-  #   key: "run_dbt_databricks_ads"
-  #   plugins:
-  #     - docker#v3.13.0:
-  #         image: "python:3.8"
-  #         shell: [ "/bin/bash", "-e", "-c" ]
-  #         environment:
-  #           - "BASH_ENV=/tmp/.bashrc"
-  #           - "CI_DATABRICKS_DBT_HOST"
-  #           - "CI_DATABRICKS_DBT_HTTP_PATH"
-  #           - "CI_DATABRICKS_DBT_TOKEN"
-  #   commands: |
-  #     bash .buildkite/scripts/ads_run_models.sh databricks
+      bash .buildkite/scripts/ads_run_models.sh databricks facebook_ads twitter_ads reddit_ads microsoft_ads
