@@ -18,9 +18,8 @@ echo `pwd`
 cd integration_tests
 dbt deps ## Install all packages needed
 
-packages=$2
-
-for model in "${packages[@]}"
+shift ## Skips the first argument (warehouse) and moves to only looking at the data model arguments
+for model in "$@" ## Iterates over all non warehouse arguments
 do
     echo "compiling "$model""
     cd dbt_packages/$model/integration_tests/
