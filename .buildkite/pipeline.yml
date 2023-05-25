@@ -27,7 +27,7 @@ steps:
             - "CI_DATABRICKS_DBT_HTTP_PATH"
             - "CI_DATABRICKS_DBT_TOKEN"
     commands: |
-      bash .buildkite/scripts/ads_run_models.sh twitter_ads reddit_ads microsoft_ads facebook_ads
+      bash .buildkite/scripts/ads_run_models.sh facebook_ads twitter_ads reddit_ads microsoft_ads
 
 
   # - label: ":postgres: Run Tests - Postgres: Ads Packages :money_with_wings:"
