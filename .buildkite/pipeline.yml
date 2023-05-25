@@ -11,7 +11,7 @@ steps:
             - "CI_SNOWFLAKE_DBT_ACCOUNT"
             - "CI_SNOWFLAKE_DATABASE_FT_UTILS"
             - "CI_SNOWFLAKE_DBT_PASS"
-            - "CI_SNOWFLAKE_DBT_ROLE"
+            - "CI_SNOWFLAKE_DBT_ROLE_FT_UTILS_TEST"
             - "CI_SNOWFLAKE_DBT_USER"
             - "CI_SNOWFLAKE_DBT_WAREHOUSE"
     commands: |

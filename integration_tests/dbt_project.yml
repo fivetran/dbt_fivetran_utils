@@ -41,7 +41,6 @@ vars:
   hubspot_schema: "{% if target.type != 'snowflake' %} snowflake_stage_hubspot {% endif %}"
   jira_schema: "{% if target.type != 'snowflake' %} snowflake_stage_jira {% endif %}"
   klaviyo_schema: "{% if target.type != 'snowflake' %} snowflake_stage_klaviyo {% endif %}"
-  twitter_schema: "{% if target.type != 'snowflake' %} snowflake_stage_twitter {% endif %}"
   zendesk_schema: "{% if target.type != 'snowflake' %} snowflake_stage_zendesk {% endif %}"
 
   zendesk_schedule: "{{ source('zendesk', 'schedule') }}"
