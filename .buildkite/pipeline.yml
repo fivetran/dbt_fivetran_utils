@@ -15,7 +15,7 @@ steps:
             - "CI_SNOWFLAKE_DBT_USER"
             - "CI_SNOWFLAKE_DBT_WAREHOUSE"
     commands: |
-      bash .buildkite/scripts/ads_run_models.sh snowflake facebook_ads twitter_ads reddit_ads microsoft_ads
+      bash .buildkite/scripts/ads_run_models.sh snowflake microsoft_ads facebook_ads twitter_ads reddit_ads
 
   - label: ":postgres: Run Tests - :one: Ads Packages :bookmark:"
     key: "run-dbt-postgres-ads"
@@ -30,7 +30,7 @@ steps:
             - "CI_POSTGRES_DBT_PASS"
             - "CI_POSTGRES_DBT_USER"
     commands: |
-      bash .buildkite/scripts/ads_run_models.sh postgres facebook_ads twitter_ads reddit_ads microsoft_ads
+      bash .buildkite/scripts/ads_run_models.sh postgres microsoft_ads facebook_ads twitter_ads reddit_ads
 
   - label: ":gcloud: Run Tests - :one: Ads Packages :bookmark:"
     key: "run_dbt_bigquery_ads"
@@ -42,7 +42,7 @@ steps:
             - "BASH_ENV=/tmp/.bashrc"
             - "GCLOUD_SERVICE_KEY"
     commands: |
-      bash .buildkite/scripts/ads_run_models.sh bigquery facebook_ads twitter_ads reddit_ads microsoft_ads
+      bash .buildkite/scripts/ads_run_models.sh bigquery microsoft_ads facebook_ads twitter_ads reddit_ads
 
   - label: ":amazon-redshift: Run Tests - :one: Ads Packages :bookmark:"
     key: "run_dbt_redshift_ads"
@@ -57,7 +57,7 @@ steps:
             - "CI_REDSHIFT_DBT_PASS"
             - "CI_REDSHIFT_DBT_USER"
     commands: |
-      bash .buildkite/scripts/ads_run_models.sh redshift facebook_ads twitter_ads reddit_ads microsoft_ads
+      bash .buildkite/scripts/ads_run_models.sh redshift microsoft_ads facebook_ads twitter_ads reddit_ads
 
   - label: ":bricks: Run Tests - :one: Ads Packages :bookmark:"
     key: "run_dbt_databricks_ads"
@@ -71,4 +71,4 @@ steps:
             - "CI_DATABRICKS_DBT_HTTP_PATH"
             - "CI_DATABRICKS_DBT_TOKEN"
     commands: |
-      bash .buildkite/scripts/ads_run_models.sh databricks facebook_ads twitter_ads reddit_ads microsoft_ads
+      bash .buildkite/scripts/ads_run_models.sh databricks microsoft_ads facebook_ads twitter_ads reddit_ads

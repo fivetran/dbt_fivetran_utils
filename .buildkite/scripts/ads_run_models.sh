@@ -29,7 +29,7 @@ do
     dbt deps
     value_to_replace=$(grep ""$model"_schema:" dbt_project.yml | awk '{ print $2 }')
     perl -i -pe "s/(schema: ).*/\1$value_to_replace/" ~/.dbt/profiles.yml
-    dbt seed --target "$db"
+    dbt seed --target "$db" --full-refresh
     dbt run --target "$db"
     dbt run-operation fivetran_utils.drop_schemas_automation --target "$db"
     cd ../../../
