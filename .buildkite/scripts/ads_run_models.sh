@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ## remove failure for testing
-# set -euo pipefail
+set -euo pipefail
 
 apt-get update
 apt-get install libsasl2-dev
@@ -16,6 +16,8 @@ cp integration_tests/ci/sample.profiles.yml ~/.dbt/profiles.yml
 echo `pwd`
 cd integration_tests
 dbt deps ## Install all packages needed
+
+warehouses=("databricks" "snowflake" "postgres" "redshift" "bigquery")
 
 for wh in "${warehouses[@]}"
 do
