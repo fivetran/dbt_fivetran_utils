@@ -21,13 +21,13 @@ dbt deps ## Install all packages needed
 shift ## Skips the first argument (warehouse) and moves to only looking at the data model arguments
 for model in "$@" ## Iterates over all non warehouse arguments
 do
-    echo "compiling "$model""
+    echo -e "\ncompiling "$model"\n"
     cd dbt_packages/$model/integration_tests/
     dbt deps
     cp ../../../packages_ft_utils_override.yml packages.yml
     dbt deps
     value_to_replace=$(grep ""$model"_schema:" dbt_project.yml | awk '{ print $2 }')
-    sed -i '' "s/\(schema: \).*/\1$value_to_replace/" ~/.dbt/profiles.yml
+    perl -i -pe "s/(schema: ).*/\1$value_to_replace/" ~/.dbt/profiles.yml
     dbt seed --target "$db"
     dbt compile --target "$db"
     dbt run-operation fivetran_utils.drop_schemas_automation --target "$db"
