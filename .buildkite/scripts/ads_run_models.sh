@@ -13,23 +13,24 @@ pip install -r integration_tests/requirements.txt
 mkdir -p ~/.dbt
 cp integration_tests/ci/sample.profiles.yml ~/.dbt/profiles.yml
 
-db=$1
 echo `pwd`
 cd integration_tests
 dbt deps ## Install all packages needed
 
-shift ## Skips the first argument (warehouse) and moves to only looking at the data model arguments
-for model in "$@" ## Iterates over all non warehouse arguments
+for wh in "${warehouses[@]}"
 do
-    echo -e "\ncompiling "$model"\n"
-    cd dbt_packages/$model/integration_tests/
-    dbt deps
-    cp ../../../packages_ft_utils_override.yml packages.yml
-    dbt deps
-    value_to_replace=$(grep ""$model"_schema:" dbt_project.yml | awk '{ print $2 }')
-    perl -i -pe "s/(schema: ).*/\1$value_to_replace/" ~/.dbt/profiles.yml
-    dbt seed --target "$db"
-    dbt compile --target "$db"
-    dbt run-operation fivetran_utils.drop_schemas_automation --target "$db"
-    cd ../../../
+    for model in "$@" ## Iterates over all non warehouse arguments
+    do
+        echo -e "\n"$wh" - compiling "$model"\n"
+        cd dbt_packages/$model/integration_tests/
+        dbt deps
+        cp ../../../packages_ft_utils_override.yml packages.yml
+        dbt deps
+        value_to_replace=$(grep ""$model"_schema:" dbt_project.yml | awk '{ print $2 }')
+        perl -i -pe "s/(schema: ).*/\1$value_to_replace/" ~/.dbt/profiles.yml
+        dbt seed --target "$wh"
+        dbt run --target "$wh"
+        dbt run-operation fivetran_utils.drop_schemas_automation --target "$wh"
+        cd ../../../
+    done
 done

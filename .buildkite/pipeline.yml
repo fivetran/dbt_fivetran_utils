@@ -1,6 +1,6 @@
 steps:
   ## Ads Packages
-  - label: ":snowflake: Run Tests - Snowflake: Ads Packages :money_with_wings:"
+  - label: "Run Tests - Ads Packages :money_with_wings:"
     key: "run_dbt_snowflake_ads"
     plugins:
       - docker#v3.13.0:
@@ -14,8 +14,20 @@ steps:
             - "CI_SNOWFLAKE_DBT_ROLE_FT_UTILS_TEST"
             - "CI_SNOWFLAKE_DBT_USER"
             - "CI_SNOWFLAKE_DBT_WAREHOUSE"
+            - "CI_POSTGRES_DBT_DBNAME"
+            - "CI_POSTGRES_DBT_HOST"
+            - "CI_POSTGRES_DBT_PASS"
+            - "CI_POSTGRES_DBT_USER"
+            - "GCLOUD_SERVICE_KEY"
+            - "CI_REDSHIFT_DBT_DBNAME"
+            - "CI_REDSHIFT_DBT_HOST"
+            - "CI_REDSHIFT_DBT_PASS"
+            - "CI_REDSHIFT_DBT_USER"
+            - "CI_DATABRICKS_DBT_HOST"
+            - "CI_DATABRICKS_DBT_HTTP_PATH"
+            - "CI_DATABRICKS_DBT_TOKEN"
     commands: |
-      bash .buildkite/scripts/ads_run_models.sh snowflake twitter_ads
+      bash .buildkite/scripts/ads_run_models.sh twitter_ads reddit_ads microsoft_ads facebook_ads
 
 
   # - label: ":postgres: Run Tests - Postgres: Ads Packages :money_with_wings:"
