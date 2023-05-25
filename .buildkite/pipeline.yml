@@ -15,7 +15,7 @@ steps:
             - "CI_SNOWFLAKE_DBT_USER"
             - "CI_SNOWFLAKE_DBT_WAREHOUSE"
     commands: |
-      bash .buildkite/scripts/ads_run_models.sh snowflake
+      bash .buildkite/scripts/ads_run_models.sh snowflake ('twitter_ads')
 
 
   # - label: ":postgres: Run Tests - Postgres: Ads Packages :money_with_wings:"

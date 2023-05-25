@@ -18,7 +18,7 @@ echo `pwd`
 cd integration_tests
 dbt deps ## Install all packages needed
 
-packages=('twitter_ads')
+packages=$2
 
 for model in "${packages[@]}"
 do
@@ -27,6 +27,8 @@ do
     dbt deps
     cp ../../../packages_ft_utils_override.yml packages.yml
     dbt deps
+    value_to_replace=$(grep ""$model"_schema:" dbt_project.yml | awk '{ print $2 }')
+    sed -i '' "s/\(schema: \).*/\1$value_to_replace/" ~/.dbt/profiles.yml
     dbt seed --target "$db"
     dbt compile --target "$db"
     dbt run-operation fivetran_utils.drop_schemas_automation --target "$db"
