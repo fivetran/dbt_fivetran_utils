@@ -1,6 +1,6 @@
 steps:
   ## Ads Packages
-  - label: "Run Tests - Ads Packages :bookmark:"
+  - label: "Run Tests - :one: Ads Packages :bookmark:"
     key: "run_dbt_snowflake_ads"
     plugins:
       - docker#v3.13.0:

@@ -17,7 +17,7 @@ echo `pwd`
 cd integration_tests
 dbt deps ## Install all packages needed
 
-warehouses=("databricks" "snowflake" "postgres" "redshift" "bigquery")
+warehouses=("redshift" "databricks" "snowflake" "bigquery" "postgres")
 
 for wh in "${warehouses[@]}"
 do
