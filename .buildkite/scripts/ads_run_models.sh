@@ -22,14 +22,19 @@ shift ## Skips the first argument (warehouse) and moves to only looking at the d
 
 for model in "$@" ## Iterates over all non warehouse arguments
 do
-    echo -e "\n"$db" - compiling "$model"\n"
+    echo -e "\ncompiling "$model"\n"
     cd dbt_packages/$model/integration_tests/
     dbt deps
     cp ../../../packages_ft_utils_override.yml packages.yml
     dbt deps
-    value_to_replace=$(grep ""$model"_schema:" dbt_project.yml | awk '{ print $2 }')
-    perl -i -pe "s/(schema: ).*/\1$value_to_replace/" ~/.dbt/profiles.yml
-    dbt seed --target "$db" --full-refresh
+    if [$model = "linkedin"]; then
+        value_to_replace=$(grep ""$model"_ads_schema:" dbt_project.yml | awk '{ print $2 }')
+        perl -i -pe "s/(schema: ).*/\1$value_to_replace/" ~/.dbt/profiles.yml
+    else
+        value_to_replace=$(grep ""$model"_ads_schema:" dbt_project.yml | awk '{ print $2 }')
+        perl -i -pe "s/(schema: ).*/\1$value_to_replace/" ~/.dbt/profiles.yml
+    fi
+    dbt seed --target "$db"
     dbt run --target "$db"
     dbt run-operation fivetran_utils.drop_schemas_automation --target "$db"
     cd ../../../
