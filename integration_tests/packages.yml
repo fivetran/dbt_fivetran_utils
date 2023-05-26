@@ -3,3 +3,9 @@ packages:
     version: [">=1.0.0", "<2.0.0"]
   - package: fivetran/social_media_reporting
     version: [">=0.1.0", "<1.0.0"]
+  - package: fivetran/app_reporting
+    version: [">=0.1.0", "<1.0.0"]
+  - package: fivetran/salesforce
+    version: [">=0.1.0", "<1.0.0"]
+  - package: fivetran/hubspot
+    version: [">=0.1.0", "<1.0.0"]

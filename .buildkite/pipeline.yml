@@ -72,10 +72,6 @@ steps:
             - "CI_DATABRICKS_DBT_TOKEN"
     commands: |
       bash .buildkite/scripts/run_standard_models.sh databricks linkedin apple_search_ads snapchat_ads facebook_ads google_ads microsoft_ads
-    soft_fail:
-      - exit_status: 42
-
-  - wait
 
 ## Ads Packages 2
   - label: ":snowflake: Run Tests - Ads Packages :bookmark: :two:"
@@ -150,10 +146,9 @@ steps:
             - "CI_DATABRICKS_DBT_TOKEN"
     commands: |
       bash .buildkite/scripts/run_standard_models.sh databricks tiktok_ads twitter_ads amazon_ads reddit_ads pinterest
-    soft_fail:
-      - exit_status: 42
-
-  - wait
+    depends_on:
+      - step: run_dbt_databricks_ads_1
+        allow_failure: true
 
 ## Social Packages
   - label: ":snowflake: Run Tests - Social Packages :iphone:"
@@ -228,5 +223,160 @@ steps:
             - "CI_DATABRICKS_DBT_TOKEN"
     commands: |
       bash .buildkite/scripts/run_standard_models.sh databricks linkedin_pages facebook_pages instagram_business twitter_organic
-    soft_fail:
-      - exit_status: 42
+    depends_on:
+      - step: run_dbt_databricks_ads_2
+        allow_failure: true
+
+## App Packages
+  - label: ":snowflake: Run Tests - App Packages :video_game:"
+    key: "run_dbt_snowflake_app"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.8"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+            - "CI_SNOWFLAKE_DBT_ACCOUNT"
+            - "CI_SNOWFLAKE_DATABASE_FT_UTILS"
+            - "CI_SNOWFLAKE_DBT_PASS"
+            - "CI_SNOWFLAKE_DBT_ROLE_FT_UTILS_TEST"
+            - "CI_SNOWFLAKE_DBT_USER"
+            - "CI_SNOWFLAKE_DBT_WAREHOUSE"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh snowflake google_play apple_store
+
+  - label: ":postgres: Run Tests - App Packages :video_game:"
+    key: "run-dbt-postgres-app"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.8"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+            - "CI_POSTGRES_DBT_DBNAME"
+            - "CI_POSTGRES_DBT_HOST"
+            - "CI_POSTGRES_DBT_PASS"
+            - "CI_POSTGRES_DBT_USER"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh postgres google_play apple_store
+
+  - label: ":gcloud: Run Tests - App Packages :video_game:"
+    key: "run_dbt_bigquery_app"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.8"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+            - "GCLOUD_SERVICE_KEY"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh bigquery google_play apple_store
+
+  - label: ":amazon-redshift: Run Tests - App Packages :video_game:"
+    key: "run_dbt_redshift_app"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.8"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+            - "CI_REDSHIFT_DBT_DBNAME"
+            - "CI_REDSHIFT_DBT_HOST"
+            - "CI_REDSHIFT_DBT_PASS"
+            - "CI_REDSHIFT_DBT_USER"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh redshift google_play apple_store
+
+  - label: ":bricks: Run Tests - App Packages :video_game:"
+    key: "run_dbt_databricks_app"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.8"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+            - "CI_DATABRICKS_DBT_HOST"
+            - "CI_DATABRICKS_DBT_HTTP_PATH"
+            - "CI_DATABRICKS_DBT_TOKEN"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh databricks google_play apple_store
+    depends_on:
+      - step: run_dbt_databricks_social
+        allow_failure: true
+
+## CRM Packages
+  - label: ":snowflake: Run Tests - CRM Packages :salesforce::hubspot:"
+    key: "run_dbt_snowflake_crm"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.8"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+            - "CI_SNOWFLAKE_DBT_ACCOUNT"
+            - "CI_SNOWFLAKE_DATABASE_FT_UTILS"
+            - "CI_SNOWFLAKE_DBT_PASS"
+            - "CI_SNOWFLAKE_DBT_ROLE_FT_UTILS_TEST"
+            - "CI_SNOWFLAKE_DBT_USER"
+            - "CI_SNOWFLAKE_DBT_WAREHOUSE"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh snowflake salesforce hubspot
+
+  - label: ":postgres: Run Tests - CRM Packages :salesforce::hubspot:"
+    key: "run-dbt-postgres-crm"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.8"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+            - "CI_POSTGRES_DBT_DBNAME"
+            - "CI_POSTGRES_DBT_HOST"
+            - "CI_POSTGRES_DBT_PASS"
+            - "CI_POSTGRES_DBT_USER"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh postgres salesforce hubspot
+
+  - label: ":gcloud: Run Tests - CRM Packages :salesforce::hubspot:"
+    key: "run_dbt_bigquery_crm"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.8"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+            - "GCLOUD_SERVICE_KEY"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh bigquery salesforce hubspot
+
+  - label: ":amazon-redshift: Run Tests - CRM Packages :salesforce::hubspot:"
+    key: "run_dbt_redshift_crm"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.8"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+            - "CI_REDSHIFT_DBT_DBNAME"
+            - "CI_REDSHIFT_DBT_HOST"
+            - "CI_REDSHIFT_DBT_PASS"
+            - "CI_REDSHIFT_DBT_USER"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh redshift salesforce hubspot
+
+  - label: ":bricks: Run Tests - CRM Packages :salesforce::hubspot:"
+    key: "run_dbt_databricks_crm"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.8"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+            - "CI_DATABRICKS_DBT_HOST"
+            - "CI_DATABRICKS_DBT_HTTP_PATH"
+            - "CI_DATABRICKS_DBT_TOKEN"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh databricks salesforce hubspot
+    depends_on:
+      - step: run_dbt_databricks_app
+        allow_failure: true
