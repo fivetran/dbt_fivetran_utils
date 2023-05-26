@@ -73,6 +73,8 @@ steps:
     commands: |
       bash .buildkite/scripts/ads_run_models.sh databricks linkedin apple_search_ads snapchat_ads facebook_ads google_ads microsoft_ads
 
+  - wait
+  
 ## Ads Packages 2
   - label: ":snowflake: Run Tests - Ads Packages :bookmark: :two:"
     key: "run_dbt_snowflake_ads_2"
