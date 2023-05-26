@@ -31,7 +31,7 @@ do
         value_to_replace=$(grep ""$model"_ads_schema:" dbt_project.yml | awk '{ print $2 }')
         perl -i -pe "s/(schema: ).*/\1$value_to_replace/" ~/.dbt/profiles.yml
     else
-        value_to_replace=$(grep ""$model"_ads_schema:" dbt_project.yml | awk '{ print $2 }')
+        value_to_replace=$(grep ""$model"_schema:" dbt_project.yml | awk '{ print $2 }')
         perl -i -pe "s/(schema: ).*/\1$value_to_replace/" ~/.dbt/profiles.yml
     fi
     dbt seed --target "$db"
