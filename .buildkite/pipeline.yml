@@ -1,7 +1,7 @@
 steps:
 ## Ads Packages 1
   - label: ":snowflake: Run Tests - Ads Packages :bookmark: :one:"
-    key: "run_dbt_snowflake_ads"
+    key: "run_dbt_snowflake_ads_1"
     plugins:
       - docker#v3.13.0:
           image: "python:3.8"
@@ -18,7 +18,7 @@ steps:
       bash .buildkite/scripts/ads_run_models.sh snowflake linkedin apple_search_ads snapchat_ads facebook_ads google_ads microsoft_ads
 
   - label: ":postgres: Run Tests - Ads Packages :bookmark: :one:"
-    key: "run-dbt-postgres-ads"
+    key: "run-dbt-postgres-ads_1"
     plugins:
       - docker#v3.13.0:
           image: "python:3.8"
@@ -33,7 +33,7 @@ steps:
       bash .buildkite/scripts/ads_run_models.sh postgres linkedin apple_search_ads snapchat_ads facebook_ads google_ads microsoft_ads
 
   - label: ":gcloud: Run Tests - Ads Packages :bookmark: :one:"
-    key: "run_dbt_bigquery_ads"
+    key: "run_dbt_bigquery_ads_1"
     plugins:
       - docker#v3.13.0:
           image: "python:3.8"
@@ -45,7 +45,7 @@ steps:
       bash .buildkite/scripts/ads_run_models.sh bigquery linkedin apple_search_ads snapchat_ads facebook_ads google_ads microsoft_ads
 
   - label: ":amazon-redshift: Run Tests - Ads Packages :bookmark: :one:"
-    key: "run_dbt_redshift_ads"
+    key: "run_dbt_redshift_ads_1"
     plugins:
       - docker#v3.13.0:
           image: "python:3.8"
@@ -60,7 +60,7 @@ steps:
       bash .buildkite/scripts/ads_run_models.sh redshift linkedin apple_search_ads snapchat_ads facebook_ads google_ads microsoft_ads
 
   - label: ":bricks: Run Tests - Ads Packages :bookmark: :one:"
-    key: "run_dbt_databricks_ads"
+    key: "run_dbt_databricks_ads_1"
     plugins:
       - docker#v3.13.0:
           image: "python:3.8"
@@ -75,7 +75,7 @@ steps:
 
 ## Ads Packages 2
   - label: ":snowflake: Run Tests - Ads Packages :bookmark: :two:"
-    key: "run_dbt_snowflake_ads"
+    key: "run_dbt_snowflake_ads_2"
     plugins:
       - docker#v3.13.0:
           image: "python:3.8"
@@ -92,7 +92,7 @@ steps:
       bash .buildkite/scripts/ads_run_models.sh snowflake tiktok_ads twitter_ads amazon_ads reddit_ads pinterest
 
   - label: ":postgres: Run Tests - Ads Packages :bookmark: :two:"
-    key: "run-dbt-postgres-ads"
+    key: "run-dbt-postgres-ads_2"
     plugins:
       - docker#v3.13.0:
           image: "python:3.8"
@@ -107,7 +107,7 @@ steps:
       bash .buildkite/scripts/ads_run_models.sh postgres tiktok_ads twitter_ads amazon_ads reddit_ads pinterest
 
   - label: ":gcloud: Run Tests - Ads Packages :bookmark: :two:"
-    key: "run_dbt_bigquery_ads"
+    key: "run_dbt_bigquery_ads_2"
     plugins:
       - docker#v3.13.0:
           image: "python:3.8"
@@ -119,7 +119,7 @@ steps:
       bash .buildkite/scripts/ads_run_models.sh bigquery tiktok_ads twitter_ads amazon_ads reddit_ads pinterest
 
   - label: ":amazon-redshift: Run Tests - Ads Packages :bookmark: :two:"
-    key: "run_dbt_redshift_ads"
+    key: "run_dbt_redshift_ads_2"
     plugins:
       - docker#v3.13.0:
           image: "python:3.8"
@@ -134,7 +134,7 @@ steps:
       bash .buildkite/scripts/ads_run_models.sh redshift tiktok_ads twitter_ads amazon_ads reddit_ads pinterest
 
   - label: ":bricks: Run Tests - Ads Packages :bookmark: :two:"
-    key: "run_dbt_databricks_ads"
+    key: "run_dbt_databricks_ads_2"
     plugins:
       - docker#v3.13.0:
           image: "python:3.8"
