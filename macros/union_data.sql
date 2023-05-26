@@ -112,15 +112,12 @@
             identifier=source(default_schema, table_identifier).identifier
         ) -%}
     {% endif %}
-    {{ log(relation, info=true) }}
 {%- set table_exists=relation is not none -%}
 
-{# {{ log(var(default_variable), info=true) }} #}
-{{ log(relation, info=true) }}
 {%- if table_exists -%}
     select * 
-    from {{ relation }}
-    {# from {{ var(default_variable) }} #}
+    {# from {{ relation }} #}
+    from {{ var(default_variable) }}
 {%- else -%}
     {% if execute and not var('fivetran__remove_empty_table_warnings', false) -%}
     {{ exceptions.warn("\n\nPlease be aware: The " ~ table_identifier|upper ~ " table was not found in your " ~ default_schema|upper ~ " schema(s). The Fivetran dbt package will create a completely empty " ~ table_identifier|upper ~ " staging model as to not break downstream transformations. To turn off these warnings, set the `fivetran__remove_empty_table_warnings` variable to TRUE (see https://github.com/fivetran/dbt_fivetran_utils/tree/releases/v0.4.latest#union_data-source for details).\n") }}
