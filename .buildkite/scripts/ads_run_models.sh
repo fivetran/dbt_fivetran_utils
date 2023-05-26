@@ -27,7 +27,7 @@ do
     dbt deps
     cp ../../../packages_ft_utils_override.yml packages.yml
     dbt deps
-    if [$model = "linkedin"]; then
+    if [ $model = "linkedin" ]; then
         value_to_replace=$(grep ""$model"_ads_schema:" dbt_project.yml | awk '{ print $2 }')
         perl -i -pe "s/(schema: ).*/\1$value_to_replace/" ~/.dbt/profiles.yml
     else
