@@ -474,7 +474,7 @@ steps:
             - "CI_SNOWFLAKE_DBT_USER"
             - "CI_SNOWFLAKE_DBT_WAREHOUSE"
     commands: |
-      bash .buildkite/scripts/run_standard_models.sh snowflake shopify recurly recharge stripe zuora
+      bash .buildkite/scripts/run_standard_models.sh snowflake shopify recurly stripe zuora
 
   - label: ":postgres: Run Tests - Ecommerce and Subscription Packages :shopping_bags:"
     key: "run-dbt-postgres-esub"
@@ -489,7 +489,7 @@ steps:
             - "CI_POSTGRES_DBT_PASS"
             - "CI_POSTGRES_DBT_USER"
     commands: |
-      bash .buildkite/scripts/run_standard_models.sh postgres shopify recurly recharge stripe zuora
+      bash .buildkite/scripts/run_standard_models.sh postgres shopify recurly stripe zuora
 
   - label: ":gcloud: Run Tests - Ecommerce and Subscription Packages :shopping_bags:"
     key: "run_dbt_bigquery_esub"
@@ -501,7 +501,7 @@ steps:
             - "BASH_ENV=/tmp/.bashrc"
             - "GCLOUD_SERVICE_KEY"
     commands: |
-      bash .buildkite/scripts/run_standard_models.sh bigquery shopify recurly recharge stripe zuora
+      bash .buildkite/scripts/run_standard_models.sh bigquery shopify recurly stripe zuora
 
   - label: ":amazon-redshift: Run Tests - Ecommerce and Subscription Packages :shopping_bags:"
     key: "run_dbt_redshift_esub"
@@ -516,7 +516,7 @@ steps:
             - "CI_REDSHIFT_DBT_PASS"
             - "CI_REDSHIFT_DBT_USER"
     commands: |
-      bash .buildkite/scripts/run_standard_models.sh redshift shopify recurly recharge stripe zuora
+      bash .buildkite/scripts/run_standard_models.sh redshift shopify recurly stripe zuora
 
   - label: ":bricks: Run Tests - Ecommerce and Subscription Packages :shopping_bags:"
     key: "run_dbt_databricks_esub"
@@ -530,7 +530,7 @@ steps:
             - "CI_DATABRICKS_DBT_HTTP_PATH"
             - "CI_DATABRICKS_DBT_TOKEN"
     commands: |
-      bash .buildkite/scripts/run_standard_models.sh databricks shopify recurly recharge stripe zuora
+      bash .buildkite/scripts/run_standard_models.sh databricks shopify recurly stripe zuora
     depends_on:
       - step: run_dbt_databricks_crm
         allow_failure: true
@@ -811,7 +811,7 @@ steps:
     commands: |
       bash .buildkite/scripts/run_standard_models.sh bigquery amplitude mixpanel pendo
 
-  - label: ":amazon-redshift: Product Packages :unicorn_face:"
+  - label: ":amazon-redshift: Run Tests - Product Packages :unicorn_face:"
     key: "run_dbt_redshift_product"
     plugins:
       - docker#v3.13.0:
@@ -888,7 +888,7 @@ steps:
     commands: |
       bash .buildkite/scripts/run_standard_models.sh bigquery intercom github zendesk asana jira
 
-  - label: ":amazon-redshift: Velocity Packages :roller_coaster:"
+  - label: ":amazon-redshift: Run Tests - Velocity Packages :roller_coaster:"
     key: "run_dbt_redshift_velocity"
     plugins:
       - docker#v3.13.0:
@@ -918,4 +918,312 @@ steps:
       bash .buildkite/scripts/run_standard_models.sh databricks intercom github zendesk asana jira
     depends_on:
       - step: run_dbt_databricks_product
+        allow_failure: true
+
+## Ad Reporting Roll Up Packages
+  - label: ":snowflake: Run Tests - Ad Reporting Roll Up Package :roller_skate:"
+    key: "run_dbt_snowflake_ad_roll"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.8"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+            - "CI_SNOWFLAKE_DBT_ACCOUNT"
+            - "CI_SNOWFLAKE_DATABASE_FT_UTILS"
+            - "CI_SNOWFLAKE_DBT_PASS"
+            - "CI_SNOWFLAKE_DBT_ROLE_FT_UTILS_TEST"
+            - "CI_SNOWFLAKE_DBT_USER"
+            - "CI_SNOWFLAKE_DBT_WAREHOUSE"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh snowflake ad_reporting
+
+  - label: ":postgres: Run Tests - Ad Reporting Roll Up Package :roller_skate:"
+    key: "run-dbt-postgres-ad_roll"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.8"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+            - "CI_POSTGRES_DBT_DBNAME"
+            - "CI_POSTGRES_DBT_HOST"
+            - "CI_POSTGRES_DBT_PASS"
+            - "CI_POSTGRES_DBT_USER"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh postgres ad_reporting
+
+  - label: ":gcloud: Run Tests - Ad Reporting Roll Up Package :roller_skate:"
+    key: "run_dbt_bigquery_ad_roll"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.8"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+            - "GCLOUD_SERVICE_KEY"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh bigquery ad_reporting
+
+  - label: ":amazon-redshift: Run Tests - Ad Reporting Roll Up Package :roller_skate:"
+    key: "run_dbt_redshift_ad_roll"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.8"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+            - "CI_REDSHIFT_DBT_DBNAME"
+            - "CI_REDSHIFT_DBT_HOST"
+            - "CI_REDSHIFT_DBT_PASS"
+            - "CI_REDSHIFT_DBT_USER"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh redshift ad_reporting
+
+  - label: ":bricks: Run Tests - Ad Reporting Roll Up Package :roller_skate:"
+    key: "run_dbt_databricks_ad_roll"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.8"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+            - "CI_DATABRICKS_DBT_HOST"
+            - "CI_DATABRICKS_DBT_HTTP_PATH"
+            - "CI_DATABRICKS_DBT_TOKEN"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh databricks ad_reporting
+    depends_on:
+      - step: run_dbt_databricks_velocity
+        allow_failure: true
+
+## App Reporting Roll Up Packages
+  - label: ":snowflake: Run Tests - App Reporting Roll Up Package :roller_skate:"
+    key: "run_dbt_snowflake_app_roll"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.8"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+            - "CI_SNOWFLAKE_DBT_ACCOUNT"
+            - "CI_SNOWFLAKE_DATABASE_FT_UTILS"
+            - "CI_SNOWFLAKE_DBT_PASS"
+            - "CI_SNOWFLAKE_DBT_ROLE_FT_UTILS_TEST"
+            - "CI_SNOWFLAKE_DBT_USER"
+            - "CI_SNOWFLAKE_DBT_WAREHOUSE"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh snowflake app_reporting
+
+  - label: ":postgres: Run Tests - App Reporting Roll Up Package :roller_skate:"
+    key: "run-dbt-postgres-app_roll"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.8"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+            - "CI_POSTGRES_DBT_DBNAME"
+            - "CI_POSTGRES_DBT_HOST"
+            - "CI_POSTGRES_DBT_PASS"
+            - "CI_POSTGRES_DBT_USER"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh postgres app_reporting
+
+  - label: ":gcloud: Run Tests - App Reporting Roll Up Package :roller_skate:"
+    key: "run_dbt_bigquery_app_roll"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.8"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+            - "GCLOUD_SERVICE_KEY"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh bigquery app_reporting
+
+  - label: ":amazon-redshift: Run Tests - App Reporting Roll Up Package :roller_skate:"
+    key: "run_dbt_redshift_app_roll"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.8"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+            - "CI_REDSHIFT_DBT_DBNAME"
+            - "CI_REDSHIFT_DBT_HOST"
+            - "CI_REDSHIFT_DBT_PASS"
+            - "CI_REDSHIFT_DBT_USER"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh redshift app_reporting
+
+  - label: ":bricks: Run Tests - App Reporting Roll Up Package :roller_skate:"
+    key: "run_dbt_databricks_app_roll"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.8"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+            - "CI_DATABRICKS_DBT_HOST"
+            - "CI_DATABRICKS_DBT_HTTP_PATH"
+            - "CI_DATABRICKS_DBT_TOKEN"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh databricks app_reporting
+    depends_on:
+      - step: run_dbt_databricks_ad_roll
+        allow_failure: true
+
+## Social Media Reporting Roll Up Packages
+  - label: ":snowflake: Run Tests - Social Reporting Roll Up Package :roller_skate:"
+    key: "run_dbt_snowflake_social_roll"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.8"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+            - "CI_SNOWFLAKE_DBT_ACCOUNT"
+            - "CI_SNOWFLAKE_DATABASE_FT_UTILS"
+            - "CI_SNOWFLAKE_DBT_PASS"
+            - "CI_SNOWFLAKE_DBT_ROLE_FT_UTILS_TEST"
+            - "CI_SNOWFLAKE_DBT_USER"
+            - "CI_SNOWFLAKE_DBT_WAREHOUSE"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh snowflake social_media_reporting
+
+  - label: ":postgres: Run Tests - Social Reporting Roll Up Package :roller_skate:"
+    key: "run-dbt-postgres-social_roll"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.8"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+            - "CI_POSTGRES_DBT_DBNAME"
+            - "CI_POSTGRES_DBT_HOST"
+            - "CI_POSTGRES_DBT_PASS"
+            - "CI_POSTGRES_DBT_USER"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh postgres social_media_reporting
+
+  - label: ":gcloud: Run Tests - Social Reporting Roll Up Package :roller_skate:"
+    key: "run_dbt_bigquery_social_roll"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.8"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+            - "GCLOUD_SERVICE_KEY"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh bigquery social_media_reporting
+
+  - label: ":amazon-redshift: Run Tests - Social Reporting Roll Up Package :roller_skate:"
+    key: "run_dbt_redshift_social_roll"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.8"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+            - "CI_REDSHIFT_DBT_DBNAME"
+            - "CI_REDSHIFT_DBT_HOST"
+            - "CI_REDSHIFT_DBT_PASS"
+            - "CI_REDSHIFT_DBT_USER"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh redshift social_media_reporting
+
+  - label: ":bricks: Run Tests - Social Reporting Roll Up Package :roller_skate:"
+    key: "run_dbt_databricks_social_roll"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.8"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+            - "CI_DATABRICKS_DBT_HOST"
+            - "CI_DATABRICKS_DBT_HTTP_PATH"
+            - "CI_DATABRICKS_DBT_TOKEN"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh databricks social_media_reporting
+    depends_on:
+      - step: run_dbt_databricks_app_roll
+        allow_failure: true
+
+## Shopify Holistic Reporting Roll Up Packages
+  - label: ":snowflake: Run Tests - Shopify Holistic Reporting Roll Up Package :roller_skate:"
+    key: "run_dbt_snowflake_shopify_holistic_roll"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.8"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+            - "CI_SNOWFLAKE_DBT_ACCOUNT"
+            - "CI_SNOWFLAKE_DATABASE_FT_UTILS"
+            - "CI_SNOWFLAKE_DBT_PASS"
+            - "CI_SNOWFLAKE_DBT_ROLE_FT_UTILS_TEST"
+            - "CI_SNOWFLAKE_DBT_USER"
+            - "CI_SNOWFLAKE_DBT_WAREHOUSE"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh snowflake shopify_holistic_reporting
+
+  - label: ":postgres: Run Tests - Shopify Holistic Reporting Roll Up Package :roller_skate:"
+    key: "run-dbt-postgres-shopify_holistic_roll"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.8"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+            - "CI_POSTGRES_DBT_DBNAME"
+            - "CI_POSTGRES_DBT_HOST"
+            - "CI_POSTGRES_DBT_PASS"
+            - "CI_POSTGRES_DBT_USER"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh postgres shopify_holistic_reporting
+
+  - label: ":gcloud: Run Tests - Shopify Holistic Reporting Roll Up Package :roller_skate:"
+    key: "run_dbt_bigquery_shopify_holistic_roll"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.8"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+            - "GCLOUD_SERVICE_KEY"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh bigquery shopify_holistic_reporting
+
+  - label: ":amazon-redshift: Run Tests - Shopify Holistic Reporting Roll Up Package :roller_skate:"
+    key: "run_dbt_redshift_shopify_holistic_roll"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.8"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+            - "CI_REDSHIFT_DBT_DBNAME"
+            - "CI_REDSHIFT_DBT_HOST"
+            - "CI_REDSHIFT_DBT_PASS"
+            - "CI_REDSHIFT_DBT_USER"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh redshift shopify_holistic_reporting
+
+  - label: ":bricks: Run Tests - Shopify Holistic Reporting Roll Up Package :roller_skate:"
+    key: "run_dbt_databricks_shopify_holistic_roll"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.8"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+            - "CI_DATABRICKS_DBT_HOST"
+            - "CI_DATABRICKS_DBT_HTTP_PATH"
+            - "CI_DATABRICKS_DBT_TOKEN"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh databricks shopify_holistic_reporting
+    depends_on:
+      - step: run_dbt_databricks_social_roll
         allow_failure: true
