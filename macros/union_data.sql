@@ -115,8 +115,6 @@
             identifier=var(identifier_var, table_identifier)
         ) -%}
     {% endif %}
-{{ log(default_schema, info=true) }}
-{{ log(relation.value, info=true) }}
 {%- set table_exists=relation.value is not none -%}
 
 {%- if table_exists -%}
