@@ -24,9 +24,6 @@
     union_database_variable
     ) -%}
 
-{# In order for this macro to effectively work within upstream integration tests (mainly used by the Fivetran dbt package maintainers), this identifier variable selection is required to use the macro with different identifier names. #}
-{% set identifier_var = default_schema + "_" + table_identifier + "_identifier"  %}
-
 {%- if var(union_schema_variable, none) -%}
 
     {%- set relations = [] -%}
@@ -96,29 +93,35 @@
 
 {%- else -%}
     {% set exception_schemas = {"linkedin_company_pages": "linkedin_pages", "instagram_business_pages": "instagram_business"} %}
-
+    {% set relation = namespace(value="") %}
     {% if default_schema in exception_schemas.keys() %}
         {% for corrected_schema_name in exception_schemas.items() %}   
             {% if default_schema in corrected_schema_name %}
-                {%- set relation=adapter.get_relation(
+                {# In order for this macro to effectively work within upstream integration tests (mainly used by the Fivetran dbt package maintainers), this identifier variable selection is required to use the macro with different identifier names. #}
+                {% set identifier_var = corrected_schema_name[1] + "_" + table_identifier + "_identifier"  %}
+                {%- set relation.value=adapter.get_relation(
                     database=source(corrected_schema_name[1], table_identifier).database,
                     schema=source(corrected_schema_name[1], table_identifier).schema,
-                    identifier=var(identifier_var)
+                    identifier=var(identifier_var, table_identifier)
                 ) -%}
             {% endif %}
         {% endfor %}
     {% else %}
-        {%- set relation=adapter.get_relation(
+        {# In order for this macro to effectively work within upstream integration tests (mainly used by the Fivetran dbt package maintainers), this identifier variable selection is required to use the macro with different identifier names. #}
+        {% set identifier_var = default_schema + "_" + table_identifier + "_identifier"  %}
+        {%- set relation.value=adapter.get_relation(
             database=source(default_schema, table_identifier).database,
             schema=source(default_schema, table_identifier).schema,
-            identifier=var(identifier_var)
+            identifier=var(identifier_var, table_identifier)
         ) -%}
     {% endif %}
-{%- set table_exists=relation is not none -%}
+{{ log(default_schema, info=true) }}
+{{ log(relation.value, info=true) }}
+{%- set table_exists=relation.value is not none -%}
 
 {%- if table_exists -%}
     select * 
-    from {{ relation }}
+    from {{ relation.value }}
     {# from {{ var(default_variable) }} #}
 {%- else -%}
     {% if execute and not var('fivetran__remove_empty_table_warnings', false) -%}

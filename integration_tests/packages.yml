@@ -5,8 +5,12 @@ packages:
   - package: fivetran/shopify_holistic_reporting
     version: [">=0.1.0", "<1.0.0"]
 
-  - package: fivetran/social_media_reporting
-    version: [">=0.1.0", "<1.0.0"]
+  # - package: fivetran/social_media_reporting
+  #   version: [">=0.1.0", "<1.0.0"]
+  - git: https://github.com/fivetran/dbt_social_media_reporting.git
+    revision: MagicBot/integation-test-webhooks-14
+    warn-unpinned: false 
+
   - package: fivetran/youtube_analytics
     version: [">=0.1.0", "<1.0.0"]
 
