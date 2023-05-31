@@ -29,21 +29,21 @@ do
     dbt deps
     if [ "$model" = "linkedin" ]; then
         value_to_replace=$(grep ""$model"_ads_schema:" dbt_project.yml | awk '{ print $2 }')
-        perl -i -pe "s/(schema: ).*/\1$value_to_replace/" ~/.dbt/profiles.yml
+        perl -i -pe "s/(schema: |dataset: ).*/\1$value_to_replace/" ~/.dbt/profiles.yml
     elif [ "$model" = "ad_reporting" ]; then
         value_to_replace=$(grep "google_ads_schema:" dbt_project.yml | awk '{ print $2 }')
-        perl -i -pe "s/(schema: ).*/\1$value_to_replace/" ~/.dbt/profiles.yml
+        perl -i -pe "s/(schema: |dataset: ).*/\1$value_to_replace/" ~/.dbt/profiles.yml
     elif [ "$model" = "app_reporting" ]; then
         value_to_replace=$(grep "google_play_schema:" dbt_project.yml | awk '{ print $2 }')
-        perl -i -pe "s/(schema: ).*/\1$value_to_replace/" ~/.dbt/profiles.yml
+        perl -i -pe "s/(schema: |dataset: ).*/\1$value_to_replace/" ~/.dbt/profiles.yml
     elif [ "$model" = "shopify_holistic_reporting" ]; then
         value_to_replace=$(grep "shopify_schema:" dbt_project.yml | awk '{ print $2 }')
-        perl -i -pe "s/(schema: ).*/\1$value_to_replace/" ~/.dbt/profiles.yml
+        perl -i -pe "s/(schema: |dataset: ).*/\1$value_to_replace/" ~/.dbt/profiles.yml
     elif [ "$model" = "social_media_reporting" ]; then
-        perl -i -pe "s/(schema: ).*/\1social_media_rollup_integration_tests/" ~/.dbt/profiles.yml
+        perl -i -pe "s/(schema: |dataset: ).*/\1social_media_rollup_integration_tests/" ~/.dbt/profiles.yml
     else
         value_to_replace=$(grep ""$model"_schema:" dbt_project.yml | awk '{ print $2 }')
-        perl -i -pe "s/(schema: ).*/\1$value_to_replace/" ~/.dbt/profiles.yml
+        perl -i -pe "s/(schema: |dataset: ).*/\1$value_to_replace/" ~/.dbt/profiles.yml
     fi
     dbt seed --target "$db"
     dbt run --target "$db"

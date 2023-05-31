@@ -24,6 +24,9 @@
     union_database_variable
     ) -%}
 
+{# In order for this macro to effectively work within upstream integration tests (mainly used by the Fivetran dbt package maintainers), this identifier variable selection is required to use the macro with different identifier names. #}
+{% set identifier_var = default_schema + "_" + table_identifier + "_identifier"  %}
+
 {%- if var(union_schema_variable, none) -%}
 
     {%- set relations = [] -%}
@@ -100,24 +103,23 @@
                 {%- set relation=adapter.get_relation(
                     database=source(corrected_schema_name[1], table_identifier).database,
                     schema=source(corrected_schema_name[1], table_identifier).schema,
-                    identifier=source(corrected_schema_name[1], table_identifier).identifier
+                    identifier=var(identifier_var)
                 ) -%}
             {% endif %}
         {% endfor %}
     {% else %}
-
         {%- set relation=adapter.get_relation(
             database=source(default_schema, table_identifier).database,
             schema=source(default_schema, table_identifier).schema,
-            identifier=source(default_schema, table_identifier).identifier
+            identifier=var(identifier_var)
         ) -%}
     {% endif %}
 {%- set table_exists=relation is not none -%}
 
 {%- if table_exists -%}
     select * 
-    {# from {{ relation }} #}
-    from {{ var(default_variable) }}
+    from {{ relation }}
+    {# from {{ var(default_variable) }} #}
 {%- else -%}
     {% if execute and not var('fivetran__remove_empty_table_warnings', false) -%}
     {{ exceptions.warn("\n\nPlease be aware: The " ~ table_identifier|upper ~ " table was not found in your " ~ default_schema|upper ~ " schema(s). The Fivetran dbt package will create a completely empty " ~ table_identifier|upper ~ " staging model as to not break downstream transformations. To turn off these warnings, set the `fivetran__remove_empty_table_warnings` variable to TRUE (see https://github.com/fivetran/dbt_fivetran_utils/tree/releases/v0.4.latest#union_data-source for details).\n") }}
