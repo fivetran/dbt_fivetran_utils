@@ -1,4 +1,5 @@
 # dbt_fivetran_utils v0.4.7
+[PR #118](https://github.com/fivetran/dbt_fivetran_utils/pull/118) includes the following updates.
 ## Feature Updates
 - Update to the `union_data` macro to ensure a source connection is established when just one schema is being used with the macro. 
     - The previous build did allow the macro to read data from the correct location; however, it did not leverage the source. Therefore, the models using this macro would result in not having a source connection. This has since been updated in this release and all versions of this macro (whether unioning or not) will attempt to leverage the source function.
@@ -8,6 +9,7 @@
 ## Under the Hood
 - The `union_data` macro has been adjusted to leverage the identifier variable and the true relation when running on a single schema. This ensures a more accurate use of the macro and the ability for the macro to work as expected within the Fivetran integration test pipeline.
 - The `.buildkite` folder has been overhauled to ensure full integration test coverage over **all** Fivetran dbt packages that reference the dbt_fivetran_utils package. The new pipeline updates will ensure the fivetran_utils release version will succeed and not cause errors on any Fivetran dependent package prior to release.
+- Cleaned up a variety of integration test configurations that are no longer needed with the new approach to integration tests for Fivetran Utils.
 
 # dbt_fivetran_utils v0.4.6
 ## Bug Fixes

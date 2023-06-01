@@ -5,6 +5,7 @@ packages:
   - package: fivetran/shopify_holistic_reporting
     version: [">=0.1.0", "<1.0.0"]
 
+  ## To be switched after the social media integration tests is updated
   # - package: fivetran/social_media_reporting
   #   version: [">=0.1.0", "<1.0.0"]
   - git: https://github.com/fivetran/dbt_social_media_reporting.git
@@ -30,9 +31,8 @@ packages:
     version: [">=0.1.0", "<1.0.0"]
   - package: fivetran/zuora
     version: [">=0.1.0", "<1.0.0"]
-  - git: https://github.com/fivetran/dbt_recharge.git
-    revision: main
-    warn-unpinned: false 
+  - package: fivetran/recharge
+    version: [">=0.1.0", "<1.0.0"]
 
   - package: fivetran/marketo
     version: [">=0.1.0", "<1.0.0"]
