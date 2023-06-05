@@ -763,8 +763,8 @@ steps:
             - "CI_DATABRICKS_DBT_HTTP_PATH"
             - "CI_DATABRICKS_DBT_TOKEN"
     commands: |
-      bash .buildkite/scripts/run_standard_models.sh databricks fivetran_log lever
-    ## Removed greenhouse as it is not databricks compatible at the moment.
+      bash .buildkite/scripts/run_standard_models.sh databricks fivetran_log
+    ## Removed greenhouse and lever as it is not databricks compatible at the moment.
     depends_on:
       - step: run_dbt_databricks_finance
         allow_failure: true
