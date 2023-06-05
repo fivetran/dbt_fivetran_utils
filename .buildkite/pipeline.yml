@@ -607,7 +607,8 @@ steps:
             - "CI_DATABRICKS_DBT_HTTP_PATH"
             - "CI_DATABRICKS_DBT_TOKEN"
     commands: |
-      bash .buildkite/scripts/run_standard_models.sh databricks marketo iterable klaviyo mailchimp pardot
+      bash .buildkite/scripts/run_standard_models.sh databricks marketo klaviyo mailchimp pardot
+    # Iterable removed as it is not databricks compatible for now.
     depends_on:
       - step: run_dbt_databricks_esub
         allow_failure: true
@@ -684,7 +685,8 @@ steps:
             - "CI_DATABRICKS_DBT_HTTP_PATH"
             - "CI_DATABRICKS_DBT_TOKEN"
     commands: |
-      bash .buildkite/scripts/run_standard_models.sh databricks quickbooks xero sage_intacct netsuite
+      bash .buildkite/scripts/run_standard_models.sh databricks xero sage_intacct netsuite
+    # Quickbooks removed as it is not databricks compatible for now
     depends_on:
       - step: run_dbt_databricks_email
         allow_failure: true
@@ -761,7 +763,8 @@ steps:
             - "CI_DATABRICKS_DBT_HTTP_PATH"
             - "CI_DATABRICKS_DBT_TOKEN"
     commands: |
-      bash .buildkite/scripts/run_standard_models.sh databricks fivetran_log greenhouse lever
+      bash .buildkite/scripts/run_standard_models.sh databricks fivetran_log lever
+    ## Removed greenhouse as it is not databricks compatible at the moment.
     depends_on:
       - step: run_dbt_databricks_finance
         allow_failure: true
@@ -915,7 +918,8 @@ steps:
             - "CI_DATABRICKS_DBT_HTTP_PATH"
             - "CI_DATABRICKS_DBT_TOKEN"
     commands: |
-      bash .buildkite/scripts/run_standard_models.sh databricks intercom github zendesk asana jira
+      bash .buildkite/scripts/run_standard_models.sh databricks github zendesk jira
+    ## Intercome and Asana are removed since they are not compatible with databricks at the moment.
     depends_on:
       - step: run_dbt_databricks_product
         allow_failure: true
