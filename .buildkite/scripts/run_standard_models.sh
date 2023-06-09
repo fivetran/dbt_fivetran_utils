@@ -1,6 +1,5 @@
 #!/bin/bash
 
-## remove failure for testing
 set -euo pipefail
 
 apt-get update
@@ -18,31 +17,31 @@ echo `pwd`
 cd integration_tests
 dbt deps ## Install all packages needed
 
-shift ## Skips the first argument (warehouse) and moves to only looking at the data model arguments
+shift ## Skips the first argument (warehouse) and moves to only looking at the package arguments
 
-for model in "$@" ## Iterates over all non warehouse arguments
+for package in "$@" ## Iterates over all non warehouse arguments
 do
-    echo -e "\ncompiling "$model"\n"
-    cd dbt_packages/$model/integration_tests/
+    echo -e "\ncompiling "$package"\n"
+    cd dbt_packages/$package/integration_tests/
     dbt deps
     cp ../../../packages_ft_utils_override.yml packages.yml
     dbt deps
-    if [ "$model" = "linkedin" ]; then
-        value_to_replace=$(grep ""$model"_ads_schema:" dbt_project.yml | awk '{ print $2 }')
+    if [ "$package" = "linkedin" ]; then
+        value_to_replace=$(grep ""$package"_ads_schema:" dbt_project.yml | awk '{ print $2 }')
         perl -i -pe "s/(schema: |dataset: ).*/\1$value_to_replace/" ~/.dbt/profiles.yml
-    elif [ "$model" = "ad_reporting" ]; then
+    elif [ "$package" = "ad_reporting" ]; then
         value_to_replace=$(grep "google_ads_schema:" dbt_project.yml | awk '{ print $2 }')
         perl -i -pe "s/(schema: |dataset: ).*/\1$value_to_replace/" ~/.dbt/profiles.yml
-    elif [ "$model" = "app_reporting" ]; then
+    elif [ "$package" = "app_reporting" ]; then
         value_to_replace=$(grep "google_play_schema:" dbt_project.yml | awk '{ print $2 }')
         perl -i -pe "s/(schema: |dataset: ).*/\1$value_to_replace/" ~/.dbt/profiles.yml
-    elif [ "$model" = "shopify_holistic_reporting" ]; then
+    elif [ "$package" = "shopify_holistic_reporting" ]; then
         value_to_replace=$(grep "shopify_schema:" dbt_project.yml | awk '{ print $2 }')
         perl -i -pe "s/(schema: |dataset: ).*/\1$value_to_replace/" ~/.dbt/profiles.yml
-    elif [ "$model" = "social_media_reporting" ]; then
+    elif [ "$package" = "social_media_reporting" ]; then
         perl -i -pe "s/(schema: |dataset: ).*/\1social_media_rollup_integration_tests/" ~/.dbt/profiles.yml
     else
-        value_to_replace=$(grep ""$model"_schema:" dbt_project.yml | awk '{ print $2 }')
+        value_to_replace=$(grep ""$package"_schema:" dbt_project.yml | awk '{ print $2 }')
         perl -i -pe "s/(schema: |dataset: ).*/\1$value_to_replace/" ~/.dbt/profiles.yml
     fi
     dbt seed --target "$db"
