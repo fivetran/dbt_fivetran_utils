@@ -1,44 +1,7 @@
 name: 'fivetran_utils_integration_tests'
-version: '0.4.6'
+version: '0.4.7'
 config-version: 2
 profile: 'integration_tests'
-
-models:
-  fivetran_utils_schema: 'fivetran_utils_integration_tests'
-  hubspot:
-    +tags: hubspot
-  jira: 
-    intermediate:
-      field_history:
-        int_jira__issue_calendar_spine:
-          +enabled: False
-    +tags: jira
-  klaviyo:
-    +tags: klaviyo
-  twitter_ads:
-    +tags: twitter_ads
-  zendesk:
-    +tags: zendesk
-    intermediate:
-      int_zendesk__ticket_schedules:
-        +enabled: False
-    utils:
-      int_zendesk__calendar_spine:
-        +enabled: False
-    ticket_history:
-      int_zendesk__field_history_pivot:
-        +enabled: False
-
-vars:
-  hubspot_schema: "{% if target.type != 'snowflake' %} snowflake_stage_hubspot {% endif %}"
-  jira_schema: "{% if target.type != 'snowflake' %} snowflake_stage_jira {% endif %}"
-  klaviyo_schema: "{% if target.type != 'snowflake' %} snowflake_stage_klaviyo {% endif %}"
-  twitter_schema: "{% if target.type != 'snowflake' %} snowflake_stage_twitter {% endif %}"
-  zendesk_schema: "{% if target.type != 'snowflake' %} snowflake_stage_zendesk {% endif %}"
-
-  zendesk_schedule: "{{ source('zendesk', 'schedule') }}"
-  zendesk_ticket: "{{ source('zendesk', 'ticket') }}"
-  zendesk_ticket_field_history: "{{ source('zendesk', 'ticket_field_history') }}"
 
 clean-targets:        
   - "target"

@@ -1,3 +1,16 @@
+# dbt_fivetran_utils v0.4.7
+[PR #118](https://github.com/fivetran/dbt_fivetran_utils/pull/118) includes the following updates.
+## Feature Updates
+- Update to the `union_data` macro to ensure a source connection is established when just one schema is being used with the macro. ([code link for reference](https://github.com/fivetran/dbt_fivetran_utils/blob/bdece2dd5fcc47ae80f63b777d52a13eecb3416f/macros/union_data.sql#L112-L115)) 
+    - The previous build did allow the macro to read data from the correct location; however, it did not leverage the source. Therefore, the models using this macro would result in not having a source connection. This has since been updated in this release and all versions of this macro (whether unioning or not) will attempt to leverage the source function.
+- In addition to the above update, a specific code adjustment was provided for the LinkedIn Company Pages and Instagram Business Pages packages as the sources are not named the same as their default schema. This was the core issue that resulted in dbt_fivetran_utils v0.4.5 being rolled back. This has now been addressed and may be expanded in the future for any other packages with mismatching source/default_schema names. ([code link for reference](https://github.com/fivetran/dbt_fivetran_utils/blob/bdece2dd5fcc47ae80f63b777d52a13eecb3416f/macros/union_data.sql#L95-L108)) 
+    - For additional context, this is the approach taken as renaming the sources could result in incompatible versions of base package and fivetran_utils. Particularly, this could result in package users having a different experience based on the version of their base package. Which is not the behavior we would prefer for this new feature.
+
+## Under the Hood
+- The `union_data` macro has been adjusted to leverage the identifier variable and the true relation when running on a single schema. This ensures a more accurate use of the macro and the ability for the macro to work as expected within the Fivetran integration test pipeline.
+- The `.buildkite` folder has been overhauled to ensure full integration test coverage over **all** Fivetran dbt packages that reference the dbt_fivetran_utils package. The new pipeline updates will ensure the fivetran_utils release version will succeed and not cause errors on any Fivetran dependent package prior to release.
+- Cleaned up a variety of integration test configurations that are no longer needed with the new approach to integration tests for Fivetran Utils.
+
 # dbt_fivetran_utils v0.4.6
 ## Bug Fixes
 - Rolling back an error within the v0.4.5 release that caused a breaking change for the LinkedIn Pages dbt Package

@@ -29,7 +29,7 @@ integration_tests:
       account: "{{ env_var('CI_SNOWFLAKE_DBT_ACCOUNT') }}"
       user: "{{ env_var('CI_SNOWFLAKE_DBT_USER') }}"
       password: "{{ env_var('CI_SNOWFLAKE_DBT_PASS') }}"
-      role: "{{ env_var('CI_SNOWFLAKE_DBT_ROLE') }}"
+      role: "{{ env_var('CI_SNOWFLAKE_DBT_ROLE_FT_UTILS_TEST') }}"
       database: "{{ env_var('CI_SNOWFLAKE_DATABASE_FT_UTILS') }}"
       warehouse: "{{ env_var('CI_SNOWFLAKE_DBT_WAREHOUSE') }}"
       schema: fivetran_utils_integration_tests
@@ -48,6 +48,6 @@ integration_tests:
       host: "{{ env_var('CI_DATABRICKS_DBT_HOST') }}"
       http_path: "{{ env_var('CI_DATABRICKS_DBT_HTTP_PATH') }}"
       schema: fivetran_utils_integration_tests
-      threads: 2
+      threads: 8
       token: "{{ env_var('CI_DATABRICKS_DBT_TOKEN') }}"
       type: databricks
