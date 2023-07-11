@@ -66,3 +66,8 @@
     {% endif %}
 
 {% endmacro %}
+
+
+{% macro duckdb__timestamp_diff(first_date, second_date, datepart) %}
+    return(postgres__timestamp_diff(first_date, second_date, datepart))
+{% endmacro %}
