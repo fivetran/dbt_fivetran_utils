@@ -73,6 +73,18 @@ steps:
     commands: |
       bash .buildkite/scripts/run_standard_models.sh databricks linkedin apple_search_ads snapchat_ads facebook_ads 
 
+  - label: ":duck: Run Tests - Ads Packages :bookmark: :one:"
+    key: "run_dbt_duckdb_ads_1"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.8"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+            - "CI_DUCKDB_DBT_PATH=/tmp/ads1.duckdb"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh duckdb linkedin apple_search_ads snapchat_ads facebook_ads 
+
 ## Ads Packages 2
   - label: ":snowflake: Run Tests - Ads Packages :bookmark: :two:"
     key: "run_dbt_snowflake_ads_2"
@@ -149,6 +161,18 @@ steps:
     depends_on:
       - step: run_dbt_databricks_ads_1
         allow_failure: true
+
+  - label: ":duck: Run Tests - Ads Packages :bookmark: :two:"
+    key: "run_dbt_duckdb_ads_2"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.8"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+            - "CI_DUCKDB_DBT_PATH=/tmp/ads2.duckdb"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh duckdb tiktok_ads twitter_ads amazon_ads reddit_ads
 
 ## Ads Packages 3
   - label: ":snowflake: Run Tests - Ads Packages :bookmark: :three:"
@@ -227,6 +251,18 @@ steps:
       - step: run_dbt_databricks_ads_2
         allow_failure: true
 
+  - label: ":duck: Run Tests - Ads Packages :bookmark: :three:"
+    key: "run_dbt_duckdb_ads_3"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.8"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+            - "CI_DUCKDB_DBT_PATH=/tmp/ads3.duckdb"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh duckdb google_ads microsoft_ads pinterest
+
 ## Social Packages
   - label: ":snowflake: Run Tests - Social Packages :iphone:"
     key: "run_dbt_snowflake_social"
@@ -303,6 +339,18 @@ steps:
     depends_on:
       - step: run_dbt_databricks_ads_3
         allow_failure: true
+
+  - label: ":duck: Run Tests - Social Packages :iphone:"
+    key: "run_dbt_duckdb_social"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.8"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+            - "CI_DUCKDB_DBT_PATH=/tmp/social.duckdb"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh duckdb linkedin_pages facebook_pages instagram_business twitter_organic youtube_analytics
 
 ## App Packages
   - label: ":snowflake: Run Tests - App Packages :video_game:"
@@ -381,6 +429,18 @@ steps:
       - step: run_dbt_databricks_social
         allow_failure: true
 
+  - label: ":duck: Run Tests - App Packages :video_game:"
+    key: "run_dbt_duckdb_app"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.8"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+            - "CI_DUCKDB_DBT_PATH=/tmp/app.duckdb"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh duckdb google_play apple_store
+
 ## CRM Packages
   - label: ":snowflake: Run Tests - CRM Packages :salesforce::hubspot:"
     key: "run_dbt_snowflake_crm"
@@ -458,6 +518,18 @@ steps:
       - step: run_dbt_databricks_app
         allow_failure: true
 
+  - label: ":duck: Run Tests - CRM Packages :salesforce::hubspot:"
+    key: "run_dbt_duckdb_crm"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.8"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+            - "CI_DUCKDB_DBT_PATH=/tmp/crm.duckdb"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh duckdb salesforce hubspot
+
 ## Ecommerce and Subscription Packages
   - label: ":snowflake: Run Tests - Ecommerce and Subscription Packages :shopping_bags:"
     key: "run_dbt_snowflake_esub"
@@ -534,6 +606,18 @@ steps:
     depends_on:
       - step: run_dbt_databricks_crm
         allow_failure: true
+
+  - label: ":duck: Run Tests - Ecommerce and Subscription Packages :shopping_bags:"
+    key: "run_dbt_duckdb_esub"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.8"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+            - "CI_DUCKDB_DBT_PATH=/tmp/esub.duckdb"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh duckdb shopify recurly stripe zuora
 
 ## Email Marketing Packages
   - label: ":snowflake: Run Tests - Email Marketing Packages :email:"
@@ -613,6 +697,18 @@ steps:
       - step: run_dbt_databricks_esub
         allow_failure: true
 
+  - label: ":duck: Run Tests - Email Marketing Packages :email:"
+    key: "run_dbt_duckdb_email"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.8"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+            - "CI_DUCKDB_DBT_PATH=/tmp/email.duckdb"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh duckdb marketo iterable klaviyo mailchimp pardot
+
 ## Finance Packages
   - label: ":snowflake: Run Tests - Finance Packages :money_with_wings:"
     key: "run_dbt_snowflake_finance"
@@ -690,6 +786,18 @@ steps:
     depends_on:
       - step: run_dbt_databricks_email
         allow_failure: true
+
+  - label: ":gcloud: Run Tests - Finance Packages :money_with_wings:"
+    key: "run_dbt_duckdb_finance"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.8"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+            - "CI_DUCKDB_DBT_PATH=/tmp/finance.duckdb"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh duckdb quickbooks xero sage_intacct netsuite
 
 ## Log and People Packages
   - label: ":snowflake: Run Tests - Log and People Packages :people_hugging:"
@@ -769,6 +877,18 @@ steps:
       - step: run_dbt_databricks_finance
         allow_failure: true
 
+  - label: ":duck: Run Tests - Log and People Packages :people_hugging:"
+    key: "run_dbt_duckdb_log_people"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.8"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+            - "CI_DUCKDB_DBT_PATH=/tmp/log_people.duckdb"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh duckdb fivetran_log greenhouse lever
+
 ## Product Packages
   - label: ":snowflake: Run Tests - Product Packages :unicorn_face:"
     key: "run_dbt_snowflake_product"
@@ -845,6 +965,18 @@ steps:
     depends_on:
       - step: run_dbt_databricks_log_people
         allow_failure: true
+
+  - label: ":duck: Run Tests - Product Packages :unicorn_face:"
+    key: "run_dbt_duckdb_product"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.8"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+            - "CI_DUCKDB_DBT_PATH=/tmp/product.duckdb"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh duckdb amplitude mixpanel pendo
 
 ## Velocity Packages
   - label: ":snowflake: Run Tests - Velocity Packages :roller_coaster:"
@@ -924,6 +1056,18 @@ steps:
       - step: run_dbt_databricks_product
         allow_failure: true
 
+  - label: ":duck: Run Tests - Velocity Packages :roller_coaster:"
+    key: "run_dbt_duckdb_velocity"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.8"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+            - "CI_DUCKDB_DBT_PATH=/tmp/velocity.duckdb"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh duckdb intercom github zendesk asana jira
+
 ## Ad Reporting Roll Up Packages
   - label: ":snowflake: Run Tests - Ad Reporting Roll Up Package :roller_skate:"
     key: "run_dbt_snowflake_ad_roll"
@@ -1000,6 +1144,18 @@ steps:
     depends_on:
       - step: run_dbt_databricks_velocity
         allow_failure: true
+
+  - label: ":duck: Run Tests - Ad Reporting Roll Up Package :roller_skate:"
+    key: "run_dbt_duckdb_ad_roll"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.8"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+            - "CI_DUCKDB_DBT_PATH=/tmp/ad_reporting.duckdb"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh duckdb ad_reporting
 
 ## App Reporting Roll Up Packages
   - label: ":snowflake: Run Tests - App Reporting Roll Up Package :roller_skate:"
@@ -1078,6 +1234,18 @@ steps:
       - step: run_dbt_databricks_ad_roll
         allow_failure: true
 
+  - label: ":duck: Run Tests - App Reporting Roll Up Package :roller_skate:"
+    key: "run_dbt_duckdb_app_roll"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.8"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+            - "CI_DUCKDB_DBT_PATH=/tmp/app_reporting.duckdb"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh duckdb app_reporting
+
 ## Social Media Reporting Roll Up Packages
   - label: ":snowflake: Run Tests - Social Reporting Roll Up Package :roller_skate:"
     key: "run_dbt_snowflake_social_roll"
@@ -1155,6 +1323,18 @@ steps:
       - step: run_dbt_databricks_app_roll
         allow_failure: true
 
+  - label: ":duck: Run Tests - Social Reporting Roll Up Package :roller_skate:"
+    key: "run_dbt_duckdb_social_roll"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.8"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+            - "CI_DUCKDB_DBT_PATH=/tmp/social_media_reporting.duckdb"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh duckdb social_media_reporting
+
 ## Shopify Holistic Reporting Roll Up Packages
   - label: ":snowflake: Run Tests - Shopify Holistic Reporting Roll Up Package :roller_skate:"
     key: "run_dbt_snowflake_shopify_holistic_roll"
@@ -1231,3 +1411,15 @@ steps:
     depends_on:
       - step: run_dbt_databricks_social_roll
         allow_failure: true
+
+  - label: ":duck: Run Tests - Shopify Holistic Reporting Roll Up Package :roller_skate:"
+    key: "run_dbt_duckdb_shopify_holistic_roll"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.8"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+            - "CI_DUCKDB_DBT_PATH=/tmp/shopify_holistic_reporting.duckdb"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh duckdb shopify_holistic_reporting

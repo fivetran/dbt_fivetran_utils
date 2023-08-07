@@ -48,4 +48,4 @@
 
     {{ dbt.dateadd(datepart, interval, from_timestamp) }}
 
-{% endmacro %
+{% endmacro %}

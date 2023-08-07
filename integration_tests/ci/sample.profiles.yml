@@ -53,3 +53,5 @@ integration_tests:
       type: databricks
     duckdb:
       type: duckdb
+      path: "{{ env_var('CI_DUCKDB_DBT_PATH') }}"
+      schema: fivetran_utils_integration_tests
