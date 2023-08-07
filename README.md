@@ -162,7 +162,7 @@ BigQuery, Snowflake, Redshift, and Postgres. By default a comma `,` is used as a
 ----
 ### ceiling ([source](macros/ceiling.sql))
 This macro allows for cross database use of the ceiling function. The ceiling function returns the smallest integer greater 
-than, or equal to, the specified numeric expression. The ceiling macro is compatible with BigQuery, Redshift, Postgres, and Snowflake.
+than, or equal to, the specified numeric expression. The ceiling macro is compatible with BigQuery, Redshift, Postgres, DuckDB, and Snowflake.
 
 **Usage:**
 ```sql
@@ -189,7 +189,7 @@ This macro returns the value_expression for the first row in the current window 
 
 ### json_extract ([source](macros/json_extract.sql))
 This macro allows for cross database use of the json extract function. The json extract allows the return of data from a json object.
-The data is returned by the path you provide as the argument. The json_extract macro is compatible with BigQuery, Redshift, Postgres, and Snowflake.
+The data is returned by the path you provide as the argument. The json_extract macro is compatible with BigQuery, Redshift, Postgres, DuckDB, and Snowflake.
 
 **Usage:**
 ```sql
@@ -214,7 +214,7 @@ The data is returned by the path you provide as the list within the `string_path
 
 ----
 ### max_bool ([source](macros/max_bool.sql))
-This macro allows for cross database use of obtaining the max boolean value of a field. This macro recognizes true = 1 and false = 0. The macro will aggregate the boolean_field and return the max boolean value. The max_bool macro is compatible with BigQuery, Redshift, Postgres, and Snowflake.
+This macro allows for cross database use of obtaining the max boolean value of a field. This macro recognizes true = 1 and false = 0. The macro will aggregate the boolean_field and return the max boolean value. The max_bool macro is compatible with BigQuery, Redshift, Postgres, DuckDB, and Snowflake.
 
 **Usage:**
 ```sql
@@ -241,7 +241,7 @@ from your_cte
 
 ----
 ### pivot_json_extract ([source](macros/pivot_json_extract.sql))
-This macro builds off of the `json_extract` macro in order to extract a list of fields from a json object and pivot the fields out into columns. The `pivot_json_extract` macro is compatible with BigQuery, Redshift, Postgres, and Snowflake.
+This macro builds off of the `json_extract` macro in order to extract a list of fields from a json object and pivot the fields out into columns. The `pivot_json_extract` macro is compatible with BigQuery, Redshift, Postgres, DuckDB, and Snowflake.
 
 **Usage:**
 ```sql
@@ -254,7 +254,7 @@ This macro builds off of the `json_extract` macro in order to extract a list of 
 ----
 ### string_agg ([source](macros/string_agg.sql))
 This macro allows for cross database field aggregation and delimiter customization. Supported database specific field aggregation functions include 
-BigQuery, Snowflake, Redshift, Postgres, and Spark.
+BigQuery, Snowflake, Redshift, Postgres, DuckDB, and Spark.
 
 **Usage:**
 ```sql
@@ -265,7 +265,7 @@ BigQuery, Snowflake, Redshift, Postgres, and Spark.
 * `delimiter`    (required): Character you want to be used as the delimiter between aggregates.
 ----
 ### timestamp_add ([source](macros/timestamp_add.sql))
-This macro allows for cross database addition of a timestamp field and a specified datepart and interval for BigQuery, Redshift, Postgres, and Snowflake.
+This macro allows for cross database addition of a timestamp field and a specified datepart and interval for BigQuery, Redshift, Postgres, DuckDB, and Snowflake.
 
 **Usage:**
 ```sql
@@ -278,7 +278,7 @@ This macro allows for cross database addition of a timestamp field and a specifi
 
 ----
 ### timestamp_diff ([source](macros/timestamp_diff.sql))
-This macro allows for cross database timestamp difference calculation for BigQuery, Redshift, Postgres, and Snowflake.
+This macro allows for cross database timestamp difference calculation for BigQuery, Redshift, Postgres, DuckDB, and Snowflake.
 
 **Usage:**
 ```sql
@@ -291,7 +291,7 @@ This macro allows for cross database timestamp difference calculation for BigQue
 
 ----
 ### try_cast ([source](macros/try_cast.sql))
-This macro allows a field to be cast to a specified datatype. If the datatype is incompatible then a `null` value is provided. This macro is compatible with BigQuery, Redshift, Postgres, Snowflake, and Databricks.
+This macro allows a field to be cast to a specified datatype. If the datatype is incompatible then a `null` value is provided. This macro is compatible with BigQuery, Redshift, Postgres, DuckDB, Snowflake, and Databricks.
 > Please note: For Postgres and Redshift destinations the `numeric` datatype is only supported to try_cast.
 **Usage:**
 ```sql
