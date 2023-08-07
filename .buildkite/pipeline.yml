@@ -787,7 +787,7 @@ steps:
       - step: run_dbt_databricks_email
         allow_failure: true
 
-  - label: ":gcloud: Run Tests - Finance Packages :money_with_wings:"
+  - label: ":duck: Run Tests - Finance Packages :money_with_wings:"
     key: "run_dbt_duckdb_finance"
     plugins:
       - docker#v3.13.0:
