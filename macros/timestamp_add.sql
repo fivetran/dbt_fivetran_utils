@@ -43,3 +43,9 @@
     {{ dbt.dateadd(datepart, interval, from_timestamp) }}
         
 {% endmacro %}
+
+{% macro duckdb__timestamp_add(datepart, interval, from_timestamp) %}
+
+    {{ dbt.dateadd(datepart, interval, from_timestamp) }}
+
+{% endmacro %}
