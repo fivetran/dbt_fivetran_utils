@@ -104,7 +104,7 @@
             {% if default_schema in corrected_schema_name %}
                 {# In order for this macro to effectively work within upstream integration tests (mainly used by the Fivetran dbt package maintainers), this identifier variable selection is required to use the macro with different identifier names. #}
                 {% set identifier_var = corrected_schema_name[1] + "_" + table_identifier + "_identifier"  %}
-                {% if default_schema in ["linkedin", "pinterest"] %}
+                {% if default_schema in ["linkedin"] %}
                     {%- set relation.value=adapter.get_relation(
                         database=source(default_schema, table_identifier).database,
                         schema=source(default_schema, table_identifier).schema,
