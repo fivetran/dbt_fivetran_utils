@@ -92,18 +92,31 @@
     {%- endif -%}
 
 {%- else -%}
-    {% set exception_schemas = {"linkedin_company_pages": "linkedin_pages", "instagram_business_pages": "instagram_business"} %}
+    {% set exception_schemas = {
+        "linkedin_company_pages": "linkedin_pages", 
+        "instagram_business_pages": "instagram_business",
+        "linkedin": "linkedin_ads",
+        "pinterest": "pinterest_ads"
+        } %}
     {% set relation = namespace(value="") %}
     {% if default_schema in exception_schemas.keys() %}
         {% for corrected_schema_name in exception_schemas.items() %}   
             {% if default_schema in corrected_schema_name %}
                 {# In order for this macro to effectively work within upstream integration tests (mainly used by the Fivetran dbt package maintainers), this identifier variable selection is required to use the macro with different identifier names. #}
                 {% set identifier_var = corrected_schema_name[1] + "_" + table_identifier + "_identifier"  %}
-                {%- set relation.value=adapter.get_relation(
-                    database=source(corrected_schema_name[1], table_identifier).database,
-                    schema=source(corrected_schema_name[1], table_identifier).schema,
-                    identifier=var(identifier_var, table_identifier)
-                ) -%}
+                {% if default_schema in ["linkedin", "pinterest"] %}
+                    {%- set relation.value=adapter.get_relation(
+                        database=source(default_schema, table_identifier).database,
+                        schema=source(default_schema, table_identifier).schema,
+                        identifier=var(identifier_var, table_identifier)
+                    ) -%}
+                {% else %}
+                    {%- set relation.value=adapter.get_relation(
+                        database=source(corrected_schema_name[1], table_identifier).database,
+                        schema=source(corrected_schema_name[1], table_identifier).schema,
+                        identifier=var(identifier_var, table_identifier)
+                    ) -%}
+                {% endif %}
             {% endif %}
         {% endfor %}
     {% else %}
