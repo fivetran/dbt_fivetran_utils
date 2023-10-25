@@ -76,5 +76,9 @@ packages:
     version: [">=0.1.0", "<1.0.0"]
   - package: fivetran/zendesk
     version: [">=0.1.0", "<1.0.0"]
-  - package: fivetran/intercom
-    version: [">=0.1.0", "<1.0.0"]
+  # - package: fivetran/intercom
+  #   version: [">=0.1.0", "<1.0.0"]
+    # put this back when package versions updated in intercom_source
+  - git: https://github.com/fivetran/dbt_intercom.git
+    revision: test/calogica_version_update
+    warn-unpinned: false
