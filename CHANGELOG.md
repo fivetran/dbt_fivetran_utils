@@ -1,3 +1,8 @@
+# dbt_fivetran_utils v0.4.8
+[PR #127](https://github.com/fivetran/dbt_fivetran_utils/pull/127) includes the following updates.
+## Feature Updates
+- Updated the `collect_freshness` macro for compatibility with dbt versions greater than v1.5.0 to prevent erroneous warnings from occurring during freshness tests.
+
 # dbt_fivetran_utils v0.4.7
 [PR #118](https://github.com/fivetran/dbt_fivetran_utils/pull/118) includes the following updates.
 ## Feature Updates

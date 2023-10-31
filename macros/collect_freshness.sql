@@ -31,5 +31,11 @@
     {% endif %}
 
   {% endcall %}
-  {{ return(load_result('collect_freshness').table) }}
+
+  {% if dbt_version.split('.') | map('int') | list >= [1, 5, 0]  %}
+    {{ return(load_result('collect_freshness')) }}
+  {% else %}
+    {{ return(load_result('collect_freshness').table) }}
+  {% endif %}
+
 {% endmacro %}

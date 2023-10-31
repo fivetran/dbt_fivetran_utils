@@ -2,15 +2,15 @@ packages:
   - package: fivetran/ad_reporting
     version: [">=1.0.0", "<2.0.0"]
 
-  - package: fivetran/shopify_holistic_reporting
-    version: [">=0.1.0", "<1.0.0"]
-
-  ## To be switched after the social media integration tests is updated
-  # - package: fivetran/social_media_reporting
+  # - package: fivetran/shopify_holistic_reporting
   #   version: [">=0.1.0", "<1.0.0"]
-  - git: https://github.com/fivetran/dbt_social_media_reporting.git
-    revision: MagicBot/integation-test-webhooks-14
-    warn-unpinned: false 
+  # put this back when package versions updated in shopify_holistic_reporting
+  - git: https://github.com/fivetran/dbt_shopify_holistic_reporting.git
+    revision: test/update-shopify-versions
+    warn-unpinned: false
+
+  - package: fivetran/social_media_reporting
+    version: [">=0.1.0", "<1.0.0"]
 
   - package: fivetran/youtube_analytics
     version: [">=0.1.0", "<1.0.0"]
@@ -76,5 +76,9 @@ packages:
     version: [">=0.1.0", "<1.0.0"]
   - package: fivetran/zendesk
     version: [">=0.1.0", "<1.0.0"]
-  - package: fivetran/intercom
-    version: [">=0.1.0", "<1.0.0"]
+  # - package: fivetran/intercom
+  #   version: [">=0.1.0", "<1.0.0"]
+    # put this back when package versions updated in intercom_source
+  - git: https://github.com/fivetran/dbt_intercom.git
+    revision: test/calogica_version_update
+    warn-unpinned: false
