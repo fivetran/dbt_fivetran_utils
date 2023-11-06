@@ -50,3 +50,7 @@
 {% macro spark__try_cast(field, type) %}
     try_cast({{field}} as {{type}})
 {% endmacro %}
+
+{% macro sqlserver__try_cast(field, type) %}
+    try_cast({{field}} as {{type}})
+{% endmacro %}
