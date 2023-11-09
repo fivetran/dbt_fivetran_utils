@@ -1,3 +1,11 @@
+# dbt_fivetran_utils v0.4.9
+PR #<something> includes the following updates:
+
+## Feature Update
+- Made the `try_cast()` macro compatible with SQL Server.
+## Bug Fix
+- Corrected the name of the default version of `try_cast()` from safe_cast to try_cast.
+
 # dbt_fivetran_utils v0.4.8
 [PR #127](https://github.com/fivetran/dbt_fivetran_utils/pull/127) includes the following updates.
 ## Feature Updates
