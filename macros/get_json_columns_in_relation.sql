@@ -6,7 +6,9 @@
 
 -- currently only need this for bigquery, so for everything else do nothing and just return an empty list
 {% macro default__get_json_columns_in_relation(source_columns) %}
+
 {{ return([]) }}
+
 {% endmacro %}
 
 -- we will return the columns that are of JSON type

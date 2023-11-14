@@ -5,7 +5,6 @@
 {%- set json_columns = [] -%}
 {% if target.type == 'bigquery' %}
     {%- set json_columns = fivetran_utils.get_json_columns_in_relation(source_columns) -%}
-    {{ log(json_columns|lower, info=true)}}
 {% endif %}
 
 {%- for column in staging_columns %}
