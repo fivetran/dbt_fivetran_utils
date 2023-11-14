@@ -58,6 +58,7 @@ dispatch:
   - [Cross-database compatibility](#cross-database-compatibility)
     - [array\_agg (source)](#array_agg-source)
     - [ceiling (source)](#ceiling-source)
+    - [get\_json\_columns\_in\_relation (source)](#get_json_columns_in_relation-source)
     - [first\_value (source)](#first_value-source)
     - [json\_extract (source)](#json_extract-source)
     - [json\_parse (source)](#json_parse-source)
@@ -81,6 +82,7 @@ dispatch:
     - [remove\_prefix\_from\_columns (source)](#remove_prefix_from_columns-source)
     - [source\_relation (source)](#source_relation-source)
     - [union\_data (source)](#union_data-source)
+      - [Union Data Defined Sources Configuration](#union-data-defined-sources-configuration)
     - [union\_relations (source)](#union_relations-source)
   - [Variable Checks](#variable-checks)
     - [empty\_variable\_warning (source)](#empty_variable_warning-source)
@@ -170,6 +172,19 @@ than, or equal to, the specified numeric expression. The ceiling macro is compat
 ```
 **Args:**
 * `num` (required): The integer field you wish to apply the ceiling function.
+
+----
+### get_json_columns_in_relation ([source](macros/get_json_columns_in_relation.sql))
+In BigQuery warehouses, this macro returns the names of columns that are of type JSON (as opposed to a string), given a model or source's columns. For non-BigQuery destinations, it will always return an empty list, as JSON support has not yet been rolled out to other Fivetran destinations.
+
+**Usage:**
+```sql
+{{ fivetran_utils.get_json_columns_in_relation(source_columns=adapter.get_columns_in_relation(ref('stg_fivetran_platform__connector_tmp'))) }}
+```
+**Args:**
+* `source_columns` (required): The columns of the relation. This will likely be a call to `adapter.get_columns_in_relation`.
+
+> In Fivetran modeling packages, the `get_json_columns_in_relation` macro is called within the [fivetran_utils.fill_staging_columns](macros/fill_staging_columns.sql) macro.
 
 ----
 ### first_value ([source](macros/first_value.sql))
@@ -429,6 +444,8 @@ from source
 **Args:**
 * `source_columns`  (required): Will call the [get_columns_in_relation](https://docs.getdbt.com/reference/dbt-jinja-functions/adapter/#get_columns_in_relation) macro as well requires a `ref()` or `source()` argument for the staging models within the `_tmp` directory.
 * `staging_columns` (required): Created as a result of running the [generate_columns_macro](https://github.com/fivetran/dbt_fivetran_utils#generate_columns_macro-source) for the respective table.
+
+> This macro makes a call to `fivetran_utils.get_json_columns_in_relation()`, which returns source columns that are JSONs (BigQuery only). It will wrap each JSON field in [TO_JSON_STRING](https://cloud.google.com/bigquery/docs/reference/standard-sql/json_functions#to_json_string) and convert each to a string.
 
 ----
 ### persist_pass_through_columns ([source](macros/persist_pass_through_columns.sql))
