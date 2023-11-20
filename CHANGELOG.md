@@ -1,3 +1,7 @@
+# dbt_fivetran_utils v0.4.9
+## Feature Updates
+- Added the `excluded` argument to the `union_data` macro so models that leverage this macro may exclude unnecessary fields prior to the union taking place.
+
 # dbt_fivetran_utils v0.4.8
 [PR #127](https://github.com/fivetran/dbt_fivetran_utils/pull/127) includes the following updates.
 ## Feature Updates

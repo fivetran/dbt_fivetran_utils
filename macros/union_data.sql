@@ -1,4 +1,4 @@
-{%- macro union_data(table_identifier, database_variable, schema_variable, default_database, default_schema, default_variable, union_schema_variable='union_schemas', union_database_variable='union_databases') -%}
+{%- macro union_data(table_identifier, database_variable, schema_variable, default_database, default_schema, default_variable, union_schema_variable='union_schemas', union_database_variable='union_databases', excluded=[]) -%}
 
 {{ adapter.dispatch('union_data', 'fivetran_utils') (
     table_identifier, 
@@ -8,7 +8,8 @@
     default_schema, 
     default_variable,
     union_schema_variable,
-    union_database_variable
+    union_database_variable,
+    excluded
     ) }}
 
 {%- endmacro -%}
@@ -21,7 +22,8 @@
     default_schema, 
     default_variable,
     union_schema_variable,
-    union_database_variable
+    union_database_variable,
+    excluded
     ) -%}
 
 {%- if var(union_schema_variable, none) -%}
@@ -51,7 +53,7 @@
     {%- endfor -%}
     
     {%- if relations != [] -%}
-        {{ dbt_utils.union_relations(relations) }}
+        {{ dbt_utils.union_relations(relations, exclude=excluded) }}
     {%- else -%}
     {% if execute and not var('fivetran__remove_empty_table_warnings', false) -%}
     {{ exceptions.warn("\n\nPlease be aware: The " ~ table_identifier|upper ~ " table was not found in your " ~ default_schema|upper ~ " schema(s). The Fivetran dbt package will create a completely empty " ~ table_identifier|upper ~ " staging model as to not break downstream transformations. To turn off these warnings, set the `fivetran__remove_empty_table_warnings` variable to TRUE (see https://github.com/fivetran/dbt_fivetran_utils/tree/releases/v0.4.latest#union_data-source for details).\n") }}
@@ -81,7 +83,7 @@
     {%- endfor -%}
 
     {%- if relations != [] -%}
-        {{ dbt_utils.union_relations(relations) }}
+        {{ dbt_utils.union_relations(relations, exclude=excluded) }}
     {%- else -%}
     {% if execute and not var('fivetran__remove_empty_table_warnings', false) -%}
     {{ exceptions.warn("\n\nPlease be aware: The " ~ table_identifier|upper ~ " table was not found in your " ~ default_schema|upper ~ " schema(s). The Fivetran dbt package will create a completely empty " ~ table_identifier|upper ~ " staging model as to not break downstream transformations. To turn off these warnings, set the `fivetran__remove_empty_table_warnings` variable to TRUE (see https://github.com/fivetran/dbt_fivetran_utils/tree/releases/v0.4.latest#union_data-source for details).\n") }}
