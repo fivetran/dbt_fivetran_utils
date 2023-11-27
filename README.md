@@ -59,6 +59,7 @@ dispatch:
     - [array\_agg (source)](#array_agg-source)
     - [ceiling (source)](#ceiling-source)
     - [first\_value (source)](#first_value-source)
+    - [extract\_url\_parameter (source)](#extract-url-parameter-source)
     - [json\_extract (source)](#json_extract-source)
     - [json\_parse (source)](#json_parse-source)
     - [max\_bool (source)](#max_bool-source)
@@ -186,7 +187,18 @@ This macro returns the value_expression for the first row in the current window 
 * `order`             (optional): The order of which you want to partition the window frame. The order argument by default is `asc`. If you wish to get the last_value, you may change the argument to `desc`.
 
 ----
+### extract_url_parameter ([source](macros/extract_url_parameter.sql))
+This macro extracts a url parameter from a column containing a url. It is an expansion of `dbt_utils.get_url_parameter()` to add support for Databricks SQL. 
 
+**Usage:**
+```sql
+{{ fivetran_utils.extract_url_parameter(field="url_field", url_parameter="utm_source") }}
+```
+**Args:**
+* `field` (required): The name of the column containing the url.
+* `url_parameter` (required): The parameter you want to extract. 
+
+----
 ### json_extract ([source](macros/json_extract.sql))
 This macro allows for cross database use of the json extract function. The json extract allows the return of data from a json object.
 The data is returned by the path you provide as the argument. The json_extract macro is compatible with BigQuery, Redshift, Postgres, and Snowflake.
