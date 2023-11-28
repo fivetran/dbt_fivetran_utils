@@ -1,12 +1,12 @@
 {% macro date_spine(datepart, start_date, end_date) -%}
 
-{{ adapter.dispatch('date_spine', 'fivetran_utils') (datepart, start_date, end_date) }}
+{{ return(adapter.dispatch('date_spine', 'fivetran_utils') (datepart, start_date, end_date)) }}
 
 {%- endmacro %}
 
 {% macro default__date_spine(datepart, start_date, end_date) %}
 
-    {{ dbt_utils.date_spine(datepart, interval, from_timestamp) }}
+    {{ dbt_utils.date_spine(datepart, start_date, end_date) }}
         
 {% endmacro %}
 
