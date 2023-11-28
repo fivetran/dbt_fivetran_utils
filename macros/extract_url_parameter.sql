@@ -12,7 +12,7 @@
 {%- endmacro %}
 
 
-{% macro databricks__extract_url_parameter(field, url_parameter) -%}
+{% macro spark__extract_url_parameter(field, url_parameter) -%}
 
 {%- set formatted_url_parameter = "'" + url_parameter + "=([^&]+)'" -%}
 nullif(regexp_extract({{ field }}, {{ formatted_url_parameter }}, 1), '')
