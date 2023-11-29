@@ -40,6 +40,9 @@ do
         perl -i -pe "s/(schema: |dataset: ).*/\1$value_to_replace/" ~/.dbt/profiles.yml
     elif [ "$package" = "social_media_reporting" ]; then
         perl -i -pe "s/(schema: |dataset: ).*/\1social_media_rollup_integration_tests/" ~/.dbt/profiles.yml
+    elif [ "$package" = "fivetran_log" ]; then
+        value_to_replace=$(grep "fivetran_platform_schema:" dbt_project.yml | awk '{ print $2 }')
+        perl -i -pe "s/(schema: |dataset: ).*/\1$value_to_replace/" ~/.dbt/profiles.yml
     else
         value_to_replace=$(grep ""$package"_schema:" dbt_project.yml | awk '{ print $2 }')
         perl -i -pe "s/(schema: |dataset: ).*/\1$value_to_replace/" ~/.dbt/profiles.yml
