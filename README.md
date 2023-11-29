@@ -185,19 +185,6 @@ This macro extracts a url parameter from a column containing a url. It is an exp
 * `url_parameter` (required): The parameter you want to extract. 
 
 ----
-### json_extract ([source](macros/json_extract.sql))
-This macro allows for cross database use of the json extract function. The json extract allows the return of data from a json object.
-The data is returned by the path you provide as the argument. The json_extract macro is compatible with BigQuery, Redshift, Postgres, and Snowflake.
-
-**Usage:**
-```sql
-{{ fivetran_utils.json_extract(string="value", string_path="in_business_hours") }}
-```
-**Args:**
-* `string` (required): Name of the field which contains the json object.
-* `string_path`  (required): Name of the path in the json object which you want to extract the data from.
-
-----
 ### first_value ([source](macros/first_value.sql))
 This macro returns the value_expression for the first row in the current window frame with cross db functionality. This macro ignores null values. The default first_value calculation within the macro is the `first_value` function. The Redshift first_value calculation is the `first_value` function, with the inclusion of a frame_clause `{{ partition_field }} rows unbounded preceding`.
 
@@ -210,6 +197,19 @@ This macro returns the value_expression for the first row in the current window 
 * `partition_field`   (required): Name of the field you want to partition by to determine the first_value.
 * `order_by_field`    (required): Name of the field you wish to sort on to determine the first_value.
 * `order`             (optional): The order of which you want to partition the window frame. The order argument by default is `asc`. If you wish to get the last_value, you may change the argument to `desc`.
+
+----
+### json_extract ([source](macros/json_extract.sql))
+This macro allows for cross database use of the json extract function. The json extract allows the return of data from a json object.
+The data is returned by the path you provide as the argument. The json_extract macro is compatible with BigQuery, Redshift, Postgres, and Snowflake.
+
+**Usage:**
+```sql
+{{ fivetran_utils.json_extract(string="value", string_path="in_business_hours") }}
+```
+**Args:**
+* `string` (required): Name of the field which contains the json object.
+* `string_path`  (required): Name of the path in the json object which you want to extract the data from.
 
 ----
 ### json_parse ([source](macros/json_parse.sql))
