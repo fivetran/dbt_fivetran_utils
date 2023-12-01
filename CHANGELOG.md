@@ -1,7 +1,5 @@
 # dbt_fivetran_utils v0.4.9
 
-[PR #131](https://github.com/fivetran/dbt_fivetran_utils/pull/131) includes the following updates:
-
 ## Feature Update
 - Added macro `extract_url_parameter` to create special logic for Databricks instances not supported by `dbt_utils.get_url_parameter()`. The macro uses `dbt_utils.get_url_parameter()` for default, non-Databricks targets. See [README](https://github.com/fivetran/dbt_fivetran_utils/blob/releases/v0.4.latest/README.md#extract_url_parameter-source) for more details ([PR #130](https://github.com/fivetran/dbt_fivetran_utils/pull/130)).
 - Made the `try_cast()` [macro](https://github.com/fivetran/dbt_fivetran_utils/tree/releases/v0.4.latest#try_cast-source) compatible with SQL Server ([PR #131](https://github.com/fivetran/dbt_fivetran_utils/pull/131)).
