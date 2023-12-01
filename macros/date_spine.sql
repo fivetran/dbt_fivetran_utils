@@ -102,11 +102,11 @@
 
     {% if execute %}
 
-    {% set results_list = results.columns[0].values() %}
+        {% set results_list = results.columns[0].values() %}
     
     {% else %}
 
-    {% set results_list = [] %}
+        {% set results_list = [] %}
 
     {% endif %}
 

@@ -3,6 +3,8 @@ PR #<something> includes the following updates:
 
 ## Feature Update
 - Made the `try_cast()` macro compatible with SQL Server.
+- Added a `date_spine()` macro. For non-SQL Server databases, this will simply call `dbt_utils.date_spine()`. For SQL Server targets, this will manually create a spine, with code heavily leveraged from [`tsql-utils.date_spine()`](https://github.com/dbt-msft/tsql-utils/blob/main/macros/dbt_utils/datetime/date_spine.sql) but [adjusted for recent changes to dbt_utils](https://github.com/dbt-msft/tsql-utils/issues/96).
+
 ## Bug Fix
 - Corrected the name of the default version of `try_cast()` from safe_cast to try_cast.
 
