@@ -1,15 +1,17 @@
 # dbt_fivetran_utils v0.4.9
+
 [PR #131](https://github.com/fivetran/dbt_fivetran_utils/pull/131) includes the following updates:
 
 ## Feature Update
-- Made the `try_cast()` [macro](https://github.com/fivetran/dbt_fivetran_utils/tree/releases/v0.4.latest#try_cast-source) compatible with SQL Server.
-- Made the  `json_parse()` [macro](https://github.com/fivetran/dbt_fivetran_utils/tree/releases/v0.4.latest#json_parse-source) compatible with SQL Server.
-- Added a `date_spine()` macro. 
+- Added macro `extract_url_parameter` to create special logic for Databricks instances not supported by `dbt_utils.get_url_parameter()`. The macro uses `dbt_utils.get_url_parameter()` for default, non-Databricks targets. See [README](https://github.com/fivetran/dbt_fivetran_utils/blob/releases/v0.4.latest/README.md#extract_url_parameter-source) for more details ([PR #130](https://github.com/fivetran/dbt_fivetran_utils/pull/130)).
+- Made the `try_cast()` [macro](https://github.com/fivetran/dbt_fivetran_utils/tree/releases/v0.4.latest#try_cast-source) compatible with SQL Server ([PR #131](https://github.com/fivetran/dbt_fivetran_utils/pull/131)).
+- Made the  `json_parse()` [macro](https://github.com/fivetran/dbt_fivetran_utils/tree/releases/v0.4.latest#json_parse-source) compatible with SQL Server ([PR #131](https://github.com/fivetran/dbt_fivetran_utils/pull/131)).
+- Added a `date_spine()` macro ([PR #131](https://github.com/fivetran/dbt_fivetran_utils/pull/131)).
   - For non-SQL Server databases, this will simply call [`dbt_utils.date_spine()`](https://github.com/dbt-labs/dbt-utils#date_spine-source). 
   - For SQL Server targets, this will manually create a spine, with code heavily leveraged from [`tsql-utils.date_spine()`](https://github.com/dbt-msft/tsql-utils/blob/main/macros/dbt_utils/datetime/date_spine.sql) but [adjusted for recent changes to dbt_utils](https://github.com/dbt-msft/tsql-utils/issues/96).
 
 ## Bug Fix
-- Corrected the name of the default version of `try_cast()` from safe_cast to try_cast.
+- Corrected the name of the default version of `try_cast()` from safe_cast to try_cast ([PR #131](https://github.com/fivetran/dbt_fivetran_utils/pull/131)).
 
 # dbt_fivetran_utils v0.4.8
 [PR #127](https://github.com/fivetran/dbt_fivetran_utils/pull/127) includes the following updates.
