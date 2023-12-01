@@ -59,7 +59,7 @@ steps:
     commands: |
       bash .buildkite/scripts/run_standard_models.sh redshift linkedin apple_search_ads snapchat_ads facebook_ads
 
-  - label: ":bricks: Run Tests - Ads Packages :bookmark: :one:"
+  - label: ":databricks: Run Tests - Ads Packages :bookmark: :one:"
     key: "run_dbt_databricks_ads_1"
     plugins:
       - docker#v3.13.0:
@@ -133,7 +133,7 @@ steps:
     commands: |
       bash .buildkite/scripts/run_standard_models.sh redshift tiktok_ads twitter_ads amazon_ads reddit_ads
 
-  - label: ":bricks: Run Tests - Ads Packages :bookmark: :two:"
+  - label: ":databricks: Run Tests - Ads Packages :bookmark: :two:"
     key: "run_dbt_databricks_ads_2"
     plugins:
       - docker#v3.13.0:
@@ -210,7 +210,7 @@ steps:
     commands: |
       bash .buildkite/scripts/run_standard_models.sh redshift google_ads microsoft_ads pinterest
 
-  - label: ":bricks: Run Tests - Ads Packages :bookmark: :three:"
+  - label: ":databricks: Run Tests - Ads Packages :bookmark: :three:"
     key: "run_dbt_databricks_ads_3"
     plugins:
       - docker#v3.13.0:
@@ -287,7 +287,7 @@ steps:
     commands: |
       bash .buildkite/scripts/run_standard_models.sh redshift linkedin_pages facebook_pages instagram_business twitter_organic youtube_analytics
 
-  - label: ":bricks: Run Tests - Social Packages :iphone:"
+  - label: ":databricks: Run Tests - Social Packages :iphone:"
     key: "run_dbt_databricks_social"
     plugins:
       - docker#v3.13.0:
@@ -364,7 +364,7 @@ steps:
     commands: |
       bash .buildkite/scripts/run_standard_models.sh redshift google_play apple_store
 
-  - label: ":bricks: Run Tests - App Packages :video_game:"
+  - label: ":databricks: Run Tests - App Packages :video_game:"
     key: "run_dbt_databricks_app"
     plugins:
       - docker#v3.13.0:
@@ -441,7 +441,7 @@ steps:
     commands: |
       bash .buildkite/scripts/run_standard_models.sh redshift salesforce hubspot
 
-  - label: ":bricks: Run Tests - CRM Packages :salesforce::hubspot:"
+  - label: ":databricks: Run Tests - CRM Packages :salesforce::hubspot:"
     key: "run_dbt_databricks_crm"
     plugins:
       - docker#v3.13.0:
@@ -518,7 +518,7 @@ steps:
     commands: |
       bash .buildkite/scripts/run_standard_models.sh redshift shopify recurly stripe zuora
 
-  - label: ":bricks: Run Tests - Ecommerce and Subscription Packages :shopping_bags:"
+  - label: ":databricks: Run Tests - Ecommerce and Subscription Packages :shopping_bags:"
     key: "run_dbt_databricks_esub"
     plugins:
       - docker#v3.13.0:
@@ -595,7 +595,7 @@ steps:
     commands: |
       bash .buildkite/scripts/run_standard_models.sh redshift marketo iterable klaviyo mailchimp pardot
 
-  - label: ":bricks: Run Tests - Email Marketing Packages :email:"
+  - label: ":databricks: Run Tests - Email Marketing Packages :email:"
     key: "run_dbt_databricks_email"
     plugins:
       - docker#v3.13.0:
@@ -673,7 +673,7 @@ steps:
     commands: |
       bash .buildkite/scripts/run_standard_models.sh redshift quickbooks xero sage_intacct netsuite
 
-  - label: ":bricks: Run Tests - Finance Packages :money_with_wings:"
+  - label: ":databricks: Run Tests - Finance Packages :money_with_wings:"
     key: "run_dbt_databricks_finance"
     plugins:
       - docker#v3.13.0:
@@ -751,7 +751,7 @@ steps:
     commands: |
       bash .buildkite/scripts/run_standard_models.sh redshift fivetran_log greenhouse lever
 
-  - label: ":bricks: Run Tests - Log and People Packages :people_hugging:"
+  - label: ":databricks: Run Tests - Log and People Packages :people_hugging:"
     key: "run_dbt_databricks_log_people"
     plugins:
       - docker#v3.13.0:
@@ -829,7 +829,7 @@ steps:
     commands: |
       bash .buildkite/scripts/run_standard_models.sh redshift amplitude mixpanel pendo
 
-  - label: ":bricks: Run Tests - Product Packages :unicorn_face:"
+  - label: ":databricks: Run Tests - Product Packages :unicorn_face:"
     key: "run_dbt_databricks_product"
     plugins:
       - docker#v3.13.0:
@@ -906,7 +906,7 @@ steps:
     commands: |
       bash .buildkite/scripts/run_standard_models.sh redshift intercom github zendesk asana jira
 
-  - label: ":bricks: Run Tests - Velocity Packages :roller_coaster:"
+  - label: ":databricks: Run Tests - Velocity Packages :roller_coaster:"
     key: "run_dbt_databricks_velocity"
     plugins:
       - docker#v3.13.0:
@@ -984,7 +984,7 @@ steps:
     commands: |
       bash .buildkite/scripts/run_standard_models.sh redshift ad_reporting
 
-  - label: ":bricks: Run Tests - Ad Reporting Roll Up Package :roller_skate:"
+  - label: ":databricks: Run Tests - Ad Reporting Roll Up Package :roller_skate:"
     key: "run_dbt_databricks_ad_roll"
     plugins:
       - docker#v3.13.0:
@@ -1061,7 +1061,7 @@ steps:
     commands: |
       bash .buildkite/scripts/run_standard_models.sh redshift app_reporting
 
-  - label: ":bricks: Run Tests - App Reporting Roll Up Package :roller_skate:"
+  - label: ":databricks: Run Tests - App Reporting Roll Up Package :roller_skate:"
     key: "run_dbt_databricks_app_roll"
     plugins:
       - docker#v3.13.0:
@@ -1138,7 +1138,7 @@ steps:
     commands: |
       bash .buildkite/scripts/run_standard_models.sh redshift social_media_reporting
 
-  - label: ":bricks: Run Tests - Social Reporting Roll Up Package :roller_skate:"
+  - label: ":databricks: Run Tests - Social Reporting Roll Up Package :roller_skate:"
     key: "run_dbt_databricks_social_roll"
     plugins:
       - docker#v3.13.0:
@@ -1215,7 +1215,7 @@ steps:
     commands: |
       bash .buildkite/scripts/run_standard_models.sh redshift shopify_holistic_reporting
 
-  - label: ":bricks: Run Tests - Shopify Holistic Reporting Roll Up Package :roller_skate:"
+  - label: ":databricks: Run Tests - Shopify Holistic Reporting Roll Up Package :roller_skate:"
     key: "run_dbt_databricks_shopify_holistic_roll"
     plugins:
       - docker#v3.13.0:

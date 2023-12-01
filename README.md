@@ -58,6 +58,7 @@ dispatch:
   - [Cross-database compatibility](#cross-database-compatibility)
     - [array\_agg (source)](#array_agg-source)
     - [ceiling (source)](#ceiling-source)
+    - [extract\_url\_parameter (source)](#extract_url_parameter-source)
     - [first\_value (source)](#first_value-source)
     - [json\_extract (source)](#json_extract-source)
     - [json\_parse (source)](#json_parse-source)
@@ -172,6 +173,18 @@ than, or equal to, the specified numeric expression. The ceiling macro is compat
 * `num` (required): The integer field you wish to apply the ceiling function.
 
 ----
+### extract_url_parameter ([source](macros/extract_url_parameter.sql))
+This macro extracts a url parameter from a column containing a url. It is an expansion of `dbt_utils.get_url_parameter()` to add support for Databricks SQL. 
+
+**Usage:**
+```sql
+{{ fivetran_utils.extract_url_parameter(field="url_field", url_parameter="utm_source") }}
+```
+**Args:**
+* `field` (required): The name of the column containing the url.
+* `url_parameter` (required): The parameter you want to extract. 
+
+----
 ### first_value ([source](macros/first_value.sql))
 This macro returns the value_expression for the first row in the current window frame with cross db functionality. This macro ignores null values. The default first_value calculation within the macro is the `first_value` function. The Redshift first_value calculation is the `first_value` function, with the inclusion of a frame_clause `{{ partition_field }} rows unbounded preceding`.
 
@@ -186,7 +199,6 @@ This macro returns the value_expression for the first row in the current window 
 * `order`             (optional): The order of which you want to partition the window frame. The order argument by default is `asc`. If you wish to get the last_value, you may change the argument to `desc`.
 
 ----
-
 ### json_extract ([source](macros/json_extract.sql))
 This macro allows for cross database use of the json extract function. The json extract allows the return of data from a json object.
 The data is returned by the path you provide as the argument. The json_extract macro is compatible with BigQuery, Redshift, Postgres, and Snowflake.
