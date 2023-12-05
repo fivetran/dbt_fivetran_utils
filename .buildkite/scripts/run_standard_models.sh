@@ -24,7 +24,8 @@ do
     echo -e "\ncompiling "$package"\n"
     cd dbt_packages/$package/integration_tests/
     dbt deps
-    cp ../../../packages_ft_utils_override.yml packages.yml
+    ## Post dbt 1.7.0 we need to edit the package-lock.yml instead of the packages.yml
+    awk '/- package: fivetran\/fivetran_utils/ {print "- local: ../../../../"; skip=1; next} skip && /^  version:/ {skip=0; next} 1' package-lock.yml > temp.yml && mv temp.yml package-lock.yml
     dbt deps
     if [ "$package" = "linkedin" ]; then
         value_to_replace=$(grep ""$package"_ads_schema:" dbt_project.yml | awk '{ print $2 }')
