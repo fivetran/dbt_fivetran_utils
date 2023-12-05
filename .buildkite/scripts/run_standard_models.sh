@@ -16,8 +16,6 @@ db=$1
 echo `pwd`
 cd integration_tests
 dbt deps ## Install all packages needed
-rm package-lock.yml
-echo -e "removing package-lock.yml"
 
 shift ## Skips the first argument (warehouse) and moves to only looking at the package arguments
 
@@ -25,14 +23,9 @@ for package in "$@" ## Iterates over all non warehouse arguments
 do
     echo -e "\ncompiling "$package"\n"
     cd dbt_packages/$package/integration_tests/
-    dbt clean
     dbt deps
-    rm package-lock.yml
-    echo -e "removing package-lock.yml"
     cp ../../../packages_ft_utils_override.yml packages.yml
     dbt deps
-    rm package-lock.yml
-    echo -e "removing package-lock.yml"
     if [ "$package" = "linkedin" ]; then
         value_to_replace=$(grep ""$package"_ads_schema:" dbt_project.yml | awk '{ print $2 }')
         perl -i -pe "s/(schema: |dataset: ).*/\1$value_to_replace/" ~/.dbt/profiles.yml
