@@ -15,7 +15,7 @@ cp integration_tests/ci/sample.profiles.yml ~/.dbt/profiles.yml
 db=$1
 echo `pwd`
 cd integration_tests
-dbt deps --lock ## Install all packages needed
+dbt deps ## Install all packages needed
 
 shift ## Skips the first argument (warehouse) and moves to only looking at the package arguments
 
@@ -23,9 +23,9 @@ for package in "$@" ## Iterates over all non warehouse arguments
 do
     echo -e "\ncompiling "$package"\n"
     cd dbt_packages/$package/integration_tests/
-    dbt deps --lock
-    cp ../../../packages_ft_utils_override.yml packages.yml
-    dbt deps --lock
+    dbt deps
+    awk '/- package: fivetran\/fivetran_utils/ {print "- local: ../../../../"; skip=1; next} skip && /^  version:/ {skip=0; next} 1' package-lock.yml > temp.yml && mv temp.yml package-lock.yml
+    dbt deps
     if [ "$package" = "linkedin" ]; then
         value_to_replace=$(grep ""$package"_ads_schema:" dbt_project.yml | awk '{ print $2 }')
         perl -i -pe "s/(schema: |dataset: ).*/\1$value_to_replace/" ~/.dbt/profiles.yml
