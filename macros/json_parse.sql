@@ -40,3 +40,9 @@
   {{string}} : {%- for s in string_path -%}{% if s is number %}[{{ s }}]{% else %}['{{ s }}']{% endif %}{%- endfor -%}
 
 {% endmacro %}
+
+{% macro sqlserver__json_parse(string, string_path) %}
+
+  json_value({{string}}, '$.{%- for s in string_path -%}{{ s }}{%- if not loop.last -%}.{%- endif -%}{%- endfor -%} ')
+
+{% endmacro %}
