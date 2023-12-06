@@ -74,6 +74,7 @@ dispatch:
     - [add\_dbt\_source\_relation (source)](#add_dbt_source_relation-source)
     - [add\_pass\_through\_columns (source)](#add_pass_through_columns-source)
     - [calculated\_fields (source)](#calculated_fields-source)
+    - [date\_spine (source)](#date_spine-source)
     - [drop\_schemas\_automation (source)](#drop_schemas_automation-source)
     - [dummy\_coalesce\_value (source)](#dummy_coalesce_value-source)
     - [fill\_pass\_through\_columns (source)](#fill_pass_through_columns-source)
@@ -82,6 +83,7 @@ dispatch:
     - [remove\_prefix\_from\_columns (source)](#remove_prefix_from_columns-source)
     - [source\_relation (source)](#source_relation-source)
     - [union\_data (source)](#union_data-source)
+      - [Union Data Defined Sources Configuration](#union-data-defined-sources-configuration)
     - [union\_relations (source)](#union_relations-source)
   - [Variable Checks](#variable-checks)
     - [empty\_variable\_warning (source)](#empty_variable_warning-source)
@@ -365,6 +367,26 @@ vars:
 ```
 **Args:**
 * `variable` (required): The variable containing the calculated field `name` and `transform_sql`.
+
+----
+### date_spine ([source](macros/date_spine.sql))
+This macro returns the sql required to build a date spine. The spine will include the `start_date` (if it is aligned to the `datepart`), but it will not include the `end_date`.
+
+For non-SQL Server databases, this will simply call [`dbt_utils.date_spine()`](https://github.com/dbt-labs/dbt-utils#date_spine-source). For SQL Server targets, this will manually create a spine, with code heavily leveraged from [`tsql-utils.date_spine()`](https://github.com/dbt-msft/tsql-utils/blob/main/macros/dbt_utils/datetime/date_spine.sql) but [adjusted for recent changes to dbt_utils](https://github.com/dbt-msft/tsql-utils/issues/96).
+
+**Usage:**
+```sql
+{{ fivetran_utils.date_spine(
+    datepart="day",
+    start_date="cast('2019-01-01' as date)",
+    end_date="cast('2020-01-01' as date)"
+   )
+}}
+```
+**Args:**
+* `datepart` (required): The grain at which you would like to create the date spine. 
+* `start_date` (required): The date (inclusive if it is aligned to the `datepart`) at which you'd like the date spine to start.
+* `end_date` (required): The date (excusive) at which you'd like the date spine to end.
 
 ----
 
