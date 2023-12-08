@@ -146,9 +146,7 @@ steps:
             - "CI_DATABRICKS_DBT_TOKEN"
     commands: |
       bash .buildkite/scripts/run_standard_models.sh databricks tiktok_ads twitter_ads amazon_ads reddit_ads
-    depends_on:
-      - step: run_dbt_databricks_ads_1
-        allow_failure: true
+    
 
 ## Ads Packages 3
   - label: ":snowflake: Run Tests - Ads Packages :bookmark: :three:"
@@ -223,9 +221,7 @@ steps:
             - "CI_DATABRICKS_DBT_TOKEN"
     commands: |
       bash .buildkite/scripts/run_standard_models.sh databricks google_ads microsoft_ads pinterest
-    depends_on:
-      - step: run_dbt_databricks_ads_2
-        allow_failure: true
+    
 
 ## Social Packages
   - label: ":snowflake: Run Tests - Social Packages :iphone:"
@@ -300,9 +296,7 @@ steps:
             - "CI_DATABRICKS_DBT_TOKEN"
     commands: |
       bash .buildkite/scripts/run_standard_models.sh databricks linkedin_pages facebook_pages instagram_business twitter_organic youtube_analytics
-    depends_on:
-      - step: run_dbt_databricks_ads_3
-        allow_failure: true
+    
 
 ## App Packages
   - label: ":snowflake: Run Tests - App Packages :video_game:"
@@ -377,9 +371,7 @@ steps:
             - "CI_DATABRICKS_DBT_TOKEN"
     commands: |
       bash .buildkite/scripts/run_standard_models.sh databricks google_play apple_store
-    depends_on:
-      - step: run_dbt_databricks_social
-        allow_failure: true
+    
 
 ## CRM Packages
   - label: ":snowflake: Run Tests - CRM Packages :salesforce::hubspot:"
@@ -454,9 +446,7 @@ steps:
             - "CI_DATABRICKS_DBT_TOKEN"
     commands: |
       bash .buildkite/scripts/run_standard_models.sh databricks salesforce hubspot
-    depends_on:
-      - step: run_dbt_databricks_app
-        allow_failure: true
+    
 
 ## Ecommerce and Subscription Packages
   - label: ":snowflake: Run Tests - Ecommerce and Subscription Packages :shopping_bags:"
@@ -531,9 +521,7 @@ steps:
             - "CI_DATABRICKS_DBT_TOKEN"
     commands: |
       bash .buildkite/scripts/run_standard_models.sh databricks shopify recurly stripe zuora
-    depends_on:
-      - step: run_dbt_databricks_crm
-        allow_failure: true
+    
 
 ## Email Marketing Packages
   - label: ":snowflake: Run Tests - Email Marketing Packages :email:"
@@ -609,9 +597,7 @@ steps:
     commands: |
       bash .buildkite/scripts/run_standard_models.sh databricks marketo klaviyo mailchimp pardot
     # Iterable removed as it is not databricks compatible for now.
-    depends_on:
-      - step: run_dbt_databricks_esub
-        allow_failure: true
+    
 
 ## Finance Packages
   - label: ":snowflake: Run Tests - Finance Packages :money_with_wings:"
@@ -687,9 +673,7 @@ steps:
     commands: |
       bash .buildkite/scripts/run_standard_models.sh databricks xero sage_intacct netsuite
     # Quickbooks removed as it is not databricks compatible for now
-    depends_on:
-      - step: run_dbt_databricks_email
-        allow_failure: true
+    
 
 ## Log and People Packages
   - label: ":snowflake: Run Tests - Log and People Packages :people_hugging:"
@@ -765,9 +749,7 @@ steps:
     commands: |
       bash .buildkite/scripts/run_standard_models.sh databricks fivetran_log
     ## Removed greenhouse and lever as it is not databricks compatible at the moment.
-    depends_on:
-      - step: run_dbt_databricks_finance
-        allow_failure: true
+    
 
 ## Product Packages
   - label: ":snowflake: Run Tests - Product Packages :unicorn_face:"
@@ -842,9 +824,7 @@ steps:
             - "CI_DATABRICKS_DBT_TOKEN"
     commands: |
       bash .buildkite/scripts/run_standard_models.sh databricks amplitude mixpanel pendo
-    depends_on:
-      - step: run_dbt_databricks_log_people
-        allow_failure: true
+    
 
 ## Velocity Packages
   - label: ":snowflake: Run Tests - Velocity Packages :roller_coaster:"
@@ -920,9 +900,7 @@ steps:
     commands: |
       bash .buildkite/scripts/run_standard_models.sh databricks github zendesk jira
     ## Intercome and Asana are removed since they are not compatible with databricks at the moment.
-    depends_on:
-      - step: run_dbt_databricks_product
-        allow_failure: true
+    
 
 ## Ad Reporting Roll Up Packages
   - label: ":snowflake: Run Tests - Ad Reporting Roll Up Package :roller_skate:"
@@ -997,9 +975,7 @@ steps:
             - "CI_DATABRICKS_DBT_TOKEN"
     commands: |
       bash .buildkite/scripts/run_standard_models.sh databricks ad_reporting
-    depends_on:
-      - step: run_dbt_databricks_velocity
-        allow_failure: true
+    
 
 ## App Reporting Roll Up Packages
   - label: ":snowflake: Run Tests - App Reporting Roll Up Package :roller_skate:"
@@ -1074,9 +1050,7 @@ steps:
             - "CI_DATABRICKS_DBT_TOKEN"
     commands: |
       bash .buildkite/scripts/run_standard_models.sh databricks app_reporting
-    depends_on:
-      - step: run_dbt_databricks_ad_roll
-        allow_failure: true
+    
 
 ## Social Media Reporting Roll Up Packages
   - label: ":snowflake: Run Tests - Social Reporting Roll Up Package :roller_skate:"
@@ -1151,9 +1125,7 @@ steps:
             - "CI_DATABRICKS_DBT_TOKEN"
     commands: |
       bash .buildkite/scripts/run_standard_models.sh databricks social_media_reporting
-    depends_on:
-      - step: run_dbt_databricks_app_roll
-        allow_failure: true
+    
 
 ## Shopify Holistic Reporting Roll Up Packages
   - label: ":snowflake: Run Tests - Shopify Holistic Reporting Roll Up Package :roller_skate:"
@@ -1228,6 +1200,4 @@ steps:
             - "CI_DATABRICKS_DBT_TOKEN"
     commands: |
       bash .buildkite/scripts/run_standard_models.sh databricks shopify_holistic_reporting
-    depends_on:
-      - step: run_dbt_databricks_social_roll
-        allow_failure: true
+    
