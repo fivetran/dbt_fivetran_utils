@@ -1,3 +1,9 @@
+# dbt_fivetran_utils v0.4.10
+
+## Bug Fix
+- This release addresses a bug caused by the introduction of the `date_spine()` macro. Some users reporterd a recursion error that was resolved by ensuring that this macro had a different name from `dbt_utils.date_spine()`.
+  - Thus, the `date_spine()` macro has been renamed to `fivetran_date_spine()` ([PR #136](https://github.com/fivetran/dbt_fivetran_utils/pull/136)).
+
 # dbt_fivetran_utils v0.4.9
 
 ## Feature Update
