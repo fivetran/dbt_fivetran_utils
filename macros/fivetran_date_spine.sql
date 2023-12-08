@@ -1,16 +1,16 @@
-{% macro date_spine(datepart, start_date, end_date) -%}
+{% macro fivetran_date_spine(datepart, start_date, end_date) -%}
 
-{{ return(adapter.dispatch('date_spine', 'fivetran_utils') (datepart, start_date, end_date)) }}
+{{ return(adapter.dispatch('fivetran_date_spine', 'fivetran_utils') (datepart, start_date, end_date)) }}
 
 {%- endmacro %}
 
-{% macro default__date_spine(datepart, start_date, end_date) %}
+{% macro default__fivetran_date_spine(datepart, start_date, end_date) %}
 
     {{ dbt_utils.date_spine(datepart, start_date, end_date) }}
         
 {% endmacro %}
 
-{% macro sqlserver__date_spine(datepart, start_date, end_date) -%}
+{% macro sqlserver__fivetran_date_spine(datepart, start_date, end_date) -%}
 
     {% set date_spine_query %}
         with
