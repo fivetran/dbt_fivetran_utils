@@ -305,7 +305,7 @@ This macro allows for cross database timestamp difference calculation for BigQue
 
 ----
 ### try_cast ([source](macros/try_cast.sql))
-This macro allows a field to be cast to a specified datatype. If the datatype is incompatible then a `null` value is provided. This macro is compatible with BigQuery, Redshift, Postgres, Snowflake, and Databricks.
+This macro allows a field to be cast to a specified datatype. If the datatype is incompatible then a `null` value is provided. This macro is compatible with BigQuery, Redshift, Postgres, Snowflake, Databricks, and SQL Server.
 > Please note: For Postgres and Redshift destinations the `numeric` datatype is only supported to try_cast.
 **Usage:**
 ```sql
@@ -317,7 +317,7 @@ This macro allows a field to be cast to a specified datatype. If the datatype is
 
 ----
 ### wrap_in_quotes ([source](macros/wrap_in_quotes.sql))
-This macro takes a SQL object (ie database, schema, column) and returns it wrapped in database-appropriate quotes (and casing for Snowflake). 
+This macro takes a SQL object (ie database, schema, column) and returns it wrapped in database-appropriate quotes (and casing for Snowflake). It is compatible with BigQuery, Snowflake, Postgres, Redshift, Databricks, and SQL Server.
 
 **Usage:**
 ```sql
@@ -370,7 +370,7 @@ vars:
 
 ----
 ### fivetran_date_spine ([source](macros/fivetran_date_spine.sql))
-This macro returns the sql required to build a date spine. The spine will include the `start_date` (if it is aligned to the `datepart`), but it will not include the `end_date`.
+This macro returns the sql required to build a date spine. The spine will include the `start_date` (if it is aligned to the `datepart`), but it will not include the `end_date`. It is compatible with BigQuery, Snowflake, Redshift, Postgres, Databricks, and SQL Server.
 
 For non-SQL Server databases, this will simply call [`dbt_utils.date_spine()`](https://github.com/dbt-labs/dbt-utils#date_spine-source). For SQL Server targets, this will manually create a spine, with code heavily leveraged from [`tsql-utils.date_spine()`](https://github.com/dbt-msft/tsql-utils/blob/main/macros/dbt_utils/datetime/date_spine.sql) but [adjusted for recent changes to dbt_utils](https://github.com/dbt-msft/tsql-utils/issues/96).
 
