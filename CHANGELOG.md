@@ -1,3 +1,8 @@
+# dbt_fivetran_utils v0.4.11
+
+## Feature Update
+- Added SQL Server logic to the `wrap_in_quotes()` [macro](https://github.com/fivetran/dbt_fivetran_utils/tree/releases/v0.4.latest?tab=readme-ov-file#wrap_in_quotes-source) ([PR #138](https://github.com/fivetran/dbt_fivetran_utils/pull/138)).
+
 # dbt_fivetran_utils v0.4.10
 
 ## Bug Fix
