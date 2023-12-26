@@ -84,6 +84,7 @@ dispatch:
     - [source\_relation (source)](#source_relation-source)
     - [union\_data (source)](#union_data-source)
       - [Union Data Defined Sources Configuration](#union-data-defined-sources-configuration)
+    - [fivetran\_union\_relations (source)](#fivetran_union_relations-source)
     - [union\_relations (source)](#union_relations-source)
   - [Variable Checks](#variable-checks)
     - [empty\_variable\_warning (source)](#empty_variable_warning-source)
@@ -578,7 +579,34 @@ sources:
       ...
 ```
 ----
+### fivetran_union_relations ([source](macros/union_relations.sql))
+Heavily adapted from [dbt_utils.union_relations()](https://github.com/dbt-labs/dbt-utils?tab=readme-ov-file#union_relations-source).
+
+This macro combines via a `union all` of an array of [Relations](https://docs.getdbt.com/reference/dbt-classes#relation), even when columns have differing orders in each Relation, and/or some columns are missing from some relations. Any columns exclusive to a subset of these relations will be filled with `null` where not present. A new column (`_dbt_source_relation`) is also added to indicate the source for each record.
+
+**Usage:**
+```sql
+{{ fivetran_utils.fivetran_union_relations(
+    relations=[ref('my_model'), source('my_source', 'my_table')],
+    exclude=["_loaded_at"],
+    aliases=['my_model_cte', 'my_source_table_cte']
+) }}
+```
+**Args:**
+* `relations`          (required): An array of [Relations](https://docs.getdbt.com/docs/writing-code-in-dbt/class-reference/#relation).
+* `aliases`            (optional): An override of the relation identifier. This argument should be populated with the overwritten alias for each relation (ie if we are selecting from a CTE). If not populated `relations` will be the default. This argument is not included in the `dbt_utils` version of this macro.
+* `exclude`            (optional): A list of column names that should be excluded from the final query.
+* `include`            (optional): A list of column names that should be included in the final query. Note the `include` and `exclude` parameters are mutually exclusive.
+* `column_override`    (optional): A dictionary of explicit column type overrides, e.g. `{"some_field": "varchar(100)"}`.``
+* `source_column_name` (optional, `default="_dbt_source_relation"`): The name of the column that records the source of this row. Pass `None` to omit this column from the results.
+* `where` (optional): Filter conditions to include in the `where` clause.
+
+----
 ### union_relations ([source](macros/union_relations.sql))
+> TO BE DEPRECATED IN FAVOR OF `fivetran_union_relations`.
+>
+> Currenlty only used in Marketo transform package.
+
 This macro unions together an array of [Relations](https://docs.getdbt.com/docs/writing-code-in-dbt/class-reference/#relation),
 even when columns have differing orders in each Relation, and/or some columns are
 missing from some relations. Any columns exclusive to a subset of these
@@ -587,7 +615,7 @@ relations will be filled with `null` where not present. An new column
 
 **Usage:**
 ```sql
-{{ dbt_utils.union_relations(
+{{ fivetran_utils.union_relations(
     relations=[ref('my_model'), source('my_source', 'my_table')],
     exclude=["_loaded_at"]
 ) }}
