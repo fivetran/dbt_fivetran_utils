@@ -5,8 +5,9 @@
 - Added the new `fivetran_union_relations()` macro.
   - This was necessary for adding `union_data()` support to Zendesk the package, which works with some tables that have reserved-keywords for names (ie timezone).
   - We heavily leveraged `dbt_utils.union_relations()` but adjusted it to work with these problematically named source tables.
-> Note: We already do have a macro calles `union_relations()` in this package, but as we learned [recently](https://github.com/fivetran/dbt_fivetran_utils/releases/tag/v0.4.10), using the same exact name as a macro in `dbt_utils` is not a good idea. Thus, `fivetran_utils.union_relations()` will be deprecated in favor of `fivetran_utils.fivetran_union_relations()` in the future.
+- Adjusted the `union_data()` macro to reference `fivetran_union_relations()` instead of `dbt_utils.union_relations()`.
 
+> Note: We already do have a macro calles `union_relations()` in this package, but as we learned [recently](https://github.com/fivetran/dbt_fivetran_utils/releases/tag/v0.4.10), using the same exact name as a macro in `dbt_utils` is not a good idea. Thus, `fivetran_utils.union_relations()` will be deprecated in favor of `fivetran_utils.fivetran_union_relations()` in the future. Currently it is used in only one package (Marketo).
 
 # dbt_fivetran_utils v0.4.10
 
