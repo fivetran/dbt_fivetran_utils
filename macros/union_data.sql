@@ -133,7 +133,7 @@
     select
         {% if not col_dbt_source_relation_exists -%}
         {# cast(null as {{ dbt.type_string() }}) as _dbt_source_relation, #}
-        'placeholder' as _dbt_source_relation,
+        {{ relation.schema }} as _dbt_source_relation,
         {%- endif %}
 
         {{ dbt_utils.star(from=relation.value) }}
