@@ -124,10 +124,8 @@
 {%- if table_exists -%}
     {%- set columns = adapter.get_columns_in_relation(relation.value) -%}
     {%- set col_dbt_source_relation_exists = false -%}
-    {%- for col in columns -%}
-        {%- if col.name == '_dbt_source_relation' -%}
-            {%- set col_dbt_source_relation_exists = true -%}
-        {%- endif -%}
+    {%- for col in columns if col.name == '_dbt_source_relation' -%}
+        {%- set col_dbt_source_relation_exists = true -%}
     {%- endfor -%}
 
     select
