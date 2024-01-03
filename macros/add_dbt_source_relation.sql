@@ -1,7 +1,6 @@
 {% macro add_dbt_source_relation() %}
-
-{% if var('union_schemas', none) or var('union_databases', none) %}
+{# This is a fix for use in the xero_source package, which is the only package that uses this macro. 
+To be deprecated in v0.5.0 of fivetran_utils. #}
 , _dbt_source_relation
-{% endif %}
 
 {% endmacro %}
