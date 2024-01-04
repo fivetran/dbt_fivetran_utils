@@ -130,7 +130,7 @@
 
     select
         {% if not col_dbt_source_relation_exists -%}
-        {{ "'" ~ relation.value.schema ~ "'" }} as _dbt_source_relation,
+        0 as _dbt_source_relation,
         {%- endif %}
 
         {{ dbt_utils.star(from=relation.value) }}
