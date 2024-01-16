@@ -1,4 +1,4 @@
-{%- macro union_data(table_identifier, database_variable, schema_variable, default_database, default_schema, default_variable, union_schema_variable='union_schemas', union_database_variable='union_databases') -%}
+{%- macro union_data(table_identifier, database_variable, schema_variable, default_database, default_schema, default_variable, union_schema_variable='union_schemas', union_database_variable='union_databases', connector_table_name_override=None) -%}
 
 {{ adapter.dispatch('union_data', 'fivetran_utils') (
     table_identifier, 
@@ -8,7 +8,8 @@
     default_schema, 
     default_variable,
     union_schema_variable,
-    union_database_variable
+    union_database_variable,
+    connector_table_name_override
     ) }}
 
 {%- endmacro -%}
@@ -21,7 +22,8 @@
     default_schema, 
     default_variable,
     union_schema_variable,
-    union_database_variable
+    union_database_variable,
+    connector_table_name_override
     ) -%}
 
 {%- if var(union_schema_variable, none) -%}
@@ -39,7 +41,7 @@
     {%- set relation=adapter.get_relation(
         database=source(schema, table_identifier).database if var('has_defined_sources', false) else var(database_variable, default_database),
         schema=source(schema, table_identifier).schema if var('has_defined_sources', false) else schema,
-        identifier=source(schema, table_identifier).identifier if var('has_defined_sources', false) else table_identifier
+        identifier=connector_table_name_override if connector_table_name_override else (source(schema, table_identifier).identifier if var('has_defined_sources', false) else table_identifier)
     ) -%}
     
     {%- set relation_exists=relation is not none -%}
@@ -69,7 +71,7 @@
     {%- set relation=adapter.get_relation(
         database=source(schema, table_identifier).database if var('has_defined_sources', false) else database,
         schema=source(schema, table_identifier).schema if var('has_defined_sources', false) else var(schema_variable, default_schema),
-        identifier=source(schema, table_identifier).identifier if var('has_defined_sources', false) else table_identifier
+        identifier=connector_table_name_override if connector_table_name_override else (source(schema, table_identifier).identifier if var('has_defined_sources', false) else table_identifier)
     ) -%}
 
     {%- set relation_exists=relation is not none -%}
@@ -102,7 +104,7 @@
                 {%- set relation.value=adapter.get_relation(
                     database=source(corrected_schema_name[1], table_identifier).database,
                     schema=source(corrected_schema_name[1], table_identifier).schema,
-                    identifier=var(identifier_var, table_identifier)
+                    identifier=connector_table_name_override if connector_table_name_override else var(identifier_var, table_identifier)
                 ) -%}
             {% endif %}
         {% endfor %}
@@ -116,7 +118,7 @@
         {%- set relation.value=adapter.get_relation(
             database=source(default_schema, table_identifier).database,
             schema=source(default_schema, table_identifier).schema,
-            identifier=var(identifier_var, table_identifier)
+            identifier=connector_table_name_override if connector_table_name_override else var(identifier_var, table_identifier)
         ) -%}
     {% endif %}
 {%- set table_exists=relation.value is not none -%}

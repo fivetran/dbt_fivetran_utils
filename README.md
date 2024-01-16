@@ -542,6 +542,7 @@ If the source table is not found in any of the provided schemas/databases, `unio
 * `default_variable`: The name of the variable that users should populate when they want to pass one specific relation to this model (mostly used for CI)
 * `union_schema_variable` (optional): The name of the union schema variable. By default the macro will look for `union_schemas`.
 * `union_database_variable` (optional): The name of the union database variable. By default the macro will look for `union_databases`.
+* `connector_table_name_override` (optional): The _actual_ name/identifier of the table as it appears in the connector schema. Currently, this is only used in our Netsuite2 data models, whose actual table names and defined `source` tables differ slightly.
 
 #### Union Data Defined Sources Configuration
 ```yml
