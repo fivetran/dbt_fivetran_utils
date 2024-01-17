@@ -124,19 +124,8 @@
 {%- set table_exists=relation.value is not none -%}
 
 {%- if table_exists -%}
-    {%- set columns = adapter.get_columns_in_relation(relation.value) -%}
-    {%- set col_dbt_source_relation_exists = false -%}
-    {%- for col in columns if col.name == '_dbt_source_relation' -%}
-        {%- set col_dbt_source_relation_exists = true -%}
-    {%- endfor -%}
-
     select
-        {% if not col_dbt_source_relation_exists -%}
-        {{ "'" ~ relation.value.schema ~ "'" }} as _dbt_source_relation,
-        {%- endif %}
-
         {{ dbt_utils.star(from=relation.value) }}
-
     from {{ relation.value }}
 {%- else -%}
     {% if execute and not var('fivetran__remove_empty_table_warnings', false) -%}
