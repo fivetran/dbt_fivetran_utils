@@ -118,7 +118,7 @@
         {%- set relation.value=adapter.get_relation(
             database=source(default_schema, table_identifier).database,
             schema=source(default_schema, table_identifier).schema,
-            identifier=connector_table_name_override if connector_table_name_override else var(identifier_var, table_identifier)
+            identifier=connector_table_name_override if connector_table_name_override and not var(integration_tests_seed_identifer_override, false) else var(identifier_var, table_identifier)
         ) -%}
     {% endif %}
 {%- set table_exists=relation.value is not none -%}
