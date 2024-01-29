@@ -116,10 +116,11 @@
             {% set identifier_var = default_schema + "_" + table_identifier + "_identifer"  %}
         {% endif %}
         {{ log('\nthe ' ~ identifier_var ~ ' identifier for ' ~ table_identifier ~ ' is ' ~ var(identifier_var, table_identifier), info=true )}}
+        {{ '\nthe source database is ' ~ source(default_schema, table_identifier).database ~ ' and the schema is ' ~ source(default_schema, table_identifier).schema }}
         {%- set relation.value=adapter.get_relation(
             database=source(default_schema, table_identifier).database,
             schema=source(default_schema, table_identifier).schema,
-            identifier=connector_table_name_override if connector_table_name_override and not var(integration_tests_seed_identifer_override, false) else var(identifier_var, table_identifier)
+            identifier=connector_table_name_override if (connector_table_name_override and not var(integration_tests_seed_identifer_override, false)) else var(identifier_var, table_identifier)
         ) -%}
     {% endif %}
 {%- set table_exists=relation.value is not none -%}
