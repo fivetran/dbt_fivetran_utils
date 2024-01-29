@@ -116,7 +116,7 @@
             {% set identifier_var = default_schema + "_" + table_identifier + "_identifer"  %}
         {% endif %}
         {{ log('\nthe ' ~ identifier_var ~ ' identifier for ' ~ table_identifier ~ ' is ' ~ var(identifier_var, table_identifier), info=true )}}
-        {{ '\nthe source database is ' ~ source(default_schema, table_identifier).database ~ ' and the schema is ' ~ source(default_schema, table_identifier).schema }}
+        {{ log('\nthe source database is ' ~ source(default_schema, table_identifier).database ~ ' and the schema is ' ~ source(default_schema, table_identifier).schema, info=true) }}
         {%- set relation.value=adapter.get_relation(
             database=source(default_schema, table_identifier).database,
             schema=source(default_schema, table_identifier).schema,
