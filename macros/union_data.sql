@@ -115,6 +115,7 @@
         {% if var(identifier_var, none) is none %} 
             {% set identifier_var = default_schema + "_" + table_identifier + "_identifer"  %}
         {% endif %}
+        {{ log('\nidentifier is ' ~ var(identifier_var), info=true )}}
         {%- set relation.value=adapter.get_relation(
             database=source(default_schema, table_identifier).database,
             schema=source(default_schema, table_identifier).schema,
