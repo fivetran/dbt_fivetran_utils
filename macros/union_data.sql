@@ -124,7 +124,7 @@
     {% endif %}
 {%- set table_exists=relation.value is not none -%}
 {{ log('\nthe ' ~ identifier_var ~ ' identifier for ' ~ table_identifier ~ ' is ' ~ var(identifier_var, table_identifier), info=true )}}
-{{ log('does the' ~ table_identifier ~ 'table exist? ' ~ table_exists, info=true)}}
+{{ log('does the ' ~ table_identifier ~ ' table exist? ' ~ table_exists ~ ' well this is the identifier ' ~ (connector_table_name_override if (connector_table_name_override and not var(integration_tests_seed_identifer_override, false)) else var(identifier_var, table_identifier) ), info=true)}}
 {%- if table_exists -%}
     select
         {{ dbt_utils.star(from=relation.value) }}
