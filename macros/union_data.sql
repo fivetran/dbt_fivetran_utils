@@ -115,8 +115,7 @@
         {% if var(identifier_var, none) is none %} 
             {% set identifier_var = default_schema + "_" + table_identifier + "_identifer"  %}
         {% endif %}
-        {{ log('\nthe ' ~ identifier_var ~ ' identifier for ' ~ table_identifier ~ ' is ' ~ var(identifier_var, table_identifier), info=true )}}
-        {{ log('\nthe source database is ' ~ source(default_schema, table_identifier).database ~ ' and the schema is ' ~ source(default_schema, table_identifier).schema, info=true) }}
+        {# {{ log('\nthe source database is ' ~ source(default_schema, table_identifier).database ~ ' and the schema is ' ~ source(default_schema, table_identifier).schema, info=true) }} #}
         {%- set relation.value=adapter.get_relation(
             database=source(default_schema, table_identifier).database,
             schema=source(default_schema, table_identifier).schema,
@@ -124,7 +123,8 @@
         ) -%}
     {% endif %}
 {%- set table_exists=relation.value is not none -%}
-{{ log('does the' ~ relation.value ~ 'table exist? ' ~ table_exists, info=true)}}
+{{ log('\nthe ' ~ identifier_var ~ ' identifier for ' ~ table_identifier ~ ' is ' ~ var(identifier_var, table_identifier), info=true )}}
+{{ log('does the' ~ table_identifier ~ 'table exist? ' ~ table_exists, info=true)}}
 {%- if table_exists -%}
     select
         {{ dbt_utils.star(from=relation.value) }}
