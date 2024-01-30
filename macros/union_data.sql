@@ -124,7 +124,7 @@
         ) -%}
     {% endif %}
 {%- set table_exists=relation.value is not none -%}
-
+{{ log('does the' ~ relation.value ~ 'table exist? ' ~ table_exists, info=true)}}
 {%- if table_exists -%}
     select
         {{ dbt_utils.star(from=relation.value) }}
