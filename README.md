@@ -84,6 +84,7 @@ dispatch:
     - [source\_relation (source)](#source_relation-source)
     - [union\_data (source)](#union_data-source)
       - [Union Data Defined Sources Configuration](#union-data-defined-sources-configuration)
+      - [Using identifiers for seeds in Buildkite in packages with `union_data`](#using-identifiers-for-seeds-in-buildkite-in-packages-with-union_data)
     - [fivetran\_union\_relations (source)](#fivetran_union_relations-source)
     - [union\_relations (source)](#union_relations-source)
   - [Variable Checks](#variable-checks)
@@ -579,6 +580,15 @@ sources:
       - name: customer 
       ...
 ```
+
+#### Using identifiers for seeds in Buildkite in packages with `union_data`
+In our integration tests, we often have seed files that do not have the default names for their respective tables. They might have a `_data` suffix or something along those lines. In these cases, we make use of our identifier variables in the `integration_tests/dbt_project.yml` file. To ensure that the `union_data` macro picks these custom name configs up, set the following variable to `true` in the package's `integration_tests/dbt_project.yml` file:
+
+```yml
+vars:
+  integration_tests_seed_identifer_override: true
+```
+
 ----
 ### fivetran_union_relations ([source](macros/union_relations.sql))
 Heavily adapted from [dbt_utils.union_relations()](https://github.com/dbt-labs/dbt-utils?tab=readme-ov-file#union_relations-source).

@@ -115,7 +115,6 @@
         {% if var(identifier_var, none) is none %} 
             {% set identifier_var = default_schema + "_" + table_identifier + "_identifer"  %}
         {% endif %}
-        {# {{ log('\nthe source database is ' ~ source(default_schema, table_identifier).database ~ ' and the schema is ' ~ source(default_schema, table_identifier).schema, info=true) }} #}
         {%- set relation.value=adapter.get_relation(
             database=source(default_schema, table_identifier).database,
             schema=source(default_schema, table_identifier).schema,
@@ -123,10 +122,7 @@
         ) -%}
     {% endif %}
 {%- set table_exists=relation.value is not none -%}
-{{ log('\nthe ' ~ identifier_var ~ ' identifier for ' ~ table_identifier ~ ' is ' ~ var(identifier_var, table_identifier), info=true )}}
-{{ log('does the ' ~ table_identifier ~ ' table exist? ' ~ table_exists ~ '. Well this is the identifier: ' ~ (connector_table_name_override if connector_table_name_override is not none and not var('integration_tests_seed_identifer_override', false) else var(identifier_var, table_identifier)) ~ ' and integration_tests_seed_identifer_override is ' ~ var('integration_tests_seed_identifer_override', false), info=true) }}
 
-{# {{ log('does the ' ~ table_identifier ~ ' table exist? ' ~ table_exists ~ ' well this is the identifier: ' ~ connector_table_name_override if connector_table_name_override is not none and not var(integration_tests_seed_identifer_override, false) else var(identifier_var, table_identifier) ~ ' and not integration_tests_seed_identifer_override is ' ~ not var(integration_tests_seed_identifer_override, false), info=true) }} #}
 {%- if table_exists -%}
     select
         {{ dbt_utils.star(from=relation.value) }}
