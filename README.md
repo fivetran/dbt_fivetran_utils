@@ -83,8 +83,8 @@ dispatch:
     - [remove\_prefix\_from\_columns (source)](#remove_prefix_from_columns-source)
     - [source\_relation (source)](#source_relation-source)
     - [union\_data (source)](#union_data-source)
+      - [Using identifiers in packages that have `union_data` and include the `connector_table_name_override` argument (currently only Netsuite2)](#using-identifiers-in-packages-that-have-union_data-and-include-the-connector_table_name_override-argument-currently-only-netsuite2)
       - [Union Data Defined Sources Configuration](#union-data-defined-sources-configuration)
-      - [Using identifiers for seeds in Buildkite (or for customers to use with single-connector runs) in packages with `union_data`](#using-identifiers-for-seeds-in-buildkite-or-for-customers-to-use-with-single-connector-runs-in-packages-with-union_data)
     - [fivetran\_union\_relations (source)](#fivetran_union_relations-source)
     - [union\_relations (source)](#union_relations-source)
   - [Variable Checks](#variable-checks)
@@ -520,6 +520,12 @@ To create dependencies between the unioned model and its *sources*, you **must d
 
 If the source table is not found in any of the provided schemas/databases, `union_data` will return a **completely** empty table (ie `limit 0`) with just one string column (`_dbt_source_relation`). A compiler warning message will be output, highlighting that the expected source table was not found and its respective staging model is empty. The compiler warning can be turned off by the end user by setting the `fivetran__remove_empty_table_warnings` variable to `True`.
 
+```yml
+# in root dbt_project.yml file
+vars:
+  fivetran__remove_empty_table_warnings: true # false by default
+```
+
 **Usage:**
 ```sql
 -- in model.sql file
@@ -543,16 +549,27 @@ If the source table is not found in any of the provided schemas/databases, `unio
 * `default_variable`: The name of the variable that users should populate when they want to pass one specific relation to this model (mostly used for CI)
 * `union_schema_variable` (optional): The name of the union schema variable. By default the macro will look for `union_schemas`.
 * `union_database_variable` (optional): The name of the union database variable. By default the macro will look for `union_databases`.
-* `connector_table_name_override` (optional): The _actual_ name/identifier of the table as it appears in the connector schema. Currently, this is only used in our Netsuite2 data models, whose actual table names and defined `source` tables differ slightly.
+* `connector_table_name_override` (optional): The _actual_ name/identifier of the table as it appears in the connector schema. Currently, this is only used in our Netsuite2 data models, whose actual table names and defined `source` table names differ slightly due to our support of both the Netsuite1 and Netsuite2 endpoints.
+  * If this argument is used, refer to the below subsection.
+
+#### Using identifiers in packages that have `union_data` and include the `connector_table_name_override` argument (currently only Netsuite2)
+In our integration tests, we often have seed files that do not have the default names for their respective tables. They might have a `_data` suffix or something along those lines. In these cases, we make use of our identifier variables in the `integration_tests/dbt_project.yml` file. To ensure that the `union_data` macro picks these custom name configs up and does not use the `connector_table_name_override` (only a thing in Netsuite), set the following variable to `true` in the package's `integration_tests/dbt_project.yml` file:
+
+```yml
+vars:
+  use_table_name_identifer_override: true
+```
+
+This can also be used by customers, but is **only relevant to Netsuite2** because the `source` table names != actual connector table names.
 
 #### Union Data Defined Sources Configuration
+To create dependencies between the unioned model and its *sources*, you **must define** the source tables in a `.yml` file in your project and set the `has_defined_sources` variable (scoped to the source package in which the macro is being called) to `True` in your `dbt_project.yml` file. If you set `has_defined_sources` to true and do not define sources (at least adding the `name` of each table in the source), dbt will throw an error.
+
 ```yml
 # in root dbt_project.yml file
 vars:
-  shopify_source:
+  shopify_source: # or whatever source package
     has_defined_sources: true
-  
-  fivetran__remove_empty_table_warnings: true # false by default
 ```
 
 ```yml
@@ -580,16 +597,6 @@ sources:
       - name: customer 
       ...
 ```
-
-#### Using identifiers for seeds in Buildkite (or for customers to use with single-connector runs) in packages with `union_data`
-In our integration tests, we often have seed files that do not have the default names for their respective tables. They might have a `_data` suffix or something along those lines. In these cases, we make use of our identifier variables in the `integration_tests/dbt_project.yml` file. To ensure that the `union_data` macro picks these custom name configs up, set the following variable to `true` in the package's `integration_tests/dbt_project.yml` file:
-
-```yml
-vars:
-  use_table_name_identifer_override: true
-```
-
-This can also be used by customers to utilize identifier variables in packages that offer unioning capability (but for single-connector runs only). Identifiers cannot currently be used when unioning multiple connectors.
 
 ----
 ### fivetran_union_relations ([source](macros/union_relations.sql))
