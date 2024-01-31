@@ -84,7 +84,7 @@ dispatch:
     - [source\_relation (source)](#source_relation-source)
     - [union\_data (source)](#union_data-source)
       - [Union Data Defined Sources Configuration](#union-data-defined-sources-configuration)
-      - [Using identifiers for seeds in Buildkite in packages with `union_data`](#using-identifiers-for-seeds-in-buildkite-in-packages-with-union_data)
+      - [Using identifiers for seeds in Buildkite (or for customers to use with single-connector runs) in packages with `union_data`](#using-identifiers-for-seeds-in-buildkite-or-for-customers-to-use-with-single-connector-runs-in-packages-with-union_data)
     - [fivetran\_union\_relations (source)](#fivetran_union_relations-source)
     - [union\_relations (source)](#union_relations-source)
   - [Variable Checks](#variable-checks)
@@ -581,13 +581,15 @@ sources:
       ...
 ```
 
-#### Using identifiers for seeds in Buildkite in packages with `union_data`
+#### Using identifiers for seeds in Buildkite (or for customers to use with single-connector runs) in packages with `union_data`
 In our integration tests, we often have seed files that do not have the default names for their respective tables. They might have a `_data` suffix or something along those lines. In these cases, we make use of our identifier variables in the `integration_tests/dbt_project.yml` file. To ensure that the `union_data` macro picks these custom name configs up, set the following variable to `true` in the package's `integration_tests/dbt_project.yml` file:
 
 ```yml
 vars:
-  integration_tests_seed_identifer_override: true
+  use_table_name_identifer_override: true
 ```
+
+This can also be used by customers to utilize identifier variables in packages that offer unioning capability (but for single-connector runs only). Identifiers cannot currently be used when unioning multiple connectors.
 
 ----
 ### fivetran_union_relations ([source](macros/union_relations.sql))
