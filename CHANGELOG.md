@@ -10,7 +10,7 @@
   - Now includes a new optonal argument, `connector_table_name_override`, which is the _actual_ name/identifier of the table as it appears in the connector schema. Currently, this is only used in our Netsuite2 data models, whose actual table names and defined `source` table names differ slightly due to our support of both the Netsuite1 and Netsuite2 endpoints.
   - Includes a reference to a new `use_table_name_identifer_override` global variable. This variable was introduced to accommodate the use of `identifier` variables in packages where `connector_table_name_override` is used (again, just Netsuite for now).
 
-> Note: We already do have a macro calles `union_relations()` in this package, but as we learned [recently](https://github.com/fivetran/dbt_fivetran_utils/releases/tag/v0.4.10), using the same exact name as a macro in `dbt_utils` is not a good idea. Thus, `fivetran_utils.union_relations()` will be deprecated in favor of `fivetran_utils.fivetran_union_relations()` in the future. Currently it is used in only one package (Marketo).
+> Note: We already do have a macro called `union_relations()` in this package, but as we learned [recently](https://github.com/fivetran/dbt_fivetran_utils/releases/tag/v0.4.10), using the same exact name as a macro in `dbt_utils` is not a good idea. Thus, `fivetran_utils.union_relations()` will be deprecated in favor of `fivetran_utils.fivetran_union_relations()` in the future. Currently it is used in only one package (Marketo).
 
 # dbt_fivetran_utils v0.4.10
 
