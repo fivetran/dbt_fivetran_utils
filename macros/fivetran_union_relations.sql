@@ -1,6 +1,8 @@
--- to be deprecated in favor of fivetran_union_relations
+{%- macro fivetran_union_relations(relations, aliases=none, column_override=none, include=[], exclude=[], source_column_name='_dbt_source_relation', where=none) -%}
+    {{ return(adapter.dispatch('fivetran_union_relations', 'fivetran_utils')(relations, aliases, column_override, include, exclude, source_column_name, where)) }}
+{% endmacro %}
 
-{%- macro union_relations(relations, aliases=none, column_override=none, include=[], exclude=[], source_column_name=none) -%}
+{%- macro default__fivetran_union_relations(relations, aliases=none, column_override=none, include=[], exclude=[], source_column_name='_dbt_source_relation', where=none) -%}
 
     {%- if exclude and include -%}
         {{ exceptions.raise_compiler_error("Both an exclude and include list were provided to the `union` macro. Only one is allowed") }}
@@ -12,24 +14,38 @@
     {% endif -%}
 
     {%- set column_override = column_override if column_override is not none else {} -%}
-    {%- set source_column_name = source_column_name if source_column_name is not none else '_dbt_source_relation' -%}
 
     {%- set relation_columns = {} -%}
     {%- set column_superset = {} -%}
+    {%- set all_excludes = [] -%}
+    {%- set all_includes = [] -%}
+
+    {%- if exclude -%}
+        {%- for exc in exclude -%}
+            {%- do all_excludes.append(exc | lower) -%}
+        {%- endfor -%}
+    {%- endif -%}
+
+    {%- if include -%}
+        {%- for inc in include -%}
+            {%- do all_includes.append(inc | lower) -%}
+        {%- endfor -%}
+    {%- endif -%}
 
     {%- for relation in relations -%}
 
         {%- do relation_columns.update({relation: []}) -%}
 
-        {%- do dbt_utils._is_relation(relation, 'union_relations') -%}
+        {%- do dbt_utils._is_relation(relation, 'fivetran_union_relations') -%}
+        {%- do dbt_utils._is_ephemeral(relation, 'fivetran_union_relations') -%}
         {%- set cols = adapter.get_columns_in_relation(relation) -%}
         {%- for col in cols -%}
 
         {#- If an exclude list was provided and the column is in the list, do nothing -#}
-        {%- if exclude and col.column in exclude -%}
+        {%- if exclude and col.column | lower in all_excludes -%}
 
         {#- If an include list was provided and the column is not in the list, do nothing -#}
-        {%- elif include and col.column not in include -%}
+        {%- elif include and col.column | lower not in all_includes -%}
 
         {#- Otherwise add the column to the column superset -#}
         {%- else -%}
@@ -58,13 +74,35 @@
     {%- endfor -%}
 
     {%- set ordered_column_names = column_superset.keys() -%}
+    {%- set dbt_command = flags.WHICH -%}
+
+
+    {% if dbt_command in ['run', 'build'] %}
+    {% if (include | length > 0 or exclude | length > 0) and not column_superset.keys() %}
+        {%- set relations_string -%}
+            {%- for relation in relations -%}
+                {{ relation.name }}
+            {%- if not loop.last %}, {% endif -%}
+            {%- endfor -%}
+        {%- endset -%}
+
+        {%- set error_message -%}
+            There were no columns found to union for relations {{ relations_string }}
+        {%- endset -%}
+
+        {{ exceptions.raise_compiler_error(error_message) }}
+    {%- endif -%}
+    {%- endif -%}
 
     {%- for relation in relations %}
 
         (
             select
 
+                {%- if source_column_name is not none %}
                 cast({{ dbt.string_literal(relation) }} as {{ dbt.type_string() }}) as {{ source_column_name }},
+                {%- endif %}
+
                 {% for col_name in ordered_column_names -%}
 
                     {%- set col = column_superset[col_name] %}
@@ -74,7 +112,11 @@
 
                 {%- endfor %}
 
-            from {{ aliases[loop.index0] if aliases else relation }}
+            from {{ aliases[loop.index0] if aliases else relation }} as unioned_relation_{{ loop.index }}
+
+            {% if where -%}
+            where {{ where }}
+            {%- endif %}
         )
 
         {% if not loop.last -%}
@@ -82,13 +124,5 @@
         {% endif -%}
 
     {%- endfor -%}
-
-{%- endmacro -%}
-
-{%- macro union_tables(tables, column_override=none, include=[], exclude=[], source_column_name='_dbt_source_table') -%}
-
-    {%- do exceptions.warn("Warning: the `union_tables` macro is no longer supported and will be deprecated in a future release of dbt-utils. Use the `union_relations` macro instead") -%}
-
-    {{ return(dbt_utils.union_relations(tables, column_override, include, exclude, source_column_name)) }}
 
 {%- endmacro -%}

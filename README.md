@@ -83,7 +83,9 @@ dispatch:
     - [remove\_prefix\_from\_columns (source)](#remove_prefix_from_columns-source)
     - [source\_relation (source)](#source_relation-source)
     - [union\_data (source)](#union_data-source)
+      - [Using identifiers in packages that have `union_data` and include the `connector_table_name_override` argument (currently only Netsuite2)](#using-identifiers-in-packages-that-have-union_data-and-include-the-connector_table_name_override-argument-currently-only-netsuite2)
       - [Union Data Defined Sources Configuration](#union-data-defined-sources-configuration)
+    - [fivetran\_union\_relations (source)](#fivetran_union_relations-source)
     - [union\_relations (source)](#union_relations-source)
   - [Variable Checks](#variable-checks)
     - [empty\_variable\_warning (source)](#empty_variable_warning-source)
@@ -518,6 +520,12 @@ To create dependencies between the unioned model and its *sources*, you **must d
 
 If the source table is not found in any of the provided schemas/databases, `union_data` will return a **completely** empty table (ie `limit 0`) with just one string column (`_dbt_source_relation`). A compiler warning message will be output, highlighting that the expected source table was not found and its respective staging model is empty. The compiler warning can be turned off by the end user by setting the `fivetran__remove_empty_table_warnings` variable to `True`.
 
+```yml
+# in root dbt_project.yml file
+vars:
+  fivetran__remove_empty_table_warnings: true # false by default
+```
+
 **Usage:**
 ```sql
 -- in model.sql file
@@ -541,15 +549,27 @@ If the source table is not found in any of the provided schemas/databases, `unio
 * `default_variable`: The name of the variable that users should populate when they want to pass one specific relation to this model (mostly used for CI)
 * `union_schema_variable` (optional): The name of the union schema variable. By default the macro will look for `union_schemas`.
 * `union_database_variable` (optional): The name of the union database variable. By default the macro will look for `union_databases`.
+* `connector_table_name_override` (optional): The _actual_ name/identifier of the table as it appears in the connector schema. Currently, this is only used in our Netsuite2 data models, whose actual table names and defined `source` table names differ slightly due to our support of both the Netsuite1 and Netsuite2 endpoints.
+  * If this argument is used, refer to the below subsection.
+
+#### Using identifiers in packages that have `union_data` and include the `connector_table_name_override` argument (currently only Netsuite2)
+In our integration tests, we often have seed files that do not have the default names for their respective tables. They might have a `_data` suffix or something along those lines. In these cases, we make use of our identifier variables in the `integration_tests/dbt_project.yml` file. To ensure that the `union_data` macro picks these custom name configs up and does not use the `connector_table_name_override` (only a thing in Netsuite), set the following variable to `true` in the package's `integration_tests/dbt_project.yml` file:
+
+```yml
+vars:
+  use_table_name_identifer_override: true
+```
+
+This can also be used by customers, but is **only relevant to Netsuite2** because the `source` table names != actual connector table names.
 
 #### Union Data Defined Sources Configuration
+To create dependencies between the unioned model and its *sources*, you **must define** the source tables in a `.yml` file in your project and set the `has_defined_sources` variable (scoped to the source package in which the macro is being called) to `True` in your `dbt_project.yml` file. If you set `has_defined_sources` to true and do not define sources (at least adding the `name` of each table in the source), dbt will throw an error.
+
 ```yml
 # in root dbt_project.yml file
 vars:
-  shopify_source:
+  shopify_source: # or whatever source package
     has_defined_sources: true
-  
-  fivetran__remove_empty_table_warnings: true # false by default
 ```
 
 ```yml
@@ -577,8 +597,36 @@ sources:
       - name: customer 
       ...
 ```
+
+----
+### fivetran_union_relations ([source](macros/union_relations.sql))
+Heavily adapted from [dbt_utils.union_relations()](https://github.com/dbt-labs/dbt-utils?tab=readme-ov-file#union_relations-source).
+
+This macro combines via a `union all` of an array of [Relations](https://docs.getdbt.com/reference/dbt-classes#relation), even when columns have differing orders in each Relation, and/or some columns are missing from some relations. Any columns exclusive to a subset of these relations will be filled with `null` where not present. A new column (`_dbt_source_relation`) is also added to indicate the source for each record.
+
+**Usage:**
+```sql
+{{ fivetran_utils.fivetran_union_relations(
+    relations=[ref('my_model'), source('my_source', 'my_table')],
+    exclude=["_loaded_at"],
+    aliases=['my_model_cte', 'my_source_table_cte']
+) }}
+```
+**Args:**
+* `relations`          (required): An array of [Relations](https://docs.getdbt.com/docs/writing-code-in-dbt/class-reference/#relation).
+* `aliases`            (optional): An override of the relation identifier. This argument should be populated with the overwritten alias for each relation (ie if we are selecting from a CTE). If not populated `relations` will be the default. This argument is not included in the `dbt_utils` version of this macro.
+* `exclude`            (optional): A list of column names that should be excluded from the final query.
+* `include`            (optional): A list of column names that should be included in the final query. Note the `include` and `exclude` parameters are mutually exclusive.
+* `column_override`    (optional): A dictionary of explicit column type overrides, e.g. `{"some_field": "varchar(100)"}`.``
+* `source_column_name` (optional, `default="_dbt_source_relation"`): The name of the column that records the source of this row. Pass `None` to omit this column from the results.
+* `where` (optional): Filter conditions to include in the `where` clause.
+
 ----
 ### union_relations ([source](macros/union_relations.sql))
+> TO BE DEPRECATED IN FAVOR OF `fivetran_union_relations`.
+>
+> Currenlty only used in Marketo transform package.
+
 This macro unions together an array of [Relations](https://docs.getdbt.com/docs/writing-code-in-dbt/class-reference/#relation),
 even when columns have differing orders in each Relation, and/or some columns are
 missing from some relations. Any columns exclusive to a subset of these
@@ -587,7 +635,7 @@ relations will be filled with `null` where not present. An new column
 
 **Usage:**
 ```sql
-{{ dbt_utils.union_relations(
+{{ fivetran_utils.union_relations(
     relations=[ref('my_model'), source('my_source', 'my_table')],
     exclude=["_loaded_at"]
 ) }}
