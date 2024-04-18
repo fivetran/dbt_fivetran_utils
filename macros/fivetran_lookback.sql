@@ -1,6 +1,6 @@
 {% macro fivetran_lookback(from_date, datepart, interval, safety_date='2010-01-01') %}
 
-{{ adapter.dispatch('fivetran_lookback', 'fivetran') (from_date, datepart, interval, safety_date='2010-01-01') }}
+{{ adapter.dispatch('fivetran_lookback', 'fivetran_utils') (from_date, datepart, interval, safety_date='2010-01-01') }}
 
 {%- endmacro %}
 
