@@ -79,6 +79,7 @@ dispatch:
     - [dummy\_coalesce\_value (source)](#dummy_coalesce_value-source)
     - [fill\_pass\_through\_columns (source)](#fill_pass_through_columns-source)
     - [fill\_staging\_columns (source)](#fill_staging_columns-source)
+    - [fivetran\_lookback (source)](#fivetran_lookback-source)
     - [persist\_pass\_through\_columns (source)](#persist_pass_through_columns-source)
     - [remove\_prefix\_from\_columns (source)](#remove_prefix_from_columns-source)
     - [source\_relation (source)](#source_relation-source)
@@ -465,6 +466,28 @@ from source
 **Args:**
 * `source_columns`  (required): Will call the [get_columns_in_relation](https://docs.getdbt.com/reference/dbt-jinja-functions/adapter/#get_columns_in_relation) macro as well requires a `ref()` or `source()` argument for the staging models within the `_tmp` directory.
 * `staging_columns` (required): Created as a result of running the [generate_columns_macro](https://github.com/fivetran/dbt_fivetran_utils#generate_columns_macro-source) for the respective table.
+
+----
+### fivetran_lookback ([source](macros/fivetran_lookback.sql))
+This macro takes a date expression and uses `dbt.dateadd` and backdates it by the specified interval. This is intended for use in incremental blocks to look backwards and catch late arriving records. Any date aggregate can be used as an input, but the typical usage is with the max date of the present model.
+
+**Usage:**
+```sql
+{% if is_incremental() %}
+  where date_day >= 
+    {{ netsuite.netsuite_lookback(
+      from_date='max(date_day)',
+      interval=3,
+      datepart='day', 
+      safety_date='2010-01-01')
+    }}
+{% endif %}
+```
+**Args:**
+* `from_date`  (required): String to run against the current model. The expression used should be expected to return a single result.
+* `interval` (required): The number of units to look backwards.
+* `datepart` (required): The grain of the interval. 
+* `safety_date` (optional): This date will be used in the rare case that the `from_date` expression returns a null value. This only needs to be specified if you want to change the default value or '2010-01-01'.
 
 ----
 ### persist_pass_through_columns ([source](macros/persist_pass_through_columns.sql))
