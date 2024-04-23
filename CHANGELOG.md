@@ -12,6 +12,10 @@
 
 > Note: We already do have a macro called `union_relations()` in this package, but as we learned [recently](https://github.com/fivetran/dbt_fivetran_utils/releases/tag/v0.4.10), using the same exact name as a macro in `dbt_utils` is not a good idea. Thus, `fivetran_utils.union_relations()` will be deprecated in favor of `fivetran_utils.fivetran_union_relations()` in the future. Currently it is used in only one package (Marketo).
 
+[PR #145](https://github.com/fivetran/dbt_fivetran_utils/pull/145) includes the following update:
+- Added the new `fivetran_lookback()` macro. This generates SQL to simplify adding lookback windows to incremental models. See [README](https://github.com/fivetran/dbt_fivetran_utils/blob/releases/v0.4.latest/README.md#fivetran_lookback-source).
+- Added the new `fivetran_is_databricks_sql_warehouse()` macro. This determines if Databricks destination is a SQL Warehouse or All Purpose Cluster. See [README](https://github.com/fivetran/dbt_fivetran_utils/blob/releases/v0.4.latest/README.md#fivetran-is-databricks-sql-warehouse-source).
+
 # dbt_fivetran_utils v0.4.10
 
 ## Bug Fix
