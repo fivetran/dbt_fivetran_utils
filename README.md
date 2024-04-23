@@ -487,7 +487,7 @@ This macro takes a date expression and uses `dbt.dateadd` and backdates it by th
 ```sql
 {% if is_incremental() %}
   where date_day >= 
-    {{ netsuite.netsuite_lookback(
+    {{ fivetran_utils.fivetran_lookback(
       from_date='max(date_day)',
       interval=3,
       datepart='day', 
@@ -497,9 +497,9 @@ This macro takes a date expression and uses `dbt.dateadd` and backdates it by th
 ```
 **Args:**
 * `from_date`  (required): String to run against the current model. The expression used should be expected to return a single result.
-* `interval` (required): The number of units to look backwards.
 * `datepart` (required): The grain of the interval. 
-* `safety_date` (optional): This date will be used in the rare case that the `from_date` expression returns a null value. This only needs to be specified if you want to change the default value or '2010-01-01'.
+* `interval` (required): The number of units to look backwards.
+* `safety_date` (optional): This date will be used in the rare case that the `from_date` expression returns a null value. This only needs to be specified if you want to change the default value from '2010-01-01'.
 
 ----
 ### persist_pass_through_columns ([source](macros/persist_pass_through_columns.sql))
