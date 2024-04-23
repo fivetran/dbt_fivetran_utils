@@ -53,7 +53,7 @@ dispatch:
 - [📋 Contents](#-contents)
   - [Tests and helpers](#tests-and-helpers)
     - [collect\_freshness (source)](#collect_freshness-source)
-    - [is\_databricks\_sql\_warehouse (source)](#is-databricks-sql-warehouse-source)
+    - [fivetran\_is\_databricks\_sql\_warehouse (source)](#fivetran-is-databricks-sql-warehouse-source)
     - [seed\_data\_helper (source)](#seed_data_helper-source)
     - [snowflake\_seed\_data (source)](#snowflake_seed_data-source)
   - [Cross-database compatibility](#cross-database-compatibility)
@@ -123,12 +123,12 @@ sources:
 * `meta.is_enabled` (optional): The variable(s) you would like to reference to determine if dbt should include this table in freshness tests.
 
 ----
-### is_databricks_sql_warehouse ([source](macros/is_databricks_sql_warehouse.sql))
+### fivetran_is_databricks_sql_warehouse ([source](macros/fivetran_is_databricks_sql_warehouse.sql))
 For Databricks destinations, this macro returns `true` if the Databricks target indicates it is a SQL Warehouse. It will return return `false` if it is an All-Purpose Cluster. 
 
 ***Usage:**
 ```yml
-    fivetran_utils.is_databricks_sql_warehouse(target)
+    fivetran_utils.fivetran_is_databricks_sql_warehouse(target)
 ```
 **Args:**
 * `target` (required): Always set this equal to "target". This will pass all the current target information to the macro.
