@@ -14,6 +14,7 @@
 
 [PR #145](https://github.com/fivetran/dbt_fivetran_utils/pull/145) includes the following update:
 - Added the new `fivetran_lookback()` macro. This generates SQL to simplify adding lookback windows to incremental models. See [README](https://github.com/fivetran/dbt_fivetran_utils/blob/releases/v0.4.latest/README.md#fivetran_lookback-source).
+- Added the new `is_databricks_sql_warehouse()` macro. This determines if Databricks destination is a SQL Warehouse or All Purpose Cluster. See [README](https://github.com/fivetran/dbt_fivetran_utils/blob/releases/v0.4.latest/README.md#is-databricks-sql-warehouse-source).
 
 # dbt_fivetran_utils v0.4.10
 
