@@ -128,10 +128,10 @@ For Databricks destinations, this macro returns `true` if the Databricks target 
 
 ***Usage:**
 ```yml
-    fivetran_utils.fivetran_is_databricks_sql_warehouse(target)
+    fivetran_utils.fivetran_is_databricks_sql_warehouse()
 ```
 **Args:**
-* `target` (required): Always set this equal to "target". This will pass all the current target information to the macro.
+* none
 
 ----
 ### seed_data_helper ([source](macros/seed_data_helper.sql))

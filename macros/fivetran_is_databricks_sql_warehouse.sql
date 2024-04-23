@@ -1,4 +1,4 @@
-{% macro fivetran_is_databricks_sql_warehouse(target) %}
+{% macro fivetran_is_databricks_sql_warehouse() %}
     {% if target.type in ('databricks') %}
         {% set re = modules.re %}
         {% set path_match = target.http_path %}
