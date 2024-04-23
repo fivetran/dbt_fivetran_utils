@@ -600,7 +600,7 @@ sources:
 
 ----
 ### fivetran_union_relations ([source](macros/union_relations.sql))
-Heavily adapted from [dbt_utils.union_relations()](https://github.com/dbt-labs/dbt-utils?tab=readme-ov-file#union_relations-source).
+Heavily adapted from [dbt_utils.union_relations()](https://github.com/dbt-labs/dbt-utils?tab=readme-ov-file#union_relations-source). The primary difference is that our version of the macro supports unioning relations that have reserved keywords as names (ex: table called `timezone`).
 
 This macro combines via a `union all` of an array of [Relations](https://docs.getdbt.com/reference/dbt-classes#relation), even when columns have differing orders in each Relation, and/or some columns are missing from some relations. Any columns exclusive to a subset of these relations will be filled with `null` where not present. A new column (`_dbt_source_relation`) is also added to indicate the source for each record.
 
@@ -625,7 +625,7 @@ This macro combines via a `union all` of an array of [Relations](https://docs.ge
 ### union_relations ([source](macros/union_relations.sql))
 > TO BE DEPRECATED IN FAVOR OF `fivetran_union_relations`.
 >
-> Currenlty only used in Marketo transform package.
+> Currenlty only used in [Marketo](https://github.com/fivetran/dbt_marketo/blob/main/models/intermediate/marketo__change_data_scd.sql#L47) transform package.
 
 This macro unions together an array of [Relations](https://docs.getdbt.com/docs/writing-code-in-dbt/class-reference/#relation),
 even when columns have differing orders in each Relation, and/or some columns are
