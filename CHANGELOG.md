@@ -19,7 +19,6 @@
 ## Under the Hood
 [PR #139](https://github.com/fivetran/dbt_fivetran_utils/pull/139) includes the following update:
 - Updated the pull request [templates](https://github.com/fivetran/dbt_fivetran_utils/tree/releases/v0.4.latest/.github) to align with our current format.
-- Included auto-releaser GitHub Actions workflow to automate future releases.
 
 # dbt_fivetran_utils v0.4.10
 
