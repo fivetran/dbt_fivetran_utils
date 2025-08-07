@@ -2,3 +2,6 @@ name: 'fivetran_utils_integration_tests'
 version: '0.1.0'
 config-version: 2
 profile: 'integration_tests'
+
+flags:
+  require_generic_test_arguments_property: true

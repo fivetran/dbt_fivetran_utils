@@ -1,7 +1,8 @@
 version: 2
 
 models:
-    - name: fill_staging_columns_test
-      tests:
-        - dbt_utils.equality:
+  - name: fill_staging_columns_test
+    tests:
+      - dbt_utils.equality:
+          arguments:
             compare_model: ref('fill_staging_columns_output')
