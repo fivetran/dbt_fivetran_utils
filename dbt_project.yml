@@ -2,7 +2,6 @@ name: 'fivetran_utils'
 version: '0.5.0'
 profile: 'default'
 config-version: 2
-
 require-dbt-version: [">=1.10.6"]
 
 model-paths: ["models"]
