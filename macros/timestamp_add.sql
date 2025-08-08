@@ -1,6 +1,6 @@
 {% macro timestamp_add(datepart, interval, from_timestamp) -%}
 
-{{ adapter.dispatch('timestamp_add', packages = fivetran_utils._get_utils_namespaces()) (datepart, interval, from_timestamp) }}
+{{ adapter.dispatch('timestamp_add', 'fivetran_utils') (datepart, interval, from_timestamp) }}
 
 {%- endmacro %}
 
@@ -40,6 +40,6 @@
 
 {% macro spark__timestamp_add(datepart, interval, from_timestamp) %}
 
-    {{ dbt_utils.dateadd(datepart, interval, from_timestamp) }}
+    {{ dbt.dateadd(datepart, interval, from_timestamp) }}
         
 {% endmacro %}

@@ -1,6 +1,6 @@
 {% macro array_agg(field_to_agg) -%}
 
-{{ adapter.dispatch('array_agg', packages = fivetran_utils._get_utils_namespaces()) (field_to_agg) }}
+{{ adapter.dispatch('array_agg', 'fivetran_utils') (field_to_agg) }}
 
 {%- endmacro %}
 

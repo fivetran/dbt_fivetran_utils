@@ -8,7 +8,7 @@
 
   {%- set enabled_array = [] -%}
   {% for node in graph.sources.values() %}
-    {% if node.name == source.name %}
+    {% if node.identifier == source.identifier %}
       {% if (node.meta['is_enabled'] | default(true)) %}
         {%- do enabled_array.append(1) -%}
       {% endif %}
@@ -31,5 +31,11 @@
     {% endif %}
 
   {% endcall %}
-  {{ return(load_result('collect_freshness').table) }}
+
+  {% if dbt_version.split('.') | map('int') | list >= [1, 5, 0]  %}
+    {{ return(load_result('collect_freshness')) }}
+  {% else %}
+    {{ return(load_result('collect_freshness').table) }}
+  {% endif %}
+
 {% endmacro %}

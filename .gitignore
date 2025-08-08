@@ -3,3 +3,6 @@ target/
 dbt_modules/
 logs/
 dbt_internal_packages/
+venv/
+dbt_packages/
+test_run_models.sh
