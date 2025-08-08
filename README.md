@@ -163,7 +163,7 @@ BigQuery, Snowflake, Redshift, and Postgres. By default a comma `,` is used as a
 * `field_to_agg` (required): Field within the table you are wishing to aggregate.
 
 ----
-### ceiling ([source](macros/ceiling.sql))
+### ceiling ([source](https://github.com/fivetran/dbt_fivetran_utils/blob/master/macros/ceiling.sql))
 This macro allows for cross database use of the ceiling function. The ceiling function returns the smallest integer greater 
 than, or equal to, the specified numeric expression. The ceiling macro is compatible with BigQuery, Redshift, Postgres, and Snowflake.
 
@@ -187,7 +187,7 @@ This macro extracts a url parameter from a column containing a url. It is an exp
 * `url_parameter` (required): The parameter you want to extract. 
 
 ----
-### first_value ([source](macros/first_value.sql))
+### first_value ([source](https://github.com/fivetran/dbt_fivetran_utils/blob/master/macros/first_value.sql))
 This macro returns the value_expression for the first row in the current window frame with cross db functionality. This macro ignores null values. The default first_value calculation within the macro is the `first_value` function. The Redshift first_value calculation is the `first_value` function, with the inclusion of a frame_clause `{{ partition_field }} rows unbounded preceding`.
 
 **Usage:**
@@ -214,7 +214,7 @@ The data is returned by the path you provide as the argument. The json_extract m
 * `string_path`  (required): Name of the path in the json object which you want to extract the data from.
 
 ----
-### json_parse ([source](macros/json_parse.sql))
+### json_parse ([source](https://github.com/fivetran/dbt_fivetran_utils/blob/master/macros/json_parse.sql))
 This macro allows for cross database use of the json extract function, specifically used to parse and extract a nested value from a json object.
 The data is returned by the path you provide as the list within the `string_path` argument. The json_parse macro is compatible with BigQuery, Redshift, Postgres, Snowflake and Databricks.
 
@@ -266,7 +266,7 @@ This macro builds off of the `json_extract` macro in order to extract a list of 
 * `list_of_properties`  (required): List of the fields that you want to extract from the json object and pivot out into columns.
 
 ----
-### string_agg ([source](macros/string_agg.sql))
+### string_agg ([source](https://github.com/fivetran/dbt_fivetran_utils/blob/master/macros/string_agg.sql))
 This macro allows for cross database field aggregation and delimiter customization. Supported database specific field aggregation functions include 
 BigQuery, Snowflake, Redshift, Postgres, and Spark.
 
@@ -278,7 +278,7 @@ BigQuery, Snowflake, Redshift, Postgres, and Spark.
 * `field_to_agg` (required): Field within the table you are wishing to aggregate.
 * `delimiter`    (required): Character you want to be used as the delimiter between aggregates.
 ----
-### timestamp_add ([source](macros/timestamp_add.sql))
+### timestamp_add ([source](https://github.com/fivetran/dbt_fivetran_utils/blob/master/macros/timestamp_add.sql))
 This macro allows for cross database addition of a timestamp field and a specified datepart and interval for BigQuery, Redshift, Postgres, and Snowflake.
 
 **Usage:**
@@ -291,7 +291,7 @@ This macro allows for cross database addition of a timestamp field and a specifi
 * `from_timestamp` (required): The timestamp field you are adding the datepart and interval.
 
 ----
-### timestamp_diff ([source](macros/timestamp_diff.sql))
+### timestamp_diff ([source](https://github.com/fivetran/dbt_fivetran_utils/blob/master/macros/timestamp_diff.sql))
 This macro allows for cross database timestamp difference calculation for BigQuery, Redshift, Postgres, and Snowflake.
 
 **Usage:**

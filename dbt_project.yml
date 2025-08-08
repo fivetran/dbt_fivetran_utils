@@ -1,4 +1,21 @@
 name: 'fivetran_utils'
-version: '0.4.10'
+version: '0.5.0'
+profile: 'default'
 config-version: 2
-require-dbt-version: [">=1.3.0", "<2.0.0"]
+require-dbt-version: [">=1.10.6"]
+
+model-paths: ["models"]
+analysis-paths: ["analysis"]
+test-paths: ["tests"]
+seed-paths: ["data"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+
+vars:
+  fivetran_utils:
+    dbt_utils_dispatch_list:
+      - fivetran_utils 
+
+flags:
+  require_generic_test_arguments_property: true

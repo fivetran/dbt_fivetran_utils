@@ -3,6 +3,8 @@ version: '0.4.10'
 config-version: 2
 profile: 'integration_tests'
 
+flags:
+  require_generic_test_arguments_property: true
 clean-targets:        
   - "target"
   - "dbt_packages"
