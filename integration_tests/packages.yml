@@ -62,7 +62,7 @@ packages:
   - package: fivetran/pendo
     version: [">=1.0.0", "<2.0.0"]
   - package: fivetran/mixpanel
-    version: [">=1.0.0", "<2.0.0"]
+    version: [">=0.1.0", "<1.0.0"]
 
   - package: fivetran/jira
     version: [">=1.0.0", "<2.0.0"]
