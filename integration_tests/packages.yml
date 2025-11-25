@@ -2,9 +2,6 @@ packages:
   - package: fivetran/ad_reporting
     version: [">=2.0.0", "<3.0.0"]
 
-  - package: fivetran/shopify_holistic_reporting
-    version: [">=0.1.0", "<1.0.0"]
-
   - package: fivetran/social_media_reporting
     version: [">=1.0.0", "<2.0.0"]
 
