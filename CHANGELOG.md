@@ -1,3 +1,8 @@
+# dbt_fivetran_utils v0.4.11
+
+## Features
+- Increases the required dbt version upper limit to v3.0.0
+
 # dbt_fivetran_utils v0.4.10
 
 ## Bug Fix
