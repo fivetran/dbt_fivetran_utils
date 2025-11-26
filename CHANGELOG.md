@@ -1,7 +1,12 @@
 # dbt_fivetran_utils v0.4.11
 
+[PR #154](https://github.com/fivetran/dbt_fivetran_utils/pull/154) includes the following updates:
+
 ## Features
 - Increases the required dbt version upper limit to v3.0.0
+
+## Under the Hood
+- Updates to the integration tests to ensure proper and complete testing of the new package version
 
 # dbt_fivetran_utils v0.4.10
 
