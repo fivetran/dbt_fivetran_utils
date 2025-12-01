@@ -4,7 +4,7 @@ steps:
     key: "run_dbt_snowflake_ads_1"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -21,7 +21,7 @@ steps:
     key: "run-dbt-postgres-ads_1"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -36,7 +36,7 @@ steps:
     key: "run_dbt_bigquery_ads_1"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -48,7 +48,7 @@ steps:
     key: "run_dbt_redshift_ads_1"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -63,7 +63,7 @@ steps:
     key: "run_dbt_databricks_ads_1"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -78,7 +78,7 @@ steps:
     key: "run_dbt_snowflake_ads_2"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -95,7 +95,7 @@ steps:
     key: "run-dbt-postgres-ads_2"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -110,7 +110,7 @@ steps:
     key: "run_dbt_bigquery_ads_2"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -122,7 +122,7 @@ steps:
     key: "run_dbt_redshift_ads_2"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -137,7 +137,7 @@ steps:
     key: "run_dbt_databricks_ads_2"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -153,7 +153,7 @@ steps:
     key: "run_dbt_snowflake_ads_3"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -170,7 +170,7 @@ steps:
     key: "run-dbt-postgres-ads_3"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -185,7 +185,7 @@ steps:
     key: "run_dbt_bigquery_ads_3"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -197,7 +197,7 @@ steps:
     key: "run_dbt_redshift_ads_3"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -212,7 +212,7 @@ steps:
     key: "run_dbt_databricks_ads_3"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -228,7 +228,7 @@ steps:
     key: "run_dbt_snowflake_social"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -245,7 +245,7 @@ steps:
     key: "run-dbt-postgres-social"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -260,7 +260,7 @@ steps:
     key: "run_dbt_bigquery_social"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -272,7 +272,7 @@ steps:
     key: "run_dbt_redshift_social"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -287,7 +287,7 @@ steps:
     key: "run_dbt_databricks_social"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -303,7 +303,7 @@ steps:
     key: "run_dbt_snowflake_app"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -320,7 +320,7 @@ steps:
     key: "run-dbt-postgres-app"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -335,7 +335,7 @@ steps:
     key: "run_dbt_bigquery_app"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -347,7 +347,7 @@ steps:
     key: "run_dbt_redshift_app"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -362,7 +362,7 @@ steps:
     key: "run_dbt_databricks_app"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -378,7 +378,7 @@ steps:
     key: "run_dbt_snowflake_crm"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -395,7 +395,7 @@ steps:
     key: "run-dbt-postgres-crm"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -410,7 +410,7 @@ steps:
     key: "run_dbt_bigquery_crm"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -422,7 +422,7 @@ steps:
     key: "run_dbt_redshift_crm"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -437,7 +437,7 @@ steps:
     key: "run_dbt_databricks_crm"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -453,7 +453,7 @@ steps:
     key: "run_dbt_snowflake_esub"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -470,7 +470,7 @@ steps:
     key: "run-dbt-postgres-esub"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -485,7 +485,7 @@ steps:
     key: "run_dbt_bigquery_esub"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -497,7 +497,7 @@ steps:
     key: "run_dbt_redshift_esub"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -512,7 +512,7 @@ steps:
     key: "run_dbt_databricks_esub"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -528,7 +528,7 @@ steps:
     key: "run_dbt_snowflake_email"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -545,7 +545,7 @@ steps:
     key: "run-dbt-postgres-email"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -560,7 +560,7 @@ steps:
     key: "run_dbt_bigquery_email"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -572,7 +572,7 @@ steps:
     key: "run_dbt_redshift_email"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -587,7 +587,7 @@ steps:
     key: "run_dbt_databricks_email"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -604,7 +604,7 @@ steps:
     key: "run_dbt_snowflake_finance"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -621,7 +621,7 @@ steps:
     key: "run-dbt-postgres-finance"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -636,7 +636,7 @@ steps:
     key: "run_dbt_bigquery_finance"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -648,7 +648,7 @@ steps:
     key: "run_dbt_redshift_finance"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -663,7 +663,7 @@ steps:
     key: "run_dbt_databricks_finance"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -680,7 +680,7 @@ steps:
     key: "run_dbt_snowflake_log_people"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -697,7 +697,7 @@ steps:
     key: "run-dbt-postgres-log_people"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -712,7 +712,7 @@ steps:
     key: "run_dbt_bigquery_log_people"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -724,7 +724,7 @@ steps:
     key: "run_dbt_redshift_log_people"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -739,7 +739,7 @@ steps:
     key: "run_dbt_databricks_log_people"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -756,7 +756,7 @@ steps:
     key: "run_dbt_snowflake_product"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -773,7 +773,7 @@ steps:
     key: "run-dbt-postgres-product"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -788,7 +788,7 @@ steps:
     key: "run_dbt_bigquery_product"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -800,7 +800,7 @@ steps:
     key: "run_dbt_redshift_product"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -815,7 +815,7 @@ steps:
     key: "run_dbt_databricks_product"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -831,7 +831,7 @@ steps:
     key: "run_dbt_snowflake_velocity"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -848,7 +848,7 @@ steps:
     key: "run-dbt-postgres-velocity"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -863,7 +863,7 @@ steps:
     key: "run_dbt_bigquery_velocity"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -875,7 +875,7 @@ steps:
     key: "run_dbt_redshift_velocity"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -890,7 +890,7 @@ steps:
     key: "run_dbt_databricks_velocity"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -907,7 +907,7 @@ steps:
     key: "run_dbt_snowflake_ad_roll"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -924,7 +924,7 @@ steps:
     key: "run-dbt-postgres-ad_roll"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -939,7 +939,7 @@ steps:
     key: "run_dbt_bigquery_ad_roll"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -951,7 +951,7 @@ steps:
     key: "run_dbt_redshift_ad_roll"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -966,7 +966,7 @@ steps:
     key: "run_dbt_databricks_ad_roll"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -982,7 +982,7 @@ steps:
     key: "run_dbt_snowflake_app_roll"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -999,7 +999,7 @@ steps:
     key: "run-dbt-postgres-app_roll"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -1014,7 +1014,7 @@ steps:
     key: "run_dbt_bigquery_app_roll"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -1026,7 +1026,7 @@ steps:
     key: "run_dbt_redshift_app_roll"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -1041,7 +1041,7 @@ steps:
     key: "run_dbt_databricks_app_roll"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -1057,7 +1057,7 @@ steps:
     key: "run_dbt_snowflake_social_roll"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -1074,7 +1074,7 @@ steps:
     key: "run-dbt-postgres-social_roll"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -1089,7 +1089,7 @@ steps:
     key: "run_dbt_bigquery_social_roll"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -1101,7 +1101,7 @@ steps:
     key: "run_dbt_redshift_social_roll"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -1116,7 +1116,7 @@ steps:
     key: "run_dbt_databricks_social_roll"
     plugins:
       - docker#v3.13.0:
-          image: "python:3.8"
+          image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
@@ -1125,79 +1125,4 @@ steps:
             - "CI_DATABRICKS_DBT_TOKEN"
     commands: |
       bash .buildkite/scripts/run_standard_models.sh databricks social_media_reporting
-    
-
-## Shopify Holistic Reporting Roll Up Packages
-  - label: ":snowflake: Run Tests - Shopify Holistic Reporting Roll Up Package :roller_skate:"
-    key: "run_dbt_snowflake_shopify_holistic_roll"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.8"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "CI_SNOWFLAKE_DBT_ACCOUNT"
-            - "CI_SNOWFLAKE_DATABASE_FT_UTILS"
-            - "CI_SNOWFLAKE_DBT_PASS"
-            - "CI_SNOWFLAKE_DBT_ROLE_FT_UTILS_TEST"
-            - "CI_SNOWFLAKE_DBT_USER"
-            - "CI_SNOWFLAKE_DBT_WAREHOUSE"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh snowflake shopify_holistic_reporting
-
-  - label: ":postgres: Run Tests - Shopify Holistic Reporting Roll Up Package :roller_skate:"
-    key: "run-dbt-postgres-shopify_holistic_roll"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.8"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "CI_POSTGRES_DBT_DBNAME"
-            - "CI_POSTGRES_DBT_HOST"
-            - "CI_POSTGRES_DBT_PASS"
-            - "CI_POSTGRES_DBT_USER"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh postgres shopify_holistic_reporting
-
-  - label: ":gcloud: Run Tests - Shopify Holistic Reporting Roll Up Package :roller_skate:"
-    key: "run_dbt_bigquery_shopify_holistic_roll"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.8"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "GCLOUD_SERVICE_KEY"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh bigquery shopify_holistic_reporting
-
-  - label: ":amazon-redshift: Run Tests - Shopify Holistic Reporting Roll Up Package :roller_skate:"
-    key: "run_dbt_redshift_shopify_holistic_roll"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.8"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "CI_REDSHIFT_DBT_DBNAME"
-            - "CI_REDSHIFT_DBT_HOST"
-            - "CI_REDSHIFT_DBT_PASS"
-            - "CI_REDSHIFT_DBT_USER"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh redshift shopify_holistic_reporting
-
-  - label: ":databricks: Run Tests - Shopify Holistic Reporting Roll Up Package :roller_skate:"
-    key: "run_dbt_databricks_shopify_holistic_roll"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.8"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "CI_DATABRICKS_DBT_HOST"
-            - "CI_DATABRICKS_DBT_HTTP_PATH"
-            - "CI_DATABRICKS_DBT_TOKEN"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh databricks shopify_holistic_reporting
     

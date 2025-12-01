@@ -1,5 +1,5 @@
 name: 'fivetran_utils_integration_tests'
-version: '0.4.10'
+version: '0.4.11'
 config-version: 2
 profile: 'integration_tests'
 
@@ -12,3 +12,7 @@ dispatch:
     search_order: ['spark_utils', 'fivetran_utils']
   - macro_namespace: dbt_utils
     search_order: ['spark_utils', 'fivetran_utils', 'dbt_utils']
+
+flags:
+  send_anonymous_usage_stats: False
+  use_colors: True
