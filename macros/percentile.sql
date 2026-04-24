@@ -44,6 +44,15 @@
 
 {% endmacro %}
 
+{% macro duckdb__percentile(percentile_field, partition_field, percent)  %}
+
+    percentile_cont(
+        {{ percent }} )
+        within group ( order by {{ percentile_field }} )
+    /* have to group by partition field */
+
+{% endmacro %}
+
 {% macro spark__percentile(percentile_field, partition_field, percent)  %}
 
     percentile( 

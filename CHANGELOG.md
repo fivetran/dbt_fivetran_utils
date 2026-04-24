@@ -1,3 +1,8 @@
+# dbt_fivetran_utils v0.4.12
+
+## Bug Fix
+- Adds DuckDB support to the `percentile` macro by dispatching to DuckDB's aggregate `percentile_cont(...) within group (...)` form.
+
 # dbt_fivetran_utils v0.4.11
 
 [PR #154](https://github.com/fivetran/dbt_fivetran_utils/pull/154) includes the following updates:
