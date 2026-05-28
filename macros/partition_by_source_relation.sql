@@ -1,5 +1,5 @@
 {% macro partition_by_source_relation(package_name, has_other_partitions='yes', alias=None) %}
-    {{ return(adapter.dispatch('partition_by_source_relation', package_name)(has_other_partitions, alias)) }}
+    {{ return(adapter.dispatch('partition_by_source_relation', 'fivetran_utils')(has_other_partitions, alias)) }}
 {% endmacro %}
 
 {% macro default__partition_by_source_relation(has_other_partitions='yes', alias=None) -%}
