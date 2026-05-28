@@ -7,6 +7,11 @@ clean-targets:
   - "target"
   - "dbt_packages"
 
+models:
+  +persist_docs:
+    relation: true
+    columns: "{{ false if target.type in ('databricks') else true }}" 
+
 dispatch:
   - macro_namespace: fivetran_utils
     search_order: ['spark_utils', 'fivetran_utils']
