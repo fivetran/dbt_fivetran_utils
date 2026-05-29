@@ -45,13 +45,13 @@
     {%- endfor -%}
 
     {%- if relations != [] -%}
-        {{ dbt_utils.union_relations(relations, source_column_name='source_relation') }}
+        {{ dbt_utils.union_relations(relations, source_column_name='_dbt_source_relation') }}
 
     {%- else -%}
         {{ exceptions.warn(exception_warning) if using_empty_table_warnings }}
 
         select
-            cast(null as {{ dbt.type_string() }}) as source_relation
+            cast(null as {{ dbt.type_string() }}) as _dbt_source_relation
         limit {{ '0' if target.type != 'redshift' else '1' }}
     {%- endif -%}
 
@@ -77,15 +77,15 @@
 
     {% if relation is not none -%}
         select
-            {{ fivetran_utils.star(from=source(single_source_name, single_table_name)) }},
-            '{{ relation.database }}' || '.'|| '{{ relation.schema }}' as source_relation
+            {{ dbt_utils.star(from=source(single_source_name, single_table_name)) }},
+            '{{ relation.database }}' || '.'|| '{{ relation.schema }}' as _dbt_source_relation
         from {{ source(single_source_name, single_table_name) }} as source_table
 
     {% else %}
         {{ exceptions.warn(exception_warning) if using_empty_table_warnings }}
 
         select
-            cast(null as {{ dbt.type_string() }}) as source_relation
+            cast(null as {{ dbt.type_string() }}) as _dbt_source_relation
         limit {{ '0' if target.type != 'redshift' else '1' }}
     {%- endif -%}
 {% endif -%}
