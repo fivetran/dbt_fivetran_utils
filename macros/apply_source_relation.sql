@@ -6,10 +6,10 @@
 
 {% macro default__apply_source_relation(package_name) -%}
 
-{% if var(package_name ~ '_sources', []) != [] %}
+{% if var(var('package_name') ~ '_sources', []) | length > 0 %}
 , _dbt_source_relation as source_relation
 {% else %}
-, '{{ var(package_name ~ "_database", target.database) }}' || '.'|| '{{ var(package_name ~ "_schema", package_name) }}' as source_relation
+, '{{ target.database }}' || '.'|| '{{ target.schema }}' as source_relation
 {% endif %}
 
 {%- endmacro %}
