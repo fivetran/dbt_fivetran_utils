@@ -60,8 +60,9 @@
 
     {% set identifier_var = single_source_name + "_" + single_table_name + "_identifier"%}
     {%- set database = source(single_source_name, single_table_name).database %}
-    {%- set schema =   source(single_source_name, single_table_name).schema %}
-    {%- set identifier = source(single_source_name, single_table_name).identifier %}
+    {%- set schema = source(single_source_name, single_table_name).schema %}
+    {%- set identifier = var(identifier_var, single_table_name) if single_table_name|lower in ('group', 'order') 
+            else source(single_source_name, single_table_name).identifier %}
     {%- set relation=adapter.get_relation(
         database=database,
         schema=schema,
