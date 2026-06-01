@@ -9,9 +9,9 @@
     {%- else -%}
         cast(null as {{ column.datatype }})
     {%- endif %}
-    as {{ column.alias if 'alias' in column else fivetran_utils.quote_column(column) }}{{ ',' if not loop.last }}
-
+    as {{ column.alias if 'alias' in column else fivetran_utils.quote_column(column) }},
 {%- endfor %}
+    {{ fivetran_utils.apply_source_relation() }}
 {%- endmacro %}
 
 {%- macro quote_column(column) %}
