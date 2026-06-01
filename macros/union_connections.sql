@@ -10,6 +10,7 @@
 {%- set using_empty_table_warnings = (execute and not var('fivetran__remove_empty_table_warnings', false)) %}
 {%- set connections = var(connection_dictionary, []) %}
 {%- set using_unioning = connections | length > 0 %}
+{%- set identifier_var = single_source_name + "_" + single_table_name + "_identifier" %}
 
 {%- if using_unioning %}
 {# For unioning #}
@@ -23,7 +24,7 @@
         {%- else %}
             {%- set database = connection.database if connection.database else target.database %}
             {%- set schema = connection.schema if connection.schema else single_source_name %}
-            {%- set identifier = default_identifier %}
+            {%- set identifier = var(identifier_var, default_identifier) %}
         {%- endif %}
         
         {%- set relation=adapter.get_relation(
@@ -44,7 +45,7 @@
 
     {%- endfor -%}
 
-    {%- if relations != [] -%}
+    {%- if relations | length > 0 -%}
         {{ dbt_utils.union_relations(relations, source_column_name='_dbt_source_relation') }}
 
     {%- else -%}
@@ -58,11 +59,10 @@
 {% else %}
 {# Not unioning #}
 
-    {% set identifier_var = single_source_name + "_" + single_table_name + "_identifier"%}
     {%- set database = source(single_source_name, single_table_name).database %}
     {%- set schema = source(single_source_name, single_table_name).schema %}
-    {%- set identifier = var(identifier_var, single_table_name) if single_table_name|lower in ('group', 'order') 
-            else source(single_source_name, single_table_name).identifier %}
+    {%- set identifier = var(identifier_var, default_identifier) %}
+
     {%- set relation=adapter.get_relation(
         database=database,
         schema=schema,
@@ -79,7 +79,7 @@
     {% if relation is not none -%}
         select
             {{ dbt_utils.star(from=source(single_source_name, single_table_name)) }},
-            '{{ relation.database }}' || '.'|| '{{ relation.schema }}' as _dbt_source_relation
+            '{{ relation }}' as _dbt_source_relation
         from {{ source(single_source_name, single_table_name) }} as source_table
 
     {% else %}
