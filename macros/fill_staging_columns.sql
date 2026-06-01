@@ -8,7 +8,7 @@
         {{ adapter.quote(column.name) if using_mdls else fivetran_utils.quote_column(column) }}
     {%- else -%}
         cast(null as {{ column.datatype }})
-    {%- endif -%}
+    {%- endif %}
     as {{ column.alias if 'alias' in column else fivetran_utils.quote_column(column) }}{{ ',' if not loop.last }}
 
 {%- endfor %}
