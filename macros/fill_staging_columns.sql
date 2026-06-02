@@ -6,7 +6,7 @@
 {%- for column in staging_columns %}
     {% if column.name|lower in source_column_names -%}
         {% if using_source_casing %}
-            {%- set column_alias = column.alias if 'alias' in column else column_name -%}
+            {%- set column_alias = column.alias if 'alias' in column else column.name -%}
             {{ adapter.quote(column.name) }} as {{ adapter.quote(column_alias|upper if target.warehouse == 'snowflake' else column_alias) }} 
         {% else %}
             {{ fivetran_utils.quote_column(column) }} as
