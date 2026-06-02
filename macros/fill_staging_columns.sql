@@ -1,7 +1,7 @@
 {% macro fill_staging_columns(source_columns, staging_columns) -%}
 
 {%- set source_column_names = source_columns|map(attribute='name')|map('lower')|list -%}
-{%- set using_source_casing = var('fivetran_using_source_casing', false) -%}
+{%- set using_source_casing = var('using_deliberate_quoting', true) -%} --var('fivetran_using_source_casing', false) -%}
 
 {%- for column in staging_columns %}
 
