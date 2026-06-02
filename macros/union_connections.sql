@@ -78,8 +78,8 @@
 
     {% if relation is not none -%}
         select
-            {{ dbt_utils.star(from=source(single_source_name, single_table_name)) }},
-            '{{ relation }}' as _dbt_source_relation
+            {{ dbt_utils.star(from=source(single_source_name, single_table_name)) }}
+            , '{{ var("zendesk_database", target.database) }}' || '.'|| '{{ var("zendesk_schema", "zendesk") }}' as source_relation
         from {{ source(single_source_name, single_table_name) }} as source_table
 
     {% else %}
