@@ -4,20 +4,26 @@
 {%- set using_source_casing = var('fivetran_using_source_casing', false) -%}
 
 {%- for column in staging_columns %}
-    {% if column.name|lower in source_column_names -%}
-        {% if using_source_casing %}
-            {%- set column_alias = column.alias if 'alias' in column else column.name -%}
-            {{ adapter.quote(column.name) }} as {{ adapter.quote(column_alias|upper if target.warehouse == 'snowflake' else column_alias) }} 
-        {% else %}
-            {{ fivetran_utils.quote_column(column) }} as
-            {%- if 'alias' in column %} {{ column.alias }} {% else %} {{ fivetran_utils.quote_column(column_alias) }} {%- endif -%}
-        {% endif %}
+
+    {%- if column.name|lower in source_column_names -%}
+        
+        {% if using_source_casing -%}
+        {%- set column_alias = column.alias if 'alias' in column else column.name -%}
+        {{ adapter.quote(column.name) }} as {{ adapter.quote(column_alias|upper if target.warehouse == 'snowflake' else column_alias) }} 
+        
+        {%- else %}
+        {{ fivetran_utils.quote_column(column) }} as
+        {%- if 'alias' in column %} {{ column.alias }} {% else %} {{ fivetran_utils.quote_column(column_alias) }} {%- endif -%}
+        
+        {%- endif %}
+    
     {%- else -%}
         cast(null as {{ column.datatype }}) as
         {%- if 'alias' in column %} {{ column.alias }} {% else %} {{ fivetran_utils.quote_column(column) }} {% endif -%}
-    {%- endif -%}
-    {%- if not loop.last -%} , {% endif -%}
-{% endfor %}
+
+    {%- endif -%}{{ ',' if not loop.last }}
+
+{%- endfor %}
 
 {% endmacro %}
 
