@@ -13,7 +13,7 @@
         
         {%- else %}
         {{ fivetran_utils.quote_column(column) }} as
-        {%- if 'alias' in column %} {{ column.alias }} {% else %} {{ fivetran_utils.quote_column(column_alias) }} {%- endif -%}
+        {%- if 'alias' in column %} {{ column.alias }} {% else %} {{ fivetran_utils.quote_column(column) }} {%- endif -%}
         
         {%- endif %}
     
