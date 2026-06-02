@@ -9,8 +9,8 @@
             {%- set column_alias = column.alias if 'alias' in column else column_name -%}
             {{ adapter.quote(column.name) }} as {{ adapter.quote(column_alias|upper if target.warehouse == 'snowflake' else column_alias) }} 
         {% else %}
-            {{ fivetran_utils.quote_column(column) }}
-            as {%- if 'alias' in column %} {{ column.alias }} {% else %} {{ fivetran_utils.quote_column(column_alias) }} {%- endif -%}
+            {{ fivetran_utils.quote_column(column) }} as
+            {%- if 'alias' in column %} {{ column.alias }} {% else %} {{ fivetran_utils.quote_column(column_alias) }} {%- endif -%}
         {% endif %}
     {%- else -%}
         cast(null as {{ column.datatype }}) as
