@@ -11,7 +11,7 @@
     {%- endif %}
     as {{ column.alias if 'alias' in column else fivetran_utils.quote_column(column) }},
 {%- endfor %}
-    {{ fivetran_utils.apply_source_relation() }}
+    _dbt_source_relation as source_relation
 {%- endmacro %}
 
 {%- macro quote_column(column) %}
