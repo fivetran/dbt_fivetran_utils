@@ -1,6 +1,6 @@
 {% macro apply_source_relation() -%}
 
-{{ adapter.dispatch('apply_source_relation', 'asana') () }}
+{{ adapter.dispatch('apply_source_relation', 'fivetran_utils') () }}
 
 {%- endmacro %}
 
