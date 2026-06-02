@@ -2,7 +2,6 @@
 
 {%- set using_source_casing = var('fivetran_using_source_casing', false) -%}
 {%- set source_column_names = source_columns | map(attribute='name') | map('lower') | list -%}
-{%- do staging_columns.append({'name': 'source_relation', 'datatype': dbt.type_string()}) -%}
 
 {%- for column in staging_columns %}
     {%- set column_name = column.name -%}
