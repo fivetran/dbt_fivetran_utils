@@ -7,7 +7,7 @@
     {%- if column.name|lower in source_column_names %}
         {%- if not using_source_casing %}
             {%- set column_alias = column.alias if 'alias' in column else column.name %}
-            {{ adapter.quote(column.name) }} as {{ adapter.quote(column_alias|upper if target.type == 'snowflake' else column_alias) }}
+            {{ adapter.quote(column.name|lower) }} as {{ adapter.quote(column_alias|upper if target.type == 'snowflake' else column_alias) }}
         {%- else %}
             {{ fivetran_utils.quote_column(column) }} as
             {%- if 'alias' in column %} {{ column.alias }}{% else %} {{ fivetran_utils.quote_column(column) }}{% endif %}
