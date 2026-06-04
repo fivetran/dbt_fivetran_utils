@@ -508,19 +508,19 @@ It should be added to all non-tmp staging models when using the `union_data` mac
 
 ----
 ### union_connections ([source](macros/union_connections.sql))
-This macro unions identically structured tables across multiple Fivetran connectors of the same type. It reads from a `connection_dictionary` variable (e.g. `jira_sources`) listing each connection's `database`, `schema`, and `name`, and falls back to a single-connection query if the variable is empty. If a source table is not found, the macro returns an empty table with a single `_dbt_source_relation` column and outputs a compiler warning.
+This macro unions identically structured tables across multiple Fivetran connections of the same type. It reads from a connection dictionary variable (e.g. `jira_sources`) listing each connection's `database`, `schema`, and `name` (optional), and falls back to a single-connection query if the variable is empty. If a source table is not found, the macro returns an empty table with a single `_dbt_source_relation` column and outputs a compiler warning.
 
-For example, in `dbt_jira` the `connection_dictionary` is set as `jira_sources`, and then can be defined in your root `dbt_project.yml`:
+For example, in `dbt_jira` the connection dictionary is set as `jira_sources`, and then can be defined in your root `dbt_project.yml`:
 ```yml
 vars:
   jira:
     jira_sources:
       - database: connection_1_destination_name
         schema: connection_1_schema_name
-        name: connection_1_source_name
+        name: connection_1_source_name # optional, use only if `has_defined_sources` is true 
       - database: connection_2_destination_name
         schema: connection_2_schema_name
-        name: connection_2_source_name
+        name: connection_2_source_name # optional, use only if `has_defined_sources` is true
 ```
 
 **Usage:**
