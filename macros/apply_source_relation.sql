@@ -18,9 +18,9 @@
     {% set union_databases_var = 'union_databases' %}
 {% endif %}
 
-{% if var(sources_var, []) != [] %}
+{% if var(sources_var, []) | length > 0 %}
 , _dbt_source_relation as source_relation
-{% elif var(union_schemas_var, []) != [] or var(union_databases_var, []) != [] %}
+{% elif var(union_schemas_var, []) | length > 0 or var(union_databases_var, []) | length > 0 %}
 {{ fivetran_utils.source_relation() }}
 {% else %}
 {% set database = var(database_var, target.database) %}
