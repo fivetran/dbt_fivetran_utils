@@ -82,6 +82,8 @@ dispatch:
     - [persist\_pass\_through\_columns (source)](#persist_pass_through_columns-source)
     - [remove\_prefix\_from\_columns (source)](#remove_prefix_from_columns-source)
     - [source\_relation (source)](#source_relation-source)
+    - [union\_connections (source)](#union_connections-source)
+      - [Union Connections Defined Sources Configuration](#union-connections-defined-sources-configuration)
     - [union\_data (source)](#union_data-source)
       - [Union Data Defined Sources Configuration](#union-data-defined-sources-configuration)
     - [union\_relations (source)](#union_relations-source)
@@ -505,6 +507,74 @@ It should be added to all non-tmp staging models when using the `union_data` mac
 * `union_database_variable` (optional): The name of the union database variable. By default the macro will look for `union_databases`.
 
 ----
+### union_connections ([source](macros/union_connections.sql))
+This macro unions identically structured tables across multiple Fivetran connectors of the same type. It reads from a `connection_dictionary` variable (e.g. `jira_sources`) listing each connection's `database`, `schema`, and `name`, and falls back to a single-connection query if the variable is empty. If a source table is not found, the macro returns an empty table with a single `_dbt_source_relation` column and outputs a compiler warning.
+
+For example, in `dbt_jira` the `connection_dictionary` is set as `jira_sources`, and then can be defined in your root `dbt_project.yml`:
+```yml
+vars:
+  jira:
+    jira_sources:
+      - database: connection_1_destination_name
+        schema: connection_1_schema_name
+        name: connection_1_source_name
+      - database: connection_2_destination_name
+        schema: connection_2_schema_name
+        name: connection_2_source_name
+```
+
+**Usage:**
+```sql
+-- in _tmp model
+{{
+    fivetran_utils.union_connections(
+        connection_dictionary='jira_sources',
+        single_source_name='jira',
+        single_table_name='issue'
+    )
+}}
+```
+**Args:**
+* `connection_dictionary`: The name of the variable containing the list of connection objects to union. Each object supports `database` (defaults to `target.database`), `schema` (defaults to `single_source_name`), and `name` (required only if `has_defined_sources` is true).
+* `single_source_name`: The source name to use when not unioning (i.e. when `connection_dictionary` is empty).
+* `single_table_name`: The name of the table to query.
+* `default_identifier` (optional): Override for the table identifier. Defaults to `single_table_name`.
+
+#### Optional: Union Connections Defined Sources Configuration
+By default, packages using this macro define one single-connection source which will be disabled if you are unioning multiple connections. This means your DAG will not include your sources, though the package will run successfully.
+
+To incorporate all of your connections into your project's DAG:
+
+1. Define each of your sources in a `.yml` file in your project. Copy the table and column-level definitions from the package's `src_<package>.yml` file into the `tables:` key below. **Important:** Make sure to remove any enable/disable configs from the `.yml` file to avoid errors.
+
+```yml
+# in a root-project schema.yml file (ex. models/src_jira.yml)
+version: 2
+
+sources:
+  - name: connection_source # must match name in <package>_sources
+    schema: connection_schema
+    database: connection_database
+    loader: Fivetran
+    loaded_at_field: _fivetran_synced
+    freshness: # feel free to adjust to your liking
+      warn_after: {count: 72, period: hour}
+      error_after: {count: 168, period: hour}
+    tables: # copy and paste from <package>/models/staging/src_<package>.yml
+```
+
+**Note:** If there are source tables you do not have, you may still include them as long as you disable the relevant variables by setting them to `false`.
+
+2. Set `has_defined_sources` to `true` in your `dbt_project.yml`:
+
+```yml
+# dbt_project.yml
+vars:
+  <package_name>:
+    has_defined_sources: true
+```
+
+----
 ### union_data ([source](macros/union_data.sql))
 This macro unions together tables of the same structure so that users can treat data from multiple connectors as the 'source' to a package.
 Depending on which macros are set, it will either look for schemas of the same name across multiple databases, or schemas with different names in the same database.
@@ -576,73 +646,6 @@ sources:
       - name: account
       - name: customer 
       ...
-```
-----
-### union_connections ([source](macros/union_connections.sql))
-This macro unions identically structured tables across multiple Fivetran connectors of the same type. It reads from a `connection_dictionary` variable (e.g. `jira_sources`) listing each connection's `database`, `schema`, and `name`, and falls back to a single-connection query if the variable is empty. If a source table is not found, the macro returns an empty table with a single `_dbt_source_relation` column and outputs a compiler warning.
-
-For example, in `dbt_jira` the `connection_dictionary` is set as `jira_sources`, and then can be defined in your root `dbt_project.yml`:
-```yml
-vars:
-  jira:
-    jira_sources:
-      - database: connection_1_destination_name
-        schema: connection_1_schema_name
-        name: connection_1_source_name
-      - database: connection_2_destination_name
-        schema: connection_2_schema_name
-        name: connection_2_source_name
-```
-
-**Usage:**
-```sql
--- in _tmp model
-{{
-    fivetran_utils.union_connections(
-        connection_dictionary='jira_sources',
-        single_source_name='jira',
-        single_table_name='issue'
-    )
-}}
-```
-**Args:**
-* `connection_dictionary`: The name of the variable containing the list of connection objects to union. Each object supports `database` (defaults to `target.database`), `schema` (defaults to `single_source_name`), and `name` (required only if `has_defined_sources` is true).
-* `single_source_name`: The source name to use when not unioning (i.e. when `connection_dictionary` is empty).
-* `single_table_name`: The name of the table to query.
-* `default_identifier` (optional): Override for the table identifier. Defaults to `single_table_name`.
-
-#### Union Connections Defined Sources Configuration
-By default, packages using this macro define one single-connection source which will be disabled if you are unioning multiple connections. This means your DAG will not include your sources, though the package will run successfully.
-
-To incorporate all of your connections into your project's DAG:
-
-1. Define each of your sources in a `.yml` file in your project. Copy the table and column-level definitions from the package's `src_<package>.yml` file into the `tables:` key below. **Important:** Make sure to remove any enable/disable configs from the `.yml` file to avoid errors.
-
-```yml
-# in a root-project schema.yml file (ex. models/src_jira.yml)
-version: 2
-
-sources:
-  - name: connection_source # must match name in <package>_sources
-    schema: connection_schema
-    database: connection_database
-    loader: Fivetran
-    loaded_at_field: _fivetran_synced
-    freshness: # feel free to adjust to your liking
-      warn_after: {count: 72, period: hour}
-      error_after: {count: 168, period: hour}
-    tables: # copy and paste from <package>/models/staging/src_<package>.yml
-```
-
-**Note:** If there are source tables you do not have, you may still include them as long as you disable the relevant variables by setting them to `false`.
-
-2. Set `has_defined_sources` to `true` in your `dbt_project.yml`:
-
-```yml
-# dbt_project.yml
-vars:
-  <package_name>:
-    has_defined_sources: true
 ```
 ----
 ### union_relations ([source](macros/union_relations.sql))
