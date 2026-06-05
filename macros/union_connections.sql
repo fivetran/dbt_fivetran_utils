@@ -46,7 +46,7 @@
     {%- endfor -%}
 
     {%- if relations | length > 0 -%}
-        {{ dbt_utils.union_relations(relations, source_column_name='_dbt_source_relation') }}
+        {{ fivetran_utils.union_relations_short_source(relations, source_column_name='_dbt_source_relation') }}
 
     {%- else -%}
         {{ exceptions.warn(exception_warning) if using_empty_table_warnings }}

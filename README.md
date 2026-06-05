@@ -86,6 +86,7 @@ dispatch:
       - [Union Connections Defined Sources Configuration](#union-connections-defined-sources-configuration)
     - [union\_data (source)](#union_data-source)
       - [Union Data Defined Sources Configuration](#union-data-defined-sources-configuration)
+    - [union\_relations\_short\_source (source)](#union_relations_short_source-source)
     - [union\_relations (source)](#union_relations-source)
   - [Variable Checks](#variable-checks)
     - [empty\_variable\_warning (source)](#empty_variable_warning-source)
@@ -647,6 +648,31 @@ sources:
       - name: customer 
       ...
 ```
+----
+### union_relations_short_source ([source](macros/union_relations_short_source.sql))
+This macro is adapted from dbt_utils.union_relations() with a slight deviation, allowing for the `_dbt_source_relation` field to return only the `database.schema` as opposed to the `database.schema.table`. 
+Unions together an array of [Relations](https://docs.getdbt.com/docs/writing-code-in-dbt/class-reference/#relation),
+even when columns have differing orders in each Relation, and/or some columns are
+missing from some relations. Any columns exclusive to a subset of these
+relations will be filled with `null` where not present. An new column
+(`_dbt_source_relation`) is also added to indicate the source for each record.
+
+**Usage:**
+```sql
+{{ dbt_utils.union_relations(
+    relations=[ref('my_model'), source('my_source', 'my_table')],
+    exclude=["_loaded_at"]
+) }}
+```
+**Args:**
+* `relations`          (required): An array of [Relations](https://docs.getdbt.com/docs/writing-code-in-dbt/class-reference/#relation).
+* `aliases`            (optional): An override of the relation identifier. This argument should be populated with the overwritten alias for the relation. If not populated `relations` will be the default.
+* `exclude`            (optional): A list of column names that should be excluded from the final query.
+* `include`            (optional): A list of column names that should be included in the final query. Note the `include` and `exclude` parameters are mutually exclusive.
+* `column_override`    (optional): A dictionary of explicit column type overrides, e.g. `{"some_field": "varchar(100)"}`.``
+* `source_column_name` (optional): The name of the column that records the source of this row. By default this argument is set to `none`.
+* `where` (optional): Filter conditions to include in the where clause.
+
 ----
 ### union_relations ([source](macros/union_relations.sql))
 This macro unions together an array of [Relations](https://docs.getdbt.com/docs/writing-code-in-dbt/class-reference/#relation),
