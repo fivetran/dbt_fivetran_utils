@@ -21,7 +21,7 @@
 {% if var(sources_var, []) | length > 0 %}
 , _dbt_source_relation as source_relation
 {% elif var(union_schemas_var, []) | length > 0 or var(union_databases_var, []) | length > 0 %}
-{{ fivetran_utils.source_relation() }}
+{{ fivetran_utils.source_relation(union_schema_variable=union_schemas_var, union_database_variable=union_databases_var) }}
 {% else %}
 {% set database = var(database_var, target.database) %}
 {% set schema = var(schema_var, package_name) %}
