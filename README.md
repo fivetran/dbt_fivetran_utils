@@ -86,7 +86,7 @@ dispatch:
       - [Union Connections Defined Sources Configuration](#union-connections-defined-sources-configuration)
     - [union\_data (source)](#union_data-source)
       - [Union Data Defined Sources Configuration](#union-data-defined-sources-configuration)
-    - [union\_relations\_short\_source (source)](#union_relations_short_source-source)
+    - [union\_relations\_custom (source)](#union_relations_custom-source)
     - [union\_relations (source)](#union_relations-source)
   - [Variable Checks](#variable-checks)
     - [empty\_variable\_warning (source)](#empty_variable_warning-source)
@@ -649,7 +649,7 @@ sources:
       ...
 ```
 ----
-### union_relations_short_source ([source](macros/union_relations_short_source.sql))
+### union_relations_custom ([source](macros/union_relations_custom.sql))
 This macro is adapted from dbt_utils.union_relations() with a slight deviation, allowing for the `_dbt_source_relation` field to return only the `database.schema` as opposed to the `database.schema.table`. 
 Unions together an array of [Relations](https://docs.getdbt.com/docs/writing-code-in-dbt/class-reference/#relation),
 even when columns have differing orders in each Relation, and/or some columns are
