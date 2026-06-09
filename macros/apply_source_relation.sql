@@ -25,7 +25,7 @@
 {% else %}
 {% set database = var(database_var, target.database) %}
 {% set schema = var(schema_var, package_name) %}
-, '{{ database ~ "." ~ schema }}' as source_relation
+, cast('{{ database ~ "." ~ schema }}' as {{ dbt.type_string() }}) as source_relation
 {% endif %}
 
 {%- endmacro %}
