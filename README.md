@@ -12,16 +12,16 @@
 
 # Fivetran Utility Macros for dbt
 
-# 🤔 Who are the intended users of this package?
+# Who are the intended users of this package?
 - The Fivetran team to leverage across Fivetran dbt packages
-- It is not recommend to use this package outside of the Fivetran dbt packages
+- We do not recommend using this package outside of the Fivetran dbt packages
 
-# 📣 What does this dbt package do?
+# What does this dbt package do?
 This package includes macros that are used across Fivetran's dbt packages. This package is comprised primarily of cross database compatible macros and macros specific for dbt package maintenance. See the **Contents** below for the macros available within this package.
 
-# 🎯 How do I use the dbt package?
+# How do I use the dbt package?
 ## Step 1: Installing the Package
-Include the following fivetran_utils package version in your `packages.yml` if you do not have any other Fivetran dbt packag dependencies. Please note that this package is installed by default within **all** Fivetran dbt packages.
+Include the following fivetran_utils package version in your `packages.yml` if you do not have any other Fivetran dbt package dependencies. This package is installed by default within **all** Fivetran dbt packages.
 > Check [dbt Hub](https://hub.getdbt.com/) for the latest installation instructions, or [read the dbt docs](https://docs.getdbt.com/docs/package-management) for more information on installing packages.
 ```yaml
 packages:
@@ -42,15 +42,15 @@ dispatch:
 ```
 
 ----
-# 📋 Contents
+# Contents
 
 - [Fivetran Utility Macros for dbt](#fivetran-utility-macros-for-dbt)
-- [🤔 Who are the intended users of this package?](#-who-are-the-intended-users-of-this-package)
-- [📣 What does this dbt package do?](#-what-does-this-dbt-package-do)
-- [🎯 How do I use the dbt package?](#-how-do-i-use-the-dbt-package)
+- [Who are the intended users of this package?](#who-are-the-intended-users-of-this-package)
+- [What does this dbt package do?](#what-does-this-dbt-package-do)
+- [How do I use the dbt package?](#how-do-i-use-the-dbt-package)
   - [Step 1: Installing the Package](#step-1-installing-the-package)
   - [Step 2: Using the Macros](#step-2-using-the-macros)
-- [📋 Contents](#-contents)
+- [Contents](#contents)
   - [Tests and helpers](#tests-and-helpers)
     - [collect\_freshness (source)](#collect_freshness-source)
     - [seed\_data\_helper (source)](#seed_data_helper-source)
@@ -82,6 +82,8 @@ dispatch:
     - [persist\_pass\_through\_columns (source)](#persist_pass_through_columns-source)
     - [remove\_prefix\_from\_columns (source)](#remove_prefix_from_columns-source)
     - [source\_relation (source)](#source_relation-source)
+    - [apply\_source\_relation (source)](#apply_source_relation-source)
+    - [partition\_by\_source\_relation (source)](#partition_by_source_relation-source)
     - [union\_connections (source)](#union_connections-source)
       - [Union Connections Defined Sources Configuration](#union-connections-defined-sources-configuration)
     - [union\_data (source)](#union_data-source)
@@ -92,11 +94,11 @@ dispatch:
     - [empty\_variable\_warning (source)](#empty_variable_warning-source)
     - [enabled\_vars (source)](#enabled_vars-source)
     - [enabled\_vars\_one\_true (source)](#enabled_vars_one_true-source)
-- [🔍 Does this package have dependencies?](#-does-this-package-have-dependencies)
-- [🙌 How is this package maintained and can I contribute?](#-how-is-this-package-maintained-and-can-i-contribute)
+- [Does this package have dependencies?](#does-this-package-have-dependencies)
+- [How is this package maintained and can I contribute?](#how-is-this-package-maintained-and-can-i-contribute)
   - [Package Maintenance](#package-maintenance)
   - [Contributions](#contributions)
-- [🏪 Are there any resources available?](#-are-there-any-resources-available)
+- [Are there any resources available?](#are-there-any-resources-available)
 
 ----
 
@@ -153,7 +155,7 @@ It simply chooses which version of the data to seed (the Snowflake copy should c
 
 ----
 ## Cross-database compatibility
-These macros allows functions to prevail across the different databases. 
+These macros allow functions to prevail across different databases. 
 ### array_agg ([source](macros/array_agg.sql))
 This macro allows for cross database field aggregation. The macro contains the database specific field aggregation function for 
 BigQuery, Snowflake, Redshift, and Postgres. By default a comma `,` is used as a delimiter in the aggregation.
@@ -389,7 +391,7 @@ For non-SQL Server databases, this will simply call [`dbt_utils.date_spine()`](h
 **Args:**
 * `datepart` (required): The grain at which you would like to create the date spine. 
 * `start_date` (required): The date (inclusive if it is aligned to the `datepart`) at which you'd like the date spine to start.
-* `end_date` (required): The date (excusive) at which you'd like the date spine to end.
+* `end_date` (required): The date (exclusive) at which you'd like the date spine to end.
 
 ----
 
@@ -447,8 +449,7 @@ This macro is used to generate the correct sql for package staging models for us
 
 ----
 ### fill_staging_columns ([source](macros/fill_staging_columns.sql))
-This macro is used to generate the correct SQL for package staging models. It takes a list of columns that are expected/needed (`staging_columns`) 
-and compares it with columns in the source (`source_columns`). 
+This macro generates the correct SQL for package staging models. It takes a list of expected columns (`staging_columns`) and compares them with the columns present in the source (`source_columns`). Missing columns are cast to `null` with the correct datatype.
 
 **Usage:**
 ```sql
@@ -464,8 +465,13 @@ select
 from source
 ```
 **Args:**
-* `source_columns`  (required): Will call the [get_columns_in_relation](https://docs.getdbt.com/reference/dbt-jinja-functions/adapter/#get_columns_in_relation) macro as well requires a `ref()` or `source()` argument for the staging models within the `_tmp` directory.
-* `staging_columns` (required): Created as a result of running the [generate_columns_macro](https://github.com/fivetran/dbt_fivetran_utils#generate_columns_macro-source) for the respective table.
+* `source_columns` (required): Calls [get_columns_in_relation](https://docs.getdbt.com/reference/dbt-jinja-functions/adapter/#get_columns_in_relation) and requires a `ref()` or `source()` pointing to the `_tmp` staging model.
+* `staging_columns` (required): The list of expected columns, typically returned by the package's `get_<table>_columns()` macro.
+
+**Variables:**
+* `fivetran_using_source_casing` (optional): Boolean variable, defaults to `false`. When `true`, the macro quotes lowercase column names as defined in the package's `get_*_columns` macros. For Snowflake targets, the alias is uppercased to match Snowflake identifier conventions.
+
+> **Important:** `fivetran_using_source_casing` was added specifically to support Fivetran's MDLs feature where the Polaris engine lowercases column names in Snowflake destinations. It does not generically preserve source casing — it mianly handles the lowercase-in-Snowflake case. If Polaris's behavior changes in the future, a different approach may be required. See the [DECISIONLOG](DECISIONLOG.md) for full details.
 
 ----
 ### persist_pass_through_columns ([source](macros/persist_pass_through_columns.sql))
@@ -506,6 +512,45 @@ It should be added to all non-tmp staging models when using the `union_data` mac
 **Args:**
 * `union_schema_variable` (optional): The name of the union schema variable. By default the macro will look for `union_schemas`.
 * `union_database_variable` (optional): The name of the union database variable. By default the macro will look for `union_databases`.
+
+----
+### apply_source_relation ([source](macros/apply_source_relation.sql))
+This macro generates the `source_relation` column in non-tmp staging models. It automatically selects the right approach based on how a package is configured for unioning:
+- If `{package_name}_sources` is set (new-style `union_connections`): passes through `_dbt_source_relation as source_relation`.
+- If `{package_name}_union_schemas` or `{package_name}_union_databases` is set: calls `source_relation()` with the appropriate variable names.
+- If none of the above: generates a static `database.schema` string cast as `source_relation`.
+
+**Usage:**
+```sql
+{{ fivetran_utils.apply_source_relation(package_name='jira') }}
+```
+**Args:**
+* `package_name` (required): The name of the package. Used to derive the variable names for sources, database, schema, and union schemas/databases.
+* `use_package_prefix` (optional): Boolean, defaults to `true`. When `true`, prefixes the union variable names with `package_name` (e.g., `jira_union_schemas`). When `false`, uses generic variable names (`union_schemas`, `union_databases`).
+
+----
+### partition_by_source_relation ([source](macros/partition_by_source_relation.sql))
+This macro conditionally generates a `partition by source_relation` or `, source_relation` addition to a window function's partition clause. It returns an empty string when not unioning, so you can include it in every model without needing conditional logic in your SQL.
+
+**Usage:**
+```sql
+-- Adding source_relation to an existing partition clause
+select
+    id,
+    {{ fivetran_utils.first_value(first_value_field='amount', partition_field='id' ~ fivetran_utils.partition_by_source_relation('jira'), order_by_field='created_at') }}
+from my_cte
+
+-- Starting a new partition clause with source_relation only
+select
+    id,
+    row_number() over ({{ fivetran_utils.partition_by_source_relation('jira', has_other_partitions='no') }} order by created_at) as row_num
+from my_cte
+```
+**Args:**
+* `package_name` (required): The name of the package. Used to derive the union variable names.
+* `has_other_partitions` (optional): Defaults to `'yes'`. When `'yes'`, prepends `, source_relation` to add to an existing partition. When `'no'`, generates the full `partition by source_relation` clause.
+* `alias` (optional): A CTE or relation alias to prefix `source_relation` (e.g., produces `alias.source_relation`).
+* `package_prefix_union_variable` (optional): Boolean, defaults to `true`. When `true`, prefixes union variable names with `package_name`. When `false`, uses generic names (`union_schemas`, `union_databases`).
 
 ----
 ### union_connections ([source](macros/union_connections.sql))
@@ -733,7 +778,7 @@ This macro references a set of specified boolean variable and returns `true` if 
 **Args:**
 * `vars` (required): Variable(s) you are referencing to return the declared variable value.
 
-# 🔍 Does this package have dependencies?
+# Does this package have dependencies?
 This dbt package is dependent on the following dbt packages. Please be aware that these dependencies are installed by default within this package. For more information on the following packages, refer to the [dbt hub](https://hub.getdbt.com/) site.
 > IMPORTANT: If you have any of these dependent packages in your own `packages.yml` file, we highly recommend that you remove them from your root `packages.yml` to avoid package version conflicts.
 ```yml
@@ -742,7 +787,7 @@ packages:
       version: [">=1.0.0", "<2.0.0"]
 ```
 
-# 🙌 How is this package maintained and can I contribute?
+# How is this package maintained and can I contribute?
 ## Package Maintenance
 The Fivetran team maintaining this package **only** maintains the latest version of the package. We highly recommend you stay consistent with the [latest version](https://hub.getdbt.com/fivetran/jira/latest/) of the package and refer to the [CHANGELOG](https://github.com/fivetran/dbt_jira/blob/main/CHANGELOG.md) and release notes for more information on changes across versions.
 
@@ -751,7 +796,7 @@ These dbt packages are developed by a small team of analytics engineers at Fivet
 
 We highly encourage and welcome contributions to this package. Check out [this post](https://discourse.getdbt.com/t/contributing-to-a-dbt-package/657) on the best workflow for contributing to a package!
 
-# 🏪 Are there any resources available?
+# Are there any resources available?
 - If you encounter any questions or want to reach out for help, please refer to the [GitHub Issue](https://github.com/fivetran/dbt_fivetran_utils/issues/new/choose) section to find the right avenue of support for you.
 - If you would like to provide feedback to the dbt package team at Fivetran, or would like to request a future dbt package to be developed, then feel free to fill out our [Feedback Form](https://www.surveymonkey.com/r/DQ7K7WW).
 - Have questions or want to just say hi? Book a time during our office hours [here](https://calendly.com/fivetran-solutions-team/fivetran-solutions-team-office-hours) or send us an email at solutions@fivetran.com.

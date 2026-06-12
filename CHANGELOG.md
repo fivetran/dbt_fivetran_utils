@@ -1,3 +1,16 @@
+# dbt_fivetran_utils v0.4.12
+
+## Feature Update
+- Adds the following new macros to support a dict-based (`{package}_sources`) multi-connection union pattern in downstream Fivetran dbt packages:
+  - [`union_connections`](macros/union_connections.sql): Reads from either a single source or, when a `connection_dictionary` variable is populated, queries each connection's database and schema to locate the target table and unions all results together with a `_dbt_source_relation` column. If none of the specified connections contain the table, the macro returns an empty staging model and raises a compiler warning.
+  - [`union_relations_custom`](macros/union_relations_custom.sql): A Fivetran-specific fork of `dbt_utils.union_relations` that sets `_dbt_source_relation` to `database.schema` only (excluding the table name) to align with Fivetran package conventions.
+  - [`apply_source_relation`](macros/apply_source_relation.sql): Derives and appends the `source_relation` column in staging models.
+  - [`partition_by_source_relation`](macros/partition_by_source_relation.sql): Returns a `PARTITION BY source_relation` clause (or `, source_relation`) only when more than one source is detected.
+- Updates the `fill_staging_columns` macro to support a new `fivetran_using_source_casing` variable (default `false`). When set to `true`, the macro quotes lowercase column names as defined in the package's `get_*_columns` macros, with Snowflake targets uppercasing the alias to match Snowflake identifier conventions in downstream models. This was added to support Fivetran's MDLs feature where Polaris lowercases column names in Snowflake. See the [DECISIONLOG](DECISIONLOG.md) for more details.
+
+## Under the Hood
+- Adds concurrency groups to the Buildkite CI pipeline steps to prevent resource contention across parallel warehouse test runs.
+
 # dbt_fivetran_utils v0.4.11
 
 [PR #154](https://github.com/fivetran/dbt_fivetran_utils/pull/154) includes the following updates:
