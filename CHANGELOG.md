@@ -9,9 +9,6 @@
   - [`partition_by_source_relation`](macros/partition_by_source_relation.sql): Returns a `PARTITION BY source_relation` clause (or `, source_relation`) only when more than one source is detected.
 - Updates the `fill_staging_columns` macro to support a new `fivetran_using_source_casing` variable (default `false`). When set to `true`, the macro quotes lowercase column names as defined in the package's `get_*_columns` macros, with Snowflake targets uppercasing the alias to match Snowflake identifier conventions in downstream models. This was added to support Fivetran's MDLs feature where Polaris lowercases column names in Snowflake. See the [DECISIONLOG](DECISIONLOG.md) for more details.
 
-## Under the Hood
-- Adds concurrency groups to the Buildkite CI pipeline steps to prevent resource contention across parallel warehouse test runs.
-
 # dbt_fivetran_utils v0.4.11
 
 [PR #154](https://github.com/fivetran/dbt_fivetran_utils/pull/154) includes the following updates:
