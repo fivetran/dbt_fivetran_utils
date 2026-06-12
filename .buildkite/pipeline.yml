@@ -3,7 +3,7 @@ steps:
   - label: ":snowflake: Run Tests - Ads Packages :bookmark: :one:"
     key: "run_dbt_snowflake_ads_1"
     concurrency: 3
-    concurrency_group: "snowflake"
+    concurrency_group: "warehouse/snowflake"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -22,7 +22,7 @@ steps:
   - label: ":postgres: Run Tests - Ads Packages :bookmark: :one:"
     key: "run-dbt-postgres-ads_1"
     concurrency: 3
-    concurrency_group: "postgres"
+    concurrency_group: "warehouse/postgres"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -39,7 +39,7 @@ steps:
   - label: ":gcloud: Run Tests - Ads Packages :bookmark: :one:"
     key: "run_dbt_bigquery_ads_1"
     concurrency: 3
-    concurrency_group: "bigquery"
+    concurrency_group: "warehouse/bigquery"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -53,7 +53,7 @@ steps:
   - label: ":amazon-redshift: Run Tests - Ads Packages :bookmark: :one:"
     key: "run_dbt_redshift_ads_1"
     concurrency: 1
-    concurrency_group: "redshift"
+    concurrency_group: "warehouse/redshift"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -70,7 +70,7 @@ steps:
   - label: ":databricks: Run Tests - Ads Packages :bookmark: :one:"
     key: "run_dbt_databricks_ads_1"
     concurrency: 3
-    concurrency_group: "databricks"
+    concurrency_group: "warehouse/databricks"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -87,7 +87,7 @@ steps:
   - label: ":snowflake: Run Tests - Ads Packages :bookmark: :two:"
     key: "run_dbt_snowflake_ads_2"
     concurrency: 3
-    concurrency_group: "snowflake"
+    concurrency_group: "warehouse/snowflake"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -106,7 +106,7 @@ steps:
   - label: ":postgres: Run Tests - Ads Packages :bookmark: :two:"
     key: "run-dbt-postgres-ads_2"
     concurrency: 3
-    concurrency_group: "postgres"
+    concurrency_group: "warehouse/postgres"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -123,7 +123,7 @@ steps:
   - label: ":gcloud: Run Tests - Ads Packages :bookmark: :two:"
     key: "run_dbt_bigquery_ads_2"
     concurrency: 3
-    concurrency_group: "bigquery"
+    concurrency_group: "warehouse/bigquery"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -137,7 +137,7 @@ steps:
   - label: ":amazon-redshift: Run Tests - Ads Packages :bookmark: :two:"
     key: "run_dbt_redshift_ads_2"
     concurrency: 1
-    concurrency_group: "redshift"
+    concurrency_group: "warehouse/redshift"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -154,7 +154,7 @@ steps:
   - label: ":databricks: Run Tests - Ads Packages :bookmark: :two:"
     key: "run_dbt_databricks_ads_2"
     concurrency: 3
-    concurrency_group: "databricks"
+    concurrency_group: "warehouse/databricks"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -172,7 +172,7 @@ steps:
   - label: ":snowflake: Run Tests - Ads Packages :bookmark: :three:"
     key: "run_dbt_snowflake_ads_3"
     concurrency: 3
-    concurrency_group: "snowflake"
+    concurrency_group: "warehouse/snowflake"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -191,7 +191,7 @@ steps:
   - label: ":postgres: Run Tests - Ads Packages :bookmark: :three:"
     key: "run-dbt-postgres-ads_3"
     concurrency: 3
-    concurrency_group: "postgres"
+    concurrency_group: "warehouse/postgres"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -208,7 +208,7 @@ steps:
   - label: ":gcloud: Run Tests - Ads Packages :bookmark: :three:"
     key: "run_dbt_bigquery_ads_3"
     concurrency: 3
-    concurrency_group: "bigquery"
+    concurrency_group: "warehouse/bigquery"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -222,7 +222,7 @@ steps:
   - label: ":amazon-redshift: Run Tests - Ads Packages :bookmark: :three:"
     key: "run_dbt_redshift_ads_3"
     concurrency: 1
-    concurrency_group: "redshift"
+    concurrency_group: "warehouse/redshift"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -239,7 +239,7 @@ steps:
   - label: ":databricks: Run Tests - Ads Packages :bookmark: :three:"
     key: "run_dbt_databricks_ads_3"
     concurrency: 3
-    concurrency_group: "databricks"
+    concurrency_group: "warehouse/databricks"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -257,7 +257,7 @@ steps:
   - label: ":snowflake: Run Tests - Social Packages :iphone:"
     key: "run_dbt_snowflake_social"
     concurrency: 3
-    concurrency_group: "snowflake"
+    concurrency_group: "warehouse/snowflake"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -276,7 +276,7 @@ steps:
   - label: ":postgres: Run Tests - Social Packages :iphone:"
     key: "run-dbt-postgres-social"
     concurrency: 3
-    concurrency_group: "postgres"
+    concurrency_group: "warehouse/postgres"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -293,7 +293,7 @@ steps:
   - label: ":gcloud: Run Tests - Social Packages :iphone:"
     key: "run_dbt_bigquery_social"
     concurrency: 3
-    concurrency_group: "bigquery"
+    concurrency_group: "warehouse/bigquery"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -307,7 +307,7 @@ steps:
   - label: ":amazon-redshift: Run Tests - Social Packages :iphone:"
     key: "run_dbt_redshift_social"
     concurrency: 1
-    concurrency_group: "redshift"
+    concurrency_group: "warehouse/redshift"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -324,7 +324,7 @@ steps:
   - label: ":databricks: Run Tests - Social Packages :iphone:"
     key: "run_dbt_databricks_social"
     concurrency: 3
-    concurrency_group: "databricks"
+    concurrency_group: "warehouse/databricks"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -342,7 +342,7 @@ steps:
   - label: ":snowflake: Run Tests - App Packages :video_game:"
     key: "run_dbt_snowflake_app"
     concurrency: 3
-    concurrency_group: "snowflake"
+    concurrency_group: "warehouse/snowflake"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -361,7 +361,7 @@ steps:
   - label: ":postgres: Run Tests - App Packages :video_game:"
     key: "run-dbt-postgres-app"
     concurrency: 3
-    concurrency_group: "postgres"
+    concurrency_group: "warehouse/postgres"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -378,7 +378,7 @@ steps:
   - label: ":gcloud: Run Tests - App Packages :video_game:"
     key: "run_dbt_bigquery_app"
     concurrency: 3
-    concurrency_group: "bigquery"
+    concurrency_group: "warehouse/bigquery"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -392,7 +392,7 @@ steps:
   - label: ":amazon-redshift: Run Tests - App Packages :video_game:"
     key: "run_dbt_redshift_app"
     concurrency: 1
-    concurrency_group: "redshift"
+    concurrency_group: "warehouse/redshift"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -409,7 +409,7 @@ steps:
   - label: ":databricks: Run Tests - App Packages :video_game:"
     key: "run_dbt_databricks_app"
     concurrency: 3
-    concurrency_group: "databricks"
+    concurrency_group: "warehouse/databricks"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -427,7 +427,7 @@ steps:
   - label: ":snowflake: Run Tests - CRM Packages :salesforce::hubspot:"
     key: "run_dbt_snowflake_crm"
     concurrency: 3
-    concurrency_group: "snowflake"
+    concurrency_group: "warehouse/snowflake"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -446,7 +446,7 @@ steps:
   - label: ":postgres: Run Tests - CRM Packages :salesforce::hubspot:"
     key: "run-dbt-postgres-crm"
     concurrency: 3
-    concurrency_group: "postgres"
+    concurrency_group: "warehouse/postgres"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -463,7 +463,7 @@ steps:
   - label: ":gcloud: Run Tests - CRM Packages :salesforce::hubspot:"
     key: "run_dbt_bigquery_crm"
     concurrency: 3
-    concurrency_group: "bigquery"
+    concurrency_group: "warehouse/bigquery"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -477,7 +477,7 @@ steps:
   - label: ":amazon-redshift: Run Tests - CRM Packages :salesforce::hubspot:"
     key: "run_dbt_redshift_crm"
     concurrency: 1
-    concurrency_group: "redshift"
+    concurrency_group: "warehouse/redshift"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -494,7 +494,7 @@ steps:
   - label: ":databricks: Run Tests - CRM Packages :salesforce::hubspot:"
     key: "run_dbt_databricks_crm"
     concurrency: 3
-    concurrency_group: "databricks"
+    concurrency_group: "warehouse/databricks"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -512,7 +512,7 @@ steps:
   - label: ":snowflake: Run Tests - Ecommerce and Subscription Packages :shopping_bags:"
     key: "run_dbt_snowflake_esub"
     concurrency: 3
-    concurrency_group: "snowflake"
+    concurrency_group: "warehouse/snowflake"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -531,7 +531,7 @@ steps:
   - label: ":postgres: Run Tests - Ecommerce and Subscription Packages :shopping_bags:"
     key: "run-dbt-postgres-esub"
     concurrency: 3
-    concurrency_group: "postgres"
+    concurrency_group: "warehouse/postgres"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -548,7 +548,7 @@ steps:
   - label: ":gcloud: Run Tests - Ecommerce and Subscription Packages :shopping_bags:"
     key: "run_dbt_bigquery_esub"
     concurrency: 3
-    concurrency_group: "bigquery"
+    concurrency_group: "warehouse/bigquery"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -562,7 +562,7 @@ steps:
   - label: ":amazon-redshift: Run Tests - Ecommerce and Subscription Packages :shopping_bags:"
     key: "run_dbt_redshift_esub"
     concurrency: 1
-    concurrency_group: "redshift"
+    concurrency_group: "warehouse/redshift"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -579,7 +579,7 @@ steps:
   - label: ":databricks: Run Tests - Ecommerce and Subscription Packages :shopping_bags:"
     key: "run_dbt_databricks_esub"
     concurrency: 3
-    concurrency_group: "databricks"
+    concurrency_group: "warehouse/databricks"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -597,7 +597,7 @@ steps:
   - label: ":snowflake: Run Tests - Email Marketing Packages :email:"
     key: "run_dbt_snowflake_email"
     concurrency: 3
-    concurrency_group: "snowflake"
+    concurrency_group: "warehouse/snowflake"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -616,7 +616,7 @@ steps:
   - label: ":postgres: Run Tests - Email Marketing Packages :email:"
     key: "run-dbt-postgres-email"
     concurrency: 3
-    concurrency_group: "postgres"
+    concurrency_group: "warehouse/postgres"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -633,7 +633,7 @@ steps:
   - label: ":gcloud: Run Tests - Email Marketing Packages :email:"
     key: "run_dbt_bigquery_email"
     concurrency: 3
-    concurrency_group: "bigquery"
+    concurrency_group: "warehouse/bigquery"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -647,7 +647,7 @@ steps:
   - label: ":amazon-redshift: Run Tests - Email Marketing Packages :email:"
     key: "run_dbt_redshift_email"
     concurrency: 1
-    concurrency_group: "redshift"
+    concurrency_group: "warehouse/redshift"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -664,7 +664,7 @@ steps:
   - label: ":databricks: Run Tests - Email Marketing Packages :email:"
     key: "run_dbt_databricks_email"
     concurrency: 3
-    concurrency_group: "databricks"
+    concurrency_group: "warehouse/databricks"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -682,7 +682,7 @@ steps:
   - label: ":snowflake: Run Tests - Finance Packages :money_with_wings:"
     key: "run_dbt_snowflake_finance"
     concurrency: 3
-    concurrency_group: "snowflake"
+    concurrency_group: "warehouse/snowflake"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -701,7 +701,7 @@ steps:
   - label: ":postgres: Run Tests - Finance Packages :money_with_wings:"
     key: "run-dbt-postgres-finance"
     concurrency: 3
-    concurrency_group: "postgres"
+    concurrency_group: "warehouse/postgres"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -718,7 +718,7 @@ steps:
   - label: ":gcloud: Run Tests - Finance Packages :money_with_wings:"
     key: "run_dbt_bigquery_finance"
     concurrency: 3
-    concurrency_group: "bigquery"
+    concurrency_group: "warehouse/bigquery"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -732,7 +732,7 @@ steps:
   - label: ":amazon-redshift: Run Tests - Finance Packages :money_with_wings:"
     key: "run_dbt_redshift_finance"
     concurrency: 1
-    concurrency_group: "redshift"
+    concurrency_group: "warehouse/redshift"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -749,7 +749,7 @@ steps:
   - label: ":databricks: Run Tests - Finance Packages :money_with_wings:"
     key: "run_dbt_databricks_finance"
     concurrency: 3
-    concurrency_group: "databricks"
+    concurrency_group: "warehouse/databricks"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -767,7 +767,7 @@ steps:
   - label: ":snowflake: Run Tests - Log and People Packages :people_hugging:"
     key: "run_dbt_snowflake_log_people"
     concurrency: 3
-    concurrency_group: "snowflake"
+    concurrency_group: "warehouse/snowflake"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -786,7 +786,7 @@ steps:
   - label: ":postgres: Run Tests - Log and People Packages :people_hugging:"
     key: "run-dbt-postgres-log_people"
     concurrency: 3
-    concurrency_group: "postgres"
+    concurrency_group: "warehouse/postgres"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -803,7 +803,7 @@ steps:
   - label: ":gcloud: Run Tests - Log and People Packages :people_hugging:"
     key: "run_dbt_bigquery_log_people"
     concurrency: 3
-    concurrency_group: "bigquery"
+    concurrency_group: "warehouse/bigquery"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -817,7 +817,7 @@ steps:
   - label: ":amazon-redshift: Run Tests - Log and People Packages :people_hugging:"
     key: "run_dbt_redshift_log_people"
     concurrency: 1
-    concurrency_group: "redshift"
+    concurrency_group: "warehouse/redshift"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -834,7 +834,7 @@ steps:
   - label: ":databricks: Run Tests - Log and People Packages :people_hugging:"
     key: "run_dbt_databricks_log_people"
     concurrency: 3
-    concurrency_group: "databricks"
+    concurrency_group: "warehouse/databricks"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -852,7 +852,7 @@ steps:
   - label: ":snowflake: Run Tests - Product Packages :unicorn_face:"
     key: "run_dbt_snowflake_product"
     concurrency: 3
-    concurrency_group: "snowflake"
+    concurrency_group: "warehouse/snowflake"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -871,7 +871,7 @@ steps:
   - label: ":postgres: Run Tests - Product Packages :unicorn_face:"
     key: "run-dbt-postgres-product"
     concurrency: 3
-    concurrency_group: "postgres"
+    concurrency_group: "warehouse/postgres"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -888,7 +888,7 @@ steps:
   - label: ":gcloud: Run Tests - Product Packages :unicorn_face:"
     key: "run_dbt_bigquery_product"
     concurrency: 3
-    concurrency_group: "bigquery"
+    concurrency_group: "warehouse/bigquery"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -902,7 +902,7 @@ steps:
   - label: ":amazon-redshift: Run Tests - Product Packages :unicorn_face:"
     key: "run_dbt_redshift_product"
     concurrency: 1
-    concurrency_group: "redshift"
+    concurrency_group: "warehouse/redshift"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -919,7 +919,7 @@ steps:
   - label: ":databricks: Run Tests - Product Packages :unicorn_face:"
     key: "run_dbt_databricks_product"
     concurrency: 3
-    concurrency_group: "databricks"
+    concurrency_group: "warehouse/databricks"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -937,7 +937,7 @@ steps:
   - label: ":snowflake: Run Tests - Velocity Packages :roller_coaster:"
     key: "run_dbt_snowflake_velocity"
     concurrency: 3
-    concurrency_group: "snowflake"
+    concurrency_group: "warehouse/snowflake"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -956,7 +956,7 @@ steps:
   - label: ":postgres: Run Tests - Velocity Packages :roller_coaster:"
     key: "run-dbt-postgres-velocity"
     concurrency: 3
-    concurrency_group: "postgres"
+    concurrency_group: "warehouse/postgres"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -973,7 +973,7 @@ steps:
   - label: ":gcloud: Run Tests - Velocity Packages :roller_coaster:"
     key: "run_dbt_bigquery_velocity"
     concurrency: 3
-    concurrency_group: "bigquery"
+    concurrency_group: "warehouse/bigquery"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -987,7 +987,7 @@ steps:
   - label: ":amazon-redshift: Run Tests - Velocity Packages :roller_coaster:"
     key: "run_dbt_redshift_velocity"
     concurrency: 1
-    concurrency_group: "redshift"
+    concurrency_group: "warehouse/redshift"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -1004,7 +1004,7 @@ steps:
   - label: ":databricks: Run Tests - Velocity Packages :roller_coaster:"
     key: "run_dbt_databricks_velocity"
     concurrency: 3
-    concurrency_group: "databricks"
+    concurrency_group: "warehouse/databricks"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -1022,7 +1022,7 @@ steps:
   - label: ":snowflake: Run Tests - Ad Reporting Roll Up Package :roller_skate:"
     key: "run_dbt_snowflake_ad_roll"
     concurrency: 3
-    concurrency_group: "snowflake"
+    concurrency_group: "warehouse/snowflake"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -1041,7 +1041,7 @@ steps:
   - label: ":postgres: Run Tests - Ad Reporting Roll Up Package :roller_skate:"
     key: "run-dbt-postgres-ad_roll"
     concurrency: 3
-    concurrency_group: "postgres"
+    concurrency_group: "warehouse/postgres"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -1058,7 +1058,7 @@ steps:
   - label: ":gcloud: Run Tests - Ad Reporting Roll Up Package :roller_skate:"
     key: "run_dbt_bigquery_ad_roll"
     concurrency: 3
-    concurrency_group: "bigquery"
+    concurrency_group: "warehouse/bigquery"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -1072,7 +1072,7 @@ steps:
   - label: ":amazon-redshift: Run Tests - Ad Reporting Roll Up Package :roller_skate:"
     key: "run_dbt_redshift_ad_roll"
     concurrency: 1
-    concurrency_group: "redshift"
+    concurrency_group: "warehouse/redshift"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -1089,7 +1089,7 @@ steps:
   - label: ":databricks: Run Tests - Ad Reporting Roll Up Package :roller_skate:"
     key: "run_dbt_databricks_ad_roll"
     concurrency: 3
-    concurrency_group: "databricks"
+    concurrency_group: "warehouse/databricks"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -1107,7 +1107,7 @@ steps:
   - label: ":snowflake: Run Tests - App Reporting Roll Up Package :roller_skate:"
     key: "run_dbt_snowflake_app_roll"
     concurrency: 3
-    concurrency_group: "snowflake"
+    concurrency_group: "warehouse/snowflake"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -1126,7 +1126,7 @@ steps:
   - label: ":postgres: Run Tests - App Reporting Roll Up Package :roller_skate:"
     key: "run-dbt-postgres-app_roll"
     concurrency: 3
-    concurrency_group: "postgres"
+    concurrency_group: "warehouse/postgres"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -1143,7 +1143,7 @@ steps:
   - label: ":gcloud: Run Tests - App Reporting Roll Up Package :roller_skate:"
     key: "run_dbt_bigquery_app_roll"
     concurrency: 3
-    concurrency_group: "bigquery"
+    concurrency_group: "warehouse/bigquery"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -1157,7 +1157,7 @@ steps:
   - label: ":amazon-redshift: Run Tests - App Reporting Roll Up Package :roller_skate:"
     key: "run_dbt_redshift_app_roll"
     concurrency: 1
-    concurrency_group: "redshift"
+    concurrency_group: "warehouse/redshift"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -1174,7 +1174,7 @@ steps:
   - label: ":databricks: Run Tests - App Reporting Roll Up Package :roller_skate:"
     key: "run_dbt_databricks_app_roll"
     concurrency: 3
-    concurrency_group: "databricks"
+    concurrency_group: "warehouse/databricks"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -1192,7 +1192,7 @@ steps:
   - label: ":snowflake: Run Tests - Social Reporting Roll Up Package :roller_skate:"
     key: "run_dbt_snowflake_social_roll"
     concurrency: 3
-    concurrency_group: "snowflake"
+    concurrency_group: "warehouse/snowflake"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -1211,7 +1211,7 @@ steps:
   - label: ":postgres: Run Tests - Social Reporting Roll Up Package :roller_skate:"
     key: "run-dbt-postgres-social_roll"
     concurrency: 3
-    concurrency_group: "postgres"
+    concurrency_group: "warehouse/postgres"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -1228,7 +1228,7 @@ steps:
   - label: ":gcloud: Run Tests - Social Reporting Roll Up Package :roller_skate:"
     key: "run_dbt_bigquery_social_roll"
     concurrency: 3
-    concurrency_group: "bigquery"
+    concurrency_group: "warehouse/bigquery"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -1242,7 +1242,7 @@ steps:
   - label: ":amazon-redshift: Run Tests - Social Reporting Roll Up Package :roller_skate:"
     key: "run_dbt_redshift_social_roll"
     concurrency: 1
-    concurrency_group: "redshift"
+    concurrency_group: "warehouse/redshift"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
@@ -1259,7 +1259,7 @@ steps:
   - label: ":databricks: Run Tests - Social Reporting Roll Up Package :roller_skate:"
     key: "run_dbt_databricks_social_roll"
     concurrency: 3
-    concurrency_group: "databricks"
+    concurrency_group: "warehouse/databricks"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
