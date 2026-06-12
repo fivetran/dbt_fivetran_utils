@@ -1,4 +1,5 @@
 # dbt_fivetran_utils v0.4.12
+[PR #156](https://github.com/fivetran/dbt_fivetran_utils/pull/156) includes the following updates:
 
 ## Feature Update
 - Adds the following new macros to support a dict-based (`{package}_sources`) multi-connection union pattern in downstream Fivetran dbt packages:
