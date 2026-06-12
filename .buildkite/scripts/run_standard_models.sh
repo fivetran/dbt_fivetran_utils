@@ -50,7 +50,7 @@ do
         value_to_replace=$(grep ""$package"_schema:" dbt_project.yml | awk '{ print $2 }')
         perl -i -pe "s/(schema: |dataset: ).*/\1$value_to_replace/" ~/.dbt/profiles.yml
     fi
-    dbt seed --target "$db"
+    dbt seed --target "$db" --full-refresh
     if [ "$package" = "ad_reporting" ]; then
         dbt run --target "$db" --vars '{ad_reporting__facebook_ads_enabled: true, facebook_ads__using_demographics_country: true, facebook_ads__using_demographics_region: true, ad_reporting__google_ads_enabled: true, ad_reporting__amazon_ads_enabled: false, ad_reporting__apple_search_ads_enabled: false, ad_reporting__linkedin_ads_enabled: true, ad_reporting__microsoft_ads_enabled: false, ad_reporting__pinterest_ads_enabled: false, ad_reporting__reddit_ads_enabled: false, ad_reporting__snapchat_ads_enabled: false, ad_reporting__tiktok_ads_enabled: false, ad_reporting__twitter_ads_enabled: false}'
     else
