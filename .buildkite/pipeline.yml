@@ -336,7 +336,7 @@ steps:
             - "CI_DATABRICKS_DBT_TOKEN"
     commands: |
       bash .buildkite/scripts/run_standard_models.sh databricks facebook_pages instagram_business twitter_organic youtube_analytics
-    
+      ## Removed linkedin_pages as it is not databricks compatible at the moment.
 
 ## App Packages
   - label: ":snowflake: Run Tests - App Packages :video_game:"
