@@ -505,7 +505,7 @@ It should be added to all non-tmp staging models when using the `union_data` mac
 ### apply_source_relation ([source](macros/apply_source_relation.sql))
 This macro generates the `source_relation` column in non-tmp staging models. It automatically selects the right approach based on how a package is configured for unioning:
 - If `{package_name}_sources` is set (new-style `union_connections`): passes through `_dbt_source_relation as source_relation`.
-- If `{package_name}_union_schemas` or `{package_name}_union_databases` is set: calls `source_relation()` with the appropriate variable names.
+- If `{package_name}_union_schemas` or `{package_name}_union_databases` is set: calls `fivetran_utils.source_relation()` with the appropriate variable names.
 - If none of the above: generates a static `database.schema` string cast as `source_relation`.
 
 **Usage:**
@@ -692,7 +692,7 @@ relations will be filled with `null` where not present. An new column
 
 **Usage:**
 ```sql
-{{ dbt_utils.union_relations(
+{{ fivetran_utils.union_relations_custom(
     relations=[ref('my_model'), source('my_source', 'my_table')],
     exclude=["_loaded_at"]
 ) }}
@@ -703,7 +703,7 @@ relations will be filled with `null` where not present. An new column
 * `exclude`            (optional): A list of column names that should be excluded from the final query.
 * `include`            (optional): A list of column names that should be included in the final query. Note the `include` and `exclude` parameters are mutually exclusive.
 * `column_override`    (optional): A dictionary of explicit column type overrides, e.g. `{"some_field": "varchar(100)"}`.``
-* `source_column_name` (optional): The name of the column that records the source of this row. By default this argument is set to `none`.
+* `source_column_name` (optional): The name of the column that records the source of this row. By default this argument is set to `_dbt_source_relation`.
 * `where` (optional): Filter conditions to include in the where clause.
 
 ----
@@ -777,7 +777,7 @@ packages:
 
 # How is this package maintained and can I contribute?
 ## Package Maintenance
-The Fivetran team maintaining this package **only** maintains the latest version of the package. We highly recommend you stay consistent with the [latest version](https://hub.getdbt.com/fivetran/jira/latest/) of the package and refer to the [CHANGELOG](https://github.com/fivetran/dbt_jira/blob/main/CHANGELOG.md) and release notes for more information on changes across versions.
+The Fivetran team maintaining this package **only** maintains the latest version of the package. We highly recommend you stay consistent with the [latest version](https://hub.getdbt.com/fivetran/fivetran_utils/latest/) of the package and refer to the [CHANGELOG](https://github.com/fivetran/dbt_fivetran_utils/blob/releases/v0.4.latest/CHANGELOG.md) and release notes for more information on changes across versions.
 
 ## Contributions
 These dbt packages are developed by a small team of analytics engineers at Fivetran. However, the packages are made better by community contributions! 

@@ -36,8 +36,8 @@
 
         {%- do relation_columns.update({relation: []}) -%}
 
-        {%- do dbt_utils._is_relation(relation, 'zendesk_union_relations') -%}
-        {%- do dbt_utils._is_ephemeral(relation, 'zendesk_union_relations') -%}
+        {%- do dbt_utils._is_relation(relation, 'union_relations_custom') -%}
+        {%- do dbt_utils._is_ephemeral(relation, 'union_relations_custom') -%}
         {%- set cols = adapter.get_columns_in_relation(relation) -%}
         {%- for col in cols -%}
 

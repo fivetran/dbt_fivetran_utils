@@ -79,7 +79,6 @@
     {% if relation is not none -%}
         select
             {{ dbt_utils.star(from=source(single_source_name, single_table_name)) }}
-            , '{{ database ~ "." ~ schema }}' as _dbt_source_relation
         from {{ source(single_source_name, single_table_name) }} as source_table
 
     {% else %}

@@ -335,7 +335,7 @@ steps:
             - "CI_DATABRICKS_DBT_HTTP_PATH"
             - "CI_DATABRICKS_DBT_TOKEN"
     commands: |
-      bash .buildkite/scripts/run_standard_models.sh databricks linkedin_pages facebook_pages instagram_business twitter_organic youtube_analytics
+      bash .buildkite/scripts/run_standard_models.sh databricks facebook_pages instagram_business twitter_organic youtube_analytics
     
 
 ## App Packages

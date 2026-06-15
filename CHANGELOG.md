@@ -7,7 +7,7 @@
   - [`union_relations_custom`](macros/union_relations_custom.sql): A Fivetran-specific fork of `dbt_utils.union_relations` that sets `_dbt_source_relation` to `database.schema` only (excluding the table name) to align with Fivetran package conventions.
   - [`apply_source_relation`](macros/apply_source_relation.sql): Derives and appends the `source_relation` column in staging models.
   - [`partition_by_source_relation`](macros/partition_by_source_relation.sql): Returns a `PARTITION BY source_relation` clause (or `, source_relation`) only when more than one source is detected.
-- Updates the `fill_staging_columns` macro to support a new `fivetran_using_source_casing` variable (default `false`). When set to `true`, the macro quotes lowercase column names as defined in the package's `get_*_columns` macros, with Snowflake targets uppercasing the alias to match Snowflake identifier conventions in downstream models. This was added to support Fivetran's MDLs feature where Polaris lowercases column names in Snowflake. See the [DECISIONLOG](DECISIONLOG.md) for more details.
+- Updates the `fill_staging_columns` macro to support a new `fivetran_using_source_casing` variable (default `false`). When set to `true`, the macro quotes lowercase column names as defined in the package's `get_*_columns` macros. On Snowflake targets, aliases are uppercased to match Snowflake's identifier conventions in downstream models. This was added to support Fivetran's Managed Data Lake Service, where column names are stored as lowercase in the Iceberg layer and must be quoted to be referenced correctly in Snowflake. See the [DECISIONLOG](DECISIONLOG.md) for more details.
 
 # dbt_fivetran_utils v0.4.11
 
