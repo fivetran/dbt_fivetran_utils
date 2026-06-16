@@ -73,7 +73,7 @@ dispatch:
     - [apply\_source\_relation (source)](#apply_source_relation-source)
     - [partition\_by\_source\_relation (source)](#partition_by_source_relation-source)
     - [union\_connections (source)](#union_connections-source)
-      - [Union Connections Defined Sources Configuration](#union-connections-defined-sources-configuration)
+      - [Union Connections Defined Sources Configuration](#optional-union-connections-defined-sources-configuration)
     - [union\_data (source)](#union_data-source)
       - [Union Data Defined Sources Configuration](#union-data-defined-sources-configuration)
     - [union\_relations\_custom (source)](#union_relations_custom-source)
@@ -459,7 +459,7 @@ from source
 **Variables:**
 * `fivetran_using_source_casing` (optional): Boolean variable, defaults to `false`. When `true`, the macro quotes lowercase column names as defined in the package's `get_*_columns` macros. For Snowflake targets, the alias is uppercased to match Snowflake identifier conventions.
 
-> **Important:** `fivetran_using_source_casing` was added specifically to support Fivetran's MDLs feature where the Polaris engine lowercases column names in Snowflake destinations. It does not generically preserve source casing — it mianly handles the lowercase-in-Snowflake case. If Polaris's behavior changes in the future, a different approach may be required. See the [DECISIONLOG](DECISIONLOG.md) for full details.
+> **Important:** `fivetran_using_source_casing` was added specifically to support Fivetran's MDLs feature where the Polaris engine lowercases column names in Snowflake destinations. It does not generically preserve source casing — it mainly handles the lowercase-in-Snowflake case. If Polaris's behavior changes in the future, a different approach may be required. See the [DECISIONLOG](DECISIONLOG.md) for full details.
 
 ----
 ### persist_pass_through_columns ([source](macros/persist_pass_through_columns.sql))
@@ -542,7 +542,9 @@ from my_cte
 
 ----
 ### union_connections ([source](macros/union_connections.sql))
-This macro unions identically structured tables across multiple Fivetran connections of the same type. It reads from a connection dictionary variable (e.g. `jira_sources`) listing each connection's `database`, `schema`, and `name` (optional), and falls back to a single-connection query if the variable is empty. If a source table is not found, the macro returns an empty table with a single `_dbt_source_relation` column and outputs a compiler warning.
+This macro unions identically structured tables across multiple Fivetran connections of the same type. It reads from a connection dictionary variable (e.g. `jira_sources`) listing each connection's `database`, `schema`, and `name` (optional), and falls back to a single-connection query if the variable is empty.
+
+If the source table is not found, `union_connections` will return a **completely** empty table (ie `limit 0`) with just one string column (`_dbt_source_relation`). A compiler warning message will be output, highlighting that the expected source table was not found and its respective staging model is empty. The compiler warning can be turned off by setting the `fivetran__remove_empty_table_warnings` variable to `True`.
 
 For example, in `dbt_jira` the connection dictionary is set as `jira_sources`, and then can be defined in your root `dbt_project.yml`:
 ```yml
@@ -702,7 +704,7 @@ relations will be filled with `null` where not present. An new column
 * `aliases`            (optional): An override of the relation identifier. This argument should be populated with the overwritten alias for the relation. If not populated `relations` will be the default.
 * `exclude`            (optional): A list of column names that should be excluded from the final query.
 * `include`            (optional): A list of column names that should be included in the final query. Note the `include` and `exclude` parameters are mutually exclusive.
-* `column_override`    (optional): A dictionary of explicit column type overrides, e.g. `{"some_field": "varchar(100)"}`.``
+* `column_override`    (optional): A dictionary of explicit column type overrides, e.g. `{"some_field": "varchar(100)"}`.
 * `source_column_name` (optional): The name of the column that records the source of this row. By default this argument is set to `_dbt_source_relation`.
 * `where` (optional): Filter conditions to include in the where clause.
 
