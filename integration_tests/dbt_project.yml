@@ -1,11 +1,16 @@
 name: 'fivetran_utils_integration_tests'
-version: '0.4.11'
+version: '0.4.12'
 config-version: 2
 profile: 'integration_tests'
 
 clean-targets:        
   - "target"
   - "dbt_packages"
+
+models:
+  +persist_docs:
+    relation: true
+    columns: "{{ false if target.type in ('databricks') else true }}" 
 
 dispatch:
   - macro_namespace: fivetran_utils

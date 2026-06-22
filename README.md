@@ -1,27 +1,15 @@
-<p align="center">
-    <a alt="License"
-        href="https://github.com/fivetran/dbt_fivetran_utils/blob/main/LICENSE">
-        <img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" /></a>
-    <a alt="dbt-core">
-        <img src="https://img.shields.io/badge/dbt_Core™_version->=1.3.0_<3.0.0-orange.svg" /></a>
-    <a alt="Maintained?">
-        <img src="https://img.shields.io/badge/Maintained%3F-yes-green.svg" /></a>
-    <a alt="PRs">
-        <img src="https://img.shields.io/badge/Contributions-welcome-blueviolet" /></a>
-</p>
-
 # Fivetran Utility Macros for dbt
 
-# 🤔 Who are the intended users of this package?
+# Who are the intended users of this package?
 - The Fivetran team to leverage across Fivetran dbt packages
-- It is not recommend to use this package outside of the Fivetran dbt packages
+- We do not recommend using this package outside of the Fivetran dbt packages
 
-# 📣 What does this dbt package do?
+# What does this dbt package do?
 This package includes macros that are used across Fivetran's dbt packages. This package is comprised primarily of cross database compatible macros and macros specific for dbt package maintenance. See the **Contents** below for the macros available within this package.
 
-# 🎯 How do I use the dbt package?
+# How do I use the dbt package?
 ## Step 1: Installing the Package
-Include the following fivetran_utils package version in your `packages.yml` if you do not have any other Fivetran dbt packag dependencies. Please note that this package is installed by default within **all** Fivetran dbt packages.
+Include the following fivetran_utils package version in your `packages.yml` if you do not have any other Fivetran dbt package dependencies. This package is installed by default within **all** Fivetran dbt packages.
 > Check [dbt Hub](https://hub.getdbt.com/) for the latest installation instructions, or [read the dbt docs](https://docs.getdbt.com/docs/package-management) for more information on installing packages.
 ```yaml
 packages:
@@ -42,15 +30,15 @@ dispatch:
 ```
 
 ----
-# 📋 Contents
+# Contents
 
 - [Fivetran Utility Macros for dbt](#fivetran-utility-macros-for-dbt)
-- [🤔 Who are the intended users of this package?](#-who-are-the-intended-users-of-this-package)
-- [📣 What does this dbt package do?](#-what-does-this-dbt-package-do)
-- [🎯 How do I use the dbt package?](#-how-do-i-use-the-dbt-package)
+- [Who are the intended users of this package?](#who-are-the-intended-users-of-this-package)
+- [What does this dbt package do?](#what-does-this-dbt-package-do)
+- [How do I use the dbt package?](#how-do-i-use-the-dbt-package)
   - [Step 1: Installing the Package](#step-1-installing-the-package)
   - [Step 2: Using the Macros](#step-2-using-the-macros)
-- [📋 Contents](#-contents)
+- [Contents](#contents)
   - [Tests and helpers](#tests-and-helpers)
     - [collect\_freshness (source)](#collect_freshness-source)
     - [seed\_data\_helper (source)](#seed_data_helper-source)
@@ -82,18 +70,23 @@ dispatch:
     - [persist\_pass\_through\_columns (source)](#persist_pass_through_columns-source)
     - [remove\_prefix\_from\_columns (source)](#remove_prefix_from_columns-source)
     - [source\_relation (source)](#source_relation-source)
+    - [apply\_source\_relation (source)](#apply_source_relation-source)
+    - [partition\_by\_source\_relation (source)](#partition_by_source_relation-source)
+    - [union\_connections (source)](#union_connections-source)
+      - [Union Connections Defined Sources Configuration](#optional-union-connections-defined-sources-configuration)
     - [union\_data (source)](#union_data-source)
       - [Union Data Defined Sources Configuration](#union-data-defined-sources-configuration)
+    - [union\_relations\_custom (source)](#union_relations_custom-source)
     - [union\_relations (source)](#union_relations-source)
   - [Variable Checks](#variable-checks)
     - [empty\_variable\_warning (source)](#empty_variable_warning-source)
     - [enabled\_vars (source)](#enabled_vars-source)
     - [enabled\_vars\_one\_true (source)](#enabled_vars_one_true-source)
-- [🔍 Does this package have dependencies?](#-does-this-package-have-dependencies)
-- [🙌 How is this package maintained and can I contribute?](#-how-is-this-package-maintained-and-can-i-contribute)
+- [Does this package have dependencies?](#does-this-package-have-dependencies)
+- [How is this package maintained and can I contribute?](#how-is-this-package-maintained-and-can-i-contribute)
   - [Package Maintenance](#package-maintenance)
   - [Contributions](#contributions)
-- [🏪 Are there any resources available?](#-are-there-any-resources-available)
+- [Are there any resources available?](#are-there-any-resources-available)
 
 ----
 
@@ -150,7 +143,7 @@ It simply chooses which version of the data to seed (the Snowflake copy should c
 
 ----
 ## Cross-database compatibility
-These macros allows functions to prevail across the different databases. 
+These macros allow functions to prevail across different databases. 
 ### array_agg ([source](macros/array_agg.sql))
 This macro allows for cross database field aggregation. The macro contains the database specific field aggregation function for 
 BigQuery, Snowflake, Redshift, and Postgres. By default a comma `,` is used as a delimiter in the aggregation.
@@ -386,7 +379,7 @@ For non-SQL Server databases, this will simply call [`dbt_utils.date_spine()`](h
 **Args:**
 * `datepart` (required): The grain at which you would like to create the date spine. 
 * `start_date` (required): The date (inclusive if it is aligned to the `datepart`) at which you'd like the date spine to start.
-* `end_date` (required): The date (excusive) at which you'd like the date spine to end.
+* `end_date` (required): The date (exclusive) at which you'd like the date spine to end.
 
 ----
 
@@ -444,8 +437,7 @@ This macro is used to generate the correct sql for package staging models for us
 
 ----
 ### fill_staging_columns ([source](macros/fill_staging_columns.sql))
-This macro is used to generate the correct SQL for package staging models. It takes a list of columns that are expected/needed (`staging_columns`) 
-and compares it with columns in the source (`source_columns`). 
+This macro generates the correct SQL for package staging models. It takes a list of expected columns (`staging_columns`) and compares them with the columns present in the source (`source_columns`). Missing columns are cast to `null` with the correct datatype.
 
 **Usage:**
 ```sql
@@ -461,8 +453,13 @@ select
 from source
 ```
 **Args:**
-* `source_columns`  (required): Will call the [get_columns_in_relation](https://docs.getdbt.com/reference/dbt-jinja-functions/adapter/#get_columns_in_relation) macro as well requires a `ref()` or `source()` argument for the staging models within the `_tmp` directory.
-* `staging_columns` (required): Created as a result of running the [generate_columns_macro](https://github.com/fivetran/dbt_fivetran_utils#generate_columns_macro-source) for the respective table.
+* `source_columns` (required): Calls [get_columns_in_relation](https://docs.getdbt.com/reference/dbt-jinja-functions/adapter/#get_columns_in_relation) and requires a `ref()` or `source()` pointing to the `_tmp` staging model.
+* `staging_columns` (required): The list of expected columns, typically returned by the package's `get_<table>_columns()` macro.
+
+**Variables:**
+* `fivetran_using_source_casing` (optional): Boolean variable, defaults to `false`. When `true`, the macro quotes lowercase column names as defined in the package's `get_*_columns` macros. For Snowflake targets, the alias is uppercased to match Snowflake identifier conventions.
+
+> **Important:** `fivetran_using_source_casing` was added specifically to support Fivetran's MDLs feature where the Polaris engine lowercases column names in Snowflake destinations. It does not generically preserve source casing — it mainly handles the lowercase-in-Snowflake case. If Polaris's behavior changes in the future, a different approach may be required. See the [DECISIONLOG](DECISIONLOG.md) for full details.
 
 ----
 ### persist_pass_through_columns ([source](macros/persist_pass_through_columns.sql))
@@ -503,6 +500,115 @@ It should be added to all non-tmp staging models when using the `union_data` mac
 **Args:**
 * `union_schema_variable` (optional): The name of the union schema variable. By default the macro will look for `union_schemas`.
 * `union_database_variable` (optional): The name of the union database variable. By default the macro will look for `union_databases`.
+
+----
+### apply_source_relation ([source](macros/apply_source_relation.sql))
+This macro generates the `source_relation` column in non-tmp staging models. It automatically selects the right approach based on how a package is configured for unioning:
+- If `{package_name}_sources` is set (new-style `union_connections`): passes through `_dbt_source_relation as source_relation`.
+- If `{package_name}_union_schemas` or `{package_name}_union_databases` is set: calls `fivetran_utils.source_relation()` with the appropriate variable names.
+- If none of the above: generates a static `database.schema` string cast as `source_relation`.
+
+**Usage:**
+```sql
+{{ fivetran_utils.apply_source_relation(package_name='jira') }}
+```
+**Args:**
+* `package_name` (required): The name of the package. Used to derive the variable names for sources, database, schema, and union schemas/databases.
+* `use_package_prefix` (optional): Boolean, defaults to `true`. When `true`, prefixes the union variable names with `package_name` (e.g., `jira_union_schemas`). When `false`, uses generic variable names (`union_schemas`, `union_databases`).
+
+----
+### partition_by_source_relation ([source](macros/partition_by_source_relation.sql))
+This macro conditionally generates a `partition by source_relation` or `, source_relation` addition to a window function's partition clause. It returns an empty string when not unioning, so you can include it in every model without needing conditional logic in your SQL.
+
+**Usage:**
+```sql
+-- Adding source_relation to an existing partition clause
+select
+    id,
+    {{ fivetran_utils.first_value(first_value_field='amount', partition_field='id' ~ fivetran_utils.partition_by_source_relation('jira'), order_by_field='created_at') }}
+from my_cte
+
+-- Starting a new partition clause with source_relation only
+select
+    id,
+    row_number() over ({{ fivetran_utils.partition_by_source_relation('jira', has_other_partitions='no') }} order by created_at) as row_num
+from my_cte
+```
+**Args:**
+* `package_name` (required): The name of the package. Used to derive the union variable names.
+* `has_other_partitions` (optional): Defaults to `'yes'`. When `'yes'`, prepends `, source_relation` to add to an existing partition. When `'no'`, generates the full `partition by source_relation` clause.
+* `alias` (optional): A CTE or relation alias to prefix `source_relation` (e.g., produces `alias.source_relation`).
+* `package_prefix_union_variable` (optional): Boolean, defaults to `true`. When `true`, prefixes union variable names with `package_name`. When `false`, uses generic names (`union_schemas`, `union_databases`).
+
+----
+### union_connections ([source](macros/union_connections.sql))
+This macro unions identically structured tables across multiple Fivetran connections of the same type. It reads from a connection dictionary variable (e.g. `jira_sources`) listing each connection's `database`, `schema`, and `name` (optional), and falls back to a single-connection query if the variable is empty.
+
+If the source table is not found, `union_connections` will return a **completely** empty table (ie `limit 0`) with just one string column (`_dbt_source_relation`). A compiler warning message will be output, highlighting that the expected source table was not found and its respective staging model is empty. The compiler warning can be turned off by setting the `fivetran__remove_empty_table_warnings` variable to `True`.
+
+For example, in `dbt_jira` the connection dictionary is set as `jira_sources`, and then can be defined in your root `dbt_project.yml`:
+```yml
+vars:
+  jira:
+    jira_sources:
+      - database: connection_1_destination_name
+        schema: connection_1_schema_name
+        name: connection_1_source_name # optional, use only if `has_defined_sources` is true 
+      - database: connection_2_destination_name
+        schema: connection_2_schema_name
+        name: connection_2_source_name # optional, use only if `has_defined_sources` is true
+```
+
+**Usage:**
+```sql
+-- in _tmp model
+{{
+    fivetran_utils.union_connections(
+        connection_dictionary='jira_sources',
+        single_source_name='jira',
+        single_table_name='issue'
+    )
+}}
+```
+**Args:**
+* `connection_dictionary`: The name of the variable containing the list of connection objects to union. Each object supports `database` (defaults to `target.database`), `schema` (defaults to `single_source_name`), and `name` (required only if `has_defined_sources` is true).
+* `single_source_name`: The source name to use when not unioning (i.e. when `connection_dictionary` is empty).
+* `single_table_name`: The name of the table to query.
+* `default_identifier` (optional): Override for the table identifier. Defaults to `single_table_name`.
+
+#### Optional: Union Connections Defined Sources Configuration
+By default, packages using this macro define one single-connection source which will be disabled if you are unioning multiple connections. This means your DAG will not include your sources, though the package will run successfully.
+
+To incorporate all of your connections into your project's DAG:
+
+1. Define each of your sources in a `.yml` file in your project. Copy the table and column-level definitions from the package's `src_<package>.yml` file into the `tables:` key below. **Important:** Make sure to remove any enable/disable configs from the `.yml` file to avoid errors.
+
+```yml
+# in a root-project schema.yml file (ex. models/src_jira.yml)
+version: 2
+
+sources:
+  - name: connection_source # must match name in <package>_sources
+    schema: connection_schema
+    database: connection_database
+    loader: Fivetran
+    loaded_at_field: _fivetran_synced
+    freshness: # feel free to adjust to your liking
+      warn_after: {count: 72, period: hour}
+      error_after: {count: 168, period: hour}
+    tables: # copy and paste from <package>/models/staging/src_<package>.yml
+```
+
+**Note:** If there are source tables you do not have, you may still include them as long as you disable the relevant variables by setting them to `false`.
+
+2. Set `has_defined_sources` to `true` in your `dbt_project.yml`:
+
+```yml
+# dbt_project.yml
+vars:
+  <package_name>:
+    has_defined_sources: true
+```
 
 ----
 ### union_data ([source](macros/union_data.sql))
@@ -578,6 +684,31 @@ sources:
       ...
 ```
 ----
+### union_relations_custom ([source](macros/union_relations_custom.sql))
+This macro is adapted from dbt_utils.union_relations() with a slight deviation, allowing for the `_dbt_source_relation` field to return only the `database.schema` as opposed to the `database.schema.table`. 
+Unions together an array of [Relations](https://docs.getdbt.com/docs/writing-code-in-dbt/class-reference/#relation),
+even when columns have differing orders in each Relation, and/or some columns are
+missing from some relations. Any columns exclusive to a subset of these
+relations will be filled with `null` where not present. An new column
+(`_dbt_source_relation`) is also added to indicate the source for each record.
+
+**Usage:**
+```sql
+{{ fivetran_utils.union_relations_custom(
+    relations=[ref('my_model'), source('my_source', 'my_table')],
+    exclude=["_loaded_at"]
+) }}
+```
+**Args:**
+* `relations`          (required): An array of [Relations](https://docs.getdbt.com/docs/writing-code-in-dbt/class-reference/#relation).
+* `aliases`            (optional): An override of the relation identifier. This argument should be populated with the overwritten alias for the relation. If not populated `relations` will be the default.
+* `exclude`            (optional): A list of column names that should be excluded from the final query.
+* `include`            (optional): A list of column names that should be included in the final query. Note the `include` and `exclude` parameters are mutually exclusive.
+* `column_override`    (optional): A dictionary of explicit column type overrides, e.g. `{"some_field": "varchar(100)"}`.
+* `source_column_name` (optional): The name of the column that records the source of this row. By default this argument is set to `_dbt_source_relation`.
+* `where` (optional): Filter conditions to include in the where clause.
+
+----
 ### union_relations ([source](macros/union_relations.sql))
 This macro unions together an array of [Relations](https://docs.getdbt.com/docs/writing-code-in-dbt/class-reference/#relation),
 even when columns have differing orders in each Relation, and/or some columns are
@@ -637,7 +768,7 @@ This macro references a set of specified boolean variable and returns `true` if 
 **Args:**
 * `vars` (required): Variable(s) you are referencing to return the declared variable value.
 
-# 🔍 Does this package have dependencies?
+# Does this package have dependencies?
 This dbt package is dependent on the following dbt packages. Please be aware that these dependencies are installed by default within this package. For more information on the following packages, refer to the [dbt hub](https://hub.getdbt.com/) site.
 > IMPORTANT: If you have any of these dependent packages in your own `packages.yml` file, we highly recommend that you remove them from your root `packages.yml` to avoid package version conflicts.
 ```yml
@@ -646,16 +777,16 @@ packages:
       version: [">=1.0.0", "<2.0.0"]
 ```
 
-# 🙌 How is this package maintained and can I contribute?
+# How is this package maintained and can I contribute?
 ## Package Maintenance
-The Fivetran team maintaining this package **only** maintains the latest version of the package. We highly recommend you stay consistent with the [latest version](https://hub.getdbt.com/fivetran/jira/latest/) of the package and refer to the [CHANGELOG](https://github.com/fivetran/dbt_jira/blob/main/CHANGELOG.md) and release notes for more information on changes across versions.
+The Fivetran team maintaining this package **only** maintains the latest version of the package. We highly recommend you stay consistent with the [latest version](https://hub.getdbt.com/fivetran/fivetran_utils/latest/) of the package and refer to the [CHANGELOG](https://github.com/fivetran/dbt_fivetran_utils/blob/releases/v0.4.latest/CHANGELOG.md) and release notes for more information on changes across versions.
 
 ## Contributions
 These dbt packages are developed by a small team of analytics engineers at Fivetran. However, the packages are made better by community contributions! 
 
 We highly encourage and welcome contributions to this package. Check out [this post](https://discourse.getdbt.com/t/contributing-to-a-dbt-package/657) on the best workflow for contributing to a package!
 
-# 🏪 Are there any resources available?
+# Are there any resources available?
 - If you encounter any questions or want to reach out for help, please refer to the [GitHub Issue](https://github.com/fivetran/dbt_fivetran_utils/issues/new/choose) section to find the right avenue of support for you.
 - If you would like to provide feedback to the dbt package team at Fivetran, or would like to request a future dbt package to be developed, then feel free to fill out our [Feedback Form](https://www.surveymonkey.com/r/DQ7K7WW).
 - Have questions or want to just say hi? Book a time during our office hours [here](https://calendly.com/fivetran-solutions-team/fivetran-solutions-team-office-hours) or send us an email at solutions@fivetran.com.
