@@ -20,3 +20,7 @@
 {%- macro postgres__wrap_in_quotes(object_to_quote)  -%}
     "{{ object_to_quote }}"
 {%- endmacro -%}
+
+{%- macro duckdb__wrap_in_quotes(object_to_quote)  -%}
+    "{{ object_to_quote }}"
+{%- endmacro -%}
