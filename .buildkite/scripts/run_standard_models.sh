@@ -20,8 +20,22 @@ db=$1
 # step's container to be joined to the "fivetran_utils_pg_ci" docker network (set
 # via the `network` option on the docker#v3.13.0 plugin in pipeline.yml), so the
 # sibling postgres container below is reachable by name over that network.
+install_docker_cli() {
+    # The docker.io apt package on Debian bookworm ships a client too old
+    # (API 1.41) for the CI host's Docker daemon (requires API >= 1.44).
+    # Install a current static client instead -- it negotiates the API
+    # version with whatever daemon it talks to, so this isn't version-pinned
+    # to the host.
+    command -v docker > /dev/null 2>&1 && return
+    arch="$(uname -m)"
+    curl -fsSL "https://download.docker.com/linux/static/stable/${arch}/docker-27.3.1.tgz" -o /tmp/docker.tgz
+    tar -xzf /tmp/docker.tgz -C /tmp
+    mv /tmp/docker/docker /usr/local/bin/docker
+    rm -rf /tmp/docker /tmp/docker.tgz
+}
+
 start_postgres_container() {
-    apt-get install -y docker.io
+    install_docker_cli
     container_name="pg_ci_${BUILDKITE_JOB_ID:-local}"
     echo "Starting containerized Postgres (${container_name})..."
     docker run -d --name "$container_name" \
