@@ -15,6 +15,10 @@ cp integration_tests/ci/sample.profiles.yml ~/.dbt/profiles.yml
 db=$1
 echo `pwd`
 cd integration_tests
+
+## Point every fivetran hub package in packages.yml to its MagicBot/duckdb-support branch instead of the published version, so this run tests against the in-progress DuckDB support code.
+perl -0777 -i -pe 's/^([ ]*)- package: fivetran\/(\S+)\n\s*version: \[.*?\]/$1- git: https:\/\/github.com\/fivetran\/dbt_$2.git\n$1  revision: MagicBot\/duckdb-support/mg' packages.yml
+
 dbt deps ## Install all packages needed
 
 shift ## Skips the first argument (warehouse) and moves to only looking at the package arguments
