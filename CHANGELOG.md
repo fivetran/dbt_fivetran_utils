@@ -1,3 +1,10 @@
+# dbt_fivetran_utils v0.4.13
+
+[PR #157](https://github.com/fivetran/dbt_fivetran_utils/pull/157) includes the following updates:
+
+## Feature Updates
+- Adds DuckDB as a supported destination.
+
 # dbt_fivetran_utils v0.4.12
 [PR #156](https://github.com/fivetran/dbt_fivetran_utils/pull/156) includes the following updates:
 
