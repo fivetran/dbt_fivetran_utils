@@ -209,7 +209,7 @@ The data is returned by the path you provide as the argument. The json_extract m
 ----
 ### json_parse ([source](macros/json_parse.sql))
 This macro allows for cross database use of the json extract function, specifically used to parse and extract a nested value from a json object.
-The data is returned by the path you provide as the list within the `string_path` argument. The json_parse macro is compatible with BigQuery, Redshift, Postgres, Snowflake and Databricks.
+The data is returned by the path you provide as the list within the `string_path` argument. The json_parse macro is compatible with BigQuery, Redshift, Postgres, Snowflake, DuckDB, and Databricks.
 
 **Usage:**
 ```sql
