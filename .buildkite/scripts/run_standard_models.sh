@@ -49,7 +49,7 @@ start_postgres_container() {
             echo "Postgres container is ready"
             perl -i -pe "s/(host: ).*/\1$container_name/" ~/.dbt/profiles.yml
             perl -i -pe "s/(user: ).*/\1postgres/" ~/.dbt/profiles.yml
-            perl -i -pe "s/(pass: ).*/\1/" ~/.dbt/profiles.yml
+            perl -i -pe 's/(pass: ).*/\1""/' ~/.dbt/profiles.yml
             perl -i -pe "s/(dbname: ).*/\1postgres/" ~/.dbt/profiles.yml
             return 0
         fi
