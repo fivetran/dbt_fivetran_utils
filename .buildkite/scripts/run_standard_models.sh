@@ -13,6 +13,49 @@ mkdir -p ~/.dbt
 cp integration_tests/ci/sample.profiles.yml ~/.dbt/profiles.yml
 
 db=$1
+
+# Postgres runs in a disposable local container instead of a shared, credentialed
+# instance -- avoids cross-build connection contention on the shared CI instance.
+# Requires the docker socket to be mounted into this step's container, and this
+# step's container to be joined to the "fivetran_utils_pg_ci" docker network (set
+# via the `network` option on the docker#v3.13.0 plugin in pipeline.yml), so the
+# sibling postgres container below is reachable by name over that network.
+start_postgres_container() {
+    apt-get install -y docker.io
+    container_name="pg_ci_${BUILDKITE_JOB_ID:-local}"
+    echo "Starting containerized Postgres (${container_name})..."
+    docker run -d --name "$container_name" \
+        --network fivetran_utils_pg_ci \
+        -e POSTGRES_HOST_AUTH_METHOD=trust \
+        postgres:15
+
+    echo "Waiting for Postgres to become ready..."
+    for _ in $(seq 1 30); do
+        if docker exec "$container_name" pg_isready -U postgres > /dev/null 2>&1; then
+            echo "Postgres container is ready"
+            perl -i -pe "s/(host: ).*/\1$container_name/" ~/.dbt/profiles.yml
+            perl -i -pe "s/(user: ).*/\1postgres/" ~/.dbt/profiles.yml
+            perl -i -pe "s/(pass: ).*/\1/" ~/.dbt/profiles.yml
+            perl -i -pe "s/(dbname: ).*/\1postgres/" ~/.dbt/profiles.yml
+            return 0
+        fi
+        sleep 1
+    done
+
+    echo "ERROR: Postgres container did not become ready in time"
+    docker logs "$container_name" || true
+    exit 1
+}
+
+stop_postgres_container() {
+    docker rm -f "$container_name" > /dev/null 2>&1 || true
+}
+
+if [ "$db" = "postgres" ]; then
+    start_postgres_container
+    trap stop_postgres_container EXIT
+fi
+
 echo `pwd`
 cd integration_tests
 dbt deps ## Install all packages needed

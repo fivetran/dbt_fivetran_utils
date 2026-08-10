@@ -21,18 +21,15 @@ steps:
 
   - label: ":postgres: Run Tests - Ads Packages :bookmark: :one:"
     key: "run-dbt-postgres-ads_1"
-    concurrency: 3
-    concurrency_group: "warehouse/postgres"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
-            - "CI_POSTGRES_DBT_DBNAME"
-            - "CI_POSTGRES_DBT_HOST"
-            - "CI_POSTGRES_DBT_PASS"
-            - "CI_POSTGRES_DBT_USER"
+          volumes:
+            - "/var/run/docker.sock:/var/run/docker.sock"
+          network: "fivetran_utils_pg_ci"
     commands: |
       bash .buildkite/scripts/run_standard_models.sh postgres linkedin apple_search_ads snapchat_ads facebook_ads
 
@@ -105,18 +102,15 @@ steps:
 
   - label: ":postgres: Run Tests - Ads Packages :bookmark: :two:"
     key: "run-dbt-postgres-ads_2"
-    concurrency: 3
-    concurrency_group: "warehouse/postgres"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
-            - "CI_POSTGRES_DBT_DBNAME"
-            - "CI_POSTGRES_DBT_HOST"
-            - "CI_POSTGRES_DBT_PASS"
-            - "CI_POSTGRES_DBT_USER"
+          volumes:
+            - "/var/run/docker.sock:/var/run/docker.sock"
+          network: "fivetran_utils_pg_ci"
     commands: |
       bash .buildkite/scripts/run_standard_models.sh postgres tiktok_ads twitter_ads amazon_ads reddit_ads
 
@@ -190,18 +184,15 @@ steps:
 
   - label: ":postgres: Run Tests - Ads Packages :bookmark: :three:"
     key: "run-dbt-postgres-ads_3"
-    concurrency: 3
-    concurrency_group: "warehouse/postgres"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
-            - "CI_POSTGRES_DBT_DBNAME"
-            - "CI_POSTGRES_DBT_HOST"
-            - "CI_POSTGRES_DBT_PASS"
-            - "CI_POSTGRES_DBT_USER"
+          volumes:
+            - "/var/run/docker.sock:/var/run/docker.sock"
+          network: "fivetran_utils_pg_ci"
     commands: |
       bash .buildkite/scripts/run_standard_models.sh postgres google_ads microsoft_ads pinterest
 
@@ -275,18 +266,15 @@ steps:
 
   - label: ":postgres: Run Tests - Social Packages :iphone:"
     key: "run-dbt-postgres-social"
-    concurrency: 3
-    concurrency_group: "warehouse/postgres"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
-            - "CI_POSTGRES_DBT_DBNAME"
-            - "CI_POSTGRES_DBT_HOST"
-            - "CI_POSTGRES_DBT_PASS"
-            - "CI_POSTGRES_DBT_USER"
+          volumes:
+            - "/var/run/docker.sock:/var/run/docker.sock"
+          network: "fivetran_utils_pg_ci"
     commands: |
       bash .buildkite/scripts/run_standard_models.sh postgres linkedin_pages facebook_pages instagram_business twitter_organic youtube_analytics
 
@@ -360,18 +348,15 @@ steps:
 
   - label: ":postgres: Run Tests - App Packages :video_game:"
     key: "run-dbt-postgres-app"
-    concurrency: 3
-    concurrency_group: "warehouse/postgres"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
-            - "CI_POSTGRES_DBT_DBNAME"
-            - "CI_POSTGRES_DBT_HOST"
-            - "CI_POSTGRES_DBT_PASS"
-            - "CI_POSTGRES_DBT_USER"
+          volumes:
+            - "/var/run/docker.sock:/var/run/docker.sock"
+          network: "fivetran_utils_pg_ci"
     commands: |
       bash .buildkite/scripts/run_standard_models.sh postgres google_play apple_store
 
@@ -445,18 +430,15 @@ steps:
 
   - label: ":postgres: Run Tests - CRM Packages :salesforce::hubspot:"
     key: "run-dbt-postgres-crm"
-    concurrency: 3
-    concurrency_group: "warehouse/postgres"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
-            - "CI_POSTGRES_DBT_DBNAME"
-            - "CI_POSTGRES_DBT_HOST"
-            - "CI_POSTGRES_DBT_PASS"
-            - "CI_POSTGRES_DBT_USER"
+          volumes:
+            - "/var/run/docker.sock:/var/run/docker.sock"
+          network: "fivetran_utils_pg_ci"
     commands: |
       bash .buildkite/scripts/run_standard_models.sh postgres salesforce hubspot
 
@@ -530,18 +512,15 @@ steps:
 
   - label: ":postgres: Run Tests - Ecommerce and Subscription Packages :shopping_bags:"
     key: "run-dbt-postgres-esub"
-    concurrency: 3
-    concurrency_group: "warehouse/postgres"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
-            - "CI_POSTGRES_DBT_DBNAME"
-            - "CI_POSTGRES_DBT_HOST"
-            - "CI_POSTGRES_DBT_PASS"
-            - "CI_POSTGRES_DBT_USER"
+          volumes:
+            - "/var/run/docker.sock:/var/run/docker.sock"
+          network: "fivetran_utils_pg_ci"
     commands: |
       bash .buildkite/scripts/run_standard_models.sh postgres shopify recurly stripe zuora
 
@@ -615,18 +594,15 @@ steps:
 
   - label: ":postgres: Run Tests - Email Marketing Packages :email:"
     key: "run-dbt-postgres-email"
-    concurrency: 3
-    concurrency_group: "warehouse/postgres"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
-            - "CI_POSTGRES_DBT_DBNAME"
-            - "CI_POSTGRES_DBT_HOST"
-            - "CI_POSTGRES_DBT_PASS"
-            - "CI_POSTGRES_DBT_USER"
+          volumes:
+            - "/var/run/docker.sock:/var/run/docker.sock"
+          network: "fivetran_utils_pg_ci"
     commands: |
       bash .buildkite/scripts/run_standard_models.sh postgres marketo iterable klaviyo mailchimp pardot
 
@@ -700,18 +676,15 @@ steps:
 
   - label: ":postgres: Run Tests - Finance Packages :money_with_wings:"
     key: "run-dbt-postgres-finance"
-    concurrency: 3
-    concurrency_group: "warehouse/postgres"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
-            - "CI_POSTGRES_DBT_DBNAME"
-            - "CI_POSTGRES_DBT_HOST"
-            - "CI_POSTGRES_DBT_PASS"
-            - "CI_POSTGRES_DBT_USER"
+          volumes:
+            - "/var/run/docker.sock:/var/run/docker.sock"
+          network: "fivetran_utils_pg_ci"
     commands: |
       bash .buildkite/scripts/run_standard_models.sh postgres quickbooks xero sage_intacct netsuite
 
@@ -785,18 +758,15 @@ steps:
 
   - label: ":postgres: Run Tests - Log and People Packages :people_hugging:"
     key: "run-dbt-postgres-log_people"
-    concurrency: 3
-    concurrency_group: "warehouse/postgres"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
-            - "CI_POSTGRES_DBT_DBNAME"
-            - "CI_POSTGRES_DBT_HOST"
-            - "CI_POSTGRES_DBT_PASS"
-            - "CI_POSTGRES_DBT_USER"
+          volumes:
+            - "/var/run/docker.sock:/var/run/docker.sock"
+          network: "fivetran_utils_pg_ci"
     commands: |
       bash .buildkite/scripts/run_standard_models.sh postgres fivetran_log greenhouse lever
 
@@ -870,18 +840,15 @@ steps:
 
   - label: ":postgres: Run Tests - Product Packages :unicorn_face:"
     key: "run-dbt-postgres-product"
-    concurrency: 3
-    concurrency_group: "warehouse/postgres"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
-            - "CI_POSTGRES_DBT_DBNAME"
-            - "CI_POSTGRES_DBT_HOST"
-            - "CI_POSTGRES_DBT_PASS"
-            - "CI_POSTGRES_DBT_USER"
+          volumes:
+            - "/var/run/docker.sock:/var/run/docker.sock"
+          network: "fivetran_utils_pg_ci"
     commands: |
       bash .buildkite/scripts/run_standard_models.sh postgres amplitude mixpanel pendo
 
@@ -955,18 +922,15 @@ steps:
 
   - label: ":postgres: Run Tests - Velocity Packages :roller_coaster:"
     key: "run-dbt-postgres-velocity"
-    concurrency: 3
-    concurrency_group: "warehouse/postgres"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
-            - "CI_POSTGRES_DBT_DBNAME"
-            - "CI_POSTGRES_DBT_HOST"
-            - "CI_POSTGRES_DBT_PASS"
-            - "CI_POSTGRES_DBT_USER"
+          volumes:
+            - "/var/run/docker.sock:/var/run/docker.sock"
+          network: "fivetran_utils_pg_ci"
     commands: |
       bash .buildkite/scripts/run_standard_models.sh postgres intercom github zendesk asana jira
 
@@ -1040,18 +1004,15 @@ steps:
 
   - label: ":postgres: Run Tests - Ad Reporting Roll Up Package :roller_skate:"
     key: "run-dbt-postgres-ad_roll"
-    concurrency: 3
-    concurrency_group: "warehouse/postgres"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
-            - "CI_POSTGRES_DBT_DBNAME"
-            - "CI_POSTGRES_DBT_HOST"
-            - "CI_POSTGRES_DBT_PASS"
-            - "CI_POSTGRES_DBT_USER"
+          volumes:
+            - "/var/run/docker.sock:/var/run/docker.sock"
+          network: "fivetran_utils_pg_ci"
     commands: |
       bash .buildkite/scripts/run_standard_models.sh postgres ad_reporting
 
@@ -1125,18 +1086,15 @@ steps:
 
   - label: ":postgres: Run Tests - App Reporting Roll Up Package :roller_skate:"
     key: "run-dbt-postgres-app_roll"
-    concurrency: 3
-    concurrency_group: "warehouse/postgres"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
-            - "CI_POSTGRES_DBT_DBNAME"
-            - "CI_POSTGRES_DBT_HOST"
-            - "CI_POSTGRES_DBT_PASS"
-            - "CI_POSTGRES_DBT_USER"
+          volumes:
+            - "/var/run/docker.sock:/var/run/docker.sock"
+          network: "fivetran_utils_pg_ci"
     commands: |
       bash .buildkite/scripts/run_standard_models.sh postgres app_reporting
 
@@ -1210,18 +1168,15 @@ steps:
 
   - label: ":postgres: Run Tests - Social Reporting Roll Up Package :roller_skate:"
     key: "run-dbt-postgres-social_roll"
-    concurrency: 3
-    concurrency_group: "warehouse/postgres"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
-            - "CI_POSTGRES_DBT_DBNAME"
-            - "CI_POSTGRES_DBT_HOST"
-            - "CI_POSTGRES_DBT_PASS"
-            - "CI_POSTGRES_DBT_USER"
+          volumes:
+            - "/var/run/docker.sock:/var/run/docker.sock"
+          network: "fivetran_utils_pg_ci"
     commands: |
       bash .buildkite/scripts/run_standard_models.sh postgres social_media_reporting
 
