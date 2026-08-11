@@ -173,7 +173,3 @@ packages:
   #   version: [">=1.0.0", "<2.0.0"]
   - git: https://github.com/fivetran/dbt_twilio.git
     revision: MagicBot/duckdb-support
-  # - package: fivetran/unified_rag
-  #   version: [">=1.0.0", "<2.0.0"]
-  - git: https://github.com/fivetran/dbt_unified_rag.git
-    revision: MagicBot/duckdb-support

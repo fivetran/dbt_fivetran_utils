@@ -1039,7 +1039,7 @@ steps:
 #             - "CI_SNOWFLAKE_DBT_USER"
 #             - "CI_SNOWFLAKE_DBT_WAREHOUSE"
 #     commands: |
-#       bash .buildkite/scripts/run_standard_models.sh snowflake intercom github zendesk asana jira servicenow twilio unified_rag
+#       bash .buildkite/scripts/run_standard_models.sh snowflake intercom github zendesk asana jira servicenow twilio
 
 #   - label: ":postgres: Run Tests - Velocity Packages :roller_coaster:"
 #     key: "run-dbt-postgres-velocity"
@@ -1053,7 +1053,7 @@ steps:
 #             - "/var/run/docker.sock:/var/run/docker.sock"
 #           network: "fivetran_utils_pg_ci"
 #     commands: |
-#       bash .buildkite/scripts/run_standard_models.sh postgres intercom github zendesk asana jira servicenow twilio unified_rag
+#       bash .buildkite/scripts/run_standard_models.sh postgres intercom github zendesk asana jira servicenow twilio
 
 #   - label: ":gcloud: Run Tests - Velocity Packages :roller_coaster:"
 #     key: "run_dbt_bigquery_velocity"
@@ -1067,7 +1067,7 @@ steps:
 #             - "BASH_ENV=/tmp/.bashrc"
 #             - "GCLOUD_SERVICE_KEY"
 #     commands: |
-#       bash .buildkite/scripts/run_standard_models.sh bigquery intercom github zendesk asana jira servicenow twilio unified_rag
+#       bash .buildkite/scripts/run_standard_models.sh bigquery intercom github zendesk asana jira servicenow twilio
 
 #   - label: ":amazon-redshift: Run Tests - Velocity Packages :roller_coaster:"
 #     key: "run_dbt_redshift_velocity"
@@ -1084,7 +1084,7 @@ steps:
 #             - "CI_REDSHIFT_DBT_PASS"
 #             - "CI_REDSHIFT_DBT_USER"
 #     commands: |
-#       bash .buildkite/scripts/run_standard_models.sh redshift intercom github zendesk asana jira servicenow twilio unified_rag
+#       bash .buildkite/scripts/run_standard_models.sh redshift intercom github zendesk asana jira servicenow twilio
 
 #   - label: ":databricks: Run Tests - Velocity Packages :roller_coaster:"
 #     key: "run_dbt_databricks_velocity"
@@ -1100,7 +1100,7 @@ steps:
 #             - "CI_DATABRICKS_DBT_HTTP_PATH"
 #             - "CI_DATABRICKS_DBT_TOKEN"
 #     commands: |
-#       bash .buildkite/scripts/run_standard_models.sh databricks intercom github zendesk asana jira servicenow twilio unified_rag
+#       bash .buildkite/scripts/run_standard_models.sh databricks intercom github zendesk asana jira servicenow twilio
 
   - label: ":duckdb: Run Tests - Velocity Packages :roller_coaster:"
     key: "run_dbt_duckdb_velocity"
@@ -1111,7 +1111,7 @@ steps:
           environment:
             - "BASH_ENV=/tmp/.bashrc"
     commands: |
-      bash .buildkite/scripts/run_standard_models.sh duckdb intercom github zendesk asana jira servicenow twilio unified_rag
+      bash .buildkite/scripts/run_standard_models.sh duckdb intercom github zendesk asana jira servicenow twilio
     
 
 ## Ad Reporting Roll Up Packages
