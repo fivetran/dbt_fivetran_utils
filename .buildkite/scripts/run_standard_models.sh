@@ -83,10 +83,7 @@ do
     cd dbt_packages/$package/integration_tests/
     rm -f package-lock.yml
     dbt deps
-    ## For when packages are using a published version of fivetran_utils
-    # awk '/name: fivetran_utils/ {print "  - local: ../../../../\n    name: fivetran_utils"; skip=1; next} skip && /^  -/ {skip=0} !skip' package-lock.yml > temp.yml && mv temp.yml package-lock.yml
-    ## For when packages are using a git branch version of fivetran_utils
-    awk '/git:.*dbt_fivetran_utils/ {print "  - local: ../../../../\n    name: fivetran_utils"; skip=1; next} skip && /^  -/ {skip=0} !skip' package-lock.yml > temp.yml && mv temp.yml package-lock.yml
+    awk '/^  - (git: .*dbt_fivetran_utils\.git|package: fivetran\/fivetran_utils)/ {print "  - local: ../../../../\n    name: fivetran_utils"; skip=1; next} skip && /^  -/ {skip=0} !skip' package-lock.yml > temp.yml && mv temp.yml package-lock.yml
     dbt deps
     fivetran_utils_version=$(grep "^version:" dbt_packages/fivetran_utils/dbt_project.yml | awk '{print $2}')
     echo -e "\nUsing fivetran_utils version: "$fivetran_utils_version"\n"
