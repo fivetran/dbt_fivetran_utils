@@ -1,84 +1,84 @@
 steps:
 ## Ads Packages 1
-  - label: ":snowflake: Run Tests - Ads Packages :bookmark: :one:"
-    key: "run_dbt_snowflake_ads_1"
-    concurrency: 3
-    concurrency_group: "warehouse/snowflake"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "CI_SNOWFLAKE_DBT_ACCOUNT"
-            - "CI_SNOWFLAKE_DATABASE_FT_UTILS"
-            - "CI_SNOWFLAKE_DBT_PASS"
-            - "CI_SNOWFLAKE_DBT_ROLE_FT_UTILS_TEST"
-            - "CI_SNOWFLAKE_DBT_USER"
-            - "CI_SNOWFLAKE_DBT_WAREHOUSE"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh snowflake linkedin apple_search_ads snapchat_ads facebook_ads
+#   - label: ":snowflake: Run Tests - Ads Packages :bookmark: :one:"
+#     key: "run_dbt_snowflake_ads_1"
+#     concurrency: 3
+#     concurrency_group: "warehouse/snowflake"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "CI_SNOWFLAKE_DBT_ACCOUNT"
+#             - "CI_SNOWFLAKE_DATABASE_FT_UTILS"
+#             - "CI_SNOWFLAKE_DBT_PASS"
+#             - "CI_SNOWFLAKE_DBT_ROLE_FT_UTILS_TEST"
+#             - "CI_SNOWFLAKE_DBT_USER"
+#             - "CI_SNOWFLAKE_DBT_WAREHOUSE"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh snowflake linkedin apple_search_ads snapchat_ads facebook_ads
 
-  - label: ":postgres: Run Tests - Ads Packages :bookmark: :one:"
-    key: "run-dbt-postgres-ads_1"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-          volumes:
-            - "/var/run/docker.sock:/var/run/docker.sock"
-          network: "fivetran_utils_pg_ci"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh postgres linkedin apple_search_ads snapchat_ads facebook_ads
+#   - label: ":postgres: Run Tests - Ads Packages :bookmark: :one:"
+#     key: "run-dbt-postgres-ads_1"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#           volumes:
+#             - "/var/run/docker.sock:/var/run/docker.sock"
+#           network: "fivetran_utils_pg_ci"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh postgres linkedin apple_search_ads snapchat_ads facebook_ads
 
-  - label: ":gcloud: Run Tests - Ads Packages :bookmark: :one:"
-    key: "run_dbt_bigquery_ads_1"
-    concurrency: 3
-    concurrency_group: "warehouse/bigquery"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "GCLOUD_SERVICE_KEY"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh bigquery linkedin apple_search_ads snapchat_ads facebook_ads
+#   - label: ":gcloud: Run Tests - Ads Packages :bookmark: :one:"
+#     key: "run_dbt_bigquery_ads_1"
+#     concurrency: 3
+#     concurrency_group: "warehouse/bigquery"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "GCLOUD_SERVICE_KEY"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh bigquery linkedin apple_search_ads snapchat_ads facebook_ads
 
-  - label: ":amazon-redshift: Run Tests - Ads Packages :bookmark: :one:"
-    key: "run_dbt_redshift_ads_1"
-    concurrency: 3
-    concurrency_group: "warehouse/redshift"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "CI_REDSHIFT_DBT_DBNAME"
-            - "CI_REDSHIFT_DBT_HOST"
-            - "CI_REDSHIFT_DBT_PASS"
-            - "CI_REDSHIFT_DBT_USER"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh redshift linkedin apple_search_ads snapchat_ads facebook_ads
+#   - label: ":amazon-redshift: Run Tests - Ads Packages :bookmark: :one:"
+#     key: "run_dbt_redshift_ads_1"
+#     concurrency: 3
+#     concurrency_group: "warehouse/redshift"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "CI_REDSHIFT_DBT_DBNAME"
+#             - "CI_REDSHIFT_DBT_HOST"
+#             - "CI_REDSHIFT_DBT_PASS"
+#             - "CI_REDSHIFT_DBT_USER"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh redshift linkedin apple_search_ads snapchat_ads facebook_ads
 
-  - label: ":databricks: Run Tests - Ads Packages :bookmark: :one:"
-    key: "run_dbt_databricks_ads_1"
-    concurrency: 3
-    concurrency_group: "warehouse/databricks"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "CI_DATABRICKS_DBT_HOST"
-            - "CI_DATABRICKS_DBT_HTTP_PATH"
-            - "CI_DATABRICKS_DBT_TOKEN"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh databricks linkedin apple_search_ads snapchat_ads facebook_ads 
+#   - label: ":databricks: Run Tests - Ads Packages :bookmark: :one:"
+#     key: "run_dbt_databricks_ads_1"
+#     concurrency: 3
+#     concurrency_group: "warehouse/databricks"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "CI_DATABRICKS_DBT_HOST"
+#             - "CI_DATABRICKS_DBT_HTTP_PATH"
+#             - "CI_DATABRICKS_DBT_TOKEN"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh databricks linkedin apple_search_ads snapchat_ads facebook_ads 
 
   - label: ":duckdb: Run Tests - Ads Packages :bookmark: :one:"
     key: "run_dbt_duckdb_ads_1"
@@ -92,85 +92,85 @@ steps:
       bash .buildkite/scripts/run_standard_models.sh duckdb linkedin apple_search_ads snapchat_ads facebook_ads
 
 ## Ads Packages 2
-  - label: ":snowflake: Run Tests - Ads Packages :bookmark: :two:"
-    key: "run_dbt_snowflake_ads_2"
-    concurrency: 3
-    concurrency_group: "warehouse/snowflake"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "CI_SNOWFLAKE_DBT_ACCOUNT"
-            - "CI_SNOWFLAKE_DATABASE_FT_UTILS"
-            - "CI_SNOWFLAKE_DBT_PASS"
-            - "CI_SNOWFLAKE_DBT_ROLE_FT_UTILS_TEST"
-            - "CI_SNOWFLAKE_DBT_USER"
-            - "CI_SNOWFLAKE_DBT_WAREHOUSE"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh snowflake tiktok_ads twitter_ads amazon_ads reddit_ads
+#   - label: ":snowflake: Run Tests - Ads Packages :bookmark: :two:"
+#     key: "run_dbt_snowflake_ads_2"
+#     concurrency: 3
+#     concurrency_group: "warehouse/snowflake"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "CI_SNOWFLAKE_DBT_ACCOUNT"
+#             - "CI_SNOWFLAKE_DATABASE_FT_UTILS"
+#             - "CI_SNOWFLAKE_DBT_PASS"
+#             - "CI_SNOWFLAKE_DBT_ROLE_FT_UTILS_TEST"
+#             - "CI_SNOWFLAKE_DBT_USER"
+#             - "CI_SNOWFLAKE_DBT_WAREHOUSE"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh snowflake tiktok_ads twitter_ads amazon_ads reddit_ads
 
-  - label: ":postgres: Run Tests - Ads Packages :bookmark: :two:"
-    key: "run-dbt-postgres-ads_2"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-          volumes:
-            - "/var/run/docker.sock:/var/run/docker.sock"
-          network: "fivetran_utils_pg_ci"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh postgres tiktok_ads twitter_ads amazon_ads reddit_ads
+#   - label: ":postgres: Run Tests - Ads Packages :bookmark: :two:"
+#     key: "run-dbt-postgres-ads_2"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#           volumes:
+#             - "/var/run/docker.sock:/var/run/docker.sock"
+#           network: "fivetran_utils_pg_ci"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh postgres tiktok_ads twitter_ads amazon_ads reddit_ads
 
-  - label: ":gcloud: Run Tests - Ads Packages :bookmark: :two:"
-    key: "run_dbt_bigquery_ads_2"
-    concurrency: 3
-    concurrency_group: "warehouse/bigquery"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "GCLOUD_SERVICE_KEY"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh bigquery tiktok_ads twitter_ads amazon_ads reddit_ads
+#   - label: ":gcloud: Run Tests - Ads Packages :bookmark: :two:"
+#     key: "run_dbt_bigquery_ads_2"
+#     concurrency: 3
+#     concurrency_group: "warehouse/bigquery"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "GCLOUD_SERVICE_KEY"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh bigquery tiktok_ads twitter_ads amazon_ads reddit_ads
 
-  - label: ":amazon-redshift: Run Tests - Ads Packages :bookmark: :two:"
-    key: "run_dbt_redshift_ads_2"
-    concurrency: 3
-    concurrency_group: "warehouse/redshift"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "CI_REDSHIFT_DBT_DBNAME"
-            - "CI_REDSHIFT_DBT_HOST"
-            - "CI_REDSHIFT_DBT_PASS"
-            - "CI_REDSHIFT_DBT_USER"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh redshift tiktok_ads twitter_ads amazon_ads reddit_ads
+#   - label: ":amazon-redshift: Run Tests - Ads Packages :bookmark: :two:"
+#     key: "run_dbt_redshift_ads_2"
+#     concurrency: 3
+#     concurrency_group: "warehouse/redshift"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "CI_REDSHIFT_DBT_DBNAME"
+#             - "CI_REDSHIFT_DBT_HOST"
+#             - "CI_REDSHIFT_DBT_PASS"
+#             - "CI_REDSHIFT_DBT_USER"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh redshift tiktok_ads twitter_ads amazon_ads reddit_ads
 
-  - label: ":databricks: Run Tests - Ads Packages :bookmark: :two:"
-    key: "run_dbt_databricks_ads_2"
-    concurrency: 3
-    concurrency_group: "warehouse/databricks"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "CI_DATABRICKS_DBT_HOST"
-            - "CI_DATABRICKS_DBT_HTTP_PATH"
-            - "CI_DATABRICKS_DBT_TOKEN"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh databricks tiktok_ads twitter_ads amazon_ads reddit_ads
+#   - label: ":databricks: Run Tests - Ads Packages :bookmark: :two:"
+#     key: "run_dbt_databricks_ads_2"
+#     concurrency: 3
+#     concurrency_group: "warehouse/databricks"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "CI_DATABRICKS_DBT_HOST"
+#             - "CI_DATABRICKS_DBT_HTTP_PATH"
+#             - "CI_DATABRICKS_DBT_TOKEN"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh databricks tiktok_ads twitter_ads amazon_ads reddit_ads
 
   - label: ":duckdb: Run Tests - Ads Packages :bookmark: :two:"
     key: "run_dbt_duckdb_ads_2"
@@ -185,85 +185,85 @@ steps:
     
 
 ## Ads Packages 3
-  - label: ":snowflake: Run Tests - Ads Packages :bookmark: :three:"
-    key: "run_dbt_snowflake_ads_3"
-    concurrency: 3
-    concurrency_group: "warehouse/snowflake"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "CI_SNOWFLAKE_DBT_ACCOUNT"
-            - "CI_SNOWFLAKE_DATABASE_FT_UTILS"
-            - "CI_SNOWFLAKE_DBT_PASS"
-            - "CI_SNOWFLAKE_DBT_ROLE_FT_UTILS_TEST"
-            - "CI_SNOWFLAKE_DBT_USER"
-            - "CI_SNOWFLAKE_DBT_WAREHOUSE"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh snowflake google_ads microsoft_ads pinterest
+#   - label: ":snowflake: Run Tests - Ads Packages :bookmark: :three:"
+#     key: "run_dbt_snowflake_ads_3"
+#     concurrency: 3
+#     concurrency_group: "warehouse/snowflake"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "CI_SNOWFLAKE_DBT_ACCOUNT"
+#             - "CI_SNOWFLAKE_DATABASE_FT_UTILS"
+#             - "CI_SNOWFLAKE_DBT_PASS"
+#             - "CI_SNOWFLAKE_DBT_ROLE_FT_UTILS_TEST"
+#             - "CI_SNOWFLAKE_DBT_USER"
+#             - "CI_SNOWFLAKE_DBT_WAREHOUSE"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh snowflake google_ads microsoft_ads pinterest
 
-  - label: ":postgres: Run Tests - Ads Packages :bookmark: :three:"
-    key: "run-dbt-postgres-ads_3"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-          volumes:
-            - "/var/run/docker.sock:/var/run/docker.sock"
-          network: "fivetran_utils_pg_ci"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh postgres google_ads microsoft_ads pinterest
+#   - label: ":postgres: Run Tests - Ads Packages :bookmark: :three:"
+#     key: "run-dbt-postgres-ads_3"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#           volumes:
+#             - "/var/run/docker.sock:/var/run/docker.sock"
+#           network: "fivetran_utils_pg_ci"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh postgres google_ads microsoft_ads pinterest
 
-  - label: ":gcloud: Run Tests - Ads Packages :bookmark: :three:"
-    key: "run_dbt_bigquery_ads_3"
-    concurrency: 3
-    concurrency_group: "warehouse/bigquery"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "GCLOUD_SERVICE_KEY"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh bigquery google_ads microsoft_ads pinterest
+#   - label: ":gcloud: Run Tests - Ads Packages :bookmark: :three:"
+#     key: "run_dbt_bigquery_ads_3"
+#     concurrency: 3
+#     concurrency_group: "warehouse/bigquery"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "GCLOUD_SERVICE_KEY"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh bigquery google_ads microsoft_ads pinterest
 
-  - label: ":amazon-redshift: Run Tests - Ads Packages :bookmark: :three:"
-    key: "run_dbt_redshift_ads_3"
-    concurrency: 3
-    concurrency_group: "warehouse/redshift"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "CI_REDSHIFT_DBT_DBNAME"
-            - "CI_REDSHIFT_DBT_HOST"
-            - "CI_REDSHIFT_DBT_PASS"
-            - "CI_REDSHIFT_DBT_USER"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh redshift google_ads microsoft_ads pinterest
+#   - label: ":amazon-redshift: Run Tests - Ads Packages :bookmark: :three:"
+#     key: "run_dbt_redshift_ads_3"
+#     concurrency: 3
+#     concurrency_group: "warehouse/redshift"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "CI_REDSHIFT_DBT_DBNAME"
+#             - "CI_REDSHIFT_DBT_HOST"
+#             - "CI_REDSHIFT_DBT_PASS"
+#             - "CI_REDSHIFT_DBT_USER"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh redshift google_ads microsoft_ads pinterest
 
-  - label: ":databricks: Run Tests - Ads Packages :bookmark: :three:"
-    key: "run_dbt_databricks_ads_3"
-    concurrency: 3
-    concurrency_group: "warehouse/databricks"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "CI_DATABRICKS_DBT_HOST"
-            - "CI_DATABRICKS_DBT_HTTP_PATH"
-            - "CI_DATABRICKS_DBT_TOKEN"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh databricks google_ads microsoft_ads pinterest
+#   - label: ":databricks: Run Tests - Ads Packages :bookmark: :three:"
+#     key: "run_dbt_databricks_ads_3"
+#     concurrency: 3
+#     concurrency_group: "warehouse/databricks"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "CI_DATABRICKS_DBT_HOST"
+#             - "CI_DATABRICKS_DBT_HTTP_PATH"
+#             - "CI_DATABRICKS_DBT_TOKEN"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh databricks google_ads microsoft_ads pinterest
 
   - label: ":duckdb: Run Tests - Ads Packages :bookmark: :three:"
     key: "run_dbt_duckdb_ads_3"
@@ -278,86 +278,86 @@ steps:
     
 
 ## Social Packages
-  - label: ":snowflake: Run Tests - Social Packages :iphone:"
-    key: "run_dbt_snowflake_social"
-    concurrency: 3
-    concurrency_group: "warehouse/snowflake"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "CI_SNOWFLAKE_DBT_ACCOUNT"
-            - "CI_SNOWFLAKE_DATABASE_FT_UTILS"
-            - "CI_SNOWFLAKE_DBT_PASS"
-            - "CI_SNOWFLAKE_DBT_ROLE_FT_UTILS_TEST"
-            - "CI_SNOWFLAKE_DBT_USER"
-            - "CI_SNOWFLAKE_DBT_WAREHOUSE"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh snowflake linkedin_pages facebook_pages instagram_business twitter_organic youtube_analytics
+#   - label: ":snowflake: Run Tests - Social Packages :iphone:"
+#     key: "run_dbt_snowflake_social"
+#     concurrency: 3
+#     concurrency_group: "warehouse/snowflake"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "CI_SNOWFLAKE_DBT_ACCOUNT"
+#             - "CI_SNOWFLAKE_DATABASE_FT_UTILS"
+#             - "CI_SNOWFLAKE_DBT_PASS"
+#             - "CI_SNOWFLAKE_DBT_ROLE_FT_UTILS_TEST"
+#             - "CI_SNOWFLAKE_DBT_USER"
+#             - "CI_SNOWFLAKE_DBT_WAREHOUSE"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh snowflake linkedin_pages facebook_pages instagram_business twitter_organic youtube_analytics
 
-  - label: ":postgres: Run Tests - Social Packages :iphone:"
-    key: "run-dbt-postgres-social"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-          volumes:
-            - "/var/run/docker.sock:/var/run/docker.sock"
-          network: "fivetran_utils_pg_ci"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh postgres linkedin_pages facebook_pages instagram_business twitter_organic youtube_analytics
+#   - label: ":postgres: Run Tests - Social Packages :iphone:"
+#     key: "run-dbt-postgres-social"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#           volumes:
+#             - "/var/run/docker.sock:/var/run/docker.sock"
+#           network: "fivetran_utils_pg_ci"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh postgres linkedin_pages facebook_pages instagram_business twitter_organic youtube_analytics
 
-  - label: ":gcloud: Run Tests - Social Packages :iphone:"
-    key: "run_dbt_bigquery_social"
-    concurrency: 3
-    concurrency_group: "warehouse/bigquery"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "GCLOUD_SERVICE_KEY"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh bigquery linkedin_pages facebook_pages instagram_business twitter_organic youtube_analytics
+#   - label: ":gcloud: Run Tests - Social Packages :iphone:"
+#     key: "run_dbt_bigquery_social"
+#     concurrency: 3
+#     concurrency_group: "warehouse/bigquery"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "GCLOUD_SERVICE_KEY"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh bigquery linkedin_pages facebook_pages instagram_business twitter_organic youtube_analytics
 
-  - label: ":amazon-redshift: Run Tests - Social Packages :iphone:"
-    key: "run_dbt_redshift_social"
-    concurrency: 3
-    concurrency_group: "warehouse/redshift"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "CI_REDSHIFT_DBT_DBNAME"
-            - "CI_REDSHIFT_DBT_HOST"
-            - "CI_REDSHIFT_DBT_PASS"
-            - "CI_REDSHIFT_DBT_USER"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh redshift linkedin_pages facebook_pages instagram_business twitter_organic youtube_analytics
+#   - label: ":amazon-redshift: Run Tests - Social Packages :iphone:"
+#     key: "run_dbt_redshift_social"
+#     concurrency: 3
+#     concurrency_group: "warehouse/redshift"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "CI_REDSHIFT_DBT_DBNAME"
+#             - "CI_REDSHIFT_DBT_HOST"
+#             - "CI_REDSHIFT_DBT_PASS"
+#             - "CI_REDSHIFT_DBT_USER"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh redshift linkedin_pages facebook_pages instagram_business twitter_organic youtube_analytics
 
-  - label: ":databricks: Run Tests - Social Packages :iphone:"
-    key: "run_dbt_databricks_social"
-    concurrency: 3
-    concurrency_group: "warehouse/databricks"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "CI_DATABRICKS_DBT_HOST"
-            - "CI_DATABRICKS_DBT_HTTP_PATH"
-            - "CI_DATABRICKS_DBT_TOKEN"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh databricks facebook_pages instagram_business twitter_organic youtube_analytics
-      ## Removed linkedin_pages as it is not databricks compatible at the moment.
+#   - label: ":databricks: Run Tests - Social Packages :iphone:"
+#     key: "run_dbt_databricks_social"
+#     concurrency: 3
+#     concurrency_group: "warehouse/databricks"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "CI_DATABRICKS_DBT_HOST"
+#             - "CI_DATABRICKS_DBT_HTTP_PATH"
+#             - "CI_DATABRICKS_DBT_TOKEN"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh databricks facebook_pages instagram_business twitter_organic youtube_analytics
+#       ## Removed linkedin_pages as it is not databricks compatible at the moment.
 
   - label: ":duckdb: Run Tests - Social Packages :iphone:"
     key: "run_dbt_duckdb_social"
@@ -371,85 +371,85 @@ steps:
       bash .buildkite/scripts/run_standard_models.sh duckdb linkedin_pages facebook_pages instagram_business twitter_organic youtube_analytics
 
 ## App Packages
-  - label: ":snowflake: Run Tests - App Packages :video_game:"
-    key: "run_dbt_snowflake_app"
-    concurrency: 3
-    concurrency_group: "warehouse/snowflake"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "CI_SNOWFLAKE_DBT_ACCOUNT"
-            - "CI_SNOWFLAKE_DATABASE_FT_UTILS"
-            - "CI_SNOWFLAKE_DBT_PASS"
-            - "CI_SNOWFLAKE_DBT_ROLE_FT_UTILS_TEST"
-            - "CI_SNOWFLAKE_DBT_USER"
-            - "CI_SNOWFLAKE_DBT_WAREHOUSE"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh snowflake google_play apple_store
+#   - label: ":snowflake: Run Tests - App Packages :video_game:"
+#     key: "run_dbt_snowflake_app"
+#     concurrency: 3
+#     concurrency_group: "warehouse/snowflake"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "CI_SNOWFLAKE_DBT_ACCOUNT"
+#             - "CI_SNOWFLAKE_DATABASE_FT_UTILS"
+#             - "CI_SNOWFLAKE_DBT_PASS"
+#             - "CI_SNOWFLAKE_DBT_ROLE_FT_UTILS_TEST"
+#             - "CI_SNOWFLAKE_DBT_USER"
+#             - "CI_SNOWFLAKE_DBT_WAREHOUSE"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh snowflake google_play apple_store
 
-  - label: ":postgres: Run Tests - App Packages :video_game:"
-    key: "run-dbt-postgres-app"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-          volumes:
-            - "/var/run/docker.sock:/var/run/docker.sock"
-          network: "fivetran_utils_pg_ci"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh postgres google_play apple_store
+#   - label: ":postgres: Run Tests - App Packages :video_game:"
+#     key: "run-dbt-postgres-app"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#           volumes:
+#             - "/var/run/docker.sock:/var/run/docker.sock"
+#           network: "fivetran_utils_pg_ci"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh postgres google_play apple_store
 
-  - label: ":gcloud: Run Tests - App Packages :video_game:"
-    key: "run_dbt_bigquery_app"
-    concurrency: 3
-    concurrency_group: "warehouse/bigquery"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "GCLOUD_SERVICE_KEY"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh bigquery google_play apple_store
+#   - label: ":gcloud: Run Tests - App Packages :video_game:"
+#     key: "run_dbt_bigquery_app"
+#     concurrency: 3
+#     concurrency_group: "warehouse/bigquery"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "GCLOUD_SERVICE_KEY"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh bigquery google_play apple_store
 
-  - label: ":amazon-redshift: Run Tests - App Packages :video_game:"
-    key: "run_dbt_redshift_app"
-    concurrency: 3
-    concurrency_group: "warehouse/redshift"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "CI_REDSHIFT_DBT_DBNAME"
-            - "CI_REDSHIFT_DBT_HOST"
-            - "CI_REDSHIFT_DBT_PASS"
-            - "CI_REDSHIFT_DBT_USER"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh redshift google_play apple_store
+#   - label: ":amazon-redshift: Run Tests - App Packages :video_game:"
+#     key: "run_dbt_redshift_app"
+#     concurrency: 3
+#     concurrency_group: "warehouse/redshift"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "CI_REDSHIFT_DBT_DBNAME"
+#             - "CI_REDSHIFT_DBT_HOST"
+#             - "CI_REDSHIFT_DBT_PASS"
+#             - "CI_REDSHIFT_DBT_USER"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh redshift google_play apple_store
 
-  - label: ":databricks: Run Tests - App Packages :video_game:"
-    key: "run_dbt_databricks_app"
-    concurrency: 3
-    concurrency_group: "warehouse/databricks"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "CI_DATABRICKS_DBT_HOST"
-            - "CI_DATABRICKS_DBT_HTTP_PATH"
-            - "CI_DATABRICKS_DBT_TOKEN"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh databricks google_play apple_store
+#   - label: ":databricks: Run Tests - App Packages :video_game:"
+#     key: "run_dbt_databricks_app"
+#     concurrency: 3
+#     concurrency_group: "warehouse/databricks"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "CI_DATABRICKS_DBT_HOST"
+#             - "CI_DATABRICKS_DBT_HTTP_PATH"
+#             - "CI_DATABRICKS_DBT_TOKEN"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh databricks google_play apple_store
 
   - label: ":duckdb: Run Tests - App Packages :video_game:"
     key: "run_dbt_duckdb_app"
@@ -464,85 +464,85 @@ steps:
     
 
 ## CRM Packages
-  - label: ":snowflake: Run Tests - CRM Packages :salesforce::hubspot:"
-    key: "run_dbt_snowflake_crm"
-    concurrency: 3
-    concurrency_group: "warehouse/snowflake"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "CI_SNOWFLAKE_DBT_ACCOUNT"
-            - "CI_SNOWFLAKE_DATABASE_FT_UTILS"
-            - "CI_SNOWFLAKE_DBT_PASS"
-            - "CI_SNOWFLAKE_DBT_ROLE_FT_UTILS_TEST"
-            - "CI_SNOWFLAKE_DBT_USER"
-            - "CI_SNOWFLAKE_DBT_WAREHOUSE"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh snowflake salesforce hubspot
+#   - label: ":snowflake: Run Tests - CRM Packages :salesforce::hubspot:"
+#     key: "run_dbt_snowflake_crm"
+#     concurrency: 3
+#     concurrency_group: "warehouse/snowflake"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "CI_SNOWFLAKE_DBT_ACCOUNT"
+#             - "CI_SNOWFLAKE_DATABASE_FT_UTILS"
+#             - "CI_SNOWFLAKE_DBT_PASS"
+#             - "CI_SNOWFLAKE_DBT_ROLE_FT_UTILS_TEST"
+#             - "CI_SNOWFLAKE_DBT_USER"
+#             - "CI_SNOWFLAKE_DBT_WAREHOUSE"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh snowflake salesforce hubspot
 
-  - label: ":postgres: Run Tests - CRM Packages :salesforce::hubspot:"
-    key: "run-dbt-postgres-crm"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-          volumes:
-            - "/var/run/docker.sock:/var/run/docker.sock"
-          network: "fivetran_utils_pg_ci"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh postgres salesforce hubspot
+#   - label: ":postgres: Run Tests - CRM Packages :salesforce::hubspot:"
+#     key: "run-dbt-postgres-crm"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#           volumes:
+#             - "/var/run/docker.sock:/var/run/docker.sock"
+#           network: "fivetran_utils_pg_ci"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh postgres salesforce hubspot
 
-  - label: ":gcloud: Run Tests - CRM Packages :salesforce::hubspot:"
-    key: "run_dbt_bigquery_crm"
-    concurrency: 3
-    concurrency_group: "warehouse/bigquery"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "GCLOUD_SERVICE_KEY"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh bigquery salesforce hubspot
+#   - label: ":gcloud: Run Tests - CRM Packages :salesforce::hubspot:"
+#     key: "run_dbt_bigquery_crm"
+#     concurrency: 3
+#     concurrency_group: "warehouse/bigquery"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "GCLOUD_SERVICE_KEY"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh bigquery salesforce hubspot
 
-  - label: ":amazon-redshift: Run Tests - CRM Packages :salesforce::hubspot:"
-    key: "run_dbt_redshift_crm"
-    concurrency: 3
-    concurrency_group: "warehouse/redshift"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "CI_REDSHIFT_DBT_DBNAME"
-            - "CI_REDSHIFT_DBT_HOST"
-            - "CI_REDSHIFT_DBT_PASS"
-            - "CI_REDSHIFT_DBT_USER"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh redshift salesforce hubspot
+#   - label: ":amazon-redshift: Run Tests - CRM Packages :salesforce::hubspot:"
+#     key: "run_dbt_redshift_crm"
+#     concurrency: 3
+#     concurrency_group: "warehouse/redshift"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "CI_REDSHIFT_DBT_DBNAME"
+#             - "CI_REDSHIFT_DBT_HOST"
+#             - "CI_REDSHIFT_DBT_PASS"
+#             - "CI_REDSHIFT_DBT_USER"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh redshift salesforce hubspot
 
-  - label: ":databricks: Run Tests - CRM Packages :salesforce::hubspot:"
-    key: "run_dbt_databricks_crm"
-    concurrency: 3
-    concurrency_group: "warehouse/databricks"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "CI_DATABRICKS_DBT_HOST"
-            - "CI_DATABRICKS_DBT_HTTP_PATH"
-            - "CI_DATABRICKS_DBT_TOKEN"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh databricks salesforce hubspot
+#   - label: ":databricks: Run Tests - CRM Packages :salesforce::hubspot:"
+#     key: "run_dbt_databricks_crm"
+#     concurrency: 3
+#     concurrency_group: "warehouse/databricks"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "CI_DATABRICKS_DBT_HOST"
+#             - "CI_DATABRICKS_DBT_HTTP_PATH"
+#             - "CI_DATABRICKS_DBT_TOKEN"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh databricks salesforce hubspot
 
   - label: ":duckdb: Run Tests - CRM Packages :salesforce::hubspot:"
     key: "run_dbt_duckdb_crm"
@@ -557,85 +557,85 @@ steps:
     
 
 ## Ecommerce and Subscription Packages
-  - label: ":snowflake: Run Tests - Ecommerce and Subscription Packages :shopping_bags:"
-    key: "run_dbt_snowflake_esub"
-    concurrency: 3
-    concurrency_group: "warehouse/snowflake"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "CI_SNOWFLAKE_DBT_ACCOUNT"
-            - "CI_SNOWFLAKE_DATABASE_FT_UTILS"
-            - "CI_SNOWFLAKE_DBT_PASS"
-            - "CI_SNOWFLAKE_DBT_ROLE_FT_UTILS_TEST"
-            - "CI_SNOWFLAKE_DBT_USER"
-            - "CI_SNOWFLAKE_DBT_WAREHOUSE"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh snowflake shopify recurly stripe zuora
+#   - label: ":snowflake: Run Tests - Ecommerce and Subscription Packages :shopping_bags:"
+#     key: "run_dbt_snowflake_esub"
+#     concurrency: 3
+#     concurrency_group: "warehouse/snowflake"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "CI_SNOWFLAKE_DBT_ACCOUNT"
+#             - "CI_SNOWFLAKE_DATABASE_FT_UTILS"
+#             - "CI_SNOWFLAKE_DBT_PASS"
+#             - "CI_SNOWFLAKE_DBT_ROLE_FT_UTILS_TEST"
+#             - "CI_SNOWFLAKE_DBT_USER"
+#             - "CI_SNOWFLAKE_DBT_WAREHOUSE"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh snowflake shopify recurly stripe zuora
 
-  - label: ":postgres: Run Tests - Ecommerce and Subscription Packages :shopping_bags:"
-    key: "run-dbt-postgres-esub"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-          volumes:
-            - "/var/run/docker.sock:/var/run/docker.sock"
-          network: "fivetran_utils_pg_ci"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh postgres shopify recurly stripe zuora
+#   - label: ":postgres: Run Tests - Ecommerce and Subscription Packages :shopping_bags:"
+#     key: "run-dbt-postgres-esub"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#           volumes:
+#             - "/var/run/docker.sock:/var/run/docker.sock"
+#           network: "fivetran_utils_pg_ci"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh postgres shopify recurly stripe zuora
 
-  - label: ":gcloud: Run Tests - Ecommerce and Subscription Packages :shopping_bags:"
-    key: "run_dbt_bigquery_esub"
-    concurrency: 3
-    concurrency_group: "warehouse/bigquery"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "GCLOUD_SERVICE_KEY"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh bigquery shopify recurly stripe zuora
+#   - label: ":gcloud: Run Tests - Ecommerce and Subscription Packages :shopping_bags:"
+#     key: "run_dbt_bigquery_esub"
+#     concurrency: 3
+#     concurrency_group: "warehouse/bigquery"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "GCLOUD_SERVICE_KEY"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh bigquery shopify recurly stripe zuora
 
-  - label: ":amazon-redshift: Run Tests - Ecommerce and Subscription Packages :shopping_bags:"
-    key: "run_dbt_redshift_esub"
-    concurrency: 3
-    concurrency_group: "warehouse/redshift"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "CI_REDSHIFT_DBT_DBNAME"
-            - "CI_REDSHIFT_DBT_HOST"
-            - "CI_REDSHIFT_DBT_PASS"
-            - "CI_REDSHIFT_DBT_USER"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh redshift shopify recurly stripe zuora
+#   - label: ":amazon-redshift: Run Tests - Ecommerce and Subscription Packages :shopping_bags:"
+#     key: "run_dbt_redshift_esub"
+#     concurrency: 3
+#     concurrency_group: "warehouse/redshift"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "CI_REDSHIFT_DBT_DBNAME"
+#             - "CI_REDSHIFT_DBT_HOST"
+#             - "CI_REDSHIFT_DBT_PASS"
+#             - "CI_REDSHIFT_DBT_USER"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh redshift shopify recurly stripe zuora
 
-  - label: ":databricks: Run Tests - Ecommerce and Subscription Packages :shopping_bags:"
-    key: "run_dbt_databricks_esub"
-    concurrency: 3
-    concurrency_group: "warehouse/databricks"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "CI_DATABRICKS_DBT_HOST"
-            - "CI_DATABRICKS_DBT_HTTP_PATH"
-            - "CI_DATABRICKS_DBT_TOKEN"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh databricks shopify recurly stripe zuora
+#   - label: ":databricks: Run Tests - Ecommerce and Subscription Packages :shopping_bags:"
+#     key: "run_dbt_databricks_esub"
+#     concurrency: 3
+#     concurrency_group: "warehouse/databricks"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "CI_DATABRICKS_DBT_HOST"
+#             - "CI_DATABRICKS_DBT_HTTP_PATH"
+#             - "CI_DATABRICKS_DBT_TOKEN"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh databricks shopify recurly stripe zuora
 
   - label: ":duckdb: Run Tests - Ecommerce and Subscription Packages :shopping_bags:"
     key: "run_dbt_duckdb_esub"
@@ -650,85 +650,85 @@ steps:
     
 
 ## Email Marketing Packages
-  - label: ":snowflake: Run Tests - Email Marketing Packages :email:"
-    key: "run_dbt_snowflake_email"
-    concurrency: 3
-    concurrency_group: "warehouse/snowflake"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "CI_SNOWFLAKE_DBT_ACCOUNT"
-            - "CI_SNOWFLAKE_DATABASE_FT_UTILS"
-            - "CI_SNOWFLAKE_DBT_PASS"
-            - "CI_SNOWFLAKE_DBT_ROLE_FT_UTILS_TEST"
-            - "CI_SNOWFLAKE_DBT_USER"
-            - "CI_SNOWFLAKE_DBT_WAREHOUSE"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh snowflake marketo iterable klaviyo mailchimp pardot
+#   - label: ":snowflake: Run Tests - Email Marketing Packages :email:"
+#     key: "run_dbt_snowflake_email"
+#     concurrency: 3
+#     concurrency_group: "warehouse/snowflake"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "CI_SNOWFLAKE_DBT_ACCOUNT"
+#             - "CI_SNOWFLAKE_DATABASE_FT_UTILS"
+#             - "CI_SNOWFLAKE_DBT_PASS"
+#             - "CI_SNOWFLAKE_DBT_ROLE_FT_UTILS_TEST"
+#             - "CI_SNOWFLAKE_DBT_USER"
+#             - "CI_SNOWFLAKE_DBT_WAREHOUSE"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh snowflake marketo iterable klaviyo mailchimp pardot
 
-  - label: ":postgres: Run Tests - Email Marketing Packages :email:"
-    key: "run-dbt-postgres-email"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-          volumes:
-            - "/var/run/docker.sock:/var/run/docker.sock"
-          network: "fivetran_utils_pg_ci"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh postgres marketo iterable klaviyo mailchimp pardot
+#   - label: ":postgres: Run Tests - Email Marketing Packages :email:"
+#     key: "run-dbt-postgres-email"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#           volumes:
+#             - "/var/run/docker.sock:/var/run/docker.sock"
+#           network: "fivetran_utils_pg_ci"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh postgres marketo iterable klaviyo mailchimp pardot
 
-  - label: ":gcloud: Run Tests - Email Marketing Packages :email:"
-    key: "run_dbt_bigquery_email"
-    concurrency: 3
-    concurrency_group: "warehouse/bigquery"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "GCLOUD_SERVICE_KEY"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh bigquery marketo iterable klaviyo mailchimp pardot
+#   - label: ":gcloud: Run Tests - Email Marketing Packages :email:"
+#     key: "run_dbt_bigquery_email"
+#     concurrency: 3
+#     concurrency_group: "warehouse/bigquery"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "GCLOUD_SERVICE_KEY"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh bigquery marketo iterable klaviyo mailchimp pardot
 
-  - label: ":amazon-redshift: Run Tests - Email Marketing Packages :email:"
-    key: "run_dbt_redshift_email"
-    concurrency: 3
-    concurrency_group: "warehouse/redshift"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "CI_REDSHIFT_DBT_DBNAME"
-            - "CI_REDSHIFT_DBT_HOST"
-            - "CI_REDSHIFT_DBT_PASS"
-            - "CI_REDSHIFT_DBT_USER"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh redshift marketo iterable klaviyo mailchimp pardot
+#   - label: ":amazon-redshift: Run Tests - Email Marketing Packages :email:"
+#     key: "run_dbt_redshift_email"
+#     concurrency: 3
+#     concurrency_group: "warehouse/redshift"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "CI_REDSHIFT_DBT_DBNAME"
+#             - "CI_REDSHIFT_DBT_HOST"
+#             - "CI_REDSHIFT_DBT_PASS"
+#             - "CI_REDSHIFT_DBT_USER"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh redshift marketo iterable klaviyo mailchimp pardot
 
-  - label: ":databricks: Run Tests - Email Marketing Packages :email:"
-    key: "run_dbt_databricks_email"
-    concurrency: 3
-    concurrency_group: "warehouse/databricks"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "CI_DATABRICKS_DBT_HOST"
-            - "CI_DATABRICKS_DBT_HTTP_PATH"
-            - "CI_DATABRICKS_DBT_TOKEN"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh databricks marketo iterable klaviyo mailchimp pardot
+#   - label: ":databricks: Run Tests - Email Marketing Packages :email:"
+#     key: "run_dbt_databricks_email"
+#     concurrency: 3
+#     concurrency_group: "warehouse/databricks"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "CI_DATABRICKS_DBT_HOST"
+#             - "CI_DATABRICKS_DBT_HTTP_PATH"
+#             - "CI_DATABRICKS_DBT_TOKEN"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh databricks marketo iterable klaviyo mailchimp pardot
 
   - label: ":duckdb: Run Tests - Email Marketing Packages :email:"
     key: "run_dbt_duckdb_email"
@@ -743,85 +743,85 @@ steps:
     
 
 ## Finance Packages
-  - label: ":snowflake: Run Tests - Finance Packages :money_with_wings:"
-    key: "run_dbt_snowflake_finance"
-    concurrency: 3
-    concurrency_group: "warehouse/snowflake"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "CI_SNOWFLAKE_DBT_ACCOUNT"
-            - "CI_SNOWFLAKE_DATABASE_FT_UTILS"
-            - "CI_SNOWFLAKE_DBT_PASS"
-            - "CI_SNOWFLAKE_DBT_ROLE_FT_UTILS_TEST"
-            - "CI_SNOWFLAKE_DBT_USER"
-            - "CI_SNOWFLAKE_DBT_WAREHOUSE"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh snowflake quickbooks xero sage_intacct netsuite
+#   - label: ":snowflake: Run Tests - Finance Packages :money_with_wings:"
+#     key: "run_dbt_snowflake_finance"
+#     concurrency: 3
+#     concurrency_group: "warehouse/snowflake"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "CI_SNOWFLAKE_DBT_ACCOUNT"
+#             - "CI_SNOWFLAKE_DATABASE_FT_UTILS"
+#             - "CI_SNOWFLAKE_DBT_PASS"
+#             - "CI_SNOWFLAKE_DBT_ROLE_FT_UTILS_TEST"
+#             - "CI_SNOWFLAKE_DBT_USER"
+#             - "CI_SNOWFLAKE_DBT_WAREHOUSE"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh snowflake quickbooks xero sage_intacct netsuite
 
-  - label: ":postgres: Run Tests - Finance Packages :money_with_wings:"
-    key: "run-dbt-postgres-finance"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-          volumes:
-            - "/var/run/docker.sock:/var/run/docker.sock"
-          network: "fivetran_utils_pg_ci"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh postgres quickbooks xero sage_intacct netsuite
+#   - label: ":postgres: Run Tests - Finance Packages :money_with_wings:"
+#     key: "run-dbt-postgres-finance"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#           volumes:
+#             - "/var/run/docker.sock:/var/run/docker.sock"
+#           network: "fivetran_utils_pg_ci"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh postgres quickbooks xero sage_intacct netsuite
 
-  - label: ":gcloud: Run Tests - Finance Packages :money_with_wings:"
-    key: "run_dbt_bigquery_finance"
-    concurrency: 3
-    concurrency_group: "warehouse/bigquery"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "GCLOUD_SERVICE_KEY"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh bigquery quickbooks xero sage_intacct netsuite
+#   - label: ":gcloud: Run Tests - Finance Packages :money_with_wings:"
+#     key: "run_dbt_bigquery_finance"
+#     concurrency: 3
+#     concurrency_group: "warehouse/bigquery"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "GCLOUD_SERVICE_KEY"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh bigquery quickbooks xero sage_intacct netsuite
 
-  - label: ":amazon-redshift: Run Tests - Finance Packages :money_with_wings:"
-    key: "run_dbt_redshift_finance"
-    concurrency: 3
-    concurrency_group: "warehouse/redshift"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "CI_REDSHIFT_DBT_DBNAME"
-            - "CI_REDSHIFT_DBT_HOST"
-            - "CI_REDSHIFT_DBT_PASS"
-            - "CI_REDSHIFT_DBT_USER"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh redshift quickbooks xero sage_intacct netsuite
+#   - label: ":amazon-redshift: Run Tests - Finance Packages :money_with_wings:"
+#     key: "run_dbt_redshift_finance"
+#     concurrency: 3
+#     concurrency_group: "warehouse/redshift"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "CI_REDSHIFT_DBT_DBNAME"
+#             - "CI_REDSHIFT_DBT_HOST"
+#             - "CI_REDSHIFT_DBT_PASS"
+#             - "CI_REDSHIFT_DBT_USER"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh redshift quickbooks xero sage_intacct netsuite
 
-  - label: ":databricks: Run Tests - Finance Packages :money_with_wings:"
-    key: "run_dbt_databricks_finance"
-    concurrency: 3
-    concurrency_group: "warehouse/databricks"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "CI_DATABRICKS_DBT_HOST"
-            - "CI_DATABRICKS_DBT_HTTP_PATH"
-            - "CI_DATABRICKS_DBT_TOKEN"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh databricks quickbooks xero sage_intacct netsuite
+#   - label: ":databricks: Run Tests - Finance Packages :money_with_wings:"
+#     key: "run_dbt_databricks_finance"
+#     concurrency: 3
+#     concurrency_group: "warehouse/databricks"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "CI_DATABRICKS_DBT_HOST"
+#             - "CI_DATABRICKS_DBT_HTTP_PATH"
+#             - "CI_DATABRICKS_DBT_TOKEN"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh databricks quickbooks xero sage_intacct netsuite
 
   - label: ":duckdb: Run Tests - Finance Packages :money_with_wings:"
     key: "run_dbt_duckdb_finance"
@@ -836,85 +836,85 @@ steps:
     
 
 ## Log and People Packages
-  - label: ":snowflake: Run Tests - Log and People Packages :people_hugging:"
-    key: "run_dbt_snowflake_log_people"
-    concurrency: 3
-    concurrency_group: "warehouse/snowflake"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "CI_SNOWFLAKE_DBT_ACCOUNT"
-            - "CI_SNOWFLAKE_DATABASE_FT_UTILS"
-            - "CI_SNOWFLAKE_DBT_PASS"
-            - "CI_SNOWFLAKE_DBT_ROLE_FT_UTILS_TEST"
-            - "CI_SNOWFLAKE_DBT_USER"
-            - "CI_SNOWFLAKE_DBT_WAREHOUSE"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh snowflake fivetran_log greenhouse lever
+#   - label: ":snowflake: Run Tests - Log and People Packages :people_hugging:"
+#     key: "run_dbt_snowflake_log_people"
+#     concurrency: 3
+#     concurrency_group: "warehouse/snowflake"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "CI_SNOWFLAKE_DBT_ACCOUNT"
+#             - "CI_SNOWFLAKE_DATABASE_FT_UTILS"
+#             - "CI_SNOWFLAKE_DBT_PASS"
+#             - "CI_SNOWFLAKE_DBT_ROLE_FT_UTILS_TEST"
+#             - "CI_SNOWFLAKE_DBT_USER"
+#             - "CI_SNOWFLAKE_DBT_WAREHOUSE"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh snowflake fivetran_log greenhouse lever
 
-  - label: ":postgres: Run Tests - Log and People Packages :people_hugging:"
-    key: "run-dbt-postgres-log_people"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-          volumes:
-            - "/var/run/docker.sock:/var/run/docker.sock"
-          network: "fivetran_utils_pg_ci"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh postgres fivetran_log greenhouse lever
+#   - label: ":postgres: Run Tests - Log and People Packages :people_hugging:"
+#     key: "run-dbt-postgres-log_people"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#           volumes:
+#             - "/var/run/docker.sock:/var/run/docker.sock"
+#           network: "fivetran_utils_pg_ci"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh postgres fivetran_log greenhouse lever
 
-  - label: ":gcloud: Run Tests - Log and People Packages :people_hugging:"
-    key: "run_dbt_bigquery_log_people"
-    concurrency: 3
-    concurrency_group: "warehouse/bigquery"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "GCLOUD_SERVICE_KEY"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh bigquery fivetran_log greenhouse lever
+#   - label: ":gcloud: Run Tests - Log and People Packages :people_hugging:"
+#     key: "run_dbt_bigquery_log_people"
+#     concurrency: 3
+#     concurrency_group: "warehouse/bigquery"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "GCLOUD_SERVICE_KEY"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh bigquery fivetran_log greenhouse lever
 
-  - label: ":amazon-redshift: Run Tests - Log and People Packages :people_hugging:"
-    key: "run_dbt_redshift_log_people"
-    concurrency: 3
-    concurrency_group: "warehouse/redshift"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "CI_REDSHIFT_DBT_DBNAME"
-            - "CI_REDSHIFT_DBT_HOST"
-            - "CI_REDSHIFT_DBT_PASS"
-            - "CI_REDSHIFT_DBT_USER"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh redshift fivetran_log greenhouse lever
+#   - label: ":amazon-redshift: Run Tests - Log and People Packages :people_hugging:"
+#     key: "run_dbt_redshift_log_people"
+#     concurrency: 3
+#     concurrency_group: "warehouse/redshift"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "CI_REDSHIFT_DBT_DBNAME"
+#             - "CI_REDSHIFT_DBT_HOST"
+#             - "CI_REDSHIFT_DBT_PASS"
+#             - "CI_REDSHIFT_DBT_USER"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh redshift fivetran_log greenhouse lever
 
-  - label: ":databricks: Run Tests - Log and People Packages :people_hugging:"
-    key: "run_dbt_databricks_log_people"
-    concurrency: 3
-    concurrency_group: "warehouse/databricks"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "CI_DATABRICKS_DBT_HOST"
-            - "CI_DATABRICKS_DBT_HTTP_PATH"
-            - "CI_DATABRICKS_DBT_TOKEN"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh databricks fivetran_log greenhouse lever
+#   - label: ":databricks: Run Tests - Log and People Packages :people_hugging:"
+#     key: "run_dbt_databricks_log_people"
+#     concurrency: 3
+#     concurrency_group: "warehouse/databricks"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "CI_DATABRICKS_DBT_HOST"
+#             - "CI_DATABRICKS_DBT_HTTP_PATH"
+#             - "CI_DATABRICKS_DBT_TOKEN"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh databricks fivetran_log greenhouse lever
 
   - label: ":duckdb: Run Tests - Log and People Packages :people_hugging:"
     key: "run_dbt_duckdb_log_people"
@@ -929,85 +929,85 @@ steps:
     
 
 ## Product Packages
-  - label: ":snowflake: Run Tests - Product Packages :unicorn_face:"
-    key: "run_dbt_snowflake_product"
-    concurrency: 3
-    concurrency_group: "warehouse/snowflake"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "CI_SNOWFLAKE_DBT_ACCOUNT"
-            - "CI_SNOWFLAKE_DATABASE_FT_UTILS"
-            - "CI_SNOWFLAKE_DBT_PASS"
-            - "CI_SNOWFLAKE_DBT_ROLE_FT_UTILS_TEST"
-            - "CI_SNOWFLAKE_DBT_USER"
-            - "CI_SNOWFLAKE_DBT_WAREHOUSE"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh snowflake amplitude mixpanel pendo
+#   - label: ":snowflake: Run Tests - Product Packages :unicorn_face:"
+#     key: "run_dbt_snowflake_product"
+#     concurrency: 3
+#     concurrency_group: "warehouse/snowflake"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "CI_SNOWFLAKE_DBT_ACCOUNT"
+#             - "CI_SNOWFLAKE_DATABASE_FT_UTILS"
+#             - "CI_SNOWFLAKE_DBT_PASS"
+#             - "CI_SNOWFLAKE_DBT_ROLE_FT_UTILS_TEST"
+#             - "CI_SNOWFLAKE_DBT_USER"
+#             - "CI_SNOWFLAKE_DBT_WAREHOUSE"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh snowflake amplitude mixpanel pendo
 
-  - label: ":postgres: Run Tests - Product Packages :unicorn_face:"
-    key: "run-dbt-postgres-product"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-          volumes:
-            - "/var/run/docker.sock:/var/run/docker.sock"
-          network: "fivetran_utils_pg_ci"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh postgres amplitude mixpanel pendo
+#   - label: ":postgres: Run Tests - Product Packages :unicorn_face:"
+#     key: "run-dbt-postgres-product"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#           volumes:
+#             - "/var/run/docker.sock:/var/run/docker.sock"
+#           network: "fivetran_utils_pg_ci"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh postgres amplitude mixpanel pendo
 
-  - label: ":gcloud: Run Tests - Product Packages :unicorn_face:"
-    key: "run_dbt_bigquery_product"
-    concurrency: 3
-    concurrency_group: "warehouse/bigquery"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "GCLOUD_SERVICE_KEY"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh bigquery amplitude mixpanel pendo
+#   - label: ":gcloud: Run Tests - Product Packages :unicorn_face:"
+#     key: "run_dbt_bigquery_product"
+#     concurrency: 3
+#     concurrency_group: "warehouse/bigquery"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "GCLOUD_SERVICE_KEY"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh bigquery amplitude mixpanel pendo
 
-  - label: ":amazon-redshift: Run Tests - Product Packages :unicorn_face:"
-    key: "run_dbt_redshift_product"
-    concurrency: 3
-    concurrency_group: "warehouse/redshift"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "CI_REDSHIFT_DBT_DBNAME"
-            - "CI_REDSHIFT_DBT_HOST"
-            - "CI_REDSHIFT_DBT_PASS"
-            - "CI_REDSHIFT_DBT_USER"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh redshift amplitude mixpanel pendo
+#   - label: ":amazon-redshift: Run Tests - Product Packages :unicorn_face:"
+#     key: "run_dbt_redshift_product"
+#     concurrency: 3
+#     concurrency_group: "warehouse/redshift"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "CI_REDSHIFT_DBT_DBNAME"
+#             - "CI_REDSHIFT_DBT_HOST"
+#             - "CI_REDSHIFT_DBT_PASS"
+#             - "CI_REDSHIFT_DBT_USER"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh redshift amplitude mixpanel pendo
 
-  - label: ":databricks: Run Tests - Product Packages :unicorn_face:"
-    key: "run_dbt_databricks_product"
-    concurrency: 3
-    concurrency_group: "warehouse/databricks"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "CI_DATABRICKS_DBT_HOST"
-            - "CI_DATABRICKS_DBT_HTTP_PATH"
-            - "CI_DATABRICKS_DBT_TOKEN"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh databricks amplitude mixpanel pendo
+#   - label: ":databricks: Run Tests - Product Packages :unicorn_face:"
+#     key: "run_dbt_databricks_product"
+#     concurrency: 3
+#     concurrency_group: "warehouse/databricks"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "CI_DATABRICKS_DBT_HOST"
+#             - "CI_DATABRICKS_DBT_HTTP_PATH"
+#             - "CI_DATABRICKS_DBT_TOKEN"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh databricks amplitude mixpanel pendo
 
   - label: ":duckdb: Run Tests - Product Packages :unicorn_face:"
     key: "run_dbt_duckdb_product"
@@ -1022,85 +1022,85 @@ steps:
     
 
 ## Velocity Packages
-  - label: ":snowflake: Run Tests - Velocity Packages :roller_coaster:"
-    key: "run_dbt_snowflake_velocity"
-    concurrency: 3
-    concurrency_group: "warehouse/snowflake"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "CI_SNOWFLAKE_DBT_ACCOUNT"
-            - "CI_SNOWFLAKE_DATABASE_FT_UTILS"
-            - "CI_SNOWFLAKE_DBT_PASS"
-            - "CI_SNOWFLAKE_DBT_ROLE_FT_UTILS_TEST"
-            - "CI_SNOWFLAKE_DBT_USER"
-            - "CI_SNOWFLAKE_DBT_WAREHOUSE"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh snowflake intercom github zendesk asana jira
+#   - label: ":snowflake: Run Tests - Velocity Packages :roller_coaster:"
+#     key: "run_dbt_snowflake_velocity"
+#     concurrency: 3
+#     concurrency_group: "warehouse/snowflake"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "CI_SNOWFLAKE_DBT_ACCOUNT"
+#             - "CI_SNOWFLAKE_DATABASE_FT_UTILS"
+#             - "CI_SNOWFLAKE_DBT_PASS"
+#             - "CI_SNOWFLAKE_DBT_ROLE_FT_UTILS_TEST"
+#             - "CI_SNOWFLAKE_DBT_USER"
+#             - "CI_SNOWFLAKE_DBT_WAREHOUSE"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh snowflake intercom github zendesk asana jira
 
-  - label: ":postgres: Run Tests - Velocity Packages :roller_coaster:"
-    key: "run-dbt-postgres-velocity"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-          volumes:
-            - "/var/run/docker.sock:/var/run/docker.sock"
-          network: "fivetran_utils_pg_ci"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh postgres intercom github zendesk asana jira
+#   - label: ":postgres: Run Tests - Velocity Packages :roller_coaster:"
+#     key: "run-dbt-postgres-velocity"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#           volumes:
+#             - "/var/run/docker.sock:/var/run/docker.sock"
+#           network: "fivetran_utils_pg_ci"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh postgres intercom github zendesk asana jira
 
-  - label: ":gcloud: Run Tests - Velocity Packages :roller_coaster:"
-    key: "run_dbt_bigquery_velocity"
-    concurrency: 3
-    concurrency_group: "warehouse/bigquery"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "GCLOUD_SERVICE_KEY"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh bigquery intercom github zendesk asana jira
+#   - label: ":gcloud: Run Tests - Velocity Packages :roller_coaster:"
+#     key: "run_dbt_bigquery_velocity"
+#     concurrency: 3
+#     concurrency_group: "warehouse/bigquery"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "GCLOUD_SERVICE_KEY"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh bigquery intercom github zendesk asana jira
 
-  - label: ":amazon-redshift: Run Tests - Velocity Packages :roller_coaster:"
-    key: "run_dbt_redshift_velocity"
-    concurrency: 3
-    concurrency_group: "warehouse/redshift"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "CI_REDSHIFT_DBT_DBNAME"
-            - "CI_REDSHIFT_DBT_HOST"
-            - "CI_REDSHIFT_DBT_PASS"
-            - "CI_REDSHIFT_DBT_USER"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh redshift intercom github zendesk asana jira
+#   - label: ":amazon-redshift: Run Tests - Velocity Packages :roller_coaster:"
+#     key: "run_dbt_redshift_velocity"
+#     concurrency: 3
+#     concurrency_group: "warehouse/redshift"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "CI_REDSHIFT_DBT_DBNAME"
+#             - "CI_REDSHIFT_DBT_HOST"
+#             - "CI_REDSHIFT_DBT_PASS"
+#             - "CI_REDSHIFT_DBT_USER"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh redshift intercom github zendesk asana jira
 
-  - label: ":databricks: Run Tests - Velocity Packages :roller_coaster:"
-    key: "run_dbt_databricks_velocity"
-    concurrency: 3
-    concurrency_group: "warehouse/databricks"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "CI_DATABRICKS_DBT_HOST"
-            - "CI_DATABRICKS_DBT_HTTP_PATH"
-            - "CI_DATABRICKS_DBT_TOKEN"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh databricks intercom github zendesk asana jira
+#   - label: ":databricks: Run Tests - Velocity Packages :roller_coaster:"
+#     key: "run_dbt_databricks_velocity"
+#     concurrency: 3
+#     concurrency_group: "warehouse/databricks"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "CI_DATABRICKS_DBT_HOST"
+#             - "CI_DATABRICKS_DBT_HTTP_PATH"
+#             - "CI_DATABRICKS_DBT_TOKEN"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh databricks intercom github zendesk asana jira
 
   - label: ":duckdb: Run Tests - Velocity Packages :roller_coaster:"
     key: "run_dbt_duckdb_velocity"
@@ -1115,85 +1115,85 @@ steps:
     
 
 ## Ad Reporting Roll Up Packages
-  - label: ":snowflake: Run Tests - Ad Reporting Roll Up Package :roller_skate:"
-    key: "run_dbt_snowflake_ad_roll"
-    concurrency: 3
-    concurrency_group: "warehouse/snowflake"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "CI_SNOWFLAKE_DBT_ACCOUNT"
-            - "CI_SNOWFLAKE_DATABASE_FT_UTILS"
-            - "CI_SNOWFLAKE_DBT_PASS"
-            - "CI_SNOWFLAKE_DBT_ROLE_FT_UTILS_TEST"
-            - "CI_SNOWFLAKE_DBT_USER"
-            - "CI_SNOWFLAKE_DBT_WAREHOUSE"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh snowflake ad_reporting
+#   - label: ":snowflake: Run Tests - Ad Reporting Roll Up Package :roller_skate:"
+#     key: "run_dbt_snowflake_ad_roll"
+#     concurrency: 3
+#     concurrency_group: "warehouse/snowflake"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "CI_SNOWFLAKE_DBT_ACCOUNT"
+#             - "CI_SNOWFLAKE_DATABASE_FT_UTILS"
+#             - "CI_SNOWFLAKE_DBT_PASS"
+#             - "CI_SNOWFLAKE_DBT_ROLE_FT_UTILS_TEST"
+#             - "CI_SNOWFLAKE_DBT_USER"
+#             - "CI_SNOWFLAKE_DBT_WAREHOUSE"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh snowflake ad_reporting
 
-  - label: ":postgres: Run Tests - Ad Reporting Roll Up Package :roller_skate:"
-    key: "run-dbt-postgres-ad_roll"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-          volumes:
-            - "/var/run/docker.sock:/var/run/docker.sock"
-          network: "fivetran_utils_pg_ci"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh postgres ad_reporting
+#   - label: ":postgres: Run Tests - Ad Reporting Roll Up Package :roller_skate:"
+#     key: "run-dbt-postgres-ad_roll"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#           volumes:
+#             - "/var/run/docker.sock:/var/run/docker.sock"
+#           network: "fivetran_utils_pg_ci"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh postgres ad_reporting
 
-  - label: ":gcloud: Run Tests - Ad Reporting Roll Up Package :roller_skate:"
-    key: "run_dbt_bigquery_ad_roll"
-    concurrency: 3
-    concurrency_group: "warehouse/bigquery"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "GCLOUD_SERVICE_KEY"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh bigquery ad_reporting
+#   - label: ":gcloud: Run Tests - Ad Reporting Roll Up Package :roller_skate:"
+#     key: "run_dbt_bigquery_ad_roll"
+#     concurrency: 3
+#     concurrency_group: "warehouse/bigquery"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "GCLOUD_SERVICE_KEY"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh bigquery ad_reporting
 
-  - label: ":amazon-redshift: Run Tests - Ad Reporting Roll Up Package :roller_skate:"
-    key: "run_dbt_redshift_ad_roll"
-    concurrency: 3
-    concurrency_group: "warehouse/redshift"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "CI_REDSHIFT_DBT_DBNAME"
-            - "CI_REDSHIFT_DBT_HOST"
-            - "CI_REDSHIFT_DBT_PASS"
-            - "CI_REDSHIFT_DBT_USER"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh redshift ad_reporting
+#   - label: ":amazon-redshift: Run Tests - Ad Reporting Roll Up Package :roller_skate:"
+#     key: "run_dbt_redshift_ad_roll"
+#     concurrency: 3
+#     concurrency_group: "warehouse/redshift"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "CI_REDSHIFT_DBT_DBNAME"
+#             - "CI_REDSHIFT_DBT_HOST"
+#             - "CI_REDSHIFT_DBT_PASS"
+#             - "CI_REDSHIFT_DBT_USER"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh redshift ad_reporting
 
-  - label: ":databricks: Run Tests - Ad Reporting Roll Up Package :roller_skate:"
-    key: "run_dbt_databricks_ad_roll"
-    concurrency: 3
-    concurrency_group: "warehouse/databricks"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "CI_DATABRICKS_DBT_HOST"
-            - "CI_DATABRICKS_DBT_HTTP_PATH"
-            - "CI_DATABRICKS_DBT_TOKEN"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh databricks ad_reporting
+#   - label: ":databricks: Run Tests - Ad Reporting Roll Up Package :roller_skate:"
+#     key: "run_dbt_databricks_ad_roll"
+#     concurrency: 3
+#     concurrency_group: "warehouse/databricks"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "CI_DATABRICKS_DBT_HOST"
+#             - "CI_DATABRICKS_DBT_HTTP_PATH"
+#             - "CI_DATABRICKS_DBT_TOKEN"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh databricks ad_reporting
 
   - label: ":duckdb: Run Tests - Ad Reporting Roll Up Package :roller_skate:"
     key: "run_dbt_duckdb_ad_roll"
@@ -1208,85 +1208,85 @@ steps:
     
 
 ## App Reporting Roll Up Packages
-  - label: ":snowflake: Run Tests - App Reporting Roll Up Package :roller_skate:"
-    key: "run_dbt_snowflake_app_roll"
-    concurrency: 3
-    concurrency_group: "warehouse/snowflake"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "CI_SNOWFLAKE_DBT_ACCOUNT"
-            - "CI_SNOWFLAKE_DATABASE_FT_UTILS"
-            - "CI_SNOWFLAKE_DBT_PASS"
-            - "CI_SNOWFLAKE_DBT_ROLE_FT_UTILS_TEST"
-            - "CI_SNOWFLAKE_DBT_USER"
-            - "CI_SNOWFLAKE_DBT_WAREHOUSE"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh snowflake app_reporting
+#   - label: ":snowflake: Run Tests - App Reporting Roll Up Package :roller_skate:"
+#     key: "run_dbt_snowflake_app_roll"
+#     concurrency: 3
+#     concurrency_group: "warehouse/snowflake"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "CI_SNOWFLAKE_DBT_ACCOUNT"
+#             - "CI_SNOWFLAKE_DATABASE_FT_UTILS"
+#             - "CI_SNOWFLAKE_DBT_PASS"
+#             - "CI_SNOWFLAKE_DBT_ROLE_FT_UTILS_TEST"
+#             - "CI_SNOWFLAKE_DBT_USER"
+#             - "CI_SNOWFLAKE_DBT_WAREHOUSE"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh snowflake app_reporting
 
-  - label: ":postgres: Run Tests - App Reporting Roll Up Package :roller_skate:"
-    key: "run-dbt-postgres-app_roll"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-          volumes:
-            - "/var/run/docker.sock:/var/run/docker.sock"
-          network: "fivetran_utils_pg_ci"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh postgres app_reporting
+#   - label: ":postgres: Run Tests - App Reporting Roll Up Package :roller_skate:"
+#     key: "run-dbt-postgres-app_roll"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#           volumes:
+#             - "/var/run/docker.sock:/var/run/docker.sock"
+#           network: "fivetran_utils_pg_ci"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh postgres app_reporting
 
-  - label: ":gcloud: Run Tests - App Reporting Roll Up Package :roller_skate:"
-    key: "run_dbt_bigquery_app_roll"
-    concurrency: 3
-    concurrency_group: "warehouse/bigquery"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "GCLOUD_SERVICE_KEY"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh bigquery app_reporting
+#   - label: ":gcloud: Run Tests - App Reporting Roll Up Package :roller_skate:"
+#     key: "run_dbt_bigquery_app_roll"
+#     concurrency: 3
+#     concurrency_group: "warehouse/bigquery"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "GCLOUD_SERVICE_KEY"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh bigquery app_reporting
 
-  - label: ":amazon-redshift: Run Tests - App Reporting Roll Up Package :roller_skate:"
-    key: "run_dbt_redshift_app_roll"
-    concurrency: 3
-    concurrency_group: "warehouse/redshift"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "CI_REDSHIFT_DBT_DBNAME"
-            - "CI_REDSHIFT_DBT_HOST"
-            - "CI_REDSHIFT_DBT_PASS"
-            - "CI_REDSHIFT_DBT_USER"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh redshift app_reporting
+#   - label: ":amazon-redshift: Run Tests - App Reporting Roll Up Package :roller_skate:"
+#     key: "run_dbt_redshift_app_roll"
+#     concurrency: 3
+#     concurrency_group: "warehouse/redshift"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "CI_REDSHIFT_DBT_DBNAME"
+#             - "CI_REDSHIFT_DBT_HOST"
+#             - "CI_REDSHIFT_DBT_PASS"
+#             - "CI_REDSHIFT_DBT_USER"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh redshift app_reporting
 
-  - label: ":databricks: Run Tests - App Reporting Roll Up Package :roller_skate:"
-    key: "run_dbt_databricks_app_roll"
-    concurrency: 3
-    concurrency_group: "warehouse/databricks"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "CI_DATABRICKS_DBT_HOST"
-            - "CI_DATABRICKS_DBT_HTTP_PATH"
-            - "CI_DATABRICKS_DBT_TOKEN"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh databricks app_reporting
+#   - label: ":databricks: Run Tests - App Reporting Roll Up Package :roller_skate:"
+#     key: "run_dbt_databricks_app_roll"
+#     concurrency: 3
+#     concurrency_group: "warehouse/databricks"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "CI_DATABRICKS_DBT_HOST"
+#             - "CI_DATABRICKS_DBT_HTTP_PATH"
+#             - "CI_DATABRICKS_DBT_TOKEN"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh databricks app_reporting
 
   - label: ":duckdb: Run Tests - App Reporting Roll Up Package :roller_skate:"
     key: "run_dbt_duckdb_app_roll"
@@ -1301,85 +1301,85 @@ steps:
     
 
 ## Social Media Reporting Roll Up Packages
-  - label: ":snowflake: Run Tests - Social Reporting Roll Up Package :roller_skate:"
-    key: "run_dbt_snowflake_social_roll"
-    concurrency: 3
-    concurrency_group: "warehouse/snowflake"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "CI_SNOWFLAKE_DBT_ACCOUNT"
-            - "CI_SNOWFLAKE_DATABASE_FT_UTILS"
-            - "CI_SNOWFLAKE_DBT_PASS"
-            - "CI_SNOWFLAKE_DBT_ROLE_FT_UTILS_TEST"
-            - "CI_SNOWFLAKE_DBT_USER"
-            - "CI_SNOWFLAKE_DBT_WAREHOUSE"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh snowflake social_media_reporting
+#   - label: ":snowflake: Run Tests - Social Reporting Roll Up Package :roller_skate:"
+#     key: "run_dbt_snowflake_social_roll"
+#     concurrency: 3
+#     concurrency_group: "warehouse/snowflake"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "CI_SNOWFLAKE_DBT_ACCOUNT"
+#             - "CI_SNOWFLAKE_DATABASE_FT_UTILS"
+#             - "CI_SNOWFLAKE_DBT_PASS"
+#             - "CI_SNOWFLAKE_DBT_ROLE_FT_UTILS_TEST"
+#             - "CI_SNOWFLAKE_DBT_USER"
+#             - "CI_SNOWFLAKE_DBT_WAREHOUSE"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh snowflake social_media_reporting
 
-  - label: ":postgres: Run Tests - Social Reporting Roll Up Package :roller_skate:"
-    key: "run-dbt-postgres-social_roll"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-          volumes:
-            - "/var/run/docker.sock:/var/run/docker.sock"
-          network: "fivetran_utils_pg_ci"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh postgres social_media_reporting
+#   - label: ":postgres: Run Tests - Social Reporting Roll Up Package :roller_skate:"
+#     key: "run-dbt-postgres-social_roll"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#           volumes:
+#             - "/var/run/docker.sock:/var/run/docker.sock"
+#           network: "fivetran_utils_pg_ci"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh postgres social_media_reporting
 
-  - label: ":gcloud: Run Tests - Social Reporting Roll Up Package :roller_skate:"
-    key: "run_dbt_bigquery_social_roll"
-    concurrency: 3
-    concurrency_group: "warehouse/bigquery"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "GCLOUD_SERVICE_KEY"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh bigquery social_media_reporting
+#   - label: ":gcloud: Run Tests - Social Reporting Roll Up Package :roller_skate:"
+#     key: "run_dbt_bigquery_social_roll"
+#     concurrency: 3
+#     concurrency_group: "warehouse/bigquery"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "GCLOUD_SERVICE_KEY"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh bigquery social_media_reporting
 
-  - label: ":amazon-redshift: Run Tests - Social Reporting Roll Up Package :roller_skate:"
-    key: "run_dbt_redshift_social_roll"
-    concurrency: 3
-    concurrency_group: "warehouse/redshift"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "CI_REDSHIFT_DBT_DBNAME"
-            - "CI_REDSHIFT_DBT_HOST"
-            - "CI_REDSHIFT_DBT_PASS"
-            - "CI_REDSHIFT_DBT_USER"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh redshift social_media_reporting
+#   - label: ":amazon-redshift: Run Tests - Social Reporting Roll Up Package :roller_skate:"
+#     key: "run_dbt_redshift_social_roll"
+#     concurrency: 3
+#     concurrency_group: "warehouse/redshift"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "CI_REDSHIFT_DBT_DBNAME"
+#             - "CI_REDSHIFT_DBT_HOST"
+#             - "CI_REDSHIFT_DBT_PASS"
+#             - "CI_REDSHIFT_DBT_USER"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh redshift social_media_reporting
 
-  - label: ":databricks: Run Tests - Social Reporting Roll Up Package :roller_skate:"
-    key: "run_dbt_databricks_social_roll"
-    concurrency: 3
-    concurrency_group: "warehouse/databricks"
-    plugins:
-      - docker#v3.13.0:
-          image: "python:3.10.13"
-          shell: [ "/bin/bash", "-e", "-c" ]
-          environment:
-            - "BASH_ENV=/tmp/.bashrc"
-            - "CI_DATABRICKS_DBT_HOST"
-            - "CI_DATABRICKS_DBT_HTTP_PATH"
-            - "CI_DATABRICKS_DBT_TOKEN"
-    commands: |
-      bash .buildkite/scripts/run_standard_models.sh databricks social_media_reporting
+#   - label: ":databricks: Run Tests - Social Reporting Roll Up Package :roller_skate:"
+#     key: "run_dbt_databricks_social_roll"
+#     concurrency: 3
+#     concurrency_group: "warehouse/databricks"
+#     plugins:
+#       - docker#v3.13.0:
+#           image: "python:3.10.13"
+#           shell: [ "/bin/bash", "-e", "-c" ]
+#           environment:
+#             - "BASH_ENV=/tmp/.bashrc"
+#             - "CI_DATABRICKS_DBT_HOST"
+#             - "CI_DATABRICKS_DBT_HTTP_PATH"
+#             - "CI_DATABRICKS_DBT_TOKEN"
+#     commands: |
+#       bash .buildkite/scripts/run_standard_models.sh databricks social_media_reporting
 
   - label: ":duckdb: Run Tests - Social Reporting Roll Up Package :roller_skate:"
     key: "run_dbt_duckdb_social_roll"
