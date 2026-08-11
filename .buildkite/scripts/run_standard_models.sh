@@ -90,6 +90,8 @@ do
     dbt deps
     fivetran_utils_version=$(grep "^version:" dbt_packages/fivetran_utils/dbt_project.yml | awk '{print $2}')
     echo -e "\nUsing fivetran_utils version: "$fivetran_utils_version"\n"
+    cat package-lock.yml  # before and after the awk, diff the two TEMP
+
     if [ "$package" = "linkedin" ]; then
         value_to_replace=$(grep ""$package"_ads_schema:" dbt_project.yml | awk '{ print $2 }')
         perl -i -pe "s/(schema: |dataset: ).*/\1$value_to_replace/" ~/.dbt/profiles.yml
