@@ -18,7 +18,7 @@ packages:
   - package: fivetran/hubspot
     version: [">=1.0.0", "<2.0.0"]
   - package: fivetran/salesforce_marketing_cloud
-    version: [">=1.0.0", "<2.0.0"]
+    version: [">=0.0.0", "<1.0.0"]
 
   - package: fivetran/shopify
     version: [">=1.0.0", "<2.0.0"]
@@ -31,7 +31,7 @@ packages:
   - package: fivetran/recharge
     version: [">=1.0.0", "<2.0.0"]
   - package: fivetran/amazon_selling_partner
-    version: [">=1.0.0", "<2.0.0"]
+    version: [">=0.0.0", "<1.0.0"]
 
   - package: fivetran/marketo
     version: [">=1.0.0", "<2.0.0"]
@@ -53,9 +53,9 @@ packages:
   - package: fivetran/xero
     version: [">=1.0.0", "<2.0.0"]
   - package: fivetran/aws_cloud_cost
-    version: [">=1.0.0", "<2.0.0"]
+    version: [">=0.0.0", "<1.0.0"]
   - package: fivetran/sap
-    version: [">=1.0.0", "<2.0.0"]
+    version: [">=0.0.0", "<1.0.0"]
   - package: fivetran/workday
     version: [">=1.0.0", "<2.0.0"]
 
@@ -73,7 +73,7 @@ packages:
   - package: fivetran/mixpanel
     version: [">=0.1.0", "<1.0.0"]
   - package: fivetran/ga4_export
-    version: [">=1.0.0", "<2.0.0"]
+    version: [">=0.0.0", "<1.0.0"]
   - package: fivetran/qualtrics
     version: [">=1.0.0", "<2.0.0"]
 
