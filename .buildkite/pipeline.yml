@@ -274,7 +274,7 @@ steps:
           environment:
             - "BASH_ENV=/tmp/.bashrc"
     commands: |
-      bash .buildkite/scripts/run_standard_models.sh duckdb google_ads microsoft_ads pinterest
+      bash .buildkite/scripts/run_standard_models.sh duckdb google_ads microsoft_ads pinterest stackadapt
     
 
 ## Social Packages
@@ -553,7 +553,7 @@ steps:
           environment:
             - "BASH_ENV=/tmp/.bashrc"
     commands: |
-      bash .buildkite/scripts/run_standard_models.sh duckdb salesforce hubspot
+      bash .buildkite/scripts/run_standard_models.sh duckdb salesforce hubspot salesforce_marketing_cloud
     
 
 ## Ecommerce and Subscription Packages
@@ -646,7 +646,7 @@ steps:
           environment:
             - "BASH_ENV=/tmp/.bashrc"
     commands: |
-      bash .buildkite/scripts/run_standard_models.sh duckdb shopify recurly stripe zuora
+      bash .buildkite/scripts/run_standard_models.sh duckdb shopify recurly stripe zuora recharge amazon_selling_partner
     
 
 ## Email Marketing Packages
@@ -832,7 +832,7 @@ steps:
           environment:
             - "BASH_ENV=/tmp/.bashrc"
     commands: |
-      bash .buildkite/scripts/run_standard_models.sh duckdb quickbooks xero sage_intacct netsuite
+      bash .buildkite/scripts/run_standard_models.sh duckdb quickbooks xero sage_intacct netsuite aws_cloud_cost sap workday
     
 
 ## Log and People Packages
@@ -1018,7 +1018,7 @@ steps:
           environment:
             - "BASH_ENV=/tmp/.bashrc"
     commands: |
-      bash .buildkite/scripts/run_standard_models.sh duckdb amplitude mixpanel pendo
+      bash .buildkite/scripts/run_standard_models.sh duckdb amplitude mixpanel pendo ga4_export qualtrics
     
 
 ## Velocity Packages
@@ -1111,7 +1111,7 @@ steps:
           environment:
             - "BASH_ENV=/tmp/.bashrc"
     commands: |
-      bash .buildkite/scripts/run_standard_models.sh duckdb intercom github zendesk asana jira
+      bash .buildkite/scripts/run_standard_models.sh duckdb intercom github zendesk asana jira servicenow twilio
     
 
 ## Ad Reporting Roll Up Packages

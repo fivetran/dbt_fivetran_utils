@@ -3,6 +3,10 @@ packages:
   #   version: [">=2.0.0", "<3.0.0"]
   - git: https://github.com/fivetran/dbt_ad_reporting.git
     revision: MagicBot/duckdb-support
+  # - package: fivetran/stackadapt
+  #   version: [">=1.0.0", "<2.0.0"]
+  - git: https://github.com/fivetran/dbt_stackadapt.git
+    revision: MagicBot/duckdb-support
 
   # - package: fivetran/social_media_reporting
   #   version: [">=1.0.0", "<2.0.0"]
@@ -27,6 +31,10 @@ packages:
   #   version: [">=1.0.0", "<2.0.0"]
   - git: https://github.com/fivetran/dbt_hubspot.git
     revision: MagicBot/duckdb-support
+  # - package: fivetran/salesforce_marketing_cloud
+  #   version: [">=1.0.0", "<2.0.0"]
+  - git: https://github.com/fivetran/dbt_salesforce_marketing_cloud.git
+    revision: MagicBot/duckdb-support
 
   # - package: fivetran/shopify
   #   version: [">=1.0.0", "<2.0.0"]
@@ -47,6 +55,10 @@ packages:
   # - package: fivetran/recharge
   #   version: [">=1.0.0", "<2.0.0"]
   - git: https://github.com/fivetran/dbt_recharge.git
+    revision: MagicBot/duckdb-support
+  # - package: fivetran/amazon_selling_partner
+  #   version: [">=1.0.0", "<2.0.0"]
+  - git: https://github.com/fivetran/dbt_amazon_selling_partner.git
     revision: MagicBot/duckdb-support
 
   # - package: fivetran/marketo
@@ -86,6 +98,18 @@ packages:
   #   version: [">=1.0.0", "<2.0.0"]
   - git: https://github.com/fivetran/dbt_xero.git
     revision: MagicBot/duckdb-support
+  # - package: fivetran/aws_cloud_cost
+  #   version: [">=1.0.0", "<2.0.0"]
+  - git: https://github.com/fivetran/dbt_aws_cloud_cost.git
+    revision: MagicBot/duckdb-support
+  # - package: fivetran/sap
+  #   version: [">=1.0.0", "<2.0.0"]
+  - git: https://github.com/fivetran/dbt_sap.git
+    revision: MagicBot/duckdb-support
+  # - package: fivetran/workday
+  #   version: [">=1.0.0", "<2.0.0"]
+  - git: https://github.com/fivetran/dbt_workday.git
+    revision: MagicBot/duckdb-support
 
   # - package: fivetran/fivetran_log
   #   version: [">=2.0.0", "<3.0.0"]
@@ -112,6 +136,14 @@ packages:
   #   version: [">=0.1.0", "<1.0.0"]
   - git: https://github.com/fivetran/dbt_mixpanel.git
     revision: MagicBot/duckdb-support
+  # - package: fivetran/ga4_export
+  #   version: [">=1.0.0", "<2.0.0"]
+  - git: https://github.com/fivetran/dbt_ga4_export.git
+    revision: MagicBot/duckdb-support
+  # - package: fivetran/qualtrics
+  #   version: [">=1.0.0", "<2.0.0"]
+  - git: https://github.com/fivetran/dbt_qualtrics.git
+    revision: MagicBot/duckdb-support
 
   # - package: fivetran/jira
   #   version: [">=1.0.0", "<2.0.0"]
@@ -132,4 +164,12 @@ packages:
   # - package: fivetran/intercom
   #   version: [">=1.0.0", "<2.0.0"]
   - git: https://github.com/fivetran/dbt_intercom.git
+    revision: MagicBot/duckdb-support
+  # - package: fivetran/servicenow
+  #   version: [">=1.0.0", "<2.0.0"]
+  - git: https://github.com/fivetran/dbt_servicenow.git
+    revision: MagicBot/duckdb-support
+  # - package: fivetran/twilio
+  #   version: [">=1.0.0", "<2.0.0"]
+  - git: https://github.com/fivetran/dbt_twilio.git
     revision: MagicBot/duckdb-support
