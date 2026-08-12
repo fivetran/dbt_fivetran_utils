@@ -274,7 +274,7 @@ steps:
           environment:
             - "BASH_ENV=/tmp/.bashrc"
     commands: |
-      bash .buildkite/scripts/run_standard_models.sh duckdb google_ads microsoft_ads pinterest stackadapt stackadapt
+      bash .buildkite/scripts/run_standard_models.sh duckdb google_ads microsoft_ads pinterest stackadapt
     
 
 ## Social Packages
