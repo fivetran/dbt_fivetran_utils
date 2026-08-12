@@ -29,3 +29,9 @@
 {% endfor %}
 
 {% endmacro %}
+
+{% macro duckdb__drop_schemas_automation(drop_target_schema=true) %}
+
+    {{ print('Not dropping any schemas in DuckDB.\n') }}
+
+{% endmacro %}

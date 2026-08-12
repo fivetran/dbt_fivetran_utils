@@ -21,18 +21,15 @@ steps:
 
   - label: ":postgres: Run Tests - Ads Packages :bookmark: :one:"
     key: "run-dbt-postgres-ads_1"
-    concurrency: 3
-    concurrency_group: "warehouse/postgres"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
-            - "CI_POSTGRES_DBT_DBNAME"
-            - "CI_POSTGRES_DBT_HOST"
-            - "CI_POSTGRES_DBT_PASS"
-            - "CI_POSTGRES_DBT_USER"
+          volumes:
+            - "/var/run/docker.sock:/var/run/docker.sock"
+          network: "fivetran_utils_pg_ci"
     commands: |
       bash .buildkite/scripts/run_standard_models.sh postgres linkedin apple_search_ads snapchat_ads facebook_ads
 
@@ -52,7 +49,7 @@ steps:
 
   - label: ":amazon-redshift: Run Tests - Ads Packages :bookmark: :one:"
     key: "run_dbt_redshift_ads_1"
-    concurrency: 1
+    concurrency: 3
     concurrency_group: "warehouse/redshift"
     plugins:
       - docker#v3.13.0:
@@ -83,6 +80,17 @@ steps:
     commands: |
       bash .buildkite/scripts/run_standard_models.sh databricks linkedin apple_search_ads snapchat_ads facebook_ads 
 
+  - label: ":duckdb: Run Tests - Ads Packages :bookmark: :one:"
+    key: "run_dbt_duckdb_ads_1"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.10.13"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh duckdb linkedin apple_search_ads snapchat_ads facebook_ads
+
 ## Ads Packages 2
   - label: ":snowflake: Run Tests - Ads Packages :bookmark: :two:"
     key: "run_dbt_snowflake_ads_2"
@@ -105,18 +113,15 @@ steps:
 
   - label: ":postgres: Run Tests - Ads Packages :bookmark: :two:"
     key: "run-dbt-postgres-ads_2"
-    concurrency: 3
-    concurrency_group: "warehouse/postgres"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
-            - "CI_POSTGRES_DBT_DBNAME"
-            - "CI_POSTGRES_DBT_HOST"
-            - "CI_POSTGRES_DBT_PASS"
-            - "CI_POSTGRES_DBT_USER"
+          volumes:
+            - "/var/run/docker.sock:/var/run/docker.sock"
+          network: "fivetran_utils_pg_ci"
     commands: |
       bash .buildkite/scripts/run_standard_models.sh postgres tiktok_ads twitter_ads amazon_ads reddit_ads
 
@@ -136,7 +141,7 @@ steps:
 
   - label: ":amazon-redshift: Run Tests - Ads Packages :bookmark: :two:"
     key: "run_dbt_redshift_ads_2"
-    concurrency: 1
+    concurrency: 3
     concurrency_group: "warehouse/redshift"
     plugins:
       - docker#v3.13.0:
@@ -166,6 +171,17 @@ steps:
             - "CI_DATABRICKS_DBT_TOKEN"
     commands: |
       bash .buildkite/scripts/run_standard_models.sh databricks tiktok_ads twitter_ads amazon_ads reddit_ads
+
+  - label: ":duckdb: Run Tests - Ads Packages :bookmark: :two:"
+    key: "run_dbt_duckdb_ads_2"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.10.13"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh duckdb tiktok_ads twitter_ads amazon_ads reddit_ads
     
 
 ## Ads Packages 3
@@ -186,24 +202,21 @@ steps:
             - "CI_SNOWFLAKE_DBT_USER"
             - "CI_SNOWFLAKE_DBT_WAREHOUSE"
     commands: |
-      bash .buildkite/scripts/run_standard_models.sh snowflake google_ads microsoft_ads pinterest
+      bash .buildkite/scripts/run_standard_models.sh snowflake google_ads microsoft_ads pinterest stackadapt
 
   - label: ":postgres: Run Tests - Ads Packages :bookmark: :three:"
     key: "run-dbt-postgres-ads_3"
-    concurrency: 3
-    concurrency_group: "warehouse/postgres"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
-            - "CI_POSTGRES_DBT_DBNAME"
-            - "CI_POSTGRES_DBT_HOST"
-            - "CI_POSTGRES_DBT_PASS"
-            - "CI_POSTGRES_DBT_USER"
+          volumes:
+            - "/var/run/docker.sock:/var/run/docker.sock"
+          network: "fivetran_utils_pg_ci"
     commands: |
-      bash .buildkite/scripts/run_standard_models.sh postgres google_ads microsoft_ads pinterest
+      bash .buildkite/scripts/run_standard_models.sh postgres google_ads microsoft_ads pinterest stackadapt
 
   - label: ":gcloud: Run Tests - Ads Packages :bookmark: :three:"
     key: "run_dbt_bigquery_ads_3"
@@ -217,11 +230,11 @@ steps:
             - "BASH_ENV=/tmp/.bashrc"
             - "GCLOUD_SERVICE_KEY"
     commands: |
-      bash .buildkite/scripts/run_standard_models.sh bigquery google_ads microsoft_ads pinterest
+      bash .buildkite/scripts/run_standard_models.sh bigquery google_ads microsoft_ads pinterest stackadapt
 
   - label: ":amazon-redshift: Run Tests - Ads Packages :bookmark: :three:"
     key: "run_dbt_redshift_ads_3"
-    concurrency: 1
+    concurrency: 3
     concurrency_group: "warehouse/redshift"
     plugins:
       - docker#v3.13.0:
@@ -234,7 +247,7 @@ steps:
             - "CI_REDSHIFT_DBT_PASS"
             - "CI_REDSHIFT_DBT_USER"
     commands: |
-      bash .buildkite/scripts/run_standard_models.sh redshift google_ads microsoft_ads pinterest
+      bash .buildkite/scripts/run_standard_models.sh redshift google_ads microsoft_ads pinterest stackadapt
 
   - label: ":databricks: Run Tests - Ads Packages :bookmark: :three:"
     key: "run_dbt_databricks_ads_3"
@@ -250,7 +263,18 @@ steps:
             - "CI_DATABRICKS_DBT_HTTP_PATH"
             - "CI_DATABRICKS_DBT_TOKEN"
     commands: |
-      bash .buildkite/scripts/run_standard_models.sh databricks google_ads microsoft_ads pinterest
+      bash .buildkite/scripts/run_standard_models.sh databricks google_ads microsoft_ads pinterest stackadapt
+
+  - label: ":duckdb: Run Tests - Ads Packages :bookmark: :three:"
+    key: "run_dbt_duckdb_ads_3"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.10.13"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh duckdb google_ads microsoft_ads pinterest stackadapt
     
 
 ## Social Packages
@@ -275,18 +299,15 @@ steps:
 
   - label: ":postgres: Run Tests - Social Packages :iphone:"
     key: "run-dbt-postgres-social"
-    concurrency: 3
-    concurrency_group: "warehouse/postgres"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
-            - "CI_POSTGRES_DBT_DBNAME"
-            - "CI_POSTGRES_DBT_HOST"
-            - "CI_POSTGRES_DBT_PASS"
-            - "CI_POSTGRES_DBT_USER"
+          volumes:
+            - "/var/run/docker.sock:/var/run/docker.sock"
+          network: "fivetran_utils_pg_ci"
     commands: |
       bash .buildkite/scripts/run_standard_models.sh postgres linkedin_pages facebook_pages instagram_business twitter_organic youtube_analytics
 
@@ -306,7 +327,7 @@ steps:
 
   - label: ":amazon-redshift: Run Tests - Social Packages :iphone:"
     key: "run_dbt_redshift_social"
-    concurrency: 1
+    concurrency: 3
     concurrency_group: "warehouse/redshift"
     plugins:
       - docker#v3.13.0:
@@ -338,6 +359,17 @@ steps:
       bash .buildkite/scripts/run_standard_models.sh databricks facebook_pages instagram_business twitter_organic youtube_analytics
       ## Removed linkedin_pages as it is not databricks compatible at the moment.
 
+  - label: ":duckdb: Run Tests - Social Packages :iphone:"
+    key: "run_dbt_duckdb_social"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.10.13"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh duckdb linkedin_pages facebook_pages instagram_business twitter_organic youtube_analytics
+
 ## App Packages
   - label: ":snowflake: Run Tests - App Packages :video_game:"
     key: "run_dbt_snowflake_app"
@@ -360,18 +392,15 @@ steps:
 
   - label: ":postgres: Run Tests - App Packages :video_game:"
     key: "run-dbt-postgres-app"
-    concurrency: 3
-    concurrency_group: "warehouse/postgres"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
-            - "CI_POSTGRES_DBT_DBNAME"
-            - "CI_POSTGRES_DBT_HOST"
-            - "CI_POSTGRES_DBT_PASS"
-            - "CI_POSTGRES_DBT_USER"
+          volumes:
+            - "/var/run/docker.sock:/var/run/docker.sock"
+          network: "fivetran_utils_pg_ci"
     commands: |
       bash .buildkite/scripts/run_standard_models.sh postgres google_play apple_store
 
@@ -391,7 +420,7 @@ steps:
 
   - label: ":amazon-redshift: Run Tests - App Packages :video_game:"
     key: "run_dbt_redshift_app"
-    concurrency: 1
+    concurrency: 3
     concurrency_group: "warehouse/redshift"
     plugins:
       - docker#v3.13.0:
@@ -421,6 +450,17 @@ steps:
             - "CI_DATABRICKS_DBT_TOKEN"
     commands: |
       bash .buildkite/scripts/run_standard_models.sh databricks google_play apple_store
+
+  - label: ":duckdb: Run Tests - App Packages :video_game:"
+    key: "run_dbt_duckdb_app"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.10.13"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh duckdb google_play apple_store
     
 
 ## CRM Packages
@@ -441,24 +481,21 @@ steps:
             - "CI_SNOWFLAKE_DBT_USER"
             - "CI_SNOWFLAKE_DBT_WAREHOUSE"
     commands: |
-      bash .buildkite/scripts/run_standard_models.sh snowflake salesforce hubspot
+      bash .buildkite/scripts/run_standard_models.sh snowflake salesforce hubspot salesforce_marketing_cloud
 
   - label: ":postgres: Run Tests - CRM Packages :salesforce::hubspot:"
     key: "run-dbt-postgres-crm"
-    concurrency: 3
-    concurrency_group: "warehouse/postgres"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
-            - "CI_POSTGRES_DBT_DBNAME"
-            - "CI_POSTGRES_DBT_HOST"
-            - "CI_POSTGRES_DBT_PASS"
-            - "CI_POSTGRES_DBT_USER"
+          volumes:
+            - "/var/run/docker.sock:/var/run/docker.sock"
+          network: "fivetran_utils_pg_ci"
     commands: |
-      bash .buildkite/scripts/run_standard_models.sh postgres salesforce hubspot
+      bash .buildkite/scripts/run_standard_models.sh postgres salesforce hubspot salesforce_marketing_cloud
 
   - label: ":gcloud: Run Tests - CRM Packages :salesforce::hubspot:"
     key: "run_dbt_bigquery_crm"
@@ -472,11 +509,11 @@ steps:
             - "BASH_ENV=/tmp/.bashrc"
             - "GCLOUD_SERVICE_KEY"
     commands: |
-      bash .buildkite/scripts/run_standard_models.sh bigquery salesforce hubspot
+      bash .buildkite/scripts/run_standard_models.sh bigquery salesforce hubspot salesforce_marketing_cloud
 
   - label: ":amazon-redshift: Run Tests - CRM Packages :salesforce::hubspot:"
     key: "run_dbt_redshift_crm"
-    concurrency: 1
+    concurrency: 3
     concurrency_group: "warehouse/redshift"
     plugins:
       - docker#v3.13.0:
@@ -489,7 +526,7 @@ steps:
             - "CI_REDSHIFT_DBT_PASS"
             - "CI_REDSHIFT_DBT_USER"
     commands: |
-      bash .buildkite/scripts/run_standard_models.sh redshift salesforce hubspot
+      bash .buildkite/scripts/run_standard_models.sh redshift salesforce hubspot salesforce_marketing_cloud
 
   - label: ":databricks: Run Tests - CRM Packages :salesforce::hubspot:"
     key: "run_dbt_databricks_crm"
@@ -505,7 +542,18 @@ steps:
             - "CI_DATABRICKS_DBT_HTTP_PATH"
             - "CI_DATABRICKS_DBT_TOKEN"
     commands: |
-      bash .buildkite/scripts/run_standard_models.sh databricks salesforce hubspot
+      bash .buildkite/scripts/run_standard_models.sh databricks salesforce hubspot salesforce_marketing_cloud
+
+  - label: ":duckdb: Run Tests - CRM Packages :salesforce::hubspot:"
+    key: "run_dbt_duckdb_crm"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.10.13"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh duckdb salesforce hubspot salesforce_marketing_cloud
     
 
 ## Ecommerce and Subscription Packages
@@ -526,24 +574,21 @@ steps:
             - "CI_SNOWFLAKE_DBT_USER"
             - "CI_SNOWFLAKE_DBT_WAREHOUSE"
     commands: |
-      bash .buildkite/scripts/run_standard_models.sh snowflake shopify recurly stripe zuora
+      bash .buildkite/scripts/run_standard_models.sh snowflake shopify recurly stripe zuora recharge amazon_selling_partner
 
   - label: ":postgres: Run Tests - Ecommerce and Subscription Packages :shopping_bags:"
     key: "run-dbt-postgres-esub"
-    concurrency: 3
-    concurrency_group: "warehouse/postgres"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
-            - "CI_POSTGRES_DBT_DBNAME"
-            - "CI_POSTGRES_DBT_HOST"
-            - "CI_POSTGRES_DBT_PASS"
-            - "CI_POSTGRES_DBT_USER"
+          volumes:
+            - "/var/run/docker.sock:/var/run/docker.sock"
+          network: "fivetran_utils_pg_ci"
     commands: |
-      bash .buildkite/scripts/run_standard_models.sh postgres shopify recurly stripe zuora
+      bash .buildkite/scripts/run_standard_models.sh postgres shopify recurly stripe zuora recharge amazon_selling_partner
 
   - label: ":gcloud: Run Tests - Ecommerce and Subscription Packages :shopping_bags:"
     key: "run_dbt_bigquery_esub"
@@ -557,11 +602,11 @@ steps:
             - "BASH_ENV=/tmp/.bashrc"
             - "GCLOUD_SERVICE_KEY"
     commands: |
-      bash .buildkite/scripts/run_standard_models.sh bigquery shopify recurly stripe zuora
+      bash .buildkite/scripts/run_standard_models.sh bigquery shopify recurly stripe zuora recharge amazon_selling_partner
 
   - label: ":amazon-redshift: Run Tests - Ecommerce and Subscription Packages :shopping_bags:"
     key: "run_dbt_redshift_esub"
-    concurrency: 1
+    concurrency: 3
     concurrency_group: "warehouse/redshift"
     plugins:
       - docker#v3.13.0:
@@ -574,7 +619,7 @@ steps:
             - "CI_REDSHIFT_DBT_PASS"
             - "CI_REDSHIFT_DBT_USER"
     commands: |
-      bash .buildkite/scripts/run_standard_models.sh redshift shopify recurly stripe zuora
+      bash .buildkite/scripts/run_standard_models.sh redshift shopify recurly stripe zuora recharge amazon_selling_partner
 
   - label: ":databricks: Run Tests - Ecommerce and Subscription Packages :shopping_bags:"
     key: "run_dbt_databricks_esub"
@@ -590,7 +635,18 @@ steps:
             - "CI_DATABRICKS_DBT_HTTP_PATH"
             - "CI_DATABRICKS_DBT_TOKEN"
     commands: |
-      bash .buildkite/scripts/run_standard_models.sh databricks shopify recurly stripe zuora
+      bash .buildkite/scripts/run_standard_models.sh databricks shopify recurly stripe zuora recharge amazon_selling_partner
+
+  - label: ":duckdb: Run Tests - Ecommerce and Subscription Packages :shopping_bags:"
+    key: "run_dbt_duckdb_esub"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.10.13"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh duckdb shopify recurly stripe zuora recharge amazon_selling_partner
     
 
 ## Email Marketing Packages
@@ -615,18 +671,15 @@ steps:
 
   - label: ":postgres: Run Tests - Email Marketing Packages :email:"
     key: "run-dbt-postgres-email"
-    concurrency: 3
-    concurrency_group: "warehouse/postgres"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
-            - "CI_POSTGRES_DBT_DBNAME"
-            - "CI_POSTGRES_DBT_HOST"
-            - "CI_POSTGRES_DBT_PASS"
-            - "CI_POSTGRES_DBT_USER"
+          volumes:
+            - "/var/run/docker.sock:/var/run/docker.sock"
+          network: "fivetran_utils_pg_ci"
     commands: |
       bash .buildkite/scripts/run_standard_models.sh postgres marketo iterable klaviyo mailchimp pardot
 
@@ -646,7 +699,7 @@ steps:
 
   - label: ":amazon-redshift: Run Tests - Email Marketing Packages :email:"
     key: "run_dbt_redshift_email"
-    concurrency: 1
+    concurrency: 3
     concurrency_group: "warehouse/redshift"
     plugins:
       - docker#v3.13.0:
@@ -676,6 +729,17 @@ steps:
             - "CI_DATABRICKS_DBT_TOKEN"
     commands: |
       bash .buildkite/scripts/run_standard_models.sh databricks marketo iterable klaviyo mailchimp pardot
+
+  - label: ":duckdb: Run Tests - Email Marketing Packages :email:"
+    key: "run_dbt_duckdb_email"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.10.13"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh duckdb marketo iterable klaviyo mailchimp pardot
     
 
 ## Finance Packages
@@ -696,24 +760,21 @@ steps:
             - "CI_SNOWFLAKE_DBT_USER"
             - "CI_SNOWFLAKE_DBT_WAREHOUSE"
     commands: |
-      bash .buildkite/scripts/run_standard_models.sh snowflake quickbooks xero sage_intacct netsuite
+      bash .buildkite/scripts/run_standard_models.sh snowflake quickbooks xero sage_intacct netsuite aws_cloud_cost sap workday
 
   - label: ":postgres: Run Tests - Finance Packages :money_with_wings:"
     key: "run-dbt-postgres-finance"
-    concurrency: 3
-    concurrency_group: "warehouse/postgres"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
-            - "CI_POSTGRES_DBT_DBNAME"
-            - "CI_POSTGRES_DBT_HOST"
-            - "CI_POSTGRES_DBT_PASS"
-            - "CI_POSTGRES_DBT_USER"
+          volumes:
+            - "/var/run/docker.sock:/var/run/docker.sock"
+          network: "fivetran_utils_pg_ci"
     commands: |
-      bash .buildkite/scripts/run_standard_models.sh postgres quickbooks xero sage_intacct netsuite
+      bash .buildkite/scripts/run_standard_models.sh postgres quickbooks xero sage_intacct netsuite aws_cloud_cost sap workday
 
   - label: ":gcloud: Run Tests - Finance Packages :money_with_wings:"
     key: "run_dbt_bigquery_finance"
@@ -727,11 +788,11 @@ steps:
             - "BASH_ENV=/tmp/.bashrc"
             - "GCLOUD_SERVICE_KEY"
     commands: |
-      bash .buildkite/scripts/run_standard_models.sh bigquery quickbooks xero sage_intacct netsuite
+      bash .buildkite/scripts/run_standard_models.sh bigquery quickbooks xero sage_intacct netsuite aws_cloud_cost sap workday
 
   - label: ":amazon-redshift: Run Tests - Finance Packages :money_with_wings:"
     key: "run_dbt_redshift_finance"
-    concurrency: 1
+    concurrency: 3
     concurrency_group: "warehouse/redshift"
     plugins:
       - docker#v3.13.0:
@@ -744,7 +805,7 @@ steps:
             - "CI_REDSHIFT_DBT_PASS"
             - "CI_REDSHIFT_DBT_USER"
     commands: |
-      bash .buildkite/scripts/run_standard_models.sh redshift quickbooks xero sage_intacct netsuite
+      bash .buildkite/scripts/run_standard_models.sh redshift quickbooks xero sage_intacct netsuite aws_cloud_cost sap workday
 
   - label: ":databricks: Run Tests - Finance Packages :money_with_wings:"
     key: "run_dbt_databricks_finance"
@@ -760,7 +821,18 @@ steps:
             - "CI_DATABRICKS_DBT_HTTP_PATH"
             - "CI_DATABRICKS_DBT_TOKEN"
     commands: |
-      bash .buildkite/scripts/run_standard_models.sh databricks quickbooks xero sage_intacct netsuite
+      bash .buildkite/scripts/run_standard_models.sh databricks quickbooks xero sage_intacct netsuite aws_cloud_cost sap workday
+
+  - label: ":duckdb: Run Tests - Finance Packages :money_with_wings:"
+    key: "run_dbt_duckdb_finance"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.10.13"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh duckdb quickbooks xero sage_intacct netsuite aws_cloud_cost sap workday
     
 
 ## Log and People Packages
@@ -785,18 +857,15 @@ steps:
 
   - label: ":postgres: Run Tests - Log and People Packages :people_hugging:"
     key: "run-dbt-postgres-log_people"
-    concurrency: 3
-    concurrency_group: "warehouse/postgres"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
-            - "CI_POSTGRES_DBT_DBNAME"
-            - "CI_POSTGRES_DBT_HOST"
-            - "CI_POSTGRES_DBT_PASS"
-            - "CI_POSTGRES_DBT_USER"
+          volumes:
+            - "/var/run/docker.sock:/var/run/docker.sock"
+          network: "fivetran_utils_pg_ci"
     commands: |
       bash .buildkite/scripts/run_standard_models.sh postgres fivetran_log greenhouse lever
 
@@ -816,7 +885,7 @@ steps:
 
   - label: ":amazon-redshift: Run Tests - Log and People Packages :people_hugging:"
     key: "run_dbt_redshift_log_people"
-    concurrency: 1
+    concurrency: 3
     concurrency_group: "warehouse/redshift"
     plugins:
       - docker#v3.13.0:
@@ -846,6 +915,17 @@ steps:
             - "CI_DATABRICKS_DBT_TOKEN"
     commands: |
       bash .buildkite/scripts/run_standard_models.sh databricks fivetran_log greenhouse lever
+
+  - label: ":duckdb: Run Tests - Log and People Packages :people_hugging:"
+    key: "run_dbt_duckdb_log_people"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.10.13"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh duckdb fivetran_log greenhouse lever
     
 
 ## Product Packages
@@ -866,24 +946,21 @@ steps:
             - "CI_SNOWFLAKE_DBT_USER"
             - "CI_SNOWFLAKE_DBT_WAREHOUSE"
     commands: |
-      bash .buildkite/scripts/run_standard_models.sh snowflake amplitude mixpanel pendo
+      bash .buildkite/scripts/run_standard_models.sh snowflake amplitude mixpanel pendo ga4_export qualtrics
 
   - label: ":postgres: Run Tests - Product Packages :unicorn_face:"
     key: "run-dbt-postgres-product"
-    concurrency: 3
-    concurrency_group: "warehouse/postgres"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
-            - "CI_POSTGRES_DBT_DBNAME"
-            - "CI_POSTGRES_DBT_HOST"
-            - "CI_POSTGRES_DBT_PASS"
-            - "CI_POSTGRES_DBT_USER"
+          volumes:
+            - "/var/run/docker.sock:/var/run/docker.sock"
+          network: "fivetran_utils_pg_ci"
     commands: |
-      bash .buildkite/scripts/run_standard_models.sh postgres amplitude mixpanel pendo
+      bash .buildkite/scripts/run_standard_models.sh postgres amplitude mixpanel pendo ga4_export qualtrics
 
   - label: ":gcloud: Run Tests - Product Packages :unicorn_face:"
     key: "run_dbt_bigquery_product"
@@ -897,11 +974,11 @@ steps:
             - "BASH_ENV=/tmp/.bashrc"
             - "GCLOUD_SERVICE_KEY"
     commands: |
-      bash .buildkite/scripts/run_standard_models.sh bigquery amplitude mixpanel pendo
+      bash .buildkite/scripts/run_standard_models.sh bigquery amplitude mixpanel pendo ga4_export qualtrics
 
   - label: ":amazon-redshift: Run Tests - Product Packages :unicorn_face:"
     key: "run_dbt_redshift_product"
-    concurrency: 1
+    concurrency: 3
     concurrency_group: "warehouse/redshift"
     plugins:
       - docker#v3.13.0:
@@ -914,7 +991,7 @@ steps:
             - "CI_REDSHIFT_DBT_PASS"
             - "CI_REDSHIFT_DBT_USER"
     commands: |
-      bash .buildkite/scripts/run_standard_models.sh redshift amplitude mixpanel pendo
+      bash .buildkite/scripts/run_standard_models.sh redshift amplitude mixpanel pendo ga4_export qualtrics
 
   - label: ":databricks: Run Tests - Product Packages :unicorn_face:"
     key: "run_dbt_databricks_product"
@@ -930,7 +1007,18 @@ steps:
             - "CI_DATABRICKS_DBT_HTTP_PATH"
             - "CI_DATABRICKS_DBT_TOKEN"
     commands: |
-      bash .buildkite/scripts/run_standard_models.sh databricks amplitude mixpanel pendo
+      bash .buildkite/scripts/run_standard_models.sh databricks amplitude mixpanel pendo ga4_export qualtrics
+
+  - label: ":duckdb: Run Tests - Product Packages :unicorn_face:"
+    key: "run_dbt_duckdb_product"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.10.13"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh duckdb amplitude mixpanel pendo ga4_export qualtrics
     
 
 ## Velocity Packages
@@ -951,24 +1039,21 @@ steps:
             - "CI_SNOWFLAKE_DBT_USER"
             - "CI_SNOWFLAKE_DBT_WAREHOUSE"
     commands: |
-      bash .buildkite/scripts/run_standard_models.sh snowflake intercom github zendesk asana jira
+      bash .buildkite/scripts/run_standard_models.sh snowflake intercom github zendesk asana jira servicenow twilio
 
   - label: ":postgres: Run Tests - Velocity Packages :roller_coaster:"
     key: "run-dbt-postgres-velocity"
-    concurrency: 3
-    concurrency_group: "warehouse/postgres"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
-            - "CI_POSTGRES_DBT_DBNAME"
-            - "CI_POSTGRES_DBT_HOST"
-            - "CI_POSTGRES_DBT_PASS"
-            - "CI_POSTGRES_DBT_USER"
+          volumes:
+            - "/var/run/docker.sock:/var/run/docker.sock"
+          network: "fivetran_utils_pg_ci"
     commands: |
-      bash .buildkite/scripts/run_standard_models.sh postgres intercom github zendesk asana jira
+      bash .buildkite/scripts/run_standard_models.sh postgres intercom github zendesk asana jira servicenow twilio
 
   - label: ":gcloud: Run Tests - Velocity Packages :roller_coaster:"
     key: "run_dbt_bigquery_velocity"
@@ -982,11 +1067,11 @@ steps:
             - "BASH_ENV=/tmp/.bashrc"
             - "GCLOUD_SERVICE_KEY"
     commands: |
-      bash .buildkite/scripts/run_standard_models.sh bigquery intercom github zendesk asana jira
+      bash .buildkite/scripts/run_standard_models.sh bigquery intercom github zendesk asana jira servicenow twilio
 
   - label: ":amazon-redshift: Run Tests - Velocity Packages :roller_coaster:"
     key: "run_dbt_redshift_velocity"
-    concurrency: 1
+    concurrency: 3
     concurrency_group: "warehouse/redshift"
     plugins:
       - docker#v3.13.0:
@@ -999,7 +1084,7 @@ steps:
             - "CI_REDSHIFT_DBT_PASS"
             - "CI_REDSHIFT_DBT_USER"
     commands: |
-      bash .buildkite/scripts/run_standard_models.sh redshift intercom github zendesk asana jira
+      bash .buildkite/scripts/run_standard_models.sh redshift intercom github zendesk asana jira servicenow twilio
 
   - label: ":databricks: Run Tests - Velocity Packages :roller_coaster:"
     key: "run_dbt_databricks_velocity"
@@ -1015,7 +1100,18 @@ steps:
             - "CI_DATABRICKS_DBT_HTTP_PATH"
             - "CI_DATABRICKS_DBT_TOKEN"
     commands: |
-      bash .buildkite/scripts/run_standard_models.sh databricks intercom github zendesk asana jira
+      bash .buildkite/scripts/run_standard_models.sh databricks intercom github zendesk asana jira servicenow twilio
+
+  - label: ":duckdb: Run Tests - Velocity Packages :roller_coaster:"
+    key: "run_dbt_duckdb_velocity"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.10.13"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh duckdb intercom github zendesk asana jira servicenow twilio
     
 
 ## Ad Reporting Roll Up Packages
@@ -1040,18 +1136,15 @@ steps:
 
   - label: ":postgres: Run Tests - Ad Reporting Roll Up Package :roller_skate:"
     key: "run-dbt-postgres-ad_roll"
-    concurrency: 3
-    concurrency_group: "warehouse/postgres"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
-            - "CI_POSTGRES_DBT_DBNAME"
-            - "CI_POSTGRES_DBT_HOST"
-            - "CI_POSTGRES_DBT_PASS"
-            - "CI_POSTGRES_DBT_USER"
+          volumes:
+            - "/var/run/docker.sock:/var/run/docker.sock"
+          network: "fivetran_utils_pg_ci"
     commands: |
       bash .buildkite/scripts/run_standard_models.sh postgres ad_reporting
 
@@ -1071,7 +1164,7 @@ steps:
 
   - label: ":amazon-redshift: Run Tests - Ad Reporting Roll Up Package :roller_skate:"
     key: "run_dbt_redshift_ad_roll"
-    concurrency: 1
+    concurrency: 3
     concurrency_group: "warehouse/redshift"
     plugins:
       - docker#v3.13.0:
@@ -1101,6 +1194,17 @@ steps:
             - "CI_DATABRICKS_DBT_TOKEN"
     commands: |
       bash .buildkite/scripts/run_standard_models.sh databricks ad_reporting
+
+  - label: ":duckdb: Run Tests - Ad Reporting Roll Up Package :roller_skate:"
+    key: "run_dbt_duckdb_ad_roll"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.10.13"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh duckdb ad_reporting
     
 
 ## App Reporting Roll Up Packages
@@ -1125,18 +1229,15 @@ steps:
 
   - label: ":postgres: Run Tests - App Reporting Roll Up Package :roller_skate:"
     key: "run-dbt-postgres-app_roll"
-    concurrency: 3
-    concurrency_group: "warehouse/postgres"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
-            - "CI_POSTGRES_DBT_DBNAME"
-            - "CI_POSTGRES_DBT_HOST"
-            - "CI_POSTGRES_DBT_PASS"
-            - "CI_POSTGRES_DBT_USER"
+          volumes:
+            - "/var/run/docker.sock:/var/run/docker.sock"
+          network: "fivetran_utils_pg_ci"
     commands: |
       bash .buildkite/scripts/run_standard_models.sh postgres app_reporting
 
@@ -1156,7 +1257,7 @@ steps:
 
   - label: ":amazon-redshift: Run Tests - App Reporting Roll Up Package :roller_skate:"
     key: "run_dbt_redshift_app_roll"
-    concurrency: 1
+    concurrency: 3
     concurrency_group: "warehouse/redshift"
     plugins:
       - docker#v3.13.0:
@@ -1186,6 +1287,17 @@ steps:
             - "CI_DATABRICKS_DBT_TOKEN"
     commands: |
       bash .buildkite/scripts/run_standard_models.sh databricks app_reporting
+
+  - label: ":duckdb: Run Tests - App Reporting Roll Up Package :roller_skate:"
+    key: "run_dbt_duckdb_app_roll"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.10.13"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh duckdb app_reporting
     
 
 ## Social Media Reporting Roll Up Packages
@@ -1210,18 +1322,15 @@ steps:
 
   - label: ":postgres: Run Tests - Social Reporting Roll Up Package :roller_skate:"
     key: "run-dbt-postgres-social_roll"
-    concurrency: 3
-    concurrency_group: "warehouse/postgres"
     plugins:
       - docker#v3.13.0:
           image: "python:3.10.13"
           shell: [ "/bin/bash", "-e", "-c" ]
           environment:
             - "BASH_ENV=/tmp/.bashrc"
-            - "CI_POSTGRES_DBT_DBNAME"
-            - "CI_POSTGRES_DBT_HOST"
-            - "CI_POSTGRES_DBT_PASS"
-            - "CI_POSTGRES_DBT_USER"
+          volumes:
+            - "/var/run/docker.sock:/var/run/docker.sock"
+          network: "fivetran_utils_pg_ci"
     commands: |
       bash .buildkite/scripts/run_standard_models.sh postgres social_media_reporting
 
@@ -1241,7 +1350,7 @@ steps:
 
   - label: ":amazon-redshift: Run Tests - Social Reporting Roll Up Package :roller_skate:"
     key: "run_dbt_redshift_social_roll"
-    concurrency: 1
+    concurrency: 3
     concurrency_group: "warehouse/redshift"
     plugins:
       - docker#v3.13.0:
@@ -1271,4 +1380,15 @@ steps:
             - "CI_DATABRICKS_DBT_TOKEN"
     commands: |
       bash .buildkite/scripts/run_standard_models.sh databricks social_media_reporting
+
+  - label: ":duckdb: Run Tests - Social Reporting Roll Up Package :roller_skate:"
+    key: "run_dbt_duckdb_social_roll"
+    plugins:
+      - docker#v3.13.0:
+          image: "python:3.10.13"
+          shell: [ "/bin/bash", "-e", "-c" ]
+          environment:
+            - "BASH_ENV=/tmp/.bashrc"
+    commands: |
+      bash .buildkite/scripts/run_standard_models.sh duckdb social_media_reporting
     

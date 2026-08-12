@@ -209,7 +209,7 @@ The data is returned by the path you provide as the argument. The json_extract m
 ----
 ### json_parse ([source](macros/json_parse.sql))
 This macro allows for cross database use of the json extract function, specifically used to parse and extract a nested value from a json object.
-The data is returned by the path you provide as the list within the `string_path` argument. The json_parse macro is compatible with BigQuery, Redshift, Postgres, Snowflake and Databricks.
+The data is returned by the path you provide as the list within the `string_path` argument. The json_parse macro is compatible with BigQuery, Redshift, Postgres, Snowflake, DuckDB, and Databricks.
 
 **Usage:**
 ```sql
@@ -232,7 +232,7 @@ This macro allows for cross database use of obtaining the max boolean value of a
 
 ----
 ### percentile ([source](macros/percentile.sql))
-This macro is used to return the designated percentile of a field with cross db functionality. The percentile function stems from percentile_cont across db's. For Snowflake and Redshift this macro uses the window function opposed to the aggregate for percentile. For Postgres, this macro uses the aggregate, as it does not support a percentile window function. Thus, you will need to add a target-dependent `group by` in the query you are calling this macro in.
+This macro is used to return the designated percentile of a field with cross db functionality. The percentile function stems from percentile_cont across db's. For Snowflake, Redshift, BigQuery, Spark, and DuckDB, this macro uses the window function opposed to the aggregate for percentile. For Postgres, this macro uses the aggregate, as it does not support a percentile window function. Thus, you will need to add a target-dependent `group by` in the query you are calling this macro in.
 
 **Usage:**
 ```sql
@@ -272,7 +272,7 @@ BigQuery, Snowflake, Redshift, Postgres, and Spark.
 * `delimiter`    (required): Character you want to be used as the delimiter between aggregates.
 ----
 ### timestamp_add ([source](macros/timestamp_add.sql))
-This macro allows for cross database addition of a timestamp field and a specified datepart and interval for BigQuery, Redshift, Postgres, and Snowflake.
+This macro allows for cross database addition of a timestamp field and a specified datepart and interval for BigQuery, Redshift, Postgres, Snowflake, Spark, and DuckDB.
 
 **Usage:**
 ```sql
@@ -285,7 +285,7 @@ This macro allows for cross database addition of a timestamp field and a specifi
 
 ----
 ### timestamp_diff ([source](macros/timestamp_diff.sql))
-This macro allows for cross database timestamp difference calculation for BigQuery, Redshift, Postgres, and Snowflake.
+This macro allows for cross database timestamp difference calculation for BigQuery, Redshift, Postgres, Snowflake, and DuckDB.
 
 **Usage:**
 ```sql

@@ -47,3 +47,8 @@ integration_tests:
       threads: 8
       token: "{{ env_var('CI_DATABRICKS_DBT_TOKEN') }}"
       type: databricks
+    duckdb:
+      type: duckdb
+      path: "/tmp/fivetran_utils_integration_tests.duckdb"
+      schema: fivetran_utils_integration_tests
+      threads: 4

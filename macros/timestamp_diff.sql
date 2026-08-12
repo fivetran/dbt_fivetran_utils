@@ -66,3 +66,9 @@
     {% endif %}
 
 {% endmacro %}
+
+{% macro duckdb__timestamp_diff(first_date, second_date, datepart) %}
+
+    datediff('{{ datepart }}', {{ first_date }}, {{ second_date }})
+
+{% endmacro %}
