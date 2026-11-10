@@ -73,6 +73,7 @@ dispatch:
     - [apply\_source\_relation (source)](#apply_source_relation-source)
     - [partition\_by\_source\_relation (source)](#partition_by_source_relation-source)
     - [union\_connections (source)](#union_connections-source)
+      - [Empty Table Warnings on dbt v2 (Fusion)](#empty-table-warnings-on-dbt-v2-fusion)
       - [Union Connections Defined Sources Configuration](#optional-union-connections-defined-sources-configuration)
     - [union\_data (source)](#union_data-source)
       - [Union Data Defined Sources Configuration](#union-data-defined-sources-configuration)
@@ -575,6 +576,13 @@ vars:
 * `single_source_name`: The source name to use when not unioning (i.e. when `connection_dictionary` is empty).
 * `single_table_name`: The name of the table to query.
 * `default_identifier` (optional): Override for the table identifier. Defaults to `single_table_name`.
+
+#### Empty Table Warnings on dbt v2 (Fusion)
+On dbt v2, `union_connections` does not output the empty table warning inline. During the compile phase, dbt v2 cannot look up existing tables, so an inline warning fires for every staging model, even when the table exists. Instead, `union_connections` marks each empty staging model, and the [`warn_empty_tables_on_run_end`](macros/warn_empty_tables_on_run_end.sql) macro outputs one warning per missing table at the end of the run.
+
+This package runs `warn_empty_tables_on_run_end` as an `on-run-end` hook in its own `dbt_project.yml`, so you don't need to configure anything. Don't add the hook to your root `dbt_project.yml`, or each warning appears twice.
+
+On dbt v1, the hook does nothing and `union_connections` outputs the warning inline, as before. The `fivetran__remove_empty_table_warnings` variable turns off the warnings on both versions.
 
 #### Optional: Union Connections Defined Sources Configuration
 By default, packages using this macro define one single-connection source which will be disabled if you are unioning multiple connections. This means your DAG will not include your sources, though the package will run successfully.

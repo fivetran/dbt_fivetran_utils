@@ -11,6 +11,7 @@
 {%- set connections = var(connection_dictionary, []) %}
 {%- set using_unioning = connections | length > 0 %}
 {%- set identifier_var = single_source_name + "_" + single_table_name + "_identifier" %}
+{%- set dbt_major_version = 'v2' if dbt_version.split(".")[0] | int >= 2 else 'v1' %}
 
 {%- if using_unioning %}
 {# For unioning #}
@@ -49,7 +50,10 @@
         {{ fivetran_utils.union_relations_custom(relations, source_column_name='_dbt_source_relation') }}
 
     {%- else -%}
-        {{ exceptions.warn(exception_warning) if using_empty_table_warnings }}
+        {%- if using_empty_table_warnings %}
+        {#- On v2 (Fusion), warn_empty_tables_on_run_end raises this warning instead, to skip compile-phase false positives. #}
+        {{ '-- fivetran_utils_empty_table: ' ~ single_source_name|upper ~ '.' ~ single_table_name|upper if dbt_major_version == 'v2' else exceptions.warn(exception_warning) }}
+        {%- endif %}
 
         select
             cast(null as {{ dbt.type_string() }}) as _dbt_source_relation
@@ -82,7 +86,10 @@
         from {{ source(single_source_name, single_table_name) }} as source_table
 
     {% else %}
-        {{ exceptions.warn(exception_warning) if using_empty_table_warnings }}
+        {%- if using_empty_table_warnings %}
+        {#- On v2 (Fusion), warn_empty_tables_on_run_end raises this warning instead, to skip compile-phase false positives. #}
+        {{ '-- fivetran_utils_empty_table: ' ~ single_source_name|upper ~ '.' ~ single_table_name|upper if dbt_major_version == 'v2' else exceptions.warn(exception_warning) }}
+        {%- endif %}
 
         select
             cast(null as {{ dbt.type_string() }}) as _dbt_source_relation
