@@ -11,6 +11,10 @@
 {%- set connections = var(connection_dictionary, []) %}
 {%- set using_unioning = connections | length > 0 %}
 {%- set identifier_var = single_source_name + "_" + single_table_name + "_identifier" %}
+{#- dbt v2 renders every model once before the run with no live warehouse access, so get_relation returns
+    none even for tables that exist. In that pass, list_schemas also returns no schemas. Only warn when the warehouse
+    returns at least one schema, so the warning fires in the real run pass only. dbt v1 always warns as before. -#}
+{%- set is_dbt_v2 = dbt_version.split(".")[0] | int >= 2 %}
 
 {%- if using_unioning %}
 {# For unioning #}
@@ -49,7 +53,11 @@
         {{ fivetran_utils.union_relations_custom(relations, source_column_name='_dbt_source_relation') }}
 
     {%- else -%}
-        {{ exceptions.warn(exception_warning) if using_empty_table_warnings }}
+        {%- if using_empty_table_warnings %}
+            {%- set first_connection = connections[0] %}
+            {%- set canary_database = source(first_connection.name, single_table_name).database if var('has_defined_sources', false) else (first_connection.database if first_connection.database else target.database) %}
+            {{ exceptions.warn(exception_warning) if not is_dbt_v2 or adapter.list_schemas(canary_database) | length > 0 }}
+        {%- endif %}
 
         select
             cast(null as {{ dbt.type_string() }}) as _dbt_source_relation
@@ -82,7 +90,7 @@
         from {{ source(single_source_name, single_table_name) }} as source_table
 
     {% else %}
-        {{ exceptions.warn(exception_warning) if using_empty_table_warnings }}
+        {{ exceptions.warn(exception_warning) if using_empty_table_warnings and (not is_dbt_v2 or adapter.list_schemas(database) | length > 0) }}
 
         select
             cast(null as {{ dbt.type_string() }}) as _dbt_source_relation
