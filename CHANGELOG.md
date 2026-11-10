@@ -1,3 +1,13 @@
+# dbt_fivetran_utils v0.4.14
+
+[PR #161](https://github.com/fivetran/dbt_fivetran_utils/pull/161) includes the following updates:
+
+## Bug Fixes
+- Fixes false "table was not found in your schema(s)" warnings from `union_connections` on dbt v2. dbt v2 compiles every model before it can look up existing tables, so the macro warned for every staging model, even when the source table existed.
+  - On dbt v2, `union_connections` no longer warns inline. It adds a marker comment to the empty staging model it creates instead.
+  - The new [`warn_empty_tables_on_run_end`](macros/warn_empty_tables_on_run_end.sql) macro reads the SQL that ran and outputs one warning per missing table at the end of the run. This package runs it as an `on-run-end` hook in its own `dbt_project.yml`.
+  - On dbt v1, the hook does nothing and `union_connections` warns inline, as before. The `fivetran__remove_empty_table_warnings` variable still turns off the warnings on both versions of dbt.
+
 # dbt_fivetran_utils v0.4.13
 
 [PR #160](https://github.com/fivetran/dbt_fivetran_utils/pull/160) includes the following updates:
