@@ -32,17 +32,32 @@ def load_yaml(path: Path):
         return {}
 
 
-def has_contract(pkg_dir: Path) -> bool:
-    return any(MACRO.search(f.read_text(errors="ignore")) for f in pkg_dir.rglob("macros/**/*.sql"))
+def project_dirs(pkg_dir: Path, meta: dict, key: str, default: str) -> list:
+    """The package's own directories for a path setting (macro-paths, model-paths).
+
+    Only these are searched, never nested ones: the root project may contain installed or vendored
+    packages, and matching their macros would wrongly credit the root with their contract.
+    """
+    return [pkg_dir / p for p in meta.get(key) or [default]]
 
 
-def references_var(pkg_dir: Path, name: str) -> bool:
+def sql_files(dirs: list):
+    for d in dirs:
+        if d.is_dir():
+            yield from d.rglob("*.sql")
+
+
+def has_contract(pkg_dir: Path, meta: dict) -> bool:
+    macro_dirs = project_dirs(pkg_dir, meta, "macro-paths", "macros")
+    return any(MACRO.search(f.read_text(errors="ignore")) for f in sql_files(macro_dirs))
+
+
+def references_var(pkg_dir: Path, meta: dict, name: str) -> bool:
     needle = f"{name}__source_config"
-    for f in pkg_dir.rglob("*"):
-        if f.is_file() and f.suffix in {".sql", ".yml", ".yaml"} and "dbt_packages" not in f.parts:
-            if needle in f.read_text(errors="ignore"):
-                return True
-    return False
+    files = list(sql_files(project_dirs(pkg_dir, meta, "macro-paths", "macros")))
+    files += list(sql_files(project_dirs(pkg_dir, meta, "model-paths", "models")))
+    files.append(pkg_dir / "dbt_project.yml")
+    return any(f.is_file() and needle in f.read_text(errors="ignore") for f in files)
 
 
 def origins(root: Path) -> dict:
@@ -81,14 +96,14 @@ def main(project_dir: str) -> None:
     for pkg_dir, fixed_origin in candidates:
         meta = load_yaml(pkg_dir / "dbt_project.yml")
         name = meta.get("name")
-        if not name or not has_contract(pkg_dir):
+        if not name or not has_contract(pkg_dir, meta):
             continue
         found.append(
             {
                 "name": name,
                 "version": str(meta.get("version", "")),
                 "origin": fixed_origin or known.get(name, "unknown"),
-                "reads_var": references_var(pkg_dir, name),
+                "reads_var": references_var(pkg_dir, meta, name),
             }
         )
     print(json.dumps(found, indent=2))
