@@ -3,7 +3,7 @@
 set -euo pipefail
 
 apt-get update
-apt-get install libsasl2-dev
+apt-get install -y libsasl2-dev
 
 python3 -m venv venv
 . venv/bin/activate
