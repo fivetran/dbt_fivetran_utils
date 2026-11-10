@@ -1,6 +1,6 @@
 # dbt_fivetran_utils v0.4.14
 
-[PR #162](https://github.com/fivetran/dbt_fivetran_utils/pull/162) includes the following updates:
+[PR #163](https://github.com/fivetran/dbt_fivetran_utils/pull/163) includes the following updates:
 
 ## Bug Fixes
 - Fixes false "table was not found in your schema(s)" warnings from `union_connections` on dbt v2. dbt v2 renders every model once before the run without live warehouse access, so the macro warned for every staging model, even when the source table existed.
