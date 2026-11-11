@@ -1,3 +1,12 @@
+# dbt_fivetran_utils v0.4.14
+
+[PR #163](https://github.com/fivetran/dbt_fivetran_utils/pull/163) includes the following updates:
+
+## Bug Fixes
+- Fixes false "table was not found in your schema(s)" warnings from `union_connections` on dbt v2. dbt v2 renders every model once before the run without live warehouse access, so the macro warned for every staging model, even when the source table existed.
+  - On dbt v2, `union_connections` now warns only when the warehouse returns at least one schema for the source database. This skips the render without warehouse access and keeps the warning for tables that are really missing.
+  - On dbt v1, the warning is unchanged. The `fivetran__remove_empty_table_warnings` variable still turns off the warnings on both versions.
+
 # dbt_fivetran_utils v0.4.13
 
 [PR #160](https://github.com/fivetran/dbt_fivetran_utils/pull/160) includes the following updates:

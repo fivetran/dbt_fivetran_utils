@@ -24,7 +24,7 @@ integration_tests:
       type: snowflake
       account: "{{ env_var('CI_SNOWFLAKE_DBT_ACCOUNT') }}"
       user: "{{ env_var('CI_SNOWFLAKE_DBT_USER') }}"
-      password: "{{ env_var('CI_SNOWFLAKE_DBT_PASS') }}"
+      private_key: "{{ env_var('CI_SNOWFLAKE_DBT_PRIVATE_KEY') }}"
       role: "{{ env_var('CI_SNOWFLAKE_DBT_ROLE_FT_UTILS_TEST') }}"
       database: "{{ env_var('CI_SNOWFLAKE_DATABASE_FT_UTILS') }}"
       warehouse: "{{ env_var('CI_SNOWFLAKE_DBT_WAREHOUSE') }}"
