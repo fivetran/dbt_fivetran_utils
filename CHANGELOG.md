@@ -1,6 +1,6 @@
 # dbt_fivetran_utils v0.4.15
 
-[PR #PLACEHOLDER](https://github.com/fivetran/dbt_fivetran_utils/pull/PLACEHOLDER) includes the following updates:
+[PR #164](https://github.com/fivetran/dbt_fivetran_utils/pull/164) includes the following updates:
 
 ## Breaking Changes
 - Removes the following macros. If you call any of them in your own project, replace them as noted:
