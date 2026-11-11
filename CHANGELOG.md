@@ -22,6 +22,13 @@
 | `timestamp_diff` | `dbt.datediff`. Moved into `dbt_qualtrics` as `qualtrics_timestamp_diff`. |
 | `union_relations` | `dbt_utils.union_relations`. Moved into `dbt_marketo` as `marketo_union_relations`. |
 | `union_tables` | `dbt_utils.union_relations`. |
+| `union_relations_custom` | `dbt_utils.union_relations` with `include_table_in_source_column=false`. |
+| `snowflake_seed_data` | None. |
+| `extract_url_parameter` | `dbt_utils.get_url_parameter`, which includes a Spark/Databricks version. |
+| `max_bool` | `dbt.bool_or`. |
+| `fivetran_date_spine` | `dbt_utils.date_spine`, which includes a SQL Server version. |
+| `percentile` | `dbt_utils.percentile`. |
+| `string_agg` | `dbt.listagg`. On Spark and Databricks, `dbt.listagg` keeps duplicate values (add `distinct` to remove them) and no longer splits values that contain `, `. |
 | `enabled_vars_one_true` | Jinja's `or` operator with an explicit default for each variable. For example, `var('a', false) or var('b', false)`. |
 
 - Updates `pivot_json_extract` to use `json_parse` instead of `json_extract`. This adds Databricks support.
@@ -31,7 +38,7 @@
 - Updates `source_relation`, which `apply_source_relation` calls, so the `union_databases` match anchors to the start of `_dbt_source_relation`. Previously, a database name that ended with another listed database name (for example, `preprod` and `prod`) could get the wrong `source_relation` value.
 
 ## Dependencies
-- Points the `dbt_utils` dependency at the `feature/sqlserver-date-spine-spark-url-parameter` branch of `fivetran-jamie/dbt-utils`, which adds the `include_table_in_source_column` and `aliases` arguments to `dbt_utils.union_relations`. This is temporary. Before release, switch it back to a `dbt-labs/dbt_utils` Hub version range that includes these arguments.
+- Points the `dbt_utils` dependency at the `feature/sqlserver-date-spine-spark-url-parameter` branch of `fivetran-jamie/dbt-utils`, which adds the `include_table_in_source_column` and `aliases` arguments to `dbt_utils.union_relations`, plus `dbt_utils.percentile`, the SQL Server `date_spine`, and the Spark/Databricks `get_url_parameter`. This is temporary. Before release, switch it back to a `dbt-labs/dbt_utils` Hub version range that includes these arguments.
 
 ## Under the Hood
 - Updates `union_connections` to call `dbt_utils.union_relations` with `include_table_in_source_column=false` instead of `union_relations_custom`. `_dbt_source_relation` is still `database.schema`, so output is unchanged.

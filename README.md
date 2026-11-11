@@ -40,18 +40,12 @@ dispatch:
   - [Step 2: Using the Macros](#step-2-using-the-macros)
 - [Contents](#contents)
   - [Tests and helpers](#tests-and-helpers)
-    - [snowflake\_seed\_data (source)](#snowflake_seed_data-source)
   - [Cross-database compatibility](#cross-database-compatibility)
-    - [extract\_url\_parameter (source)](#extract_url_parameter-source)
     - [json\_parse (source)](#json_parse-source)
-    - [max\_bool (source)](#max_bool-source)
-    - [percentile (source)](#percentile-source)
     - [pivot\_json\_extract (source)](#pivot_json_extract-source)
-    - [string\_agg (source)](#string_agg-source)
     - [wrap\_in\_quotes (source)](#wrap_in_quotes-source)
   - [SQL and field generators](#sql-and-field-generators)
     - [add\_pass\_through\_columns (source)](#add_pass_through_columns-source)
-    - [fivetran\_date\_spine (source)](#fivetran_date_spine-source)
     - [drop\_schemas\_automation (source)](#drop_schemas_automation-source)
     - [fill\_pass\_through\_columns (source)](#fill_pass_through_columns-source)
     - [fill\_staging\_columns (source)](#fill_staging_columns-source)
@@ -63,7 +57,6 @@ dispatch:
       - [Union Connections Defined Sources Configuration](#optional-union-connections-defined-sources-configuration)
     - [union\_data (source)](#union_data-source)
       - [Union Data Defined Sources Configuration](#union-data-defined-sources-configuration)
-    - [union\_relations\_custom (source)](#union_relations_custom-source)
   - [Variable Checks](#variable-checks)
     - [empty\_variable\_warning (source)](#empty_variable_warning-source)
 - [Does this package have dependencies?](#does-this-package-have-dependencies)
@@ -76,34 +69,8 @@ dispatch:
 
 ## Tests and helpers
 These macros help run or assist tests.
-### snowflake_seed_data ([source](macros/snowflake_seed_data.sql))
-This macro is intended to be used when a source table column is a reserved keyword in Snowflake, and Circle CI is throwing a fit.
-It simply chooses which version of the data to seed (the Snowflake copy should capitalize and put three pairs of quotes around the problematic column).
-
-***Usage:**
-```yml
-    # in integration_tests/dbt_project.yml
-    vars:
-        table_name: "{{ fivetran_utils.snowflake_seed_data(seed_name='user_data') }}"
-```
-**Args:**
-* `seed_name` (required): Name of the seed that has separate snowflake seed data.
-
-----
 ## Cross-database compatibility
 These macros allow functions to prevail across different databases. 
-### extract_url_parameter ([source](macros/extract_url_parameter.sql))
-This macro extracts a url parameter from a column containing a url. It is an expansion of `dbt_utils.get_url_parameter()` to add support for Databricks SQL. 
-
-**Usage:**
-```sql
-{{ fivetran_utils.extract_url_parameter(field="url_field", url_parameter="utm_source") }}
-```
-**Args:**
-* `field` (required): The name of the column containing the url.
-* `url_parameter` (required): The parameter you want to extract. 
-
-----
 ### json_parse ([source](macros/json_parse.sql))
 This macro allows for cross database use of the json extract function, specifically used to parse and extract a nested value from a json object.
 The data is returned by the path you provide as the list within the `string_path` argument. The json_parse macro is compatible with BigQuery, Redshift, Postgres, Snowflake, DuckDB, and Databricks.
@@ -117,33 +84,6 @@ The data is returned by the path you provide as the list within the `string_path
 * `string_path`  (required): List of item(s) that derive the path in the json object which you want to extract the data from.
 
 ----
-### max_bool ([source](macros/max_bool.sql))
-This macro allows for cross database use of obtaining the max boolean value of a field. This macro recognizes true = 1 and false = 0. The macro will aggregate the boolean_field and return the max boolean value. The max_bool macro is compatible with BigQuery, Redshift, Postgres, and Snowflake.
-
-**Usage:**
-```sql
-{{ fivetran_utils.max_bool(boolean_field="is_breach") }}
-```
-**Args:**
-* `boolean_field` (required): Name of the field you are obtaining the max boolean record from.
-
-----
-### percentile ([source](macros/percentile.sql))
-This macro is used to return the designated percentile of a field with cross db functionality. The percentile function stems from percentile_cont across db's. For Snowflake, Redshift, BigQuery, Spark, and DuckDB, this macro uses the window function opposed to the aggregate for percentile. For Postgres, this macro uses the aggregate, as it does not support a percentile window function. Thus, you will need to add a target-dependent `group by` in the query you are calling this macro in.
-
-**Usage:**
-```sql
-select id,
-{{ fivetran_utils.percentile(percentile_field='time_to_close', partition_field='id', percent='0.5') }}
-from your_cte
-{% if target.type == 'postgres' %} group by id {% endif %}
-```
-**Args:**
-* `percentile_field` (required): Name of the field of which you are determining the desired percentile.
-* `partition_field`  (required): Name of the field you want to partition by to determine the designated percentile. You will need to group by this for Postgres.
-* `percent`          (required): The percent necessary for `percentile_cont` to determine the percentile. If you want to find the median, you will input `0.5` for the percent. 
-
-----
 ### pivot_json_extract ([source](macros/pivot_json_extract.sql))
 This macro builds off of the [`json_parse`](#json_parse-source) macro to extract a list of top-level fields from a JSON object and pivot the fields out into columns. The `pivot_json_extract` macro is compatible with every warehouse that `json_parse` supports.
 
@@ -155,18 +95,6 @@ This macro builds off of the [`json_parse`](#json_parse-source) macro to extract
 * `string` (required): Name of the field which contains the json object.
 * `list_of_properties`  (required): List of the fields that you want to extract from the json object and pivot out into columns.
 
-----
-### string_agg ([source](macros/string_agg.sql))
-This macro allows for cross database field aggregation and delimiter customization. Supported database specific field aggregation functions include 
-BigQuery, Snowflake, Redshift, Postgres, and Spark.
-
-**Usage:**
-```sql
-{{ fivetran_utils.string_agg(field_to_agg="issues_opened", delimiter='|') }}
-```
-**Args:**
-* `field_to_agg` (required): Field within the table you are wishing to aggregate.
-* `delimiter`    (required): Character you want to be used as the delimiter between aggregates.
 ----
 ### wrap_in_quotes ([source](macros/wrap_in_quotes.sql))
 This macro takes a single SQL object name (for example, a database, schema, or column) and returns it wrapped in your warehouse's quote characters using `adapter.quote`. On Snowflake, the macro uppercases the name before quoting it so it matches Snowflake's default uppercase identifiers. Pass one name at a time, not a full `database.schema.table` path.
@@ -193,26 +121,6 @@ user defined custom fields. Works for older and newer versions of passthrough co
 **Args:**
 * `base_columns` (required): The name of the variable where the base columns are contained. This is typically `columns`.
 * `pass_through_var` (required): The variable which contains the user defined pass through fields.
-
-----
-### fivetran_date_spine ([source](macros/fivetran_date_spine.sql))
-This macro returns the sql required to build a date spine. The spine will include the `start_date` (if it is aligned to the `datepart`), but it will not include the `end_date`.
-
-For non-SQL Server databases, this will simply call [`dbt_utils.date_spine()`](https://github.com/dbt-labs/dbt-utils#date_spine-source). For SQL Server targets, this will manually create a spine, with code heavily leveraged from [`tsql-utils.date_spine()`](https://github.com/dbt-msft/tsql-utils/blob/main/macros/dbt_utils/datetime/date_spine.sql) but [adjusted for recent changes to dbt_utils](https://github.com/dbt-msft/tsql-utils/issues/96).
-
-**Usage:**
-```sql
-{{ fivetran_utils.fivetran_date_spine(
-    datepart="day",
-    start_date="cast('2019-01-01' as date)",
-    end_date="cast('2020-01-01' as date)"
-   )
-}}
-```
-**Args:**
-* `datepart` (required): The grain at which you would like to create the date spine. 
-* `start_date` (required): The date (inclusive if it is aligned to the `datepart`) at which you'd like the date spine to start.
-* `end_date` (required): The date (exclusive) at which you'd like the date spine to end.
 
 ----
 
@@ -308,7 +216,7 @@ It should be added to all non-tmp staging models when using the `union_data` mac
 ----
 ### apply_source_relation ([source](macros/apply_source_relation.sql))
 This macro generates the `source_relation` column in non-tmp staging models. It automatically selects the right approach based on how a package is configured for unioning:
-- If `{package_name}_sources` is set (new-style `union_connections`): returns `database.schema` from `_dbt_source_relation`. It removes quote characters and drops the table name, so it works with the value from either `union_relations_custom` (`database.schema`) or `dbt_utils.union_relations` (`"database"."schema"."table"`).
+- If `{package_name}_sources` is set (new-style `union_connections`): returns `database.schema` from `_dbt_source_relation`. It removes quote characters and drops the table name, so it works with either value `dbt_utils.union_relations` returns: `database.schema` (with `include_table_in_source_column=false`, as `union_connections` calls it) or the default `"database"."schema"."table"`.
 - If `{package_name}_union_schemas` or `{package_name}_union_databases` is set: calls `fivetran_utils.source_relation()` with the appropriate variable names.
 - If none of the above: generates a static `database.schema` string cast as `source_relation`.
 
@@ -487,31 +395,6 @@ sources:
       - name: customer 
       ...
 ```
-----
-### union_relations_custom ([source](macros/union_relations_custom.sql))
-This macro is adapted from dbt_utils.union_relations() with a slight deviation, allowing for the `_dbt_source_relation` field to return only the `database.schema` as opposed to the `database.schema.table`. 
-Unions together an array of [Relations](https://docs.getdbt.com/docs/writing-code-in-dbt/class-reference/#relation),
-even when columns have differing orders in each Relation, and/or some columns are
-missing from some relations. Any columns exclusive to a subset of these
-relations will be filled with `null` where not present. An new column
-(`_dbt_source_relation`) is also added to indicate the source for each record.
-
-**Usage:**
-```sql
-{{ fivetran_utils.union_relations_custom(
-    relations=[ref('my_model'), source('my_source', 'my_table')],
-    exclude=["_loaded_at"]
-) }}
-```
-**Args:**
-* `relations`          (required): An array of [Relations](https://docs.getdbt.com/docs/writing-code-in-dbt/class-reference/#relation).
-* `aliases`            (optional): An override of the relation identifier. This argument should be populated with the overwritten alias for the relation. If not populated `relations` will be the default.
-* `exclude`            (optional): A list of column names that should be excluded from the final query.
-* `include`            (optional): A list of column names that should be included in the final query. Note the `include` and `exclude` parameters are mutually exclusive.
-* `column_override`    (optional): A dictionary of explicit column type overrides, e.g. `{"some_field": "varchar(100)"}`.
-* `source_column_name` (optional): The name of the column that records the source of this row. By default this argument is set to `_dbt_source_relation`.
-* `where` (optional): Filter conditions to include in the where clause.
-
 ----
 
 ## Variable Checks

@@ -19,8 +19,9 @@
 {% endif %}
 
 {% if var(sources_var, []) | length > 0 %}
-{#- Keep only database.schema. This handles both the unquoted `database.schema` value from
-    union_relations_custom and the quoted `"database"."schema"."table"` value from dbt_utils.union_relations. -#}
+{#- Keep only database.schema. This handles both the unquoted `database.schema` value that
+    dbt_utils.union_relations returns with include_table_in_source_column=false, and its default
+    quoted `"database"."schema"."table"` value. -#}
 {%- set unquoted = "replace(replace(_dbt_source_relation, '\"', ''), '`', '')" %}
 , {{ dbt.concat([
     dbt.split_part(unquoted, "'.'", 1),
