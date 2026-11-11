@@ -15,7 +15,7 @@
 {% elif var(union_database_variable, none) %}
 , case
     {% for database in var(union_database_variable) %}
-    when lower(replace(replace(_dbt_source_relation,'"',''),'`','')) like '%{{ database|lower }}.%' then '{{ database|lower }}'
+    when lower(replace(replace(_dbt_source_relation,'"',''),'`','')) like '{{ database|lower }}.%' then '{{ database|lower }}'
     {% endfor %}
   end as source_relation
 {% else %}

@@ -1,3 +1,38 @@
+# dbt_fivetran_utils v0.4.15
+
+[PR #PLACEHOLDER](https://github.com/fivetran/dbt_fivetran_utils/pull/PLACEHOLDER) includes the following updates:
+
+## Breaking Changes
+- Removes the following macros. If you call any of them in your own project, replace them as noted:
+
+| Macro | Replacement |
+| ----- | ----------- |
+| `ceiling` | Your warehouse's native `ceil` or `ceiling` function. |
+| `first_value` | Your warehouse's native `first_value` window function. |
+| `try_cast` | Your warehouse's native `try_cast` or `safe_cast` function. |
+| `dummy_coalesce_value` | None. |
+| `seed_data_helper` | None. |
+| `json_extract` | `json_parse`, which also supports nested JSON paths. |
+| `add_dbt_source_relation` | `apply_source_relation`. |
+| `enabled_vars` | Jinja's `and` operator with an explicit default for each variable. For example, `var('a', true) and var('b', true)`. |
+| `array_agg` | None. Moved into `dbt_hubspot` as `hubspot_array_agg`. |
+| `calculated_fields` | None. Moved into `dbt_hubspot` as `hubspot_calculated_fields`. |
+| `remove_prefix_from_columns` | None. Moved into `dbt_hubspot` as `hubspot_remove_prefix_from_columns`. |
+| `timestamp_add` | `dbt.dateadd`. Moved into `dbt_zendesk` as `zendesk_timestamp_add`. |
+| `timestamp_diff` | `dbt.datediff`. Moved into `dbt_qualtrics` as `qualtrics_timestamp_diff`. |
+| `union_relations` | `dbt_utils.union_relations`. Moved into `dbt_marketo` as `marketo_union_relations`. |
+| `union_tables` | `dbt_utils.union_relations`. |
+| `enabled_vars_one_true` | Jinja's `or` operator with an explicit default for each variable. For example, `var('a', false) or var('b', false)`. |
+
+- Updates `pivot_json_extract` to use `json_parse` instead of `json_extract`. This adds Databricks support.
+- Updates `json_parse` to return `null` for invalid JSON on Snowflake (`try_parse_json`) and Redshift (`is_valid_json`). Previously, an invalid JSON string raised an error on these warehouses.
+- Updates `wrap_in_quotes` to use dbt's `adapter.quote` instead of hardcoded quote characters for each warehouse. Snowflake names are still uppercased before quoting. Output is unchanged on BigQuery, Databricks, Snowflake, Redshift, Postgres, and DuckDB. On SQL Server, names now use SQL Server's own quote characters instead of backticks.
+- Updates `apply_source_relation` to always return `database.schema` when `{package_name}_sources` is set. It now removes quote characters and drops the table name from `_dbt_source_relation`, so it returns the same value whether `union_connections` builds `_dbt_source_relation` with `union_relations_custom` or `dbt_utils.union_relations`. Output is unchanged for current packages.
+- Updates `source_relation`, which `apply_source_relation` calls, so the `union_databases` match anchors to the start of `_dbt_source_relation`. Previously, a database name that ended with another listed database name (for example, `preprod` and `prod`) could get the wrong `source_relation` value.
+
+## Under the Hood
+- Removes the `collect_freshness` macro. This macro overrode dbt's default `collect_freshness` macro to skip freshness checks on sources with `meta.is_enabled: false`. Fivetran dbt packages now disable sources with the `enabled` config, which removes them from the project before freshness runs. `dbt source freshness` now uses dbt's default macro.
+
 # dbt_fivetran_utils v0.4.14
 
 [PR #163](https://github.com/fivetran/dbt_fivetran_utils/pull/163) includes the following updates:

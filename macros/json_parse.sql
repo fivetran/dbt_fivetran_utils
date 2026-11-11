@@ -12,7 +12,7 @@
 
 {% macro redshift__json_parse(string, string_path) %}
 
-  json_extract_path_text({{string}}, {%- for s in string_path -%}'{{ s }}'{%- if not loop.last -%},{%- endif -%}{%- endfor -%} )
+  case when is_valid_json( {{string}} ) then json_extract_path_text({{string}}, {%- for s in string_path -%}'{{ s }}'{%- if not loop.last -%},{%- endif -%}{%- endfor -%} ) else null end
 
 {% endmacro %}
 
@@ -31,7 +31,7 @@
 
 {% macro snowflake__json_parse(string, string_path) %}
 
-  parse_json( {{string}} ) {%- for s in string_path -%}{% if s is number %}[{{ s }}]{% else %}['{{ s }}']{% endif %}{%- endfor -%}
+  try_parse_json( {{string}} ) {%- for s in string_path -%}{% if s is number %}[{{ s }}]{% else %}['{{ s }}']{% endif %}{%- endfor -%}
 
 {% endmacro %}
 

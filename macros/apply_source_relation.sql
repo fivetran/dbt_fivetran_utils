@@ -19,7 +19,14 @@
 {% endif %}
 
 {% if var(sources_var, []) | length > 0 %}
-, _dbt_source_relation as source_relation
+{#- Keep only database.schema. This handles both the unquoted `database.schema` value from
+    union_relations_custom and the quoted `"database"."schema"."table"` value from dbt_utils.union_relations. -#}
+{%- set unquoted = "replace(replace(_dbt_source_relation, '\"', ''), '`', '')" %}
+, {{ dbt.concat([
+    dbt.split_part(unquoted, "'.'", 1),
+    "'.'",
+    dbt.split_part(unquoted, "'.'", 2)
+]) }} as source_relation
 {% elif var(union_schemas_var, []) | length > 0 or var(union_databases_var, []) | length > 0 %}
 {{ fivetran_utils.source_relation(union_schema_variable=union_schemas_var, union_database_variable=union_databases_var) }}
 {% else %}
