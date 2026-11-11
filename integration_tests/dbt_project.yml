@@ -1,5 +1,5 @@
 name: 'fivetran_utils_integration_tests'
-version: '0.4.15'
+version: '0.5.0'
 config-version: 2
 profile: 'integration_tests'
 

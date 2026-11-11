@@ -1,4 +1,4 @@
-# dbt_fivetran_utils v0.4.15
+# dbt_fivetran_utils v0.5.0
 
 [PR #164](https://github.com/fivetran/dbt_fivetran_utils/pull/164) includes the following updates:
 
