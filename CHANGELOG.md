@@ -30,7 +30,11 @@
 - Updates `apply_source_relation` to always return `database.schema` when `{package_name}_sources` is set. It now removes quote characters and drops the table name from `_dbt_source_relation`, so it returns the same value whether `union_connections` builds `_dbt_source_relation` with `union_relations_custom` or `dbt_utils.union_relations`. Output is unchanged for current packages.
 - Updates `source_relation`, which `apply_source_relation` calls, so the `union_databases` match anchors to the start of `_dbt_source_relation`. Previously, a database name that ended with another listed database name (for example, `preprod` and `prod`) could get the wrong `source_relation` value.
 
+## Dependencies
+- Points the `dbt_utils` dependency at the `feature/sqlserver-date-spine-spark-url-parameter` branch of `fivetran-jamie/dbt-utils`, which adds the `include_table_in_source_column` and `aliases` arguments to `dbt_utils.union_relations`. This is temporary. Before release, switch it back to a `dbt-labs/dbt_utils` Hub version range that includes these arguments.
+
 ## Under the Hood
+- Updates `union_connections` to call `dbt_utils.union_relations` with `include_table_in_source_column=false` instead of `union_relations_custom`. `_dbt_source_relation` is still `database.schema`, so output is unchanged.
 - Removes the `collect_freshness` macro. This macro overrode dbt's default `collect_freshness` macro to skip freshness checks on sources with `meta.is_enabled: false`. Fivetran dbt packages now disable sources with the `enabled` config, which removes them from the project before freshness runs. `dbt source freshness` now uses dbt's default macro.
 
 # dbt_fivetran_utils v0.4.14
