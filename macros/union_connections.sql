@@ -50,7 +50,7 @@
     {%- endfor -%}
 
     {%- if relations | length > 0 -%}
-        {{ fivetran_utils.union_relations_custom(relations, source_column_name='_dbt_source_relation') }}
+        {{ dbt_utils.union_relations(relations, source_column_name='_dbt_source_relation', include_table_in_source_column=false) }}
 
     {%- else -%}
         {%- if using_empty_table_warnings %}

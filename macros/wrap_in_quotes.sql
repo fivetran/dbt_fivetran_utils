@@ -4,23 +4,7 @@
 
 {%- endmacro -%}
 
-{%- macro default__wrap_in_quotes(object_to_quote)  -%}
-{# bigquery, spark, databricks #}
-    `{{ object_to_quote }}`
-{%- endmacro -%}
-
-{%- macro snowflake__wrap_in_quotes(object_to_quote)  -%}
-    "{{ object_to_quote | upper }}"
-{%- endmacro -%}
-
-{%- macro redshift__wrap_in_quotes(object_to_quote)  -%}
-    "{{ object_to_quote }}"
-{%- endmacro -%}
-
-{%- macro postgres__wrap_in_quotes(object_to_quote)  -%}
-    "{{ object_to_quote }}"
-{%- endmacro -%}
-
-{%- macro duckdb__wrap_in_quotes(object_to_quote)  -%}
-    "{{ object_to_quote }}"
+{%- macro default__wrap_in_quotes(object_to_quote) -%}
+{#- Snowflake stores unquoted identifiers in uppercase, so uppercase before quoting to match them. -#}
+    {{ adapter.quote(object_to_quote | upper if target.type == 'snowflake' else object_to_quote) }}
 {%- endmacro -%}

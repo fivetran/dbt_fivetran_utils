@@ -1,3 +1,52 @@
+# dbt_fivetran_utils v0.5.0
+
+[PR #164](https://github.com/fivetran/dbt_fivetran_utils/pull/164) includes the following updates:
+
+## Breaking Changes
+- Removes the following macros. If you call any of them in your own project, replace them as noted:
+
+| Macro | Replacement |
+| ----- | ----------- |
+| `ceiling` | Your warehouse's native `ceil` or `ceiling` function. |
+| `first_value` | Your warehouse's native `first_value` window function. |
+| `try_cast` | Your warehouse's native `try_cast` or `safe_cast` function. |
+| `dummy_coalesce_value` | None. |
+| `seed_data_helper` | None. |
+| `json_extract` | `json_parse`, which also supports nested JSON paths. |
+| `add_dbt_source_relation` | `apply_source_relation`. |
+| `enabled_vars` | Jinja's `and` operator with an explicit default for each variable. For example, `var('a', true) and var('b', true)`. |
+| `array_agg` | None. Moved into `dbt_hubspot` as `hubspot_array_agg`. |
+| `calculated_fields` | None. Moved into `dbt_hubspot` as `hubspot_calculated_fields`. |
+| `remove_prefix_from_columns` | None. Moved into `dbt_hubspot` as `hubspot_remove_prefix_from_columns`. |
+| `timestamp_add` | `dbt.dateadd`. Moved into `dbt_zendesk` as `zendesk_timestamp_add`. |
+| `timestamp_diff` | `dbt.datediff`. Moved into `dbt_qualtrics` as `qualtrics_timestamp_diff`. |
+| `union_relations` | `dbt_utils.union_relations`. Moved into `dbt_marketo` as `marketo_union_relations`. |
+| `union_tables` | `dbt_utils.union_relations`. |
+| `union_relations_custom` | `dbt_utils.union_relations` with `include_table_in_source_column=false`. |
+| `snowflake_seed_data` | None. |
+| `extract_url_parameter` | `dbt_utils.get_url_parameter`. For Spark and Databricks, install `spark_utils` and add it to your `dbt_utils` dispatch search order. |
+| `max_bool` | `dbt.bool_or`. |
+| `fivetran_date_spine` | `dbt_utils.date_spine`. For SQL Server, install `tsql_utils` and add it to your `dbt_utils` dispatch search order. |
+| `percentile` | `dbt.percentile`. |
+| `string_agg` | `dbt.listagg`. On Spark and Databricks, `dbt.listagg` keeps duplicate values (add `distinct` to remove them) and no longer splits values that contain `, `. |
+| `enabled_vars_one_true` | Jinja's `or` operator with an explicit default for each variable. For example, `var('a', false) or var('b', false)`. |
+
+- Updates `pivot_json_extract` to use `json_parse` instead of `json_extract`. This adds Databricks support.
+- Updates `json_parse` to return `null` for invalid JSON on Snowflake (`try_parse_json`) and Redshift (`is_valid_json`). Previously, an invalid JSON string raised an error on these warehouses.
+- Updates `wrap_in_quotes` to use dbt's `adapter.quote` instead of hardcoded quote characters for each warehouse. Snowflake names are still uppercased before quoting. Output is unchanged on BigQuery, Databricks, Snowflake, Redshift, Postgres, and DuckDB. On SQL Server, names now use SQL Server's own quote characters instead of backticks.
+- Updates `apply_source_relation` to always return `database.schema` when `{package_name}_sources` is set. It now removes quote characters and drops the table name from `_dbt_source_relation`, so it returns the same value whether `union_connections` builds `_dbt_source_relation` with `union_relations_custom` or `dbt_utils.union_relations`. Output is unchanged for current packages.
+- Updates `source_relation`, which `apply_source_relation` calls, so the `union_databases` match anchors to the start of `_dbt_source_relation`. Previously, a database name that ended with another listed database name (for example, `preprod` and `prod`) could get the wrong `source_relation` value.
+
+## Feature Updates
+- Adds the `lookback` macro, which returns the date to start an incremental run from. It replaces the identical `<package>_lookback` macro in 8 Fivetran packages: `dbt_amplitude`, `dbt_fivetran_log`, `dbt_ga4_export`, `dbt_iterable`, `dbt_jira`, `dbt_mixpanel`, `dbt_netsuite`, and `dbt_shopify`. Unlike those package macros, `lookback` uses the `datepart`, `interval`, and `safety_date` values you pass in. The package macros ignored a passed-in `safety_date`, and `fivetran_log_lookback` also ignored `datepart` and `interval`.
+
+## Dependencies
+- Points the `dbt_utils` dependency at the `migrate-from-fivetran-utils` branch of `dbt-labs/dbt-utils`, which adds the `include_table_in_source_column` and `aliases` arguments to `dbt_utils.union_relations`. This is temporary. Before release, switch it back to a `dbt-labs/dbt_utils` Hub version range that includes these arguments.
+
+## Under the Hood
+- Updates `union_connections` to call `dbt_utils.union_relations` with `include_table_in_source_column=false` instead of `union_relations_custom`. `_dbt_source_relation` is still `database.schema`, so output is unchanged.
+- Removes the `collect_freshness` macro. This macro overrode dbt's default `collect_freshness` macro to skip freshness checks on sources with `meta.is_enabled: false`. Fivetran dbt packages now disable sources with the `enabled` config, which removes them from the project before freshness runs. `dbt source freshness` now uses dbt's default macro.
+
 # dbt_fivetran_utils v0.4.14
 
 [PR #163](https://github.com/fivetran/dbt_fivetran_utils/pull/163) includes the following updates:
