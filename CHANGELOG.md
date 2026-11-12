@@ -37,6 +37,9 @@
 - Updates `apply_source_relation` to always return `database.schema` when `{package_name}_sources` is set. It now removes quote characters and drops the table name from `_dbt_source_relation`, so it returns the same value whether `union_connections` builds `_dbt_source_relation` with `union_relations_custom` or `dbt_utils.union_relations`. Output is unchanged for current packages.
 - Updates `source_relation`, which `apply_source_relation` calls, so the `union_databases` match anchors to the start of `_dbt_source_relation`. Previously, a database name that ended with another listed database name (for example, `preprod` and `prod`) could get the wrong `source_relation` value.
 
+## Feature Updates
+- Adds the `lookback` macro, which returns the date to start an incremental run from. It replaces the identical `<package>_lookback` macro in 8 Fivetran packages: `dbt_amplitude`, `dbt_fivetran_log`, `dbt_ga4_export`, `dbt_iterable`, `dbt_jira`, `dbt_mixpanel`, `dbt_netsuite`, and `dbt_shopify`. Unlike those package macros, `lookback` uses the `datepart`, `interval`, and `safety_date` values you pass in. The package macros ignored a passed-in `safety_date`, and `fivetran_log_lookback` also ignored `datepart` and `interval`.
+
 ## Dependencies
 - Points the `dbt_utils` dependency at the `migrate-from-fivetran-utils` branch of `dbt-labs/dbt-utils`, which adds the `include_table_in_source_column` and `aliases` arguments to `dbt_utils.union_relations`. This is temporary. Before release, switch it back to a `dbt-labs/dbt_utils` Hub version range that includes these arguments.
 

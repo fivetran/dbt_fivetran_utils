@@ -49,6 +49,7 @@ dispatch:
     - [drop\_schemas\_automation (source)](#drop_schemas_automation-source)
     - [fill\_pass\_through\_columns (source)](#fill_pass_through_columns-source)
     - [fill\_staging\_columns (source)](#fill_staging_columns-source)
+    - [lookback (source)](#lookback-source)
     - [persist\_pass\_through\_columns (source)](#persist_pass_through_columns-source)
     - [source\_relation (source)](#source_relation-source)
     - [apply\_source\_relation (source)](#apply_source_relation-source)
@@ -187,6 +188,23 @@ from source
 > **Important:** `fivetran_using_source_casing` was added specifically to support Fivetran's MDLs feature where the Polaris engine lowercases column names in Snowflake destinations. It does not generically preserve source casing — it mainly handles the lowercase-in-Snowflake case. If Polaris's behavior changes in the future, a different approach may be required. See the [DECISIONLOG](DECISIONLOG.md) for full details.
 
 ----
+### lookback ([source](macros/lookback.sql))
+This macro returns the date to start an incremental run from. It queries the current model (`{{ this }}`) for `from_date`, then subtracts `interval` units of `datepart`. If `from_date` is null, for example when the model is empty, it uses `safety_date` instead. Use it only inside an `is_incremental()` block, because it queries the existing model.
+
+**Usage:**
+```sql
+{% if is_incremental() %}
+where event_day >= {{ fivetran_utils.lookback(from_date='max(event_day)', datepart='day', interval=var('lookback_window', 7)) }}
+{% endif %}
+```
+**Args:**
+* `from_date` (required): The SQL expression to look back from, run against the current model. This is typically `max(<date column>)`.
+* `datepart` (optional): The date part to subtract, for example `day`, `week`, or `month`. Default: `day`.
+* `interval` (optional): The number of `datepart` units to subtract. Default: `7`.
+* `safety_date` (optional): The date to use when `from_date` is null. Default: `2010-01-01`.
+
+----
+
 ### persist_pass_through_columns ([source](macros/persist_pass_through_columns.sql))
 This macro is used to persist pass through columns from the staging model to the **transform** package. This is particularly helpful when a `select *` is not feasible.
 
