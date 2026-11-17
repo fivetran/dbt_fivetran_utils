@@ -11,10 +11,10 @@
 {%- set connections = var(connection_dictionary, []) %}
 {%- set using_unioning = connections | length > 0 %}
 {%- set identifier_var = single_source_name + "_" + single_table_name + "_identifier" %}
-{#- dbt v2 renders every model once before the run with no live warehouse access, so get_relation returns
-    none even for tables that exist. In that pass, list_schemas also returns no schemas. Only warn when the warehouse
-    returns at least one schema, so the warning fires in the real run pass only. dbt v1 always warns as before. -#}
-{%- set is_dbt_v2 = dbt_version.split(".")[0] | int >= 2 %}
+{#- `execute` is false in dbt v2's pre-run render pass and true in the run pass, and
+    using_empty_table_warnings already carries it, so the warning fires in the run pass only.
+    No warehouse canary is needed, and asking for one breaks --compute sidecar, where the
+    Snowflake metadata statement is handed to the local engine. -#}
 
 {%- if using_unioning %}
 {# For unioning #}
@@ -54,9 +54,7 @@
 
     {%- else -%}
         {%- if using_empty_table_warnings %}
-            {%- set first_connection = connections[0] %}
-            {%- set canary_database = source(first_connection.name, single_table_name).database if var('has_defined_sources', false) else (first_connection.database if first_connection.database else target.database) %}
-            {{ exceptions.warn(exception_warning) if not is_dbt_v2 or adapter.list_schemas(canary_database) | length > 0 }}
+            {{ exceptions.warn(exception_warning) }}
         {%- endif %}
 
         select
@@ -90,7 +88,7 @@
         from {{ source(single_source_name, single_table_name) }} as source_table
 
     {% else %}
-        {{ exceptions.warn(exception_warning) if using_empty_table_warnings and (not is_dbt_v2 or adapter.list_schemas(database) | length > 0) }}
+        {{ exceptions.warn(exception_warning) if using_empty_table_warnings }}
 
         select
             cast(null as {{ dbt.type_string() }}) as _dbt_source_relation
