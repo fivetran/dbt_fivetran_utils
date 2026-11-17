@@ -1,6 +1,6 @@
 # dbt_fivetran_utils v0.4.15
 
-[PR #PRNUM](https://github.com/fivetran/dbt_fivetran_utils/pull/PRNUM) includes the following updates:
+[PR #166](https://github.com/fivetran/dbt_fivetran_utils/pull/166) includes the following updates:
 
 ## Bug Fixes
 - Fixes a hard failure in `union_connections` on dbt v2 when the destination is queried by an engine that does not speak the warehouse's metadata dialect, such as dbt Fusion's local compute (`--compute sidecar`). The schema canary added in v0.4.14 issues `adapter.list_schemas`, which renders the warehouse's own metadata statement; against a local engine that statement cannot be parsed, and every staging model that reaches the macro errors:
