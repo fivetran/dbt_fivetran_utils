@@ -14,7 +14,7 @@ We welcome and encourage AI-assisted contributions, but will prioritize those th
 
 - **CLA:** Please note that anyone contributing code to `dbt_fivetran_utils` must sign the Contributor License Agreement which will be available in the PR as a comment. If you are unable to sign the CLA, the maintainers will be unable to merge any of your Pull Requests. We still welcome you to participate in discussions, open issues, and comment on existing ones.
 
-- **Branches:** All pull requests from community contributors should target the `main` branch (default).
+- **Branches:** `main` is the default branch, but it isn't the live branch for releases. Current releases come from [`releases/v0.4.latest`](https://github.com/fivetran/dbt_fivetran_utils/tree/releases/v0.4.latest), so open pull requests against that branch.
 
 - **Integration Tests Seed Data:** Seed data is intended to test model compilation for CI purposes only and is not necessarily reflective of real-world data. Do not use model outputs from seed data alone as an indication of potential issues in the code.
 
