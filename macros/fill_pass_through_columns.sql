@@ -2,10 +2,14 @@
 
 {% if var(pass_through_variable) %}
     {% for field in var(pass_through_variable) %}
-        {% if field.transform_sql %}
-            , {{ field.transform_sql }} as {{ field.alias if field.alias else field.name }}
+        {% if field is mapping %}
+            {% if field.transform_sql %}
+                , {{ field.transform_sql }} as {{ field.alias if field.alias else field.name }}
+            {% else %}
+                , {{ field.alias if field.alias else field.name }}
+            {% endif %}
         {% else %}
-            , {{ field.alias if field.alias else field.name }}
+        , {{ field }}
         {% endif %}
     {% endfor %}
 {% endif %}

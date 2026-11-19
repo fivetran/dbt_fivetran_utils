@@ -62,7 +62,7 @@
         (
             select
 
-                cast({{ dbt_utils.string_literal(relation) }} as {{ dbt_utils.type_string() }}) as {{ source_column_name }},
+                cast({{ dbt.string_literal(relation) }} as {{ dbt.type_string() }}) as {{ source_column_name }},
                 {% for col_name in ordered_column_names -%}
 
                     {%- set col = column_superset[col_name] %}

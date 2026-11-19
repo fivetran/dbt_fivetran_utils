@@ -1,4 +1,93 @@
 packages:
-  - local: ../
-  - package: fishtown-analytics/dbt_utils
-    version: 0.6.2
+  - package: fivetran/ad_reporting
+    version: [">=2.0.0", "<3.0.0"]
+  - package: fivetran/stackadapt
+    version: [">=0.0.0", "<1.0.0"]
+
+  - package: fivetran/social_media_reporting
+    version: [">=1.0.0", "<2.0.0"]
+
+  - package: fivetran/youtube_analytics
+    version: [">=1.0.0", "<2.0.0"]
+
+  - package: fivetran/app_reporting
+    version: [">=1.0.0", "<2.0.0"]
+
+  - package: fivetran/salesforce
+    version: [">=2.0.0", "<3.0.0"]
+  - package: fivetran/hubspot
+    version: [">=1.0.0", "<2.0.0"]
+  - package: fivetran/salesforce_marketing_cloud
+    version: [">=0.0.0", "<1.0.0"]
+
+  - package: fivetran/shopify
+    version: [">=1.0.0", "<2.0.0"]
+  - package: fivetran/stripe
+    version: [">=1.0.0", "<2.0.0"]
+  - package: fivetran/recurly
+    version: [">=1.0.0", "<2.0.0"]
+  - package: fivetran/zuora
+    version: [">=1.0.0", "<2.0.0"]
+  - package: fivetran/recharge
+    version: [">=1.0.0", "<2.0.0"]
+  - package: fivetran/amazon_selling_partner
+    version: [">=0.0.0", "<1.0.0"]
+
+  - package: fivetran/marketo
+    version: [">=1.0.0", "<2.0.0"]
+  - package: fivetran/iterable
+    version: [">=1.0.0", "<2.0.0"]
+  - package: fivetran/klaviyo
+    version: [">=1.0.0", "<2.0.0"]
+  - package: fivetran/mailchimp
+    version: [">=1.0.0", "<2.0.0"]
+  - package: fivetran/pardot
+    version: [">=1.0.0", "<2.0.0"]
+
+  - package: fivetran/quickbooks
+    version: [">=1.0.0", "<2.0.0"]
+  - package: fivetran/netsuite
+    version: [">=1.0.0", "<2.0.0"]
+  - package: fivetran/sage_intacct
+    version: [">=1.0.0", "<2.0.0"]
+  - package: fivetran/xero
+    version: [">=1.0.0", "<2.0.0"]
+  - package: fivetran/aws_cloud_cost
+    version: [">=0.0.0", "<1.0.0"]
+  - package: fivetran/sap
+    version: [">=0.0.0", "<1.0.0"]
+  - package: fivetran/workday
+    version: [">=1.0.0", "<2.0.0"]
+
+  - package: fivetran/fivetran_log
+    version: [">=2.0.0", "<3.0.0"]
+  - package: fivetran/lever
+    version: [">=1.0.0", "<2.0.0"]
+  - package: fivetran/greenhouse
+    version: [">=1.0.0", "<2.0.0"]
+
+  - package: fivetran/amplitude
+    version: [">=1.0.0", "<2.0.0"]
+  - package: fivetran/pendo
+    version: [">=1.0.0", "<2.0.0"]
+  - package: fivetran/mixpanel
+    version: [">=0.1.0", "<1.0.0"]
+  - package: fivetran/ga4_export
+    version: [">=0.0.0", "<1.0.0"]
+  - package: fivetran/qualtrics
+    version: [">=1.0.0", "<2.0.0"]
+
+  - package: fivetran/jira
+    version: [">=1.0.0", "<2.0.0"]
+  - package: fivetran/github
+    version: [">=1.0.0", "<2.0.0"]
+  - package: fivetran/asana
+    version: [">=1.0.0", "<2.0.0"]
+  - package: fivetran/zendesk
+    version: [">=1.0.0", "<2.0.0"]
+  - package: fivetran/intercom
+    version: [">=1.0.0", "<2.0.0"]
+  - package: fivetran/servicenow
+    version: [">=1.0.0", "<2.0.0"]
+  - package: fivetran/twilio
+    version: [">=1.0.0", "<2.0.0"]
