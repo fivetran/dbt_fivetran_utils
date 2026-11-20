@@ -1,3 +1,16 @@
+# dbt_fivetran_utils v0.4.15
+
+[PR #166](https://github.com/fivetran/dbt_fivetran_utils/pull/166) includes the following updates:
+
+## Bug Fixes
+- Fixes a hard failure in `union_connections` on dbt v2 when the destination is queried by an engine that does not speak the warehouse's metadata dialect, such as dbt Fusion's local compute (`--compute sidecar`). The schema canary added in v0.4.14 issues `adapter.list_schemas`, which renders the warehouse's own metadata statement; against a local engine that statement cannot be parsed, and every staging model that reaches the macro errors:
+  ```
+  Parser Error: syntax error at or near "schemas"
+  LINE 1: show terse schemas in database <database>
+  ```
+  - The canary is no longer needed. `execute` is already false in dbt v2's pre-run render pass and true in the run pass, and `using_empty_table_warnings` already carries it, so the warning is already suppressed during the render without asking the warehouse anything. The v0.4.14 behaviour is preserved on both dbt v1 and dbt v2: no false warnings during the render, and warnings for tables that are really missing.
+  - `fivetran__remove_empty_table_warnings` continues to turn the warnings off on both versions.
+
 # dbt_fivetran_utils v0.4.14
 
 [PR #163](https://github.com/fivetran/dbt_fivetran_utils/pull/163) includes the following updates:
